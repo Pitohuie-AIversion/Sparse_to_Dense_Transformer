@@ -1,0 +1,79 @@
+# Global settings
+global:
+  seed: 42
+  deterministic: true
+  device: cuda:0
+  max_memory_fraction: 0.8
+  use_dataparallel: true
+
+# Data settings
+data:
+  path: X:/2025/Graduation_project/simulation_results/merged_all_pressures_separated_normalized.pt
+  batch_size: 128
+  use_augmentation: true
+  crop_size: [128, 128]
+
+# Model settings
+model:
+  attention_type: relative
+  d_model: 256
+  num_heads: 4
+  num_layers: 6
+  input_dim: 400
+  output_dim: 40000
+  seq_len: 49
+  max_time_steps: 100
+
+# Training settings
+training:
+  epochs: 10
+  learning_rate: 0.0001
+  early_stop_patience: 10
+
+# Visualization settings
+visualization:
+  enabled: true
+  interval: 100
+  max_samples: 5
+
+# Attention mechanisms to test
+attention_test:
+  types: 
+    - self
+    - simplified_self
+    - muse
+    - ufo
+    - relative
+    - sparse
+    - lsh
+    - emsa
+    - mobilevit
+    - mobilevitv2
+    - dat
+    - crossformer
+    - moa
+    - crisscross
+    - axial
+    - gfnet
+    - se
+    - sk
+    - cbam
+    - bam
+    - eca
+    - shuffle
+    - residual
+    - s2
+    - triplet
+    - coord
+    - psa
+    - danet
+    - cot
+    - polarized
+    - outlook
+    - vip
+    - coatnet
+    - halo
+    - a2
+    - parnet
+    - external
+    - aft

@@ -1,0 +1,8 @@
+torch
+numpy
+pyyaml
+matplotlib
+fightingcv_attention
+black
+flake8
+tensorboard

@@ -1,0 +1,1 @@
+Test Loss for danet: 0.0434907041490078

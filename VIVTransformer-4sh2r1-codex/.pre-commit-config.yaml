@@ -1,0 +1,231 @@
+# Pre-commit hooks configuration for VIVTransformer
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+repos:
+  # 基础代码质量检查
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      # 基础文件检查
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+      - id: check-json
+      - id: check-toml
+      - id: check-xml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-symlinks
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      
+      # Python特定检查
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-docstring-first
+      - id: debug-statements
+      - id: name-tests-test
+        args: [--pytest-test-first]
+      
+      # 文件大小和内容检查
+      - id: check-added-large-files
+        args: [--maxkb=1000]
+      - id: forbid-new-submodules
+      - id: no-commit-to-branch
+        args: [--branch, main, --branch, master]
+      
+      # 其他有用的检查
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: requirements-txt-fixer
+
+  # Python代码格式化 - Black
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        language_version: python3
+        args: [--line-length=88]
+        files: \.py$
+
+  # Python导入排序 - isort
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: [--profile, black, --line-length, "88"]
+        files: \.py$
+
+  # Python代码风格检查 - flake8
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        args: [
+          --max-line-length=88,
+          --extend-ignore=E203,W503,E501,
+          --max-complexity=10
+        ]
+        additional_dependencies: [
+          flake8-docstrings,
+          flake8-bugbear,
+          flake8-comprehensions,
+          flake8-simplify,
+        ]
+        files: \.py$
+
+  # Python类型检查 - mypy
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.3.0
+    hooks:
+      - id: mypy
+        args: [--ignore-missing-imports, --no-strict-optional]
+        additional_dependencies: [
+          types-PyYAML,
+          types-requests,
+          types-setuptools,
+        ]
+        files: \.py$
+
+  # 安全检查 - bandit
+  - repo: https://github.com/pycqa/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+        args: [-r, ., -f, json, -o, bandit-report.json]
+        files: \.py$
+        exclude: ^tests/
+
+  # 依赖安全检查 - safety
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.3.2
+    hooks:
+      - id: python-safety-dependencies-check
+        files: requirements.*\.txt$
+
+  # YAML格式化
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.0-alpha.9-for-vscode
+    hooks:
+      - id: prettier
+        types: [yaml]
+        exclude: ^\.github/
+
+  # Markdown格式检查
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.35.0
+    hooks:
+      - id: markdownlint
+        args: [--fix]
+        files: \.md$
+        exclude: ^(CHANGELOG\.md|node_modules/)
+
+  # 文档字符串检查 - pydocstyle
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: 6.3.0
+    hooks:
+      - id: pydocstyle
+        args: [--convention=google]
+        files: \.py$
+        exclude: ^(tests/|setup\.py)
+
+  # 代码复杂度检查 - xenon
+  - repo: https://github.com/rubik/xenon
+    rev: v0.9.0
+    hooks:
+      - id: xenon
+        args: [--max-average=A, --max-modules=B, --max-absolute=B]
+        files: \.py$
+        exclude: ^tests/
+
+  # 死代码检查 - vulture
+  - repo: https://github.com/jendrikseipp/vulture
+    rev: v2.7
+    hooks:
+      - id: vulture
+        args: [--min-confidence, "80"]
+        files: \.py$
+        exclude: ^tests/
+
+  # Jupyter Notebook清理
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.7.0
+    hooks:
+      - id: nbqa-black
+        additional_dependencies: [black==23.3.0]
+      - id: nbqa-isort
+        additional_dependencies: [isort==5.12.0]
+      - id: nbqa-flake8
+        additional_dependencies: [flake8==6.0.0]
+
+  # 提交信息检查
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.2.2
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+
+  # 本地自定义钩子
+  - repo: local
+    hooks:
+      # 检查是否有TODO/FIXME注释
+      - id: check-todos
+        name: Check for TODO/FIXME comments
+        entry: bash -c 'if grep -r "TODO\|FIXME" --include="*.py" .; then echo "Found TODO/FIXME comments. Please resolve them before committing."; exit 1; fi'
+        language: system
+        files: \.py$
+        pass_filenames: false
+
+      # 检查是否有调试打印语句
+      - id: check-debug-prints
+        name: Check for debug print statements
+        entry: bash -c 'if grep -r "print(" --include="*.py" . --exclude-dir=tests; then echo "Found print statements. Please use logging instead."; exit 1; fi'
+        language: system
+        files: \.py$
+        pass_filenames: false
+
+      # 检查配置文件语法
+      - id: check-yaml-syntax
+        name: Check YAML syntax
+        entry: python -c "import yaml; import sys; [yaml.safe_load(open(f)) for f in sys.argv[1:]]"
+        language: system
+        files: \.ya?ml$
+
+      # 运行快速测试
+      - id: run-quick-tests
+        name: Run quick tests
+        entry: python -c "from models.attention import ATTENTION_REGISTRY; print(f'✓ {len(ATTENTION_REGISTRY)} attention mechanisms available')"
+        language: system
+        files: \.py$
+        pass_filenames: false
+        stages: [pre-push]
+
+      # 检查requirements.txt是否更新
+      - id: check-requirements
+        name: Check if requirements.txt needs update
+        entry: bash -c 'if git diff --cached --name-only | grep -q "setup.py\|pyproject.toml"; then echo "setup.py or pyproject.toml changed. Consider updating requirements.txt"; fi'
+        language: system
+        pass_filenames: false
+        always_run: true
+
+# 全局配置
+default_stages: [commit]
+fail_fast: false
+default_language_version:
+  python: python3
+
+# CI配置
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit.com hooks
+    
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: ''
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false

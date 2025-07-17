@@ -1,0 +1,301 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  release:
+    types: [ published ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [3.8, 3.9, '3.10', 3.11]
+        exclude:
+          # 排除一些组合以减少CI时间
+          - os: macos-latest
+            python-version: 3.8
+          - os: windows-latest
+            python-version: 3.8
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov flake8 black isort mypy
+
+    - name: Lint with flake8
+      run: |
+        # 停止构建如果有Python语法错误或未定义的名称
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # 退出零处理所有错误为警告。GitHub编辑器宽度为127个字符
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Check code formatting with black
+      run: |
+        black --check --diff .
+
+    - name: Check import sorting with isort
+      run: |
+        isort --check-only --diff .
+
+    - name: Type checking with mypy
+      run: |
+        mypy . --ignore-missing-imports
+      continue-on-error: true  # 类型检查失败不阻止构建
+
+    - name: Run basic functionality tests
+      run: |
+        python -c "import torch; print(f'PyTorch version: {torch.__version__}')"
+        python -c "from models.attention import ATTENTION_REGISTRY; print(f'Available attention mechanisms: {len(ATTENTION_REGISTRY)}')"
+        python -c "from utils.config_loader import load_config; config = load_config('configs/config.yaml'); print('Config loaded successfully')"
+
+    - name: Run quick attention mechanism test
+      run: |
+        # 运行一个快速的注意力机制测试
+        python main.py --attention_types self_attention --epochs 1 --batch_size 8
+      timeout-minutes: 10
+
+    - name: Run unit tests with pytest
+      run: |
+        pytest tests/ -v --cov=. --cov-report=xml --cov-report=html
+      if: hashFiles('tests/*.py') != ''
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.9'
+
+  performance-test:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run performance benchmark
+      run: |
+        # 运行性能基准测试
+        python main.py --attention_types self_attention simplified_self efficient_attention --epochs 2 --batch_size 16
+      timeout-minutes: 30
+
+    - name: Generate performance report
+      run: |
+        echo "Performance test completed" > performance_report.txt
+        echo "Date: $(date)" >> performance_report.txt
+        echo "Commit: ${{ github.sha }}" >> performance_report.txt
+
+    - name: Upload performance report
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-report
+        path: performance_report.txt
+
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install security tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety bandit semgrep
+
+    - name: Run safety check
+      run: |
+        safety check --json --output safety-report.json
+      continue-on-error: true
+
+    - name: Run bandit security scan
+      run: |
+        bandit -r . -f json -o bandit-report.json
+      continue-on-error: true
+
+    - name: Run semgrep scan
+      run: |
+        semgrep --config=auto --json --output=semgrep-report.json .
+      continue-on-error: true
+
+    - name: Upload security reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-reports
+        path: |
+          safety-report.json
+          bandit-report.json
+          semgrep-report.json
+
+  documentation:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install documentation dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install sphinx sphinx-rtd-theme sphinx-autodoc-typehints
+        pip install -r requirements.txt
+
+    - name: Build documentation
+      run: |
+        # 如果有docs目录，构建文档
+        if [ -d "docs" ]; then
+          cd docs
+          make html
+        else
+          echo "No docs directory found, skipping documentation build"
+        fi
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: hashFiles('docs/**') != ''
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/_build/html
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [test, performance-test, security-scan]
+    if: github.event_name == 'release'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build twine
+
+    - name: Build package
+      run: |
+        python -m build
+
+    - name: Check package
+      run: |
+        twine check dist/*
+
+    - name: Upload to PyPI
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      run: |
+        twine upload dist/*
+      if: env.TWINE_PASSWORD != ''
+
+    - name: Create GitHub Release Assets
+      run: |
+        # 创建发布资产
+        tar -czf vivtransformer-${{ github.event.release.tag_name }}.tar.gz \
+          --exclude='.git' \
+          --exclude='__pycache__' \
+          --exclude='*.pyc' \
+          --exclude='.pytest_cache' \
+          --exclude='results' \
+          --exclude='logs' \
+          .
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./vivtransformer-${{ github.event.release.tag_name }}.tar.gz
+        asset_name: vivtransformer-${{ github.event.release.tag_name }}.tar.gz
+        asset_content_type: application/gzip
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [test, performance-test, security-scan]
+    if: always()
+
+    steps:
+    - name: Notify on success
+      if: needs.test.result == 'success'
+      run: |
+        echo "✅ All tests passed successfully!"
+        echo "Commit: ${{ github.sha }}"
+        echo "Branch: ${{ github.ref }}"
+        echo "Author: ${{ github.actor }}"
+
+    - name: Notify on failure
+      if: needs.test.result == 'failure'
+      run: |
+        echo "❌ Tests failed!"
+        echo "Commit: ${{ github.sha }}"
+        echo "Branch: ${{ github.ref }}"
+        echo "Author: ${{ github.actor }}"
+        echo "Please check the logs for more details."
+
+    - name: Create issue on failure
+      if: needs.test.result == 'failure' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `CI/CD Pipeline Failed - ${context.sha.substring(0, 7)}`,
+            body: `The CI/CD pipeline failed for commit ${context.sha}.\n\nPlease check the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for more details.\n\n**Commit:** ${context.sha}\n**Author:** ${context.actor}\n**Branch:** ${context.ref}`,
+            labels: ['bug', 'ci/cd']
+          })

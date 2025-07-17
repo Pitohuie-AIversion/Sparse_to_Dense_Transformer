@@ -1,0 +1,252 @@
+# VIVTransformer Docker Compose Configuration
+# 支持开发、生产和GPU环境
+
+version: '3.8'
+
+services:
+  # 开发环境
+  vivtransformer-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: vivtransformer-dev
+    volumes:
+      - .:/app
+      - vivtransformer-cache:/home/vivuser/.cache
+      - vivtransformer-jupyter:/home/vivuser/.jupyter
+    ports:
+      - "8888:8888"  # Jupyter
+      - "6006:6006"  # TensorBoard
+      - "8000:8000"  # 文档服务器
+    environment:
+      - PYTHONPATH=/app
+      - JUPYTER_ENABLE_LAB=yes
+    command: >
+      bash -c "
+        echo 'Starting development environment...' &&
+        jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+      "
+    networks:
+      - vivtransformer-network
+    profiles:
+      - dev
+
+  # 生产环境
+  vivtransformer-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: vivtransformer-prod
+    volumes:
+      - ./configs:/app/configs:ro
+      - ./results:/app/results
+      - ./logs:/app/logs
+    environment:
+      - PYTHONPATH=/app
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+    networks:
+      - vivtransformer-network
+    profiles:
+      - prod
+
+  # GPU环境
+  vivtransformer-gpu:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: gpu-production
+    container_name: vivtransformer-gpu
+    volumes:
+      - ./configs:/app/configs:ro
+      - ./results:/app/results
+      - ./logs:/app/logs
+    environment:
+      - PYTHONPATH=/app
+      - CUDA_VISIBLE_DEVICES=0
+      - LOG_LEVEL=INFO
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    networks:
+      - vivtransformer-network
+    profiles:
+      - gpu
+
+  # TensorBoard服务
+  tensorboard:
+    image: tensorflow/tensorflow:latest
+    container_name: vivtransformer-tensorboard
+    volumes:
+      - ./logs:/logs:ro
+      - ./results:/results:ro
+    ports:
+      - "6007:6006"
+    command: tensorboard --logdir=/logs --host=0.0.0.0 --port=6006
+    networks:
+      - vivtransformer-network
+    profiles:
+      - monitoring
+      - dev
+
+  # 文档服务器
+  docs:
+    image: nginx:alpine
+    container_name: vivtransformer-docs
+    volumes:
+      - ./docs/_build/html:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:80"
+    networks:
+      - vivtransformer-network
+    profiles:
+      - docs
+    depends_on:
+      - vivtransformer-dev
+
+  # 数据库（用于实验记录）
+  postgres:
+    image: postgres:13-alpine
+    container_name: vivtransformer-db
+    environment:
+      - POSTGRES_DB=vivtransformer
+      - POSTGRES_USER=vivuser
+      - POSTGRES_PASSWORD=vivpass
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    ports:
+      - "5432:5432"
+    networks:
+      - vivtransformer-network
+    profiles:
+      - database
+      - full
+
+  # Redis（用于缓存）
+  redis:
+    image: redis:7-alpine
+    container_name: vivtransformer-redis
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - vivtransformer-network
+    profiles:
+      - cache
+      - full
+
+  # MLflow服务器
+  mlflow:
+    image: python:3.9-slim
+    container_name: vivtransformer-mlflow
+    volumes:
+      - mlflow-data:/mlflow
+      - ./results:/results:ro
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=sqlite:///mlflow/mlflow.db
+      - MLFLOW_DEFAULT_ARTIFACT_ROOT=/mlflow/artifacts
+    command: >
+      bash -c "
+        pip install mlflow &&
+        mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root /mlflow/artifacts
+      "
+    networks:
+      - vivtransformer-network
+    profiles:
+      - mlflow
+      - full
+
+  # Prometheus监控
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: vivtransformer-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - vivtransformer-network
+    profiles:
+      - monitoring
+      - full
+
+  # Grafana仪表板
+  grafana:
+    image: grafana/grafana:latest
+    container_name: vivtransformer-grafana
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - vivtransformer-network
+    profiles:
+      - monitoring
+      - full
+    depends_on:
+      - prometheus
+
+# 网络配置
+networks:
+  vivtransformer-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# 数据卷
+volumes:
+  vivtransformer-cache:
+    driver: local
+  vivtransformer-jupyter:
+    driver: local
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+  mlflow-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+# 扩展配置
+x-common-variables: &common-variables
+  PYTHONPATH: /app
+  TZ: Asia/Shanghai
+
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+# 默认配置应用到所有服务
+x-defaults: &defaults
+  logging: *default-logging
+  environment:
+    <<: *common-variables

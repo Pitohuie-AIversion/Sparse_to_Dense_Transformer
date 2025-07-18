@@ -42,15 +42,15 @@ jobs:
           ruby-version: '3.1'
           bundler-cache: true
           cache-version: 0
-          working-directory: docs
+          working-directory: ./docs
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
 
       - name: Create Gemfile if not exists
+        working-directory: ./docs
         run: |
-          cd docs
           if [ ! -f Gemfile ]; then
             cat > Gemfile << EOF
           source "https://rubygems.org"
@@ -79,28 +79,26 @@ jobs:
           fi
 
       - name: Install dependencies
-        run: |
-          cd docs
-          bundle install
+        working-directory: ./docs
+        run: bundle install
 
       - name: Convert Wiki to Pages (if needed)
+        working-directory: ./docs
         run: |
-          cd docs
           if [ -f convert_wiki.py ] && [ -d ../wiki ]; then
             python3 convert_wiki.py
           fi
 
       - name: Build with Jekyll
-        run: |
-          cd docs
-          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        working-directory: ./docs
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/_site
+          path: ./docs/_site
 
   # Deployment job
   deploy:

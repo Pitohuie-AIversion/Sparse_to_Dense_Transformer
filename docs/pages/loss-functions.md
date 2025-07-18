@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Loss Functions
-description: 损失函数的设计和实现
+parent: Training & Optimization
+nav_order: 2
+description: "损失函数的设计和实现"
 permalink: /pages/loss-functions/
 ---
 

@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Model Design
-description: 模型设计原理和架构细节
+parent: Core Documentation
+nav_order: 2
+description: "模型设计原理和架构细节"
 permalink: /pages/model-design/
 ---
 

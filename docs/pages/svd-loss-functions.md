@@ -1,7 +1,9 @@
 ---
 layout: default
 title: SVD Loss Functions
-description: SVD损失函数的理论和实现
+parent: Training & Optimization
+nav_order: 3
+description: "SVD损失函数的理论和实现"
 permalink: /pages/svd-loss-functions/
 ---
 

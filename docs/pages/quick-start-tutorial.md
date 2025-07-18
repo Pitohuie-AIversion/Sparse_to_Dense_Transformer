@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Quick Start Tutorial
-description: 5分钟快速上手指南
+parent: Getting Started
+nav_order: 1
+description: "5分钟快速上手指南"
 permalink: /pages/quick-start-tutorial/
 ---
 

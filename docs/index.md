@@ -1,7 +1,9 @@
 ---
 layout: default
-title: VIVTransformer Documentation
-description: Advanced Transformer Architecture with Vision Integration for Vortex-Induced Vibration Analysis
+title: Home
+nav_order: 1
+description: "Advanced Transformer Architecture with Vision Integration for Vortex-Induced Vibration Analysis"
+permalink: /
 ---
 
 # VIVTransformer Documentation

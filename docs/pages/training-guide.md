@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Training Guide
-description: 完整的模型训练指南
+parent: Training & Optimization
+nav_order: 1
+description: "完整的模型训练指南"
 permalink: /pages/training-guide/
 ---
 

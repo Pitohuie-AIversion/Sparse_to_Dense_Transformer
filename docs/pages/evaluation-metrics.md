@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Evaluation Metrics
-description: 模型评估指标和方法
+parent: Evaluation & Results
+nav_order: 1
+description: "模型评估指标和方法"
 permalink: /pages/evaluation-metrics/
 ---
 

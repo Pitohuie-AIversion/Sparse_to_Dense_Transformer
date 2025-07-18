@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Architecture Overview
-description: VIVTransformer整体架构设计和核心组件
+parent: Core Documentation
+nav_order: 1
+description: "VIVTransformer整体架构设计和核心组件"
 permalink: /pages/architecture-overview/
 ---
 

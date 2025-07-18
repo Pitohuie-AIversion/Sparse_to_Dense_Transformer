@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Experimental Results
-description: 实验结果和性能分析
+parent: Evaluation & Results
+nav_order: 2
+description: "实验结果和性能分析"
 permalink: /pages/experimental-results/
 ---
 

@@ -4,12 +4,11 @@ description: Advanced Transformer Architecture with Vision Integration
 baseurl: "/Sparse_to_Dense_Transformer"
 url: "https://Pitohuie-AIversion.github.io"
 
-# Use GitHub Pages supported theme
-remote_theme: pages-themes/minimal@v0.2.0
+# Theme
+theme: minima
 
-# Plugins (GitHub Pages supported)
+# Plugins
 plugins:
-  - jekyll-remote-theme
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag

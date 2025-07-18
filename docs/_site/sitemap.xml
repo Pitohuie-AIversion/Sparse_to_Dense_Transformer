@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/ablation-study/</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/api-reference/</loc>
+</url>
+<url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/architecture-overview/</loc>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/basic-concepts/</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/benchmark-results/</loc>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/configuration-system/</loc>
@@ -34,6 +46,9 @@
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/evaluation-results/</loc>
 </url>
 <url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/examples/</loc>
+</url>
+<url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/experimental-results/</loc>
 </url>
 <url>
@@ -50,6 +65,9 @@
 </url>
 <url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/installation-guide/</loc>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/loss-functions/</loc>

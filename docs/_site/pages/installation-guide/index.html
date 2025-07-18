@@ -1,0 +1,914 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(2)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(2) > ul > li:nth-child(2) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(2) > ul > li:nth-child(2) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Installation Guide | VIVTransformer Documentation</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Installation Guide" />
+<meta name="author" content="Pitohuie" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="详细的VIVTransformer安装指南" />
+<meta property="og:description" content="详细的VIVTransformer安装指南" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/installation-guide/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/installation-guide/" />
+<meta property="og:site_name" content="VIVTransformer Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Installation Guide" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"详细的VIVTransformer安装指南","headline":"Installation Guide","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/installation-guide/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/Sparse_to_Dense_Transformer/" class="site-title lh-tight">
+  VIVTransformer Documentation
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Evaluation & Results category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/evaluation-results/" class="nav-list-link">Evaluation & Results</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/evaluation-metrics/" class="nav-list-link">Evaluation Metrics</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-results/" class="nav-list-link">Experimental Results</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/development-guide/" class="nav-list-link">Development Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul>
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
+            
+          >
+            GitHub Repository
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search VIVTransformer Documentation" aria-label="Search VIVTransformer Documentation" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/Sparse_to_Dense_Transformer/getting-started/">Getting Started</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Installation Guide</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="安装指南">
+  
+  
+    <a href="#安装指南" class="anchor-heading" aria-labelledby="安装指南"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 安装指南
+  
+  
+</h1>
+    
+
+<p>本指南将详细介绍如何在不同环境中安装和配置VIVTransformer项目。</p>
+<h2 id="目录">
+  
+  
+    <a href="#目录" class="anchor-heading" aria-labelledby="目录"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 目录
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="#系统要求">系统要求</a></li>
+  <li><a href="#python环境配置">Python环境配置</a></li>
+  <li><a href="#项目安装">项目安装</a></li>
+  <li><a href="#gpu环境配置">GPU环境配置</a></li>
+  <li><a href="#验证安装">验证安装</a></li>
+  <li><a href="#常见问题">常见问题</a></li>
+  <li><a href="#卸载指南">卸载指南</a></li>
+</ul>
+<h2 id="系统要求">
+  
+  
+    <a href="#系统要求" class="anchor-heading" aria-labelledby="系统要求"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 系统要求
+  
+  
+</h2>
+    
+<h3 id="硬件要求">
+  
+  
+    <a href="#硬件要求" class="anchor-heading" aria-labelledby="硬件要求"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🖥️ 硬件要求
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>组件</th>
+      <th>最低要求</th>
+      <th>推荐配置</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>CPU</strong></td>
+      <td>Intel i5 / AMD Ryzen 5</td>
+      <td>Intel i7 / AMD Ryzen 7</td>
+      <td>支持AVX指令集</td>
+    </tr>
+    <tr>
+      <td><strong>内存</strong></td>
+      <td>8GB RAM</td>
+      <td>16GB+ RAM</td>
+      <td>大型模型需要更多内存</td>
+    </tr>
+    <tr>
+      <td><strong>存储</strong></td>
+      <td>5GB 可用空间</td>
+      <td>20GB+ SSD</td>
+      <td>包含数据集和模型存储</td>
+    </tr>
+    <tr>
+      <td><strong>GPU</strong></td>
+      <td>可选</td>
+      <td>NVIDIA RTX 3060+</td>
+      <td>8GB+ VRAM推荐</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="软件要求">
+  
+  
+    <a href="#软件要求" class="anchor-heading" aria-labelledby="软件要求"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 软件要求
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>软件</th>
+      <th>版本要求</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>操作系统</strong></td>
+      <td>Windows 10+, Ubuntu 18.04+, macOS 10.15+</td>
+      <td>64位系统</td>
+    </tr>
+    <tr>
+      <td><strong>Python</strong></td>
+      <td>3.8 - 3.11</td>
+      <td>推荐使用3.9或3.10</td>
+    </tr>
+    <tr>
+      <td><strong>Git</strong></td>
+      <td>2.20+</td>
+      <td>用于克隆仓库</td>
+    </tr>
+    <tr>
+      <td><strong>CUDA</strong></td>
+      <td>11.8+ (可选)</td>
+      <td>GPU加速需要</td>
+    </tr>
+    <tr>
+      <td><strong>cuDNN</strong></td>
+      <td>8.6+ (可选)</td>
+      <td>配合CUDA使用</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="python环境配置">
+  
+  
+    <a href="#python环境配置" class="anchor-heading" aria-labelledby="python环境配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Python环境配置
+  
+  
+</h2>
+    
+<h3 id="方法1-使用conda-推荐">
+  
+  
+    <a href="#方法1-使用conda-推荐" class="anchor-heading" aria-labelledby="方法1-使用conda-推荐"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🐍 方法1：使用Conda (推荐)
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. 安装Miniconda或Anaconda</span>
+<span class="c"># 下载地址：https://docs.conda.io/en/latest/miniconda.html</span>
+
+<span class="c"># 2. 创建虚拟环境</span>
+conda create <span class="nt">-n</span> vivtransformer <span class="nv">python</span><span class="o">=</span>3.9
+
+<span class="c"># 3. 激活环境</span>
+conda activate vivtransformer
+
+<span class="c"># 4. 验证Python版本</span>
+python <span class="nt">--version</span>
+<span class="c"># 应该显示：Python 3.9.x</span>
+</code></pre></div></div>
+<h3 id="方法2-使用venv">
+  
+  
+    <a href="#方法2-使用venv" class="anchor-heading" aria-labelledby="方法2-使用venv"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 方法2：使用venv
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. 创建虚拟环境</span>
+python <span class="nt">-m</span> venv vivtransformer-env
+
+<span class="c"># 2. 激活环境</span>
+<span class="c"># Windows:</span>
+vivtransformer-env<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+<span class="c"># Linux/macOS:</span>
+<span class="nb">source </span>vivtransformer-env/bin/activate
+
+<span class="c"># 3. 升级pip</span>
+python <span class="nt">-m</span> pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip
+</code></pre></div></div>
+<h3 id="方法3-使用docker">
+  
+  
+    <a href="#方法3-使用docker" class="anchor-heading" aria-labelledby="方法3-使用docker"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🐳 方法3：使用Docker
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. 安装Docker</span>
+<span class="c"># 下载地址：https://www.docker.com/get-started</span>
+
+<span class="c"># 2. 拉取预配置镜像</span>
+docker pull pytorch/pytorch:2.0.1-cuda11.7-cudnn8-devel
+
+<span class="c"># 3. 运行容器</span>
+docker run <span class="nt">-it</span> <span class="nt">--gpus</span> all <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/workspace pytorch/pytorch:2.0.1-cuda11.7-cudnn8-devel bash
+</code></pre></div></div>
+<h2 id="项目安装">
+  
+  
+    <a href="#项目安装" class="anchor-heading" aria-labelledby="项目安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 项目安装
+  
+  
+</h2>
+    
+<h3 id="步骤1-克隆项目">
+  
+  
+    <a href="#步骤1-克隆项目" class="anchor-heading" aria-labelledby="步骤1-克隆项目"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📥 步骤1：克隆项目
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 克隆主仓库</span>
+git clone https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer.git
+
+<span class="c"># 进入项目目录</span>
+<span class="nb">cd </span>Sparse_to_Dense_Transformer
+
+<span class="c"># 查看项目结构</span>
+<span class="nb">ls</span> <span class="nt">-la</span>
+</code></pre></div></div>
+<h3 id="步骤2-安装依赖">
+  
+  
+    <a href="#步骤2-安装依赖" class="anchor-heading" aria-labelledby="步骤2-安装依赖"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📦 步骤2：安装依赖
+  
+  
+</h3>
+    
+<h4 id="基础安装">
+  
+  
+    <a href="#基础安装" class="anchor-heading" aria-labelledby="基础安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 基础安装
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 安装核心依赖</span>
+pip <span class="nb">install</span> <span class="nt">-r</span> modify_multi_attention/requirements.txt
+
+<span class="c"># 或者使用conda安装PyTorch</span>
+conda <span class="nb">install </span>pytorch torchvision torchaudio pytorch-cuda<span class="o">=</span>11.8 <span class="nt">-c</span> pytorch <span class="nt">-c</span> nvidia
+</code></pre></div></div>
+<h4 id="开发环境安装">
+  
+  
+    <a href="#开发环境安装" class="anchor-heading" aria-labelledby="开发环境安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 开发环境安装
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 安装开发依赖（包含测试、文档工具等）</span>
+pip <span class="nb">install</span> <span class="nt">-r</span> requirements-dev.txt
+
+<span class="c"># 安装预提交钩子</span>
+pre-commit <span class="nb">install</span>
+</code></pre></div></div>
+<h4 id="可选组件安装">
+  
+  
+    <a href="#可选组件安装" class="anchor-heading" aria-labelledby="可选组件安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 可选组件安装
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 安装可视化工具</span>
+pip <span class="nb">install </span>tensorboard wandb matplotlib seaborn
+
+<span class="c"># 安装Jupyter支持</span>
+pip <span class="nb">install </span>jupyter ipykernel
+python <span class="nt">-m</span> ipykernel <span class="nb">install</span> <span class="nt">--user</span> <span class="nt">--name</span> vivtransformer
+
+<span class="c"># 安装性能分析工具</span>
+pip <span class="nb">install </span>line-profiler memory-profiler
+</code></pre></div></div>
+<h3 id="步骤3-验证安装">
+  
+  
+    <a href="#步骤3-验证安装" class="anchor-heading" aria-labelledby="步骤3-验证安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ✅ 步骤3：验证安装
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 检查Python包</span>
+python <span class="nt">-c</span> <span class="s2">"import torch; print(f'PyTorch: {torch.__version__}')"</span>
+python <span class="nt">-c</span> <span class="s2">"import numpy; print(f'NumPy: {numpy.__version__}')"</span>
+python <span class="nt">-c</span> <span class="s2">"import yaml; print('YAML: OK')"</span>
+
+<span class="c"># 检查CUDA支持</span>
+python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA available: {torch.cuda.is_available()}')"</span>
+python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA devices: {torch.cuda.device_count()}')"</span>
+
+<span class="c"># 运行快速测试</span>
+python <span class="nt">-m</span> modify_multi_attention.main <span class="nt">--help</span>
+</code></pre></div></div>
+<h2 id="gpu环境配置">
+  
+  
+    <a href="#gpu环境配置" class="anchor-heading" aria-labelledby="gpu环境配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> GPU环境配置
+  
+  
+</h2>
+    
+<h3 id="nvidia-gpu设置">
+  
+  
+    <a href="#nvidia-gpu设置" class="anchor-heading" aria-labelledby="nvidia-gpu设置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎮 NVIDIA GPU设置
+  
+  
+</h3>
+    
+<h4 id="1-驱动安装-1-驱动安装">
+  
+  
+    <a href="#1-驱动安装-1-驱动安装" class="anchor-heading" aria-labelledby="1-驱动安装-1-驱动安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 驱动安装 {#1-驱动安装}
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 检查当前驱动</span>
+nvidia-smi
+
+<span class="c"># 如果没有输出，需要安装NVIDIA驱动</span>
+<span class="c"># Windows: 从NVIDIA官网下载</span>
+<span class="c"># Ubuntu: sudo apt install nvidia-driver-525</span>
+</code></pre></div></div>
+<h4 id="2-cuda安装-2-cuda安装">
+  
+  
+    <a href="#2-cuda安装-2-cuda安装" class="anchor-heading" aria-labelledby="2-cuda安装-2-cuda安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. CUDA安装 {#2-cuda安装}
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 检查CUDA版本</span>
+nvcc <span class="nt">--version</span>
+
+<span class="c"># 如果没有安装，下载CUDA Toolkit</span>
+<span class="c"># 下载地址：https://developer.nvidia.com/cuda-downloads</span>
+
+<span class="c"># 验证CUDA安装</span>
+<span class="nb">cd</span> /usr/local/cuda/samples/1_Utilities/deviceQuery
+<span class="nb">sudo </span>make
+./deviceQuery
+</code></pre></div></div>
+<h4 id="3-cudnn安装-3-cudnn安装">
+  
+  
+    <a href="#3-cudnn安装-3-cudnn安装" class="anchor-heading" aria-labelledby="3-cudnn安装-3-cudnn安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. cuDNN安装 {#3-cudnn安装}
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 下载cuDNN（需要NVIDIA开发者账号）</span>
+<span class="c"># 下载地址：https://developer.nvidia.com/cudnn</span>
+
+<span class="c"># 解压并复制文件</span>
+<span class="nb">tar</span> <span class="nt">-xzvf</span> cudnn-linux-x86_64-8.x.x.x_cudaX.X-archive.tar.xz
+<span class="nb">sudo cp </span>cuda/include/cudnn<span class="k">*</span>.h /usr/local/cuda/include
+<span class="nb">sudo cp </span>cuda/lib64/libcudnn<span class="k">*</span> /usr/local/cuda/lib64
+<span class="nb">sudo chmod </span>a+r /usr/local/cuda/include/cudnn<span class="k">*</span>.h /usr/local/cuda/lib64/libcudnn<span class="k">*</span>
+</code></pre></div></div>
+<h3 id="环境变量配置">
+  
+  
+    <a href="#环境变量配置" class="anchor-heading" aria-labelledby="环境变量配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 环境变量配置
+  
+  
+</h3>
+    
+<h4 id="linux-macos">
+  
+  
+    <a href="#linux-macos" class="anchor-heading" aria-labelledby="linux-macos"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Linux/macOS
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 添加到 ~/.bashrc 或 ~/.zshrc</span>
+<span class="nb">export </span><span class="nv">CUDA_HOME</span><span class="o">=</span>/usr/local/cuda
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$CUDA_HOME</span>/bin:<span class="nv">$PATH</span>
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$CUDA_HOME</span>/lib64:<span class="nv">$LD_LIBRARY_PATH</span>
+
+<span class="c"># 重新加载配置</span>
+<span class="nb">source</span> ~/.bashrc
+</code></pre></div></div>
+<h4 id="windows">
+  
+  
+    <a href="#windows" class="anchor-heading" aria-labelledby="windows"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Windows
+  
+  
+</h4>
+    
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 添加到系统环境变量</span><span class="w">
+</span><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">CUDA_PATH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8"</span><span class="w">
+</span><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">PATH</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s2">";</span><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">CUDA_PATH</span><span class="s2">\bin"</span><span class="w">
+</span></code></pre></div></div>
+<h2 id="验证安装">
+  
+  
+    <a href="#验证安装" class="anchor-heading" aria-labelledby="验证安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 验证安装
+  
+  
+</h2>
+    
+<h3 id="运行测试套件">
+  
+  
+    <a href="#运行测试套件" class="anchor-heading" aria-labelledby="运行测试套件"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🧪 运行测试套件
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 运行单元测试</span>
+python <span class="nt">-m</span> pytest modify_multi_attention/tests/ <span class="nt">-v</span>
+
+<span class="c"># 运行注意力机制测试</span>
+python modify_multi_attention/attention_test.py
+
+<span class="c"># 运行端到端测试</span>
+python <span class="nt">-m</span> modify_multi_attention.main <span class="nt">--loss_idx</span> 0 <span class="nt">--debug</span>
+</code></pre></div></div>
+<h3 id="性能基准测试">
+  
+  
+    <a href="#性能基准测试" class="anchor-heading" aria-labelledby="性能基准测试"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 性能基准测试
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># CPU性能测试</span>
+python <span class="nt">-c</span> <span class="s2">"
+import torch
+import time
+x = torch.randn(1000, 1000)
+start = time.time()
+y = torch.mm(x, x)
+print(f'CPU计算时间: {time.time() - start:.4f}秒')
+"</span>
+
+<span class="c"># GPU性能测试（如果可用）</span>
+python <span class="nt">-c</span> <span class="s2">"
+import torch
+import time
+if torch.cuda.is_available():
+    x = torch.randn(1000, 1000).cuda()
+    start = time.time()
+    y = torch.mm(x, x)
+    torch.cuda.synchronize()
+    print(f'GPU计算时间: {time.time() - start:.4f}秒')
+else:
+    print('GPU不可用')
+"</span>
+</code></pre></div></div>
+<h2 id="常见问题">
+  
+  
+    <a href="#常见问题" class="anchor-heading" aria-labelledby="常见问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 常见问题
+  
+  
+</h2>
+    
+<h3 id="安装问题">
+  
+  
+    <a href="#安装问题" class="anchor-heading" aria-labelledby="安装问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❌ 安装问题
+  
+  
+</h3>
+    
+<h4 id="问题1-pip安装失败">
+  
+  
+    <a href="#问题1-pip安装失败" class="anchor-heading" aria-labelledby="问题1-pip安装失败"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 问题1：pip安装失败
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 解决方案：升级pip和setuptools</span>
+pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip setuptools wheel
+
+<span class="c"># 使用国内镜像源</span>
+pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt <span class="nt">-i</span> https://pypi.tuna.tsinghua.edu.cn/simple/
+</code></pre></div></div>
+<h4 id="问题2-cuda版本不匹配">
+  
+  
+    <a href="#问题2-cuda版本不匹配" class="anchor-heading" aria-labelledby="问题2-cuda版本不匹配"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 问题2：CUDA版本不匹配
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 检查CUDA版本</span>
+nvidia-smi  <span class="c"># 查看驱动支持的最高CUDA版本</span>
+nvcc <span class="nt">--version</span>  <span class="c"># 查看安装的CUDA版本</span>
+
+<span class="c"># 安装匹配的PyTorch版本</span>
+<span class="c"># 访问：https://pytorch.org/get-started/locally/</span>
+pip <span class="nb">install </span>torch torchvision torchaudio <span class="nt">--index-url</span> https://download.pytorch.org/whl/cu118
+</code></pre></div></div>
+<h4 id="问题3-内存不足">
+  
+  
+    <a href="#问题3-内存不足" class="anchor-heading" aria-labelledby="问题3-内存不足"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 问题3：内存不足
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 减少批大小</span>
+<span class="c"># 修改 modify_multi_attention/configs/config.yaml</span>
+data:
+  batch_size: 32  <span class="c"># 从128减少到32</span>
+
+<span class="c"># 使用梯度累积</span>
+training:
+  gradient_accumulation_steps: 4
+</code></pre></div></div>
+<h3 id="配置问题">
+  
+  
+    <a href="#配置问题" class="anchor-heading" aria-labelledby="配置问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 配置问题
+  
+  
+</h3>
+    
+<h4 id="问题4-找不到配置文件">
+  
+  
+    <a href="#问题4-找不到配置文件" class="anchor-heading" aria-labelledby="问题4-找不到配置文件"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 问题4：找不到配置文件
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 检查配置文件路径</span>
+<span class="nb">ls </span>modify_multi_attention/configs/
+
+<span class="c"># 使用绝对路径</span>
+python <span class="nt">-m</span> modify_multi_attention.main <span class="nt">--config</span> /absolute/path/to/config.yaml
+</code></pre></div></div>
+<h4 id="问题5-数据路径错误">
+  
+  
+    <a href="#问题5-数据路径错误" class="anchor-heading" aria-labelledby="问题5-数据路径错误"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 问题5：数据路径错误
+  
+  
+</h4>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 检查数据文件</span>
+<span class="nb">ls </span>modify_multi_attention/data/
+
+<span class="c"># 修改配置文件中的数据路径</span>
+<span class="c"># modify_multi_attention/configs/config.yaml</span>
+data:
+  path: <span class="s2">"modify_multi_attention/data/your_data.pt"</span>
+</code></pre></div></div>
+<h2 id="卸载指南">
+  
+  
+    <a href="#卸载指南" class="anchor-heading" aria-labelledby="卸载指南"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 卸载指南
+  
+  
+</h2>
+    
+<h3 id="完全卸载">
+  
+  
+    <a href="#完全卸载" class="anchor-heading" aria-labelledby="完全卸载"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🗑️ 完全卸载
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. 停用虚拟环境</span>
+conda deactivate  <span class="c"># 或 deactivate</span>
+
+<span class="c"># 2. 删除虚拟环境</span>
+conda <span class="nb">env </span>remove <span class="nt">-n</span> vivtransformer
+<span class="c"># 或删除venv目录</span>
+<span class="nb">rm</span> <span class="nt">-rf</span> vivtransformer-env/
+
+<span class="c"># 3. 删除项目文件</span>
+<span class="nb">rm</span> <span class="nt">-rf</span> Sparse_to_Dense_Transformer/
+
+<span class="c"># 4. 清理pip缓存</span>
+pip cache purge
+
+<span class="c"># 5. 清理conda缓存</span>
+conda clean <span class="nt">--all</span>
+</code></pre></div></div>
+<h3 id="重新安装">
+  
+  
+    <a href="#重新安装" class="anchor-heading" aria-labelledby="重新安装"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔄 重新安装
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 如果遇到问题，可以重新安装</span>
+<span class="c"># 1. 备份配置和数据</span>
+<span class="nb">cp</span> <span class="nt">-r</span> modify_multi_attention/configs/ ~/backup/
+<span class="nb">cp</span> <span class="nt">-r</span> modify_multi_attention/data/ ~/backup/
+
+<span class="c"># 2. 完全卸载（参考上面步骤）</span>
+
+<span class="c"># 3. 重新安装（从步骤1开始）</span>
+</code></pre></div></div>
+<h2 id="获取帮助">
+  
+  
+    <a href="#获取帮助" class="anchor-heading" aria-labelledby="获取帮助"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📞 获取帮助
+  
+  
+</h2>
+    
+
+<p>如果在安装过程中遇到问题：</p>
+
+<ul>
+  <li>📖 查看 <a href="troubleshooting.html">故障排除指南</a></li>
+  <li>🐛 提交 <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer/issues">GitHub Issue</a></li>
+  <li>💬 参与 <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer/discussions">讨论区</a></li>
+  <li>📧 发送邮件至：1748492875@qq.com</li>
+</ul><hr />
+
+<p><em>最后更新：2025-07-18</em></p>
+
+          
+
+          
+            
+          
+        </main>
+        
+
+  <hr>
+  <footer>
+    
+      <p><a href="#top" id="back-to-top">Back to top</a></p>
+    
+
+    <p class="text-small text-grey-dk-100 mb-0">Copyright &copy; 2024 Pitohuie. Distributed by an <a href="https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt">MIT license.</a></p>
+
+    
+  </footer>
+
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
+</html>
+

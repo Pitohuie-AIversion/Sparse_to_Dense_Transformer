@@ -36,64 +36,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1'
-          bundler-cache: true
-          cache-version: 0
-          working-directory: ./docs
-
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
 
-      - name: Create Gemfile if not exists
-        working-directory: ./docs
-        run: |
-          if [ ! -f Gemfile ]; then
-            cat > Gemfile << EOF
-          source "https://rubygems.org"
-          
-          gem "jekyll", "~> 4.3.0"
-          gem "jekyll-theme-cayman"
-          gem "jekyll-feed"
-          gem "jekyll-sitemap"
-          gem "jekyll-seo-tag"
-          gem "webrick", "~> 1.7"
-          
-          group :jekyll_plugins do
-            gem "jekyll-feed"
-            gem "jekyll-sitemap"
-            gem "jekyll-seo-tag"
-          end
-          
-          platforms :mingw, :x64_mingw, :mswin, :jruby do
-            gem "tzinfo", ":~> 1.2"
-            gem "tzinfo-data"
-          end
-          
-          gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
-          gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
-          EOF
-          fi
-
-      - name: Install dependencies
-        working-directory: ./docs
-        run: bundle install
-
       - name: Convert Wiki to Pages (if needed)
-        working-directory: ./docs
         run: |
+          cd docs
           if [ -f convert_wiki.py ] && [ -d ../wiki ]; then
             python3 convert_wiki.py
           fi
 
       - name: Build with Jekyll
-        working-directory: ./docs
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./docs/_site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -13,117 +13,41 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="损失函数的设计和实现" />
 <meta property="og:description" content="损失函数的设计和实现" />
-<link rel="canonical" href="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/loss-functions/" />
-<meta property="og:url" content="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/loss-functions/" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/loss-functions/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/loss-functions/" />
 <meta property="og:site_name" content="VIVTransformer Documentation" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Loss Functions" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"损失函数的设计和实现","headline":"Loss Functions","url":"https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/loss-functions/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"损失函数的设计和实现","headline":"Loss Functions","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/loss-functions/"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
-    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/custom.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/Sparse_to_Dense_Transformer/assets/images/favicon.ico">
-    
-    <!-- Math support -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-      window.MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']]
-        }
-      };
-    </script>
-    
-    <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- Custom head content for Just The Docs theme -->
+<!-- Add any custom meta tags, stylesheets, or scripts here -->
   </head>
   <body>
-    <div class="container-lg px-3 my-5 markdown-body">
-      <!-- Header -->
-      <header class="site-header">
-        <div class="header-content">
-          <h1 class="site-title">
-            <a href="/Sparse_to_Dense_Transformer/" class="site-title-link">
-              🔬 VIVTransformer Documentation
-            </a>
-          </h1>
-          <p class="site-description">Advanced Transformer Architecture with Vision Integration</p>
-        </div>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/">VIVTransformer Documentation</a></h1>
         
-        <!-- Navigation -->
-        <nav class="site-nav">
-          <div class="nav-links">
-            <a href="/Sparse_to_Dense_Transformer/" class="nav-link ">🏠 首页</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-link">🚀 快速开始</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-link">🏗️ 架构</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-link">📚 训练</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-link">🚀 部署</a>
-            <a href="" class="nav-link" target="_blank">📦 GitHub</a>
-          </div>
-        </nav>
+        
+
+        <p>Advanced Transformer Architecture with Vision Integration</p>
+
+        
+
+        
+
+        
       </header>
+      <section>
 
-      <!-- Breadcrumb -->
-      
-      <nav class="breadcrumb">
-        <a href="/Sparse_to_Dense_Transformer/">首页</a>
-        
-        
-        
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <a href="/pages">Pages</a>
-            
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <span class="breadcrumb-current">Loss Functions</span>
-            
-          
-        
-      </nav>
-      
-
-      <!-- Main Content -->
-      <main class="main-content">
-        
-        <div class="page-header">
-          <h1 class="page-title">Loss Functions</h1>
-          
-          <p class="page-description">损失函数的设计和实现</p>
-          
-        </div>
-        
-
-        <!-- Table of Contents -->
-        
-        <div class="toc-container">
-          <details class="toc" open>
-            <summary class="toc-title">📋 目录</summary>
-            <div class="toc-content" id="toc"></div>
-          </details>
-        </div>
-        
-
-        <!-- Content -->
-        <div class="content">
-          <h1 id="损失函数详解">损失函数详解</h1>
+      <h1 id="损失函数详解">损失函数详解</h1>
 
 <p>本文档详细介绍VIVTransformer项目中使用的损失函数设计，包括基础损失、SVD正则化和组合策略。</p>
 
@@ -154,25 +78,7 @@
 
 <h3 id="损失架构">🏗️ 损失架构</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-</pre></td><td class="rouge-code"><pre>总损失函数
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>总损失函数
 ├── 📊 基础损失 (Base Loss)
 │   ├── MSE损失
 │   ├── MAE损失
@@ -190,15 +96,14 @@
     ├── 加权求和
     ├── 多任务学习
     └── 不确定性加权
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="数学表达式">📐 数学表达式</h3>
 
 <p>总损失函数的一般形式：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>L_total = α * L_base + β * L_svd + γ * L_aux
-</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>L_total = α * L_base + β * L_svd + γ * L_aux
+</code></pre></div></div>
 
 <p>其中：</p>
 <ul>
@@ -213,9 +118,8 @@
 <h3 id="均方误差损失-mse">📊 均方误差损失 (MSE)</h3>
 
 <p><strong>数学定义</strong>:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>L_MSE = (1/N) * Σ(y_pred - y_true)²
-</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>L_MSE = (1/N) * Σ(y_pred - y_true)²
+</code></pre></div></div>
 
 <p><strong>特点</strong>:</p>
 <ul>
@@ -225,23 +129,7 @@
 </ul>
 
 <p><strong>实现</strong>:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MSELoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MSELoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">均方误差损失</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="sh">'</span><span class="s">mean</span><span class="sh">'</span><span class="p">):</span>
@@ -257,14 +145,13 @@
             <span class="k">return</span> <span class="n">loss</span><span class="p">.</span><span class="nf">sum</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">loss</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="平均绝对误差损失-mae">📏 平均绝对误差损失 (MAE)</h3>
 
 <p><strong>数学定义</strong>:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>L_MAE = (1/N) * Σ|y_pred - y_true|
-</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>L_MAE = (1/N) * Σ|y_pred - y_true|
+</code></pre></div></div>
 
 <p><strong>特点</strong>:</p>
 <ul>
@@ -274,23 +161,7 @@
 </ul>
 
 <p><strong>实现</strong>:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MAELoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MAELoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">平均绝对误差损失</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="sh">'</span><span class="s">mean</span><span class="sh">'</span><span class="p">):</span>
@@ -306,20 +177,16 @@
             <span class="k">return</span> <span class="n">loss</span><span class="p">.</span><span class="nf">sum</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">loss</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="huber损失">🎯 Huber损失</h3>
 
 <p><strong>数学定义</strong>:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre>L_Huber = {
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>L_Huber = {
     0.5 * (y_pred - y_true)²,     if |y_pred - y_true| ≤ δ
     δ * |y_pred - y_true| - 0.5 * δ², otherwise
 }
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <p><strong>特点</strong>:</p>
 <ul>
@@ -329,34 +196,7 @@
 </ul>
 
 <p><strong>实现</strong>:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">HuberLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">HuberLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">Huber损失</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="sh">'</span><span class="s">mean</span><span class="sh">'</span><span class="p">):</span>
@@ -383,37 +223,11 @@
             <span class="k">return</span> <span class="n">loss</span><span class="p">.</span><span class="nf">sum</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">loss</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="自定义损失函数">🔄 自定义损失函数</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">CustomRegressionLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CustomRegressionLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">自定义回归损失</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
@@ -439,7 +253,7 @@
             <span class="sh">'</span><span class="s">huber</span><span class="sh">'</span><span class="p">:</span> <span class="n">huber</span><span class="p">.</span><span class="nf">item</span><span class="p">(),</span>
             <span class="sh">'</span><span class="s">total</span><span class="sh">'</span><span class="p">:</span> <span class="n">total_loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
         <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="svd正则化">SVD正则化</h2>
 
@@ -447,9 +261,8 @@
 
 <p>SVD（奇异值分解）正则化通过约束模型权重矩阵的奇异值来实现结构化正则化：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>W = U * Σ * V^T
-</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>W = U * Σ * V^T
+</code></pre></div></div>
 
 <p>其中：</p>
 <ul>
@@ -460,9 +273,8 @@
 <h3 id="svd损失函数">📐 SVD损失函数</h3>
 
 <p><strong>数学定义</strong>:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>L_SVD = Σ(i=1 to k) w_i * σ_i
-</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>L_SVD = Σ(i=1 to k) w_i * σ_i
+</code></pre></div></div>
 
 <p>其中：</p>
 <ul>
@@ -472,46 +284,7 @@
 </ul>
 
 <p><strong>实现</strong>:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">SVDRegularization</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SVDRegularization</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">SVD正则化损失</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">num_components</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
@@ -550,49 +323,11 @@
             <span class="k">return</span> <span class="n">S</span><span class="p">.</span><span class="nf">detach</span><span class="p">().</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
         <span class="k">except</span> <span class="nb">RuntimeError</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([])</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="多层svd正则化">🎛️ 多层SVD正则化</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MultiLayerSVDRegularization</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MultiLayerSVDRegularization</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">多层SVD正则化</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">layer_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">svd_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">num_components</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
@@ -630,62 +365,11 @@
                     <span class="n">layer_losses</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">layer_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">weighted_loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
         
         <span class="k">return</span> <span class="n">total_svd_loss</span><span class="p">,</span> <span class="n">layer_losses</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="自适应svd权重">📊 自适应SVD权重</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">AdaptiveSVDRegularization</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AdaptiveSVDRegularization</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">自适应SVD正则化</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">num_components</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">adaptation_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
@@ -736,83 +420,13 @@
                 <span class="sh">'</span><span class="s">max_weight</span><span class="sh">'</span><span class="p">:</span> <span class="n">weights</span><span class="p">.</span><span class="nf">max</span><span class="p">().</span><span class="nf">item</span><span class="p">(),</span>
                 <span class="sh">'</span><span class="s">min_weight</span><span class="sh">'</span><span class="p">:</span> <span class="n">weights</span><span class="p">.</span><span class="nf">min</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
             <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="损失函数组合">损失函数组合</h2>
 
 <h3 id="组合损失函数">⚖️ 组合损失函数</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">CombinedLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CombinedLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">组合损失函数</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
@@ -882,49 +496,11 @@
         <span class="n">losses</span><span class="p">[</span><span class="sh">'</span><span class="s">total</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
         
         <span class="k">return</span> <span class="n">total_loss</span><span class="p">,</span> <span class="n">losses</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="多任务损失">🎯 多任务损失</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MultiTaskLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MultiTaskLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">多任务学习损失</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">task_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">uncertainty_weighting</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
@@ -962,63 +538,13 @@
                 <span class="n">task_losses</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">uncertainty_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">log_vars</span><span class="p">[</span><span class="n">i</span><span class="p">]).</span><span class="nf">item</span><span class="p">()</span>
         
         <span class="k">return</span> <span class="n">total_loss</span><span class="p">,</span> <span class="n">task_losses</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="自适应权重">自适应权重</h2>
 
 <h3 id="动态权重调整">🔄 动态权重调整</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">DynamicWeightScheduler</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DynamicWeightScheduler</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">动态权重调度器</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">initial_weights</span><span class="p">,</span> <span class="n">schedule_type</span><span class="o">=</span><span class="sh">'</span><span class="s">cosine</span><span class="sh">'</span><span class="p">):</span>
@@ -1068,91 +594,11 @@
     <span class="k">def</span> <span class="nf">get_weights</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
         <span class="sh">"""</span><span class="s">获取当前权重</span><span class="sh">"""</span>
         <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">current_weights</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="权重优化器">📊 权重优化器</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">LossWeightOptimizer</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LossWeightOptimizer</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">损失权重优化器</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">initial_weights</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
@@ -1232,100 +678,13 @@
         
         <span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
         <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="性能分析">性能分析</h2>
 
 <h3 id="损失函数性能评估">📊 损失函数性能评估</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">LossAnalyzer</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LossAnalyzer</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">损失函数分析器</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
@@ -1412,40 +771,13 @@
         
         <span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
         <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="使用指南">使用指南</h2>
 
 <h3 id="快速开始">🚀 快速开始</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 基础使用 {#1-基础使用}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 基础使用 {#1-基础使用}
 </span><span class="kn">from</span> <span class="n">loss_functions</span> <span class="kn">import</span> <span class="n">CombinedLoss</span>
 
 <span class="c1"># 配置损失函数 {#配置损失函数}
@@ -1472,34 +804,11 @@
     <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
     
     <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Loss: </span><span class="si">{</span><span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, Components: </span><span class="si">{</span><span class="n">loss_components</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="高级配置">🎛️ 高级配置</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-</pre></td><td class="rouge-code"><pre><span class="c1"># 2. 自适应权重使用 {#2-自适应权重使用}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 2. 自适应权重使用 {#2-自适应权重使用}
 </span><span class="kn">from</span> <span class="n">loss_functions</span> <span class="kn">import</span> <span class="n">AdaptiveSVDRegularization</span><span class="p">,</span> <span class="n">DynamicWeightScheduler</span>
 
 <span class="c1"># 自适应SVD正则化 {#自适应svd正则化}
@@ -1522,35 +831,11 @@
     
     <span class="c1"># 训练一个epoch
 </span>    <span class="nf">train_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="损失分析">📊 损失分析</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-</pre></td><td class="rouge-code"><pre><span class="c1"># 3. 损失分析 {#3-损失分析}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 3. 损失分析 {#3-损失分析}
 </span><span class="kn">from</span> <span class="n">loss_functions</span> <span class="kn">import</span> <span class="n">LossAnalyzer</span>
 
 <span class="n">analyzer</span> <span class="o">=</span> <span class="nc">LossAnalyzer</span><span class="p">()</span>
@@ -1574,46 +859,28 @@
 
 <span class="c1"># 可视化 {#可视化}
 </span><span class="n">analyzer</span><span class="p">.</span><span class="nf">plot_loss_history</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="配置建议">⚙️ 配置建议</h3>
 
 <p><strong>初学者配置</strong>:</p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="na">loss</span><span class="pi">:</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">loss</span><span class="pi">:</span>
   <span class="na">base_weight</span><span class="pi">:</span> <span class="m">1.0</span>
   <span class="na">base_loss</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mse"</span>
   <span class="na">use_svd_regularization</span><span class="pi">:</span> <span class="kc">false</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <p><strong>标准配置</strong>:</p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre><span class="na">loss</span><span class="pi">:</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">loss</span><span class="pi">:</span>
   <span class="na">base_weight</span><span class="pi">:</span> <span class="m">0.7</span>
   <span class="na">base_loss</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mse"</span>
   <span class="na">use_svd_regularization</span><span class="pi">:</span> <span class="kc">true</span>
   <span class="na">svd_weights</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.08</span><span class="pi">,</span> <span class="nv">0.06</span><span class="pi">,</span> <span class="nv">0.04</span><span class="pi">,</span> <span class="nv">0.02</span><span class="pi">,</span> <span class="nv">0.02</span><span class="pi">,</span> <span class="nv">0.02</span><span class="pi">,</span> <span class="nv">0.02</span><span class="pi">,</span> <span class="nv">0.02</span><span class="pi">,</span> <span class="nv">0.02</span><span class="pi">]</span>
   <span class="na">svd_weight</span><span class="pi">:</span> <span class="m">0.2</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <p><strong>高级配置</strong>:</p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="rouge-code"><pre><span class="na">loss</span><span class="pi">:</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">loss</span><span class="pi">:</span>
   <span class="na">base_weight</span><span class="pi">:</span> <span class="m">0.5</span>
   <span class="na">base_loss</span><span class="pi">:</span> <span class="s2">"</span><span class="s">custom"</span>
   <span class="na">use_svd_regularization</span><span class="pi">:</span> <span class="kc">true</span>
@@ -1621,7 +888,7 @@
   <span class="na">svd_weight</span><span class="pi">:</span> <span class="m">0.3</span>
   <span class="na">auxiliary_losses</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">consistency"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">diversity"</span><span class="pi">]</span>
   <span class="na">auxiliary_weights</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">]</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <hr />
 
@@ -1631,129 +898,13 @@
 
 <p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
 
-        </div>
-      </main>
 
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="sidebar-section">
-          <h3>🔗 快速链接</h3>
-          <ul class="sidebar-links">
-            <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/faq/">常见问题</a></li>
-          </ul>
-        </div>
+      </section>
+      <footer>
         
-        <div class="sidebar-section">
-          <h3>📊 项目状态</h3>
-          <div class="project-badges">
-            <img src="https://img.shields.io/github/stars/yourusername/VIVTransformer?style=social" alt="GitHub stars">
-            <img src="https://img.shields.io/github/forks/yourusername/VIVTransformer?style=social" alt="GitHub forks">
-            <img src="https://img.shields.io/github/issues/yourusername/VIVTransformer" alt="GitHub issues">
-            <img src="https://img.shields.io/github/license/yourusername/VIVTransformer" alt="License">
-          </div>
-        </div>
-        
-        <div class="sidebar-section">
-          <h3>💡 需要帮助？</h3>
-          <ul class="help-links">
-            <li><a href="/issues" target="_blank">🐛 报告问题</a></li>
-            <li><a href="/discussions" target="_blank">💬 讨论区</a></li>
-            <li><a href="mailto:1748492875@qq.com">📧 联系我们</a></li>
-          </ul>
-        </div>
-      </aside>
-
-      <!-- Footer -->
-      <footer class="site-footer">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h4>VIVTransformer</h4>
-            <p>Advanced Transformer Architecture with Vision Integration</p>
-          </div>
-          
-          <div class="footer-section">
-            <h4>文档</h4>
-            <ul>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>社区</h4>
-            <ul>
-              <li><a href="" target="_blank">GitHub</a></li>
-              <li><a href="/issues" target="_blank">Issues</a></li>
-              <li><a href="/discussions" target="_blank">Discussions</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>许可证</h4>
-            <p><a href="/blob/main/LICENSE" target="_blank">MIT License</a></p>
-            <p>© 2025 VIVTransformer Team</p>
-          </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p>Built with ❤️ using <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
-          <p>Last updated: 2025-07-18 11:04</p>
-        </div>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
-    <!-- Scripts -->
-    <script>
-      // Table of Contents Generator
-      function generateTOC() {
-        const toc = document.getElementById('toc');
-        if (!toc) return;
-        
-        const headings = document.querySelectorAll('.content h2, .content h3, .content h4');
-        if (headings.length === 0) {
-          document.querySelector('.toc-container').style.display = 'none';
-          return;
-        }
-        
-        let tocHTML = '<ul>';
-        headings.forEach((heading, index) => {
-          const id = heading.id || `heading-${index}`;
-          heading.id = id;
-          const level = parseInt(heading.tagName.charAt(1));
-          const indent = level > 2 ? ' style="margin-left: ' + ((level - 2) * 20) + 'px;"' : '';
-          tocHTML += `<li${indent}><a href="#${id}">${heading.textContent}</a></li>`;
-        });
-        tocHTML += '</ul>';
-        toc.innerHTML = tocHTML;
-      }
-      
-      // Smooth scrolling for anchor links
-      function setupSmoothScrolling() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }
-          });
-        });
-      }
-      
-      // Initialize when DOM is loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        generateTOC();
-        setupSmoothScrolling();
-      });
-    </script>
-    
-    
+    <script src="/Sparse_to_Dense_Transformer/assets/js/scale.fix.js"></script>
   </body>
 </html>

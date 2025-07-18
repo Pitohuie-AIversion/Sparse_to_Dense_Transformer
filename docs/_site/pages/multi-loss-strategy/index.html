@@ -13,117 +13,41 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="多损失函数策略和配置" />
 <meta property="og:description" content="多损失函数策略和配置" />
-<link rel="canonical" href="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" />
-<meta property="og:url" content="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" />
 <meta property="og:site_name" content="VIVTransformer Documentation" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Multi-Loss Strategy" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"多损失函数策略和配置","headline":"Multi-Loss Strategy","url":"https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"多损失函数策略和配置","headline":"Multi-Loss Strategy","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
-    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/custom.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/Sparse_to_Dense_Transformer/assets/images/favicon.ico">
-    
-    <!-- Math support -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-      window.MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']]
-        }
-      };
-    </script>
-    
-    <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- Custom head content for Just The Docs theme -->
+<!-- Add any custom meta tags, stylesheets, or scripts here -->
   </head>
   <body>
-    <div class="container-lg px-3 my-5 markdown-body">
-      <!-- Header -->
-      <header class="site-header">
-        <div class="header-content">
-          <h1 class="site-title">
-            <a href="/Sparse_to_Dense_Transformer/" class="site-title-link">
-              🔬 VIVTransformer Documentation
-            </a>
-          </h1>
-          <p class="site-description">Advanced Transformer Architecture with Vision Integration</p>
-        </div>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/">VIVTransformer Documentation</a></h1>
         
-        <!-- Navigation -->
-        <nav class="site-nav">
-          <div class="nav-links">
-            <a href="/Sparse_to_Dense_Transformer/" class="nav-link ">🏠 首页</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-link">🚀 快速开始</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-link">🏗️ 架构</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-link">📚 训练</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-link">🚀 部署</a>
-            <a href="" class="nav-link" target="_blank">📦 GitHub</a>
-          </div>
-        </nav>
+        
+
+        <p>Advanced Transformer Architecture with Vision Integration</p>
+
+        
+
+        
+
+        
       </header>
+      <section>
 
-      <!-- Breadcrumb -->
-      
-      <nav class="breadcrumb">
-        <a href="/Sparse_to_Dense_Transformer/">首页</a>
-        
-        
-        
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <a href="/pages">Pages</a>
-            
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <span class="breadcrumb-current">Multi-Loss Strategy</span>
-            
-          
-        
-      </nav>
-      
-
-      <!-- Main Content -->
-      <main class="main-content">
-        
-        <div class="page-header">
-          <h1 class="page-title">Multi-Loss Strategy</h1>
-          
-          <p class="page-description">多损失函数策略和配置</p>
-          
-        </div>
-        
-
-        <!-- Table of Contents -->
-        
-        <div class="toc-container">
-          <details class="toc" open>
-            <summary class="toc-title">📋 目录</summary>
-            <div class="toc-content" id="toc"></div>
-          </details>
-        </div>
-        
-
-        <!-- Content -->
-        <div class="content">
-          <h1 id="多损失配置策略">多损失配置策略</h1>
+      <h1 id="多损失配置策略">多损失配置策略</h1>
 
 <p>本指南详细介绍了 VIVTransformer 中多损失函数的配置策略和最佳实践。</p>
 
@@ -155,28 +79,7 @@
 
 <h3 id="支持的损失函数类型">📊 支持的损失函数类型</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">LossType</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LossType</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">支持的损失函数类型</span><span class="sh">"""</span>
     
     <span class="c1"># 主要损失函数
@@ -197,114 +100,13 @@
     <span class="c1"># 对比学习损失
 </span>    <span class="n">CONTRASTIVE</span> <span class="o">=</span> <span class="sh">"</span><span class="s">contrastive</span><span class="sh">"</span>    <span class="c1"># 对比损失
 </span>    <span class="n">TRIPLET</span> <span class="o">=</span> <span class="sh">"</span><span class="s">triplet</span><span class="sh">"</span>            <span class="c1"># 三元组损失
-</span></pre></td></tr></tbody></table></code></pre></div></div>
+</span></code></pre></div></div>
 
 <h2 id="损失函数组合">损失函数组合</h2>
 
 <h3 id="基础组合策略">🔄 基础组合策略</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MultiLossStrategy</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MultiLossStrategy</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">多损失策略管理器</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
@@ -405,76 +207,11 @@
                     <span class="n">reg_loss</span> <span class="o">+=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">param</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">reg_loss</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="高级组合策略">🎛️ 高级组合策略</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">AdvancedMultiLossStrategy</span><span class="p">(</span><span class="n">MultiLossStrategy</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AdvancedMultiLossStrategy</span><span class="p">(</span><span class="n">MultiLossStrategy</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">高级多损失策略</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
@@ -539,59 +276,13 @@
                 
                 <span class="c1"># 限制权重范围
 </span>                <span class="n">self</span><span class="p">.</span><span class="n">weights</span><span class="p">[</span><span class="n">loss_type</span><span class="p">]</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="nf">min</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">weights</span><span class="p">[</span><span class="n">loss_type</span><span class="p">]))</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="权重配置策略">权重配置策略</h2>
 
 <h3 id="静态权重配置">⚖️ 静态权重配置</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">StaticWeightConfig</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">StaticWeightConfig</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">静态权重配置</span><span class="sh">"""</span>
     
     <span class="nd">@staticmethod</span>
@@ -637,82 +328,11 @@
                 <span class="p">{</span><span class="sh">'</span><span class="s">type</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">sparsity_regularization</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">weight</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">}</span>
             <span class="p">]</span>
         <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="动态权重调整">📈 动态权重调整</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">DynamicWeightScheduler</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DynamicWeightScheduler</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">动态权重调度器</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
@@ -783,40 +403,13 @@
             <span class="n">weights</span><span class="p">[</span><span class="n">loss_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">**</span> <span class="n">step</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">weights</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="配置示例">配置示例</h2>
 
 <h3 id="基础配置示例">📝 基础配置示例</h3>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-</pre></td><td class="rouge-code"><pre><span class="c1"># config/multi_loss_basic.yaml {#config-multi-loss-basic-yaml}</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/multi_loss_basic.yaml {#config-multi-loss-basic-yaml}</span>
 <span class="na">loss</span><span class="pi">:</span>
   <span class="na">strategy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">multi_loss"</span>
   <span class="na">losses</span><span class="pi">:</span>
@@ -843,57 +436,11 @@
   
   <span class="c1"># 自适应权重</span>
   <span class="na">adaptive_weights</span><span class="pi">:</span> <span class="kc">false</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="高级配置示例">🔧 高级配置示例</h3>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-</pre></td><td class="rouge-code"><pre><span class="c1"># config/multi_loss_advanced.yaml {#config-multi-loss-advanced-yaml}</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/multi_loss_advanced.yaml {#config-multi-loss-advanced-yaml}</span>
 <span class="na">loss</span><span class="pi">:</span>
   <span class="na">strategy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">advanced_multi_loss"</span>
   <span class="na">losses</span><span class="pi">:</span>
@@ -939,63 +486,11 @@
   <span class="c1"># 损失平衡</span>
   <span class="na">use_loss_balancer</span><span class="pi">:</span> <span class="kc">true</span>
   <span class="na">balancing_method</span><span class="pi">:</span> <span class="s2">"</span><span class="s">uncertainty"</span>  <span class="c1"># 或 "gradient_norm"</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="任务特定配置">🎯 任务特定配置</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">TaskSpecificConfigs</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TaskSpecificConfigs</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">任务特定的多损失配置</span><span class="sh">"""</span>
     
     <span class="nd">@staticmethod</span>
@@ -1047,103 +542,13 @@
             <span class="p">],</span>
             <span class="sh">'</span><span class="s">adaptive_weights</span><span class="sh">'</span><span class="p">:</span> <span class="bp">True</span>
         <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="性能分析">性能分析</h2>
 
 <h3 id="损失监控和分析">📊 损失监控和分析</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">LossAnalyzer</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LossAnalyzer</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">损失分析器</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
@@ -1233,72 +638,11 @@
                 <span class="n">report</span> <span class="o">+=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">- **</span><span class="si">{</span><span class="n">loss_type</span><span class="si">}</span><span class="s">**: </span><span class="si">{</span><span class="n">contribution</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="o">%</span><span class="si">}</span><span class="se">\n</span><span class="sh">"</span>
         
         <span class="k">return</span> <span class="n">report</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="可视化工具">📈 可视化工具</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">visualize_multi_loss_training</span><span class="p">(</span><span class="n">analyzer</span><span class="p">:</span> <span class="n">LossAnalyzer</span><span class="p">,</span> <span class="n">save_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">visualize_multi_loss_training</span><span class="p">(</span><span class="n">analyzer</span><span class="p">:</span> <span class="n">LossAnalyzer</span><span class="p">,</span> <span class="n">save_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">可视化多损失训练过程</span><span class="sh">"""</span>
     <span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
     
@@ -1359,7 +703,7 @@
         <span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="sh">'</span><span class="s">tight</span><span class="sh">'</span><span class="p">)</span>
     
     <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="最佳实践">最佳实践</h2>
 
@@ -1385,54 +729,7 @@
 
 <h3 id="调试技巧">🔧 调试技巧</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MultiLossDebugger</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MultiLossDebugger</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">多损失调试器</span><span class="sh">"""</span>
     
     <span class="nd">@staticmethod</span>
@@ -1479,7 +776,7 @@
                 <span class="n">warnings</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">loss_name</span><span class="si">}</span><span class="s">_gradient</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">梯度过大: </span><span class="si">{</span><span class="n">total_norm</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span>
         
         <span class="k">return</span> <span class="n">warnings</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="故障排除">故障排除</h2>
 
@@ -1490,15 +787,7 @@
 <p><strong>症状</strong>: 损失震荡，训练过程不稳定</p>
 
 <p><strong>解决方案</strong>:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 降低正则化权重 {#1-降低正则化权重}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 降低正则化权重 {#1-降低正则化权重}
 </span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">losses</span><span class="sh">'</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="sh">'</span><span class="s">weight</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># 从0.1降到0.05
 </span>
 <span class="c1"># 2. 使用梯度裁剪 {#2-使用梯度裁剪}
@@ -1506,41 +795,31 @@
 
 <span class="c1"># 3. 调整学习率 {#3-调整学习率}
 </span><span class="n">optimizer_config</span><span class="p">[</span><span class="sh">'</span><span class="s">learning_rate</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-4</span>  <span class="c1"># 降低学习率
-</span></pre></td></tr></tbody></table></code></pre></div></div>
+</span></code></pre></div></div>
 
 <h4 id="问题2-某个损失不收敛">问题2: 某个损失不收敛</h4>
 
 <p><strong>症状</strong>: 特定损失函数值不下降</p>
 
 <p><strong>解决方案</strong>:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 增加该损失的权重 {#1-增加该损失的权重}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 增加该损失的权重 {#1-增加该损失的权重}
 </span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">losses</span><span class="sh">'</span><span class="p">][</span><span class="n">target_loss_idx</span><span class="p">][</span><span class="sh">'</span><span class="s">weight</span><span class="sh">'</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">2</span>
 
 <span class="c1"># 2. 检查损失函数实现 {#2-检查损失函数实现}
 # 3. 调整损失函数参数 {#3-调整损失函数参数}
-</span></pre></td></tr></tbody></table></code></pre></div></div>
+</span></code></pre></div></div>
 
 <h4 id="问题3-过拟合">问题3: 过拟合</h4>
 
 <p><strong>症状</strong>: 训练损失下降但验证损失上升</p>
 
 <p><strong>解决方案</strong>:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="c1"># 增加正则化强度 {#增加正则化强度}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 增加正则化强度 {#增加正则化强度}
 </span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">losses</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">({</span>
     <span class="sh">'</span><span class="s">type</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">l2_regularization</span><span class="sh">'</span><span class="p">,</span>
     <span class="sh">'</span><span class="s">weight</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.1</span>
 <span class="p">})</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="检查清单">📋 检查清单</h3>
 
@@ -1578,129 +857,13 @@
 
 <p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
 
-        </div>
-      </main>
 
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="sidebar-section">
-          <h3>🔗 快速链接</h3>
-          <ul class="sidebar-links">
-            <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/faq/">常见问题</a></li>
-          </ul>
-        </div>
+      </section>
+      <footer>
         
-        <div class="sidebar-section">
-          <h3>📊 项目状态</h3>
-          <div class="project-badges">
-            <img src="https://img.shields.io/github/stars/yourusername/VIVTransformer?style=social" alt="GitHub stars">
-            <img src="https://img.shields.io/github/forks/yourusername/VIVTransformer?style=social" alt="GitHub forks">
-            <img src="https://img.shields.io/github/issues/yourusername/VIVTransformer" alt="GitHub issues">
-            <img src="https://img.shields.io/github/license/yourusername/VIVTransformer" alt="License">
-          </div>
-        </div>
-        
-        <div class="sidebar-section">
-          <h3>💡 需要帮助？</h3>
-          <ul class="help-links">
-            <li><a href="/issues" target="_blank">🐛 报告问题</a></li>
-            <li><a href="/discussions" target="_blank">💬 讨论区</a></li>
-            <li><a href="mailto:1748492875@qq.com">📧 联系我们</a></li>
-          </ul>
-        </div>
-      </aside>
-
-      <!-- Footer -->
-      <footer class="site-footer">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h4>VIVTransformer</h4>
-            <p>Advanced Transformer Architecture with Vision Integration</p>
-          </div>
-          
-          <div class="footer-section">
-            <h4>文档</h4>
-            <ul>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>社区</h4>
-            <ul>
-              <li><a href="" target="_blank">GitHub</a></li>
-              <li><a href="/issues" target="_blank">Issues</a></li>
-              <li><a href="/discussions" target="_blank">Discussions</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>许可证</h4>
-            <p><a href="/blob/main/LICENSE" target="_blank">MIT License</a></p>
-            <p>© 2025 VIVTransformer Team</p>
-          </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p>Built with ❤️ using <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
-          <p>Last updated: 2025-07-18 11:04</p>
-        </div>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
-    <!-- Scripts -->
-    <script>
-      // Table of Contents Generator
-      function generateTOC() {
-        const toc = document.getElementById('toc');
-        if (!toc) return;
-        
-        const headings = document.querySelectorAll('.content h2, .content h3, .content h4');
-        if (headings.length === 0) {
-          document.querySelector('.toc-container').style.display = 'none';
-          return;
-        }
-        
-        let tocHTML = '<ul>';
-        headings.forEach((heading, index) => {
-          const id = heading.id || `heading-${index}`;
-          heading.id = id;
-          const level = parseInt(heading.tagName.charAt(1));
-          const indent = level > 2 ? ' style="margin-left: ' + ((level - 2) * 20) + 'px;"' : '';
-          tocHTML += `<li${indent}><a href="#${id}">${heading.textContent}</a></li>`;
-        });
-        tocHTML += '</ul>';
-        toc.innerHTML = tocHTML;
-      }
-      
-      // Smooth scrolling for anchor links
-      function setupSmoothScrolling() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }
-          });
-        });
-      }
-      
-      // Initialize when DOM is loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        generateTOC();
-        setupSmoothScrolling();
-      });
-    </script>
-    
-    
+    <script src="/Sparse_to_Dense_Transformer/assets/js/scale.fix.js"></script>
   </body>
 </html>

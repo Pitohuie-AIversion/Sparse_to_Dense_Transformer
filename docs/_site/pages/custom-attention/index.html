@@ -13,117 +13,41 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="自定义注意力机制的实现指南" />
 <meta property="og:description" content="自定义注意力机制的实现指南" />
-<link rel="canonical" href="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/custom-attention/" />
-<meta property="og:url" content="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/custom-attention/" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/custom-attention/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/custom-attention/" />
 <meta property="og:site_name" content="VIVTransformer Documentation" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Custom Attention" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"自定义注意力机制的实现指南","headline":"Custom Attention","url":"https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/custom-attention/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"自定义注意力机制的实现指南","headline":"Custom Attention","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/custom-attention/"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
-    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/custom.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/Sparse_to_Dense_Transformer/assets/images/favicon.ico">
-    
-    <!-- Math support -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-      window.MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']]
-        }
-      };
-    </script>
-    
-    <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- Custom head content for Just The Docs theme -->
+<!-- Add any custom meta tags, stylesheets, or scripts here -->
   </head>
   <body>
-    <div class="container-lg px-3 my-5 markdown-body">
-      <!-- Header -->
-      <header class="site-header">
-        <div class="header-content">
-          <h1 class="site-title">
-            <a href="/Sparse_to_Dense_Transformer/" class="site-title-link">
-              🔬 VIVTransformer Documentation
-            </a>
-          </h1>
-          <p class="site-description">Advanced Transformer Architecture with Vision Integration</p>
-        </div>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/">VIVTransformer Documentation</a></h1>
         
-        <!-- Navigation -->
-        <nav class="site-nav">
-          <div class="nav-links">
-            <a href="/Sparse_to_Dense_Transformer/" class="nav-link ">🏠 首页</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-link">🚀 快速开始</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-link">🏗️ 架构</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-link">📚 训练</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-link">🚀 部署</a>
-            <a href="" class="nav-link" target="_blank">📦 GitHub</a>
-          </div>
-        </nav>
+        
+
+        <p>Advanced Transformer Architecture with Vision Integration</p>
+
+        
+
+        
+
+        
       </header>
+      <section>
 
-      <!-- Breadcrumb -->
-      
-      <nav class="breadcrumb">
-        <a href="/Sparse_to_Dense_Transformer/">首页</a>
-        
-        
-        
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <a href="/pages">Pages</a>
-            
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <span class="breadcrumb-current">Custom Attention</span>
-            
-          
-        
-      </nav>
-      
-
-      <!-- Main Content -->
-      <main class="main-content">
-        
-        <div class="page-header">
-          <h1 class="page-title">Custom Attention</h1>
-          
-          <p class="page-description">自定义注意力机制的实现指南</p>
-          
-        </div>
-        
-
-        <!-- Table of Contents -->
-        
-        <div class="toc-container">
-          <details class="toc" open>
-            <summary class="toc-title">📋 目录</summary>
-            <div class="toc-content" id="toc"></div>
-          </details>
-        </div>
-        
-
-        <!-- Content -->
-        <div class="content">
-          <h1 id="自定义注意力机制">自定义注意力机制</h1>
+      <h1 id="自定义注意力机制">自定义注意力机制</h1>
 
 <p>本文档详细介绍如何在VIVTransformer框架中创建和集成自定义注意力机制，包括设计原则、实现步骤、测试方法和最佳实践。</p>
 
@@ -154,28 +78,7 @@
 
 <h3 id="设计约束">📐 设计约束</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-</pre></td><td class="rouge-code"><pre><span class="c1"># 输入输出约束 {#输入输出约束}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 输入输出约束 {#输入输出约束}
 </span><span class="k">class</span> <span class="nc">AttentionConstraints</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">
     注意力机制设计约束
@@ -196,165 +99,13 @@
         - 计算复杂度应该明确
     </span><span class="sh">"""</span>
     <span class="k">pass</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="基础接口">基础接口</h2>
 
 <h3 id="抽象基类">🔧 抽象基类</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 <span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
 <span class="kn">import</span> <span class="n">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
@@ -506,36 +257,13 @@
             <span class="sh">'</span><span class="s">parameters</span><span class="sh">'</span><span class="p">:</span> <span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="nf">parameters</span><span class="p">()),</span>
             <span class="sh">'</span><span class="s">trainable_parameters</span><span class="sh">'</span><span class="p">:</span> <span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="nf">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">)</span>
         <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="实现步骤">实现步骤</h2>
 
 <h3 id="步骤1-继承基类">📝 步骤1: 继承基类</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">CustomAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CustomAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">自定义注意力机制示例
     
     这是一个示例实现，展示如何创建自定义注意力机制。
@@ -558,41 +286,11 @@
         
         <span class="c1"># 缩放因子
 </span>        <span class="n">self</span><span class="p">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">head_dim</span> <span class="o">**</span> <span class="o">-</span><span class="mf">0.5</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="步骤2-实现qkv生成">📝 步骤2: 实现QKV生成</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-</pre></td><td class="rouge-code"><pre>    <span class="k">def</span> <span class="nf">generate_qkv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">hidden_states</span><span class="p">,</span> <span class="n">position_ids</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">def</span> <span class="nf">generate_qkv</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">hidden_states</span><span class="p">,</span> <span class="n">position_ids</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sh">"""</span><span class="s">生成Q、K、V张量</span><span class="sh">"""</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">q_proj</span><span class="p">(</span><span class="n">hidden_states</span><span class="p">)</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">k_proj</span><span class="p">(</span><span class="n">hidden_states</span><span class="p">)</span>
@@ -622,75 +320,11 @@
                     <span class="n">pos_encoding</span><span class="p">[:,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cos</span><span class="p">(</span><span class="n">position_ids</span><span class="p">[:,</span> <span class="n">pos</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">10000</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">d_model</span><span class="p">)))</span>
         
         <span class="k">return</span> <span class="n">pos_encoding</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="步骤3-实现注意力计算">📝 步骤3: 实现注意力计算</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-</pre></td><td class="rouge-code"><pre>    <span class="k">def</span> <span class="nf">compute_attention</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">def</span> <span class="nf">compute_attention</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sh">"""</span><span class="s">计算自定义注意力</span><span class="sh">"""</span>
         <span class="c1"># 计算注意力分数
 </span>        <span class="n">attention_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">scale</span>
@@ -754,107 +388,20 @@
         
         <span class="n">attention_scores</span> <span class="o">=</span> <span class="n">attention_scores</span><span class="p">.</span><span class="nf">masked_fill</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">-inf</span><span class="sh">'</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">attention_scores</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="步骤4-实现输出投影">📝 步骤4: 实现输出投影</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre>    <span class="k">def</span> <span class="nf">output_projection</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">attention_output</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">def</span> <span class="nf">output_projection</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">attention_output</span><span class="p">):</span>
         <span class="sh">"""</span><span class="s">输出投影</span><span class="sh">"""</span>
         <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">out_proj</span><span class="p">(</span><span class="n">attention_output</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="示例实现">示例实现</h2>
 
 <h3 id="示例1-多尺度注意力">🌟 示例1: 多尺度注意力</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-</pre></td><td class="rouge-code"><pre><span class="nd">@AttentionFactory.register</span><span class="p">(</span><span class="sh">"</span><span class="s">multiscale</span><span class="sh">"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@AttentionFactory.register</span><span class="p">(</span><span class="sh">"</span><span class="s">multiscale</span><span class="sh">"</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">MultiScaleAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">多尺度注意力机制
     
@@ -938,145 +485,11 @@
         <span class="c1"># 先通过融合层，再通过输出投影
 </span>        <span class="n">fused</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">fusion</span><span class="p">(</span><span class="n">attention_output</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">out_proj</span><span class="p">(</span><span class="n">fused</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="示例2-自适应注意力">🌟 示例2: 自适应注意力</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-</pre></td><td class="rouge-code"><pre><span class="nd">@AttentionFactory.register</span><span class="p">(</span><span class="sh">"</span><span class="s">adaptive</span><span class="sh">"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@AttentionFactory.register</span><span class="p">(</span><span class="sh">"</span><span class="s">adaptive</span><span class="sh">"</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">AdaptiveAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">自适应注意力机制
     
@@ -1210,35 +623,13 @@
         <span class="n">attention_probs</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">sparse_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">context</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">attention_probs</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">context</span><span class="p">,</span> <span class="n">attention_probs</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="注册机制">注册机制</h2>
 
 <h3 id="注册自定义注意力">🔧 注册自定义注意力</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-</pre></td><td class="rouge-code"><pre><span class="c1"># 方法1: 使用装饰器注册 {#方法1-使用装饰器注册}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 方法1: 使用装饰器注册 {#方法1-使用装饰器注册}
 </span><span class="nd">@AttentionFactory.register</span><span class="p">(</span><span class="sh">"</span><span class="s">my_custom_attention</span><span class="sh">"</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">MyCustomAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
     <span class="c1"># 实现细节...
@@ -1260,31 +651,11 @@
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">cls</span> <span class="ow">in</span> <span class="n">custom_attentions</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
     <span class="n">AttentionFactory</span><span class="p">.</span><span class="nf">register_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="配置文件集成">⚙️ 配置文件集成</h3>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-</pre></td><td class="rouge-code"><pre><span class="c1"># config.yaml {#config-yaml}</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config.yaml {#config-yaml}</span>
 <span class="na">model</span><span class="pi">:</span>
   <span class="na">attention_config</span><span class="pi">:</span>
     <span class="c1"># 使用自定义注意力</span>
@@ -1304,116 +675,20 @@
       <span class="na">adaptive</span><span class="pi">:</span>
         <span class="na">controller_hidden_dim</span><span class="pi">:</span> <span class="m">256</span>
         <span class="na">num_modes</span><span class="pi">:</span> <span class="m">3</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="c1"># 在代码中使用 {#在代码中使用}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 在代码中使用 {#在代码中使用}
 </span><span class="n">config</span> <span class="o">=</span> <span class="nf">load_config</span><span class="p">(</span><span class="sh">"</span><span class="s">config.yaml</span><span class="sh">"</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
 <span class="c1"># 自动使用配置中指定的注意力机制 {#自动使用配置中指定的注意力机制}
-</span></pre></td></tr></tbody></table></code></pre></div></div>
+</span></code></pre></div></div>
 
 <h2 id="测试验证">测试验证</h2>
 
 <h3 id="单元测试">🧪 单元测试</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="n">unittest</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">unittest</span>
 <span class="kn">import</span> <span class="n">torch</span>
 
 <span class="k">class</span> <span class="nc">TestCustomAttention</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
@@ -1504,116 +779,11 @@
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">'</span><span class="s">__main__</span><span class="sh">'</span><span class="p">:</span>
     <span class="n">unittest</span><span class="p">.</span><span class="nf">main</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="性能测试">📊 性能测试</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">AttentionBenchmark</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AttentionBenchmark</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">注意力机制性能测试</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">attention_types</span><span class="p">,</span> <span class="n">test_configs</span><span class="p">):</span>
@@ -1718,110 +888,13 @@
 
 <span class="n">results</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">.</span><span class="nf">run_benchmark</span><span class="p">()</span>
 <span class="n">benchmark</span><span class="p">.</span><span class="nf">print_results</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="性能优化">性能优化</h2>
 
 <h3 id="计算优化">⚡ 计算优化</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">OptimizedAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">OptimizedAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">优化的注意力实现</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">_init_parameters</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">use_flash_attention</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -1918,76 +991,11 @@
         <span class="n">context</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">attention_probs</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">context</span><span class="p">,</span> <span class="n">attention_probs</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="内存优化">🧠 内存优化</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MemoryEfficientAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MemoryEfficientAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">内存高效的注意力实现</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">_init_parameters</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -2052,7 +1060,7 @@
 </span>    
     <span class="k">def</span> <span class="nf">output_projection</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">attention_output</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">out_proj</span><span class="p">(</span><span class="n">attention_output</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="最佳实践">最佳实践</h2>
 
@@ -2078,55 +1086,7 @@
 
 <h3 id="调试技巧">🔧 调试技巧</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">DebuggableAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DebuggableAttention</span><span class="p">(</span><span class="n">BaseAttention</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">可调试的注意力实现</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -2174,7 +1134,7 @@
     <span class="k">def</span> <span class="nf">get_debug_info</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
         <span class="sh">"""</span><span class="s">获取调试信息</span><span class="sh">"""</span>
         <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">debug_info</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <hr />
 
@@ -2216,129 +1176,13 @@
 
 <p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
 
-        </div>
-      </main>
 
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="sidebar-section">
-          <h3>🔗 快速链接</h3>
-          <ul class="sidebar-links">
-            <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/faq/">常见问题</a></li>
-          </ul>
-        </div>
+      </section>
+      <footer>
         
-        <div class="sidebar-section">
-          <h3>📊 项目状态</h3>
-          <div class="project-badges">
-            <img src="https://img.shields.io/github/stars/yourusername/VIVTransformer?style=social" alt="GitHub stars">
-            <img src="https://img.shields.io/github/forks/yourusername/VIVTransformer?style=social" alt="GitHub forks">
-            <img src="https://img.shields.io/github/issues/yourusername/VIVTransformer" alt="GitHub issues">
-            <img src="https://img.shields.io/github/license/yourusername/VIVTransformer" alt="License">
-          </div>
-        </div>
-        
-        <div class="sidebar-section">
-          <h3>💡 需要帮助？</h3>
-          <ul class="help-links">
-            <li><a href="/issues" target="_blank">🐛 报告问题</a></li>
-            <li><a href="/discussions" target="_blank">💬 讨论区</a></li>
-            <li><a href="mailto:1748492875@qq.com">📧 联系我们</a></li>
-          </ul>
-        </div>
-      </aside>
-
-      <!-- Footer -->
-      <footer class="site-footer">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h4>VIVTransformer</h4>
-            <p>Advanced Transformer Architecture with Vision Integration</p>
-          </div>
-          
-          <div class="footer-section">
-            <h4>文档</h4>
-            <ul>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>社区</h4>
-            <ul>
-              <li><a href="" target="_blank">GitHub</a></li>
-              <li><a href="/issues" target="_blank">Issues</a></li>
-              <li><a href="/discussions" target="_blank">Discussions</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>许可证</h4>
-            <p><a href="/blob/main/LICENSE" target="_blank">MIT License</a></p>
-            <p>© 2025 VIVTransformer Team</p>
-          </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p>Built with ❤️ using <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
-          <p>Last updated: 2025-07-18 11:04</p>
-        </div>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
-    <!-- Scripts -->
-    <script>
-      // Table of Contents Generator
-      function generateTOC() {
-        const toc = document.getElementById('toc');
-        if (!toc) return;
-        
-        const headings = document.querySelectorAll('.content h2, .content h3, .content h4');
-        if (headings.length === 0) {
-          document.querySelector('.toc-container').style.display = 'none';
-          return;
-        }
-        
-        let tocHTML = '<ul>';
-        headings.forEach((heading, index) => {
-          const id = heading.id || `heading-${index}`;
-          heading.id = id;
-          const level = parseInt(heading.tagName.charAt(1));
-          const indent = level > 2 ? ' style="margin-left: ' + ((level - 2) * 20) + 'px;"' : '';
-          tocHTML += `<li${indent}><a href="#${id}">${heading.textContent}</a></li>`;
-        });
-        tocHTML += '</ul>';
-        toc.innerHTML = tocHTML;
-      }
-      
-      // Smooth scrolling for anchor links
-      function setupSmoothScrolling() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }
-          });
-        });
-      }
-      
-      // Initialize when DOM is loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        generateTOC();
-        setupSmoothScrolling();
-      });
-    </script>
-    
-    
+    <script src="/Sparse_to_Dense_Transformer/assets/js/scale.fix.js"></script>
   </body>
 </html>

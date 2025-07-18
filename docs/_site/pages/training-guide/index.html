@@ -13,117 +13,41 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="完整的模型训练指南" />
 <meta property="og:description" content="完整的模型训练指南" />
-<link rel="canonical" href="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/training-guide/" />
-<meta property="og:url" content="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/training-guide/" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/training-guide/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/training-guide/" />
 <meta property="og:site_name" content="VIVTransformer Documentation" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Training Guide" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"完整的模型训练指南","headline":"Training Guide","url":"https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/training-guide/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"完整的模型训练指南","headline":"Training Guide","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/training-guide/"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
-    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/custom.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/Sparse_to_Dense_Transformer/assets/images/favicon.ico">
-    
-    <!-- Math support -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-      window.MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']]
-        }
-      };
-    </script>
-    
-    <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- Custom head content for Just The Docs theme -->
+<!-- Add any custom meta tags, stylesheets, or scripts here -->
   </head>
   <body>
-    <div class="container-lg px-3 my-5 markdown-body">
-      <!-- Header -->
-      <header class="site-header">
-        <div class="header-content">
-          <h1 class="site-title">
-            <a href="/Sparse_to_Dense_Transformer/" class="site-title-link">
-              🔬 VIVTransformer Documentation
-            </a>
-          </h1>
-          <p class="site-description">Advanced Transformer Architecture with Vision Integration</p>
-        </div>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/">VIVTransformer Documentation</a></h1>
         
-        <!-- Navigation -->
-        <nav class="site-nav">
-          <div class="nav-links">
-            <a href="/Sparse_to_Dense_Transformer/" class="nav-link ">🏠 首页</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-link">🚀 快速开始</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-link">🏗️ 架构</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-link">📚 训练</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-link">🚀 部署</a>
-            <a href="" class="nav-link" target="_blank">📦 GitHub</a>
-          </div>
-        </nav>
+        
+
+        <p>Advanced Transformer Architecture with Vision Integration</p>
+
+        
+
+        
+
+        
       </header>
+      <section>
 
-      <!-- Breadcrumb -->
-      
-      <nav class="breadcrumb">
-        <a href="/Sparse_to_Dense_Transformer/">首页</a>
-        
-        
-        
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <a href="/pages">Pages</a>
-            
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <span class="breadcrumb-current">Training Guide</span>
-            
-          
-        
-      </nav>
-      
-
-      <!-- Main Content -->
-      <main class="main-content">
-        
-        <div class="page-header">
-          <h1 class="page-title">Training Guide</h1>
-          
-          <p class="page-description">完整的模型训练指南</p>
-          
-        </div>
-        
-
-        <!-- Table of Contents -->
-        
-        <div class="toc-container">
-          <details class="toc" open>
-            <summary class="toc-title">📋 目录</summary>
-            <div class="toc-content" id="toc"></div>
-          </details>
-        </div>
-        
-
-        <!-- Content -->
-        <div class="content">
-          <h1 id="训练指南">训练指南</h1>
+      <h1 id="训练指南">训练指南</h1>
 
 <p>本文档提供VIVTransformer项目的详细训练指南，包括训练流程、参数调优、监控和故障排除。</p>
 
@@ -154,29 +78,7 @@
 
 <h3 id="训练架构">🏗️ 训练架构</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-</pre></td><td class="rouge-code"><pre>训练流程
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>训练流程
 ├── 📊 数据准备
 │   ├── 数据加载
 │   ├── 预处理
@@ -198,24 +100,13 @@
     ├── 最终评估
     ├── 模型导出
     └── 性能分析
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="训练准备">训练准备</h2>
 
 <h3 id="环境配置">🔧 环境配置</h3>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-</pre></td><td class="rouge-code"><pre><span class="c"># 1. 检查CUDA环境 {#1-检查cuda环境}</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. 检查CUDA环境 {#1-检查cuda环境}</span>
 nvidia-smi
 python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA available: {torch.cuda.is_available()}')"</span>
 
@@ -226,84 +117,11 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
 
 <span class="c"># 3. 创建必要目录 {#3-创建必要目录}</span>
 <span class="nb">mkdir</span> <span class="nt">-p</span> logs checkpoints results
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="数据准备">📊 数据准备</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-</pre></td><td class="rouge-code"><pre><span class="c1"># data_preparation.py {#data-preparation-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># data_preparation.py {#data-preparation-py}
 </span><span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">from</span> <span class="n">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">random_split</span>
@@ -376,120 +194,11 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
         <span class="n">transforms</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nc">RandomAugmentation</span><span class="p">())</span>
     
     <span class="k">return</span> <span class="nc">Compose</span><span class="p">(</span><span class="n">transforms</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="模型初始化">🧠 模型初始化</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-</pre></td><td class="rouge-code"><pre><span class="c1"># model_initialization.py {#model-initialization-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># model_initialization.py {#model-initialization-py}
 </span><span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
 <span class="kn">from</span> <span class="n">models.viv_transformer</span> <span class="kn">import</span> <span class="n">VIVTransformer</span>
@@ -598,214 +307,13 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
         <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">✅ 学习率调度器设置完成: </span><span class="si">{</span><span class="n">scheduler_type</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">scheduler</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="基础训练">基础训练</h2>
 
 <h3 id="训练循环">🔄 训练循环</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-</pre></td><td class="rouge-code"><pre><span class="c1"># training_loop.py {#training-loop-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># training_loop.py {#training-loop-py}
 </span><span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
 <span class="kn">from</span> <span class="n">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
@@ -1006,62 +514,11 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
         
         <span class="n">torch</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="sa">f</span><span class="sh">'</span><span class="s">checkpoints/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
         <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">💾 保存检查点: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="简单训练脚本">🎯 简单训练脚本</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-</pre></td><td class="rouge-code"><pre><span class="c1"># simple_train.py {#simple-train-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># simple_train.py {#simple-train-py}
 </span><span class="kn">import</span> <span class="n">yaml</span>
 <span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">from</span> <span class="n">training_loop</span> <span class="kn">import</span> <span class="n">Trainer</span>
@@ -1112,91 +569,13 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">'</span><span class="s">__main__</span><span class="sh">'</span><span class="p">:</span>
     <span class="nf">main</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="高级训练技巧">高级训练技巧</h2>
 
 <h3 id="混合精度训练">🔥 混合精度训练</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-</pre></td><td class="rouge-code"><pre><span class="c1"># mixed_precision_training.py {#mixed-precision-training-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># mixed_precision_training.py {#mixed-precision-training-py}
 </span><span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">from</span> <span class="n">torch.cuda.amp</span> <span class="kn">import</span> <span class="n">GradScaler</span><span class="p">,</span> <span class="n">autocast</span>
 
@@ -1274,63 +653,11 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
         
         <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="n">total_samples</span>
         <span class="k">return</span> <span class="p">{</span><span class="sh">'</span><span class="s">loss</span><span class="sh">'</span><span class="p">:</span> <span class="n">avg_loss</span><span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="梯度累积">🔄 梯度累积</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-</pre></td><td class="rouge-code"><pre><span class="c1"># gradient_accumulation.py {#gradient-accumulation-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># gradient_accumulation.py {#gradient-accumulation-py}
 </span><span class="k">class</span> <span class="nc">GradientAccumulationTrainer</span><span class="p">(</span><span class="n">Trainer</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">梯度累积训练器</span><span class="sh">"""</span>
     
@@ -1382,46 +709,11 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
         
         <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="n">total_samples</span>
         <span class="k">return</span> <span class="p">{</span><span class="sh">'</span><span class="s">loss</span><span class="sh">'</span><span class="p">:</span> <span class="n">avg_loss</span><span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="多gpu训练">📊 多GPU训练</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-</pre></td><td class="rouge-code"><pre><span class="c1"># multi_gpu_training.py {#multi-gpu-training-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># multi_gpu_training.py {#multi-gpu-training-py}
 </span><span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
 <span class="kn">from</span> <span class="n">torch.nn.parallel</span> <span class="kn">import</span> <span class="n">DataParallel</span><span class="p">,</span> <span class="n">DistributedDataParallel</span>
@@ -1456,155 +748,13 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
     <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">set_device</span><span class="p">(</span><span class="n">local_rank</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">local_rank</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="参数调优">参数调优</h2>
 
 <h3 id="超参数搜索">🎛️ 超参数搜索</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-</pre></td><td class="rouge-code"><pre><span class="c1"># hyperparameter_search.py {#hyperparameter-search-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># hyperparameter_search.py {#hyperparameter-search-py}
 </span><span class="kn">import</span> <span class="n">itertools</span>
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
@@ -1746,124 +896,11 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
             <span class="sh">'</span><span class="s">final_loss</span><span class="sh">'</span><span class="p">:</span> <span class="n">simulated_loss</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
             <span class="sh">'</span><span class="s">epochs_trained</span><span class="sh">'</span><span class="p">:</span> <span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">][</span><span class="sh">'</span><span class="s">epochs</span><span class="sh">'</span><span class="p">]</span>
         <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="学习率调优">📈 学习率调优</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-</pre></td><td class="rouge-code"><pre><span class="c1"># learning_rate_finder.py {#learning-rate-finder-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># learning_rate_finder.py {#learning-rate-finder-py}
 </span><span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
@@ -1976,112 +1013,13 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
         <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
         
         <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">📊 学习率-损失曲线已保存为 lr_finder_result.png</span><span class="sh">"</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="训练监控">训练监控</h2>
 
 <h3 id="tensorboard集成">📊 TensorBoard集成</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-</pre></td><td class="rouge-code"><pre><span class="c1"># tensorboard_logger.py {#tensorboard-logger-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># tensorboard_logger.py {#tensorboard-logger-py}
 </span><span class="kn">from</span> <span class="n">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
 <span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
@@ -2180,137 +1118,11 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
         <span class="sh">"""</span><span class="s">关闭writer</span><span class="sh">"""</span>
         <span class="n">self</span><span class="p">.</span><span class="n">writer</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="实时监控">📈 实时监控</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-</pre></td><td class="rouge-code"><pre><span class="c1"># real_time_monitor.py {#real-time-monitor-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># real_time_monitor.py {#real-time-monitor-py}
 </span><span class="kn">import</span> <span class="n">time</span>
 <span class="kn">import</span> <span class="n">psutil</span>
 <span class="kn">import</span> <span class="n">GPUtil</span>
@@ -2436,240 +1248,13 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
             <span class="n">ax</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">时间 (分钟)</span><span class="sh">'</span><span class="p">)</span>
         
         <span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="故障排除">故障排除</h2>
 
 <h3 id="常见问题解决">🔧 常见问题解决</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-</pre></td><td class="rouge-code"><pre><span class="c1"># troubleshooting.py {#troubleshooting-py}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># troubleshooting.py {#troubleshooting-py}
 </span><span class="kn">import</span> <span class="n">torch</span>
 <span class="kn">import</span> <span class="n">traceback</span>
 <span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
@@ -2896,7 +1481,7 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
         <span class="k">for</span> <span class="n">fix_name</span><span class="p">,</span> <span class="n">fix_value</span> <span class="ow">in</span> <span class="n">fixes</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">auto_fixes</span><span class="sh">'</span><span class="p">,</span> <span class="p">{}).</span><span class="nf">items</span><span class="p">():</span>
             <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   </span><span class="si">{</span><span class="n">fix_name</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">fix_value</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
             <span class="c1"># 这里可以添加实际的修复逻辑
-</span></pre></td></tr></tbody></table></code></pre></div></div>
+</span></code></pre></div></div>
 
 <h2 id="最佳实践">最佳实践</h2>
 
@@ -2990,129 +1575,13 @@ python <span class="nt">-c</span> <span class="s2">"import torch; print(f'CUDA a
 
 <p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
 
-        </div>
-      </main>
 
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="sidebar-section">
-          <h3>🔗 快速链接</h3>
-          <ul class="sidebar-links">
-            <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/faq/">常见问题</a></li>
-          </ul>
-        </div>
+      </section>
+      <footer>
         
-        <div class="sidebar-section">
-          <h3>📊 项目状态</h3>
-          <div class="project-badges">
-            <img src="https://img.shields.io/github/stars/yourusername/VIVTransformer?style=social" alt="GitHub stars">
-            <img src="https://img.shields.io/github/forks/yourusername/VIVTransformer?style=social" alt="GitHub forks">
-            <img src="https://img.shields.io/github/issues/yourusername/VIVTransformer" alt="GitHub issues">
-            <img src="https://img.shields.io/github/license/yourusername/VIVTransformer" alt="License">
-          </div>
-        </div>
-        
-        <div class="sidebar-section">
-          <h3>💡 需要帮助？</h3>
-          <ul class="help-links">
-            <li><a href="/issues" target="_blank">🐛 报告问题</a></li>
-            <li><a href="/discussions" target="_blank">💬 讨论区</a></li>
-            <li><a href="mailto:1748492875@qq.com">📧 联系我们</a></li>
-          </ul>
-        </div>
-      </aside>
-
-      <!-- Footer -->
-      <footer class="site-footer">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h4>VIVTransformer</h4>
-            <p>Advanced Transformer Architecture with Vision Integration</p>
-          </div>
-          
-          <div class="footer-section">
-            <h4>文档</h4>
-            <ul>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>社区</h4>
-            <ul>
-              <li><a href="" target="_blank">GitHub</a></li>
-              <li><a href="/issues" target="_blank">Issues</a></li>
-              <li><a href="/discussions" target="_blank">Discussions</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>许可证</h4>
-            <p><a href="/blob/main/LICENSE" target="_blank">MIT License</a></p>
-            <p>© 2025 VIVTransformer Team</p>
-          </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p>Built with ❤️ using <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
-          <p>Last updated: 2025-07-18 11:04</p>
-        </div>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
-    <!-- Scripts -->
-    <script>
-      // Table of Contents Generator
-      function generateTOC() {
-        const toc = document.getElementById('toc');
-        if (!toc) return;
-        
-        const headings = document.querySelectorAll('.content h2, .content h3, .content h4');
-        if (headings.length === 0) {
-          document.querySelector('.toc-container').style.display = 'none';
-          return;
-        }
-        
-        let tocHTML = '<ul>';
-        headings.forEach((heading, index) => {
-          const id = heading.id || `heading-${index}`;
-          heading.id = id;
-          const level = parseInt(heading.tagName.charAt(1));
-          const indent = level > 2 ? ' style="margin-left: ' + ((level - 2) * 20) + 'px;"' : '';
-          tocHTML += `<li${indent}><a href="#${id}">${heading.textContent}</a></li>`;
-        });
-        tocHTML += '</ul>';
-        toc.innerHTML = tocHTML;
-      }
-      
-      // Smooth scrolling for anchor links
-      function setupSmoothScrolling() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }
-          });
-        });
-      }
-      
-      // Initialize when DOM is loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        generateTOC();
-        setupSmoothScrolling();
-      });
-    </script>
-    
-    
+    <script src="/Sparse_to_Dense_Transformer/assets/js/scale.fix.js"></script>
   </body>
 </html>

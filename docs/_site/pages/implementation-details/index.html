@@ -13,117 +13,41 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="核心实现细节和技术说明" />
 <meta property="og:description" content="核心实现细节和技术说明" />
-<link rel="canonical" href="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/implementation-details/" />
-<meta property="og:url" content="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/implementation-details/" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/implementation-details/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/implementation-details/" />
 <meta property="og:site_name" content="VIVTransformer Documentation" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Implementation Details" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"核心实现细节和技术说明","headline":"Implementation Details","url":"https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/implementation-details/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"核心实现细节和技术说明","headline":"Implementation Details","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/implementation-details/"}</script>
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
-    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/custom.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/Sparse_to_Dense_Transformer/assets/images/favicon.ico">
-    
-    <!-- Math support -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-      window.MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']]
-        }
-      };
-    </script>
-    
-    <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- Custom head content for Just The Docs theme -->
+<!-- Add any custom meta tags, stylesheets, or scripts here -->
   </head>
   <body>
-    <div class="container-lg px-3 my-5 markdown-body">
-      <!-- Header -->
-      <header class="site-header">
-        <div class="header-content">
-          <h1 class="site-title">
-            <a href="/Sparse_to_Dense_Transformer/" class="site-title-link">
-              🔬 VIVTransformer Documentation
-            </a>
-          </h1>
-          <p class="site-description">Advanced Transformer Architecture with Vision Integration</p>
-        </div>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/">VIVTransformer Documentation</a></h1>
         
-        <!-- Navigation -->
-        <nav class="site-nav">
-          <div class="nav-links">
-            <a href="/Sparse_to_Dense_Transformer/" class="nav-link ">🏠 首页</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-link">🚀 快速开始</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-link">🏗️ 架构</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-link">📚 训练</a>
-            <a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-link">🚀 部署</a>
-            <a href="" class="nav-link" target="_blank">📦 GitHub</a>
-          </div>
-        </nav>
+        
+
+        <p>Advanced Transformer Architecture with Vision Integration</p>
+
+        
+
+        
+
+        
       </header>
+      <section>
 
-      <!-- Breadcrumb -->
-      
-      <nav class="breadcrumb">
-        <a href="/Sparse_to_Dense_Transformer/">首页</a>
-        
-        
-        
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <a href="/pages">Pages</a>
-            
-          
-        
-          
-            
-            
-              <span class="breadcrumb-separator">></span>
-              <span class="breadcrumb-current">Implementation Details</span>
-            
-          
-        
-      </nav>
-      
-
-      <!-- Main Content -->
-      <main class="main-content">
-        
-        <div class="page-header">
-          <h1 class="page-title">Implementation Details</h1>
-          
-          <p class="page-description">核心实现细节和技术说明</p>
-          
-        </div>
-        
-
-        <!-- Table of Contents -->
-        
-        <div class="toc-container">
-          <details class="toc" open>
-            <summary class="toc-title">📋 目录</summary>
-            <div class="toc-content" id="toc"></div>
-          </details>
-        </div>
-        
-
-        <!-- Content -->
-        <div class="content">
-          <h1 id="实现细节">实现细节</h1>
+      <h1 id="实现细节">实现细节</h1>
 
 <p>本文档详细介绍VIVTransformer项目的技术实现细节，包括核心算法、数据结构、优化技巧和工程实践。</p>
 
@@ -144,133 +68,7 @@
 
 <h3 id="vivtransformer主体架构">🏗️ VIVTransformer主体架构</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">VIVTransformer主模型类
     
     集成38种注意力机制的Transformer变体，支持多种损失函数
@@ -396,77 +194,11 @@
 </span>        <span class="n">outputs</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">output_projection</span><span class="p">(</span><span class="n">hidden_states</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">outputs</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="transformerlayer实现">🔄 TransformerLayer实现</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">TransformerLayer</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TransformerLayer</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">单个Transformer层实现</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">layer_idx</span><span class="p">):</span>
@@ -532,98 +264,13 @@
 </span>        <span class="n">hidden_states</span> <span class="o">=</span> <span class="n">hidden_states</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="nf">dropout</span><span class="p">(</span><span class="n">ff_output</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">hidden_states</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="注意力机制实现">注意力机制实现</h2>
 
 <h3 id="注意力工厂模式">🎯 注意力工厂模式</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">AttentionFactory</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AttentionFactory</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">注意力机制工厂类</span><span class="sh">"""</span>
     
     <span class="n">_registry</span> <span class="o">=</span> <span class="p">{}</span>
@@ -708,72 +355,11 @@
 </span>        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">out_proj</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">output</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="高效注意力实现">⚡ 高效注意力实现</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-</pre></td><td class="rouge-code"><pre><span class="nd">@AttentionFactory.register</span><span class="p">(</span><span class="sh">"</span><span class="s">linear</span><span class="sh">"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@AttentionFactory.register</span><span class="p">(</span><span class="sh">"</span><span class="s">linear</span><span class="sh">"</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">LinearAttention</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">线性注意力实现 - O(n)复杂度</span><span class="sh">"""</span>
     
@@ -834,93 +420,11 @@
 </span>        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">out_proj</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">output</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="稀疏注意力实现">🎭 稀疏注意力实现</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-</pre></td><td class="rouge-code"><pre><span class="nd">@AttentionFactory.register</span><span class="p">(</span><span class="sh">"</span><span class="s">sparse</span><span class="sh">"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@AttentionFactory.register</span><span class="p">(</span><span class="sh">"</span><span class="s">sparse</span><span class="sh">"</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">SparseAttention</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">稀疏注意力实现</span><span class="sh">"""</span>
     
@@ -1002,95 +506,13 @@
 </span>        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">out_proj</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">output</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="损失函数实现">损失函数实现</h2>
 
 <h3 id="svd正则化损失">📊 SVD正则化损失</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">SVDRegularizedLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SVDRegularizedLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">SVD正则化损失函数</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">base_loss</span><span class="o">=</span><span class="sh">'</span><span class="s">mse</span><span class="sh">'</span><span class="p">,</span> <span class="n">svd_weight</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">svd_layers</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -1172,59 +594,11 @@
                 <span class="sh">'</span><span class="s">base_loss</span><span class="sh">'</span><span class="p">:</span> <span class="n">base_loss</span><span class="p">,</span>
                 <span class="sh">'</span><span class="s">svd_regularization</span><span class="sh">'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
             <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="多损失组合">🎯 多损失组合</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MultiLossFunction</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MultiLossFunction</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">多损失函数组合</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">loss_config</span><span class="p">):</span>
@@ -1272,89 +646,13 @@
         
         <span class="n">loss_components</span><span class="p">[</span><span class="sh">'</span><span class="s">total_loss</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_loss</span>
         <span class="k">return</span> <span class="n">loss_components</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="数据处理实现">数据处理实现</h2>
 
 <h3 id="高效数据加载器">📊 高效数据加载器</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">EfficientDataLoader</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">EfficientDataLoader</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">高效数据加载器实现</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
@@ -1430,67 +728,11 @@
     
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">dataloader</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="数据预处理管道">🔄 数据预处理管道</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">DataPreprocessor</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DataPreprocessor</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">数据预处理管道</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
@@ -1546,224 +788,13 @@
         <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">transforms</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="nf">transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="训练循环实现">训练循环实现</h2>
 
 <h3 id="高效训练器">🏃 高效训练器</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">EfficientTrainer</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">EfficientTrainer</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">高效训练器实现</span><span class="sh">"""</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> 
@@ -1974,42 +1005,13 @@
         
         <span class="n">torch</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
         <span class="n">self</span><span class="p">.</span><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Checkpoint saved: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h2 id="优化技巧">优化技巧</h2>
 
 <h3 id="内存优化">⚡ 内存优化</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MemoryOptimizer</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MemoryOptimizer</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">内存优化工具</span><span class="sh">"""</span>
     
     <span class="nd">@staticmethod</span>
@@ -2038,64 +1040,11 @@
         <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
             <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">empty_cache</span><span class="p">()</span>
             <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">synchronize</span><span class="p">()</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <h3 id="性能优化">🚀 性能优化</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">PerformanceOptimizer</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">PerformanceOptimizer</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">性能优化工具</span><span class="sh">"""</span>
     
     <span class="nd">@staticmethod</span>
@@ -2148,7 +1097,7 @@
             <span class="sh">'</span><span class="s">throughput</span><span class="sh">'</span><span class="p">:</span> <span class="n">throughput</span><span class="p">,</span>
             <span class="sh">'</span><span class="s">memory_usage</span><span class="sh">'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">max_memory_allocated</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>
         <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</code></pre></div></div>
 
 <hr />
 
@@ -2190,129 +1139,13 @@
 
 <p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
 
-        </div>
-      </main>
 
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="sidebar-section">
-          <h3>🔗 快速链接</h3>
-          <ul class="sidebar-links">
-            <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            <li><a href="/Sparse_to_Dense_Transformer/pages/faq/">常见问题</a></li>
-          </ul>
-        </div>
+      </section>
+      <footer>
         
-        <div class="sidebar-section">
-          <h3>📊 项目状态</h3>
-          <div class="project-badges">
-            <img src="https://img.shields.io/github/stars/yourusername/VIVTransformer?style=social" alt="GitHub stars">
-            <img src="https://img.shields.io/github/forks/yourusername/VIVTransformer?style=social" alt="GitHub forks">
-            <img src="https://img.shields.io/github/issues/yourusername/VIVTransformer" alt="GitHub issues">
-            <img src="https://img.shields.io/github/license/yourusername/VIVTransformer" alt="License">
-          </div>
-        </div>
-        
-        <div class="sidebar-section">
-          <h3>💡 需要帮助？</h3>
-          <ul class="help-links">
-            <li><a href="/issues" target="_blank">🐛 报告问题</a></li>
-            <li><a href="/discussions" target="_blank">💬 讨论区</a></li>
-            <li><a href="mailto:1748492875@qq.com">📧 联系我们</a></li>
-          </ul>
-        </div>
-      </aside>
-
-      <!-- Footer -->
-      <footer class="site-footer">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h4>VIVTransformer</h4>
-            <p>Advanced Transformer Architecture with Vision Integration</p>
-          </div>
-          
-          <div class="footer-section">
-            <h4>文档</h4>
-            <ul>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
-              <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>社区</h4>
-            <ul>
-              <li><a href="" target="_blank">GitHub</a></li>
-              <li><a href="/issues" target="_blank">Issues</a></li>
-              <li><a href="/discussions" target="_blank">Discussions</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-section">
-            <h4>许可证</h4>
-            <p><a href="/blob/main/LICENSE" target="_blank">MIT License</a></p>
-            <p>© 2025 VIVTransformer Team</p>
-          </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p>Built with ❤️ using <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
-          <p>Last updated: 2025-07-18 11:04</p>
-        </div>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
-    <!-- Scripts -->
-    <script>
-      // Table of Contents Generator
-      function generateTOC() {
-        const toc = document.getElementById('toc');
-        if (!toc) return;
-        
-        const headings = document.querySelectorAll('.content h2, .content h3, .content h4');
-        if (headings.length === 0) {
-          document.querySelector('.toc-container').style.display = 'none';
-          return;
-        }
-        
-        let tocHTML = '<ul>';
-        headings.forEach((heading, index) => {
-          const id = heading.id || `heading-${index}`;
-          heading.id = id;
-          const level = parseInt(heading.tagName.charAt(1));
-          const indent = level > 2 ? ' style="margin-left: ' + ((level - 2) * 20) + 'px;"' : '';
-          tocHTML += `<li${indent}><a href="#${id}">${heading.textContent}</a></li>`;
-        });
-        tocHTML += '</ul>';
-        toc.innerHTML = tocHTML;
-      }
-      
-      // Smooth scrolling for anchor links
-      function setupSmoothScrolling() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }
-          });
-        });
-      }
-      
-      // Initialize when DOM is loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        generateTOC();
-        setupSmoothScrolling();
-      });
-    </script>
-    
-    
+    <script src="/Sparse_to_Dense_Transformer/assets/js/scale.fix.js"></script>
   </body>
 </html>

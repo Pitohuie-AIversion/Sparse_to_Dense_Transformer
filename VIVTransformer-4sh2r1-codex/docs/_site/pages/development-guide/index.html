@@ -1,0 +1,2701 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Development Guide | VIVTransformer Documentation</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Development Guide" />
+<meta name="author" content="Pitohuie" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="开发环境配置和贡献指南" />
+<meta property="og:description" content="开发环境配置和贡献指南" />
+<link rel="canonical" href="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/development-guide/" />
+<meta property="og:url" content="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/development-guide/" />
+<meta property="og:site_name" content="VIVTransformer Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Development Guide" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"开发环境配置和贡献指南","headline":"Development Guide","url":"https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/development-guide/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
+    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/custom.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/Sparse_to_Dense_Transformer/assets/images/favicon.ico">
+    
+    <!-- Math support -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      <!-- Header -->
+      <header class="site-header">
+        <div class="header-content">
+          <h1 class="site-title">
+            <a href="/Sparse_to_Dense_Transformer/" class="site-title-link">
+              🔬 VIVTransformer Documentation
+            </a>
+          </h1>
+          <p class="site-description">Advanced Transformer Architecture with Vision Integration</p>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="site-nav">
+          <div class="nav-links">
+            <a href="/Sparse_to_Dense_Transformer/" class="nav-link ">🏠 首页</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-link">🚀 快速开始</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-link">🏗️ 架构</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-link">📚 训练</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-link">🚀 部署</a>
+            <a href="" class="nav-link" target="_blank">📦 GitHub</a>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Breadcrumb -->
+      
+      <nav class="breadcrumb">
+        <a href="/Sparse_to_Dense_Transformer/">首页</a>
+        
+        
+        
+          
+        
+          
+            
+            
+              <span class="breadcrumb-separator">></span>
+              <a href="/pages">Pages</a>
+            
+          
+        
+          
+            
+            
+              <span class="breadcrumb-separator">></span>
+              <span class="breadcrumb-current">Development Guide</span>
+            
+          
+        
+      </nav>
+      
+
+      <!-- Main Content -->
+      <main class="main-content">
+        
+        <div class="page-header">
+          <h1 class="page-title">Development Guide</h1>
+          
+          <p class="page-description">开发环境配置和贡献指南</p>
+          
+        </div>
+        
+
+        <!-- Table of Contents -->
+        
+        <div class="toc-container">
+          <details class="toc" open>
+            <summary class="toc-title">📋 目录</summary>
+            <div class="toc-content" id="toc"></div>
+          </details>
+        </div>
+        
+
+        <!-- Content -->
+        <div class="content">
+          <h1 id="开发指南">开发指南</h1>
+
+<p>本文档为VIVTransformer项目的开发者提供详细的开发指导，包括代码规范、开发流程、测试指南和贡献方式。</p>
+
+<h2 id="目录">📋 目录</h2>
+
+<ul>
+  <li><a href="#开发环境设置">开发环境设置</a></li>
+  <li><a href="#代码规范">代码规范</a></li>
+  <li><a href="#项目结构">项目结构</a></li>
+  <li><a href="#开发流程">开发流程</a></li>
+  <li><a href="#测试指南">测试指南</a></li>
+  <li><a href="#文档编写">文档编写</a></li>
+  <li><a href="#性能优化">性能优化</a></li>
+  <li><a href="#贡献指南">贡献指南</a></li>
+  <li><a href="#发布流程">发布流程</a></li>
+</ul>
+
+<h2 id="开发环境设置">开发环境设置</h2>
+
+<h3 id="环境准备">🛠️ 环境准备</h3>
+
+<h4 id="1-基础环境-1-基础环境">1. 基础环境 {#1-基础环境}</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="c"># 1. 克隆项目 {#1-克隆项目}</span>
+git clone https://github.com/your-username/VIVTransformer.git
+<span class="nb">cd </span>VIVTransformer
+
+<span class="c"># 2. 创建虚拟环境 {#2-创建虚拟环境}</span>
+conda create <span class="nt">-n</span> vivtransformer-dev <span class="nv">python</span><span class="o">=</span>3.9
+conda activate vivtransformer-dev
+
+<span class="c"># 3. 安装开发依赖 {#3-安装开发依赖}</span>
+pip <span class="nb">install</span> <span class="nt">-r</span> requirements-dev.txt
+
+<span class="c"># 4. 安装项目（开发模式） {#4-安装项目-开发模式}</span>
+pip <span class="nb">install</span> <span class="nt">-e</span> <span class="nb">.</span>
+
+<span class="c"># 5. 安装预提交钩子 {#5-安装预提交钩子}</span>
+pre-commit <span class="nb">install</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="2-开发工具配置-2-开发工具配置">2. 开发工具配置 {#2-开发工具配置}</h4>
+
+<p><strong>VS Code配置</strong> (<code class="language-plaintext highlighter-rouge">.vscode/settings.json</code>):</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="p">{</span><span class="w">
+    </span><span class="nl">"python.defaultInterpreterPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./venv/bin/python"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.linting.enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.linting.pylintEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.linting.flake8Enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.formatting.provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"black"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.formatting.blackArgs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"--line-length=88"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"python.sortImports.args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"--profile"</span><span class="p">,</span><span class="w"> </span><span class="s2">"black"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"editor.formatOnSave"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"editor.codeActionsOnSave"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"source.organizeImports"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"python.testing.pytestEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.testing.pytestArgs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"tests"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>PyCharm配置</strong>:</p>
+<ul>
+  <li>设置代码风格为Black</li>
+  <li>启用类型检查</li>
+  <li>配置测试运行器为pytest</li>
+  <li>设置导入优化</li>
+</ul>
+
+<h4 id="3-git配置-3-git配置">3. Git配置 {#3-git配置}</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="c"># 设置用户信息 {#设置用户信息}</span>
+git config user.name <span class="s2">"Your Name"</span>
+git config user.email <span class="s2">"your.email@example.com"</span>
+
+<span class="c"># 设置默认分支 {#设置默认分支}</span>
+git config init.defaultBranch main
+
+<span class="c"># 设置自动换行 {#设置自动换行}</span>
+git config core.autocrlf input  <span class="c"># Linux/Mac</span>
+git config core.autocrlf <span class="nb">true</span>   <span class="c"># Windows</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="依赖管理">📦 依赖管理</h3>
+
+<h4 id="requirements-dev-txt">requirements-dev.txt</h4>
+<pre><code class="language-txt"># 基础依赖 {#基础依赖}
+torch&gt;=1.12.0
+torchvision&gt;=0.13.0
+numpy&gt;=1.21.0
+pandas&gt;=1.3.0
+scipy&gt;=1.7.0
+
+# 开发工具 {#开发工具}
+black&gt;=22.0.0
+isort&gt;=5.10.0
+flake8&gt;=4.0.0
+mypy&gt;=0.950
+pylint&gt;=2.13.0
+pre-commit&gt;=2.17.0
+
+# 测试工具 {#测试工具}
+pytest&gt;=7.0.0
+pytest-cov&gt;=3.0.0
+pytest-mock&gt;=3.7.0
+pytest-xdist&gt;=2.5.0
+hypothesis&gt;=6.40.0
+
+# 文档工具 {#文档工具}
+sphinx&gt;=4.5.0
+sphinx-rtd-theme&gt;=1.0.0
+myst-parser&gt;=0.17.0
+
+# 性能分析 {#性能分析}
+line-profiler&gt;=3.5.0
+memory-profiler&gt;=0.60.0
+py-spy&gt;=0.3.0
+
+# 可视化 {#可视化}
+matplotlib&gt;=3.5.0
+seaborn&gt;=0.11.0
+tensorboard&gt;=2.8.0
+wandb&gt;=0.12.0
+
+# 其他工具 {#其他工具}
+tqdm&gt;=4.62.0
+click&gt;=8.0.0
+rich&gt;=12.0.0
+typer&gt;=0.4.0
+</code></pre>
+
+<h2 id="代码规范">代码规范</h2>
+
+<h3 id="代码风格">🎨 代码风格</h3>
+
+<h4 id="1-python代码规范-1-python代码规范">1. Python代码规范 {#1-python代码规范}</h4>
+
+<p><strong>基本原则</strong>:</p>
+<ul>
+  <li>遵循PEP 8标准</li>
+  <li>使用Black进行代码格式化</li>
+  <li>使用isort进行导入排序</li>
+  <li>行长度限制为88字符</li>
+</ul>
+
+<p><strong>命名规范</strong>:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="c1"># 类名：大驼峰命名法 {#类名-大驼峰命名法}
+</span><span class="k">class</span> <span class="nc">AttentionMechanism</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 函数和变量：小写+下划线 {#函数和变量-小写-下划线}
+</span><span class="k">def</span> <span class="nf">calculate_attention_weights</span><span class="p">():</span>
+    <span class="n">attention_scores</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">return</span> <span class="n">attention_scores</span>
+
+<span class="c1"># 常量：全大写+下划线 {#常量-全大写-下划线}
+</span><span class="n">MAX_SEQUENCE_LENGTH</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">DEFAULT_HIDDEN_SIZE</span> <span class="o">=</span> <span class="mi">768</span>
+
+<span class="c1"># 私有方法：前缀下划线 {#私有方法-前缀下划线}
+</span><span class="k">def</span> <span class="nf">_internal_helper_function</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 特殊方法：双下划线包围 {#特殊方法-双下划线包围}
+</span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>类型注解</strong>:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="n">torch</span>
+
+<span class="k">def</span> <span class="nf">process_attention</span><span class="p">(</span>
+    <span class="n">query</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">key</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="n">dropout_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sh">"""</span><span class="s">处理注意力计算
+    
+    Args:
+        query: 查询张量 [batch_size, seq_len, d_model]
+        key: 键张量 [batch_size, seq_len, d_model]
+        value: 值张量 [batch_size, seq_len, d_model]
+        mask: 可选的掩码张量
+        dropout_rate: Dropout比率
+    
+    Returns:
+        输出张量和注意力权重的元组
+    </span><span class="sh">"""</span>
+    <span class="c1"># 实现代码...
+</span>    <span class="k">pass</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="2-文档字符串规范-2-文档字符串规范">2. 文档字符串规范 {#2-文档字符串规范}</h4>
+
+<p><strong>Google风格文档字符串</strong>:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">多头注意力机制实现
+    
+    这个类实现了Transformer中的多头注意力机制，支持自注意力和交叉注意力。
+    
+    Attributes:
+        d_model: 模型维度
+        num_heads: 注意力头数量
+        dropout_rate: Dropout比率
+    
+    Example:
+</span><span class="gp">        &gt;&gt;&gt;</span> <span class="n">attention</span> <span class="o">=</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d_model</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+        <span class="o">&gt;&gt;&gt;</span> <span class="n">output</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="nf">attention</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="n">self</span><span class="p">,</span>
+        <span class="n">d_model</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">num_heads</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">dropout_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="p">):</span>
+        <span class="sh">"""</span><span class="s">初始化多头注意力层
+        
+        Args:
+            d_model: 模型维度，必须能被num_heads整除
+            num_heads: 注意力头的数量
+            dropout_rate: Dropout比率，范围[0, 1]
+        
+        Raises:
+            ValueError: 当d_model不能被num_heads整除时
+        </span><span class="sh">"""</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="n">d_model</span> <span class="o">%</span> <span class="n">num_heads</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">d_model (</span><span class="si">{</span><span class="n">d_model</span><span class="si">}</span><span class="s">) 必须能被 num_heads (</span><span class="si">{</span><span class="n">num_heads</span><span class="si">}</span><span class="s">) 整除</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">d_k</span> <span class="o">=</span> <span class="n">d_model</span> <span class="o">//</span> <span class="n">num_heads</span>
+        
+        <span class="c1"># 线性变换层
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">w_q</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">w_k</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">w_v</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">w_o</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout_rate</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span>
+        <span class="n">self</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">前向传播
+        
+        Args:
+            query: 查询张量 [batch_size, seq_len, d_model]
+            key: 键张量 [batch_size, seq_len, d_model]
+            value: 值张量 [batch_size, seq_len, d_model]
+            mask: 可选的注意力掩码 [batch_size, seq_len, seq_len]
+        
+        Returns:
+            包含以下元素的元组:
+            - output: 输出张量 [batch_size, seq_len, d_model]
+            - attention_weights: 注意力权重 [batch_size, num_heads, seq_len, seq_len]
+        
+        Note:
+            所有输入张量必须在同一设备上
+        </span><span class="sh">"""</span>
+        <span class="c1"># 实现代码...
+</span>        <span class="k">pass</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="3-错误处理规范-3-错误处理规范">3. 错误处理规范 {#3-错误处理规范}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">VIVTransformerError</span><span class="p">(</span><span class="nb">Exception</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">VIVTransformer基础异常类</span><span class="sh">"""</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ConfigurationError</span><span class="p">(</span><span class="n">VIVTransformerError</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">配置错误异常</span><span class="sh">"""</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ModelError</span><span class="p">(</span><span class="n">VIVTransformerError</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">模型相关错误异常</span><span class="sh">"""</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">DataError</span><span class="p">(</span><span class="n">VIVTransformerError</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">数据相关错误异常</span><span class="sh">"""</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 使用示例 {#使用示例}
+</span><span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="n">config_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">加载配置文件
+    
+    Args:
+        config_path: 配置文件路径
+    
+    Returns:
+        配置字典
+    
+    Raises:
+        ConfigurationError: 配置文件格式错误或缺少必要字段
+        FileNotFoundError: 配置文件不存在
+    </span><span class="sh">"""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="p">.</span><span class="nf">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="nb">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nc">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">配置文件不存在: </span><span class="si">{</span><span class="n">config_path</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">yaml</span><span class="p">.</span><span class="n">YAMLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nc">ConfigurationError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">配置文件格式错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 验证必要字段
+</span>    <span class="n">required_fields</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">model</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">]</span>
+    <span class="n">missing_fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">required_fields</span> <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="n">missing_fields</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nc">ConfigurationError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">配置文件缺少必要字段: </span><span class="si">{</span><span class="n">missing_fields</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">config</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="代码质量工具">🧪 代码质量工具</h3>
+
+<h4 id="1-预提交钩子配置-1-预提交钩子配置">1. 预提交钩子配置 {#1-预提交钩子配置}</h4>
+
+<p><strong>.pre-commit-config.yaml</strong>:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre></td><td class="rouge-code"><pre><span class="na">repos</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">repo</span><span class="pi">:</span> <span class="s">https://github.com/pre-commit/pre-commit-hooks</span>
+    <span class="na">rev</span><span class="pi">:</span> <span class="s">v4.4.0</span>
+    <span class="na">hooks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">trailing-whitespace</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">end-of-file-fixer</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">check-yaml</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">check-added-large-files</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">check-merge-conflict</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">debug-statements</span>
+
+  <span class="pi">-</span> <span class="na">repo</span><span class="pi">:</span> <span class="s">https://github.com/psf/black</span>
+    <span class="na">rev</span><span class="pi">:</span> <span class="s">22.12.0</span>
+    <span class="na">hooks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">black</span>
+        <span class="na">language_version</span><span class="pi">:</span> <span class="s">python3</span>
+        <span class="na">args</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">--line-length=88</span><span class="pi">]</span>
+
+  <span class="pi">-</span> <span class="na">repo</span><span class="pi">:</span> <span class="s">https://github.com/pycqa/isort</span>
+    <span class="na">rev</span><span class="pi">:</span> <span class="s">5.11.4</span>
+    <span class="na">hooks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">isort</span>
+        <span class="na">args</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">--profile</span><span class="pi">,</span> <span class="nv">black</span><span class="pi">]</span>
+
+  <span class="pi">-</span> <span class="na">repo</span><span class="pi">:</span> <span class="s">https://github.com/pycqa/flake8</span>
+    <span class="na">rev</span><span class="pi">:</span> <span class="s">6.0.0</span>
+    <span class="na">hooks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">flake8</span>
+        <span class="na">args</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">--max-line-length=88</span><span class="pi">,</span> <span class="nv">--extend-ignore=E203</span><span class="pi">,</span><span class="nv">W503</span><span class="pi">]</span>
+
+  <span class="pi">-</span> <span class="na">repo</span><span class="pi">:</span> <span class="s">https://github.com/pre-commit/mirrors-mypy</span>
+    <span class="na">rev</span><span class="pi">:</span> <span class="s">v0.991</span>
+    <span class="na">hooks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">mypy</span>
+        <span class="na">additional_dependencies</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">types-PyYAML</span><span class="pi">,</span> <span class="nv">types-requests</span><span class="pi">]</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="2-配置文件-2-配置文件">2. 配置文件 {#2-配置文件}</h4>
+
+<p><strong>setup.cfg</strong>:</p>
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+</pre></td><td class="rouge-code"><pre><span class="nn">[flake8]</span>
+<span class="py">max-line-length</span> <span class="p">=</span> <span class="s">88</span>
+<span class="py">extend-ignore</span> <span class="p">=</span> <span class="s">E203, W503, E501</span>
+<span class="py">exclude</span> <span class="p">=</span> 
+    <span class="s">.git,</span>
+    <span class="err">__pycache__,</span>
+    <span class="err">build,</span>
+    <span class="err">dist,</span>
+    <span class="err">*.egg-info,</span>
+    <span class="err">.venv,</span>
+    <span class="err">.tox</span>
+
+<span class="nn">[mypy]</span>
+<span class="py">python_version</span> <span class="p">=</span> <span class="s">3.9</span>
+<span class="py">warn_return_any</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">warn_unused_configs</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">disallow_untyped_defs</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">disallow_incomplete_defs</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">check_untyped_defs</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">disallow_untyped_decorators</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">no_implicit_optional</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">warn_redundant_casts</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">warn_unused_ignores</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">warn_no_return</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">warn_unreachable</span> <span class="p">=</span> <span class="s">True</span>
+<span class="py">strict_equality</span> <span class="p">=</span> <span class="s">True</span>
+
+<span class="nn">[tool:pytest]</span>
+<span class="py">testpaths</span> <span class="p">=</span> <span class="s">tests</span>
+<span class="py">python_files</span> <span class="p">=</span> <span class="s">test_*.py</span>
+<span class="py">python_classes</span> <span class="p">=</span> <span class="s">Test*</span>
+<span class="py">python_functions</span> <span class="p">=</span> <span class="s">test_*</span>
+<span class="py">addopts</span> <span class="p">=</span> 
+    <span class="s">--strict-markers</span>
+    <span class="err">--strict-config</span>
+    <span class="err">--verbose</span>
+    <span class="py">--cov</span><span class="p">=</span><span class="s">vivtransformer</span>
+    <span class="py">--cov-report</span><span class="p">=</span><span class="s">term-missing</span>
+    <span class="py">--cov-report</span><span class="p">=</span><span class="s">html</span>
+    <span class="py">--cov-report</span><span class="p">=</span><span class="s">xml</span>
+    <span class="py">--cov-fail-under</span><span class="p">=</span><span class="s">80</span>
+
+<span class="nn">[coverage:run]</span>
+<span class="py">source</span> <span class="p">=</span> <span class="s">vivtransformer</span>
+<span class="py">omit</span> <span class="p">=</span> 
+    <span class="s">*/tests/*</span>
+    <span class="err">*/test_*</span>
+    <span class="err">setup.py</span>
+    <span class="err">*/venv/*</span>
+    <span class="err">*/__pycache__/*</span>
+
+<span class="nn">[coverage:report]</span>
+<span class="py">exclude_lines</span> <span class="p">=</span>
+    <span class="err">pragma:</span> <span class="err">no</span> <span class="err">cover</span>
+    <span class="err">def</span> <span class="err">__repr__</span>
+    <span class="err">raise</span> <span class="err">AssertionError</span>
+    <span class="err">raise</span> <span class="err">NotImplementedError</span>
+    <span class="err">if</span> <span class="py">__name__</span> <span class="p">=</span><span class="s">= .__main__.:</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>pyproject.toml</strong>:</p>
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre></td><td class="rouge-code"><pre><span class="nn">[tool.black]</span>
+<span class="py">line-length</span> <span class="p">=</span> <span class="mi">88</span>
+<span class="py">target-version</span> <span class="p">=</span> <span class="p">[</span><span class="s">'py39'</span><span class="p">]</span>
+<span class="py">include</span> <span class="p">=</span> <span class="s">'\.pyi?$'</span>
+<span class="py">extend-exclude</span> <span class="p">=</span> <span class="s">'''
+(
+  /(
+      \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''</span>
+
+<span class="nn">[tool.isort]</span>
+<span class="py">profile</span> <span class="p">=</span> <span class="s">"black"</span>
+<span class="py">line_length</span> <span class="p">=</span> <span class="mi">88</span>
+<span class="py">multi_line_output</span> <span class="p">=</span> <span class="mi">3</span>
+<span class="py">include_trailing_comma</span> <span class="p">=</span> <span class="kc">true</span>
+<span class="py">force_grid_wrap</span> <span class="p">=</span> <span class="mi">0</span>
+<span class="py">use_parentheses</span> <span class="p">=</span> <span class="kc">true</span>
+<span class="py">ensure_newline_before_comments</span> <span class="p">=</span> <span class="kc">true</span>
+
+<span class="nn">[tool.pylint.messages_control]</span>
+<span class="py">disable</span> <span class="p">=</span> <span class="s">"C0330, C0326"</span>
+
+<span class="nn">[tool.pylint.format]</span>
+<span class="py">max-line-length</span> <span class="p">=</span> <span class="s">"88"</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="项目结构">项目结构</h2>
+
+<h3 id="目录组织">📁 目录组织</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+</pre></td><td class="rouge-code"><pre>VIVTransformer/
+├── vivtransformer/              # 主要源代码
+│   ├── __init__.py
+│   ├── models/                  # 模型定义
+│   │   ├── __init__.py
+│   │   ├── base.py             # 基础模型类
+│   │   ├── transformer.py      # Transformer实现
+│   │   └── attention/          # 注意力机制
+│   │       ├── __init__.py
+│   │       ├── multi_head.py
+│   │       ├── sparse.py
+│   │       └── linear.py
+│   ├── data/                   # 数据处理
+│   │   ├── __init__.py
+│   │   ├── datasets.py
+│   │   ├── loaders.py
+│   │   └── transforms.py
+│   ├── training/               # 训练相关
+│   │   ├── __init__.py
+│   │   ├── trainer.py
+│   │   ├── losses.py
+│   │   └── optimizers.py
+│   ├── utils/                  # 工具函数
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   ├── logging.py
+│   │   └── metrics.py
+│   └── cli/                    # 命令行接口
+│       ├── __init__.py
+│       ├── train.py
+│       └── evaluate.py
+├── tests/                      # 测试代码
+│   ├── __init__.py
+│   ├── conftest.py            # pytest配置
+│   ├── unit/                  # 单元测试
+│   │   ├── test_models.py
+│   │   ├── test_attention.py
+│   │   └── test_data.py
+│   ├── integration/           # 集成测试
+│   │   ├── test_training.py
+│   │   └── test_pipeline.py
+│   └── fixtures/              # 测试数据
+│       ├── sample_data.pt
+│       └── test_config.yaml
+├── docs/                      # 文档
+│   ├── source/
+│   │   ├── conf.py
+│   │   ├── index.rst
+│   │   └── api/
+│   └── build/
+├── scripts/                   # 脚本文件
+│   ├── setup_env.sh
+│   ├── run_tests.sh
+│   └── benchmark.py
+├── config/                    # 配置文件
+│   ├── default_config.yaml
+│   ├── training_config.yaml
+│   └── model_configs/
+├── examples/                  # 示例代码
+│   ├── basic_usage.py
+│   ├── custom_attention.py
+│   └── fine_tuning.py
+├── requirements.txt           # 生产依赖
+├── requirements-dev.txt       # 开发依赖
+├── setup.py                   # 安装脚本
+├── pyproject.toml            # 项目配置
+├── README.md                 # 项目说明
+├── CHANGELOG.md              # 变更日志
+├── LICENSE                   # 许可证
+└── .gitignore               # Git忽略文件
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="模块设计原则">🏗️ 模块设计原则</h3>
+
+<h4 id="1-单一职责原则-1-单一职责原则">1. 单一职责原则 {#1-单一职责原则}</h4>
+<p>每个模块应该只有一个改变的理由：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre><span class="c1"># ❌ 错误：一个类承担多个职责 {#错误-一个类承担多个职责}
+</span><span class="k">class</span> <span class="nc">ModelTrainer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>  <span class="c1"># 数据加载职责
+</span>        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>  <span class="c1"># 训练职责
+</span>        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">save_results</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>  <span class="c1"># 结果保存职责
+</span>        <span class="k">pass</span>
+
+<span class="c1"># ✅ 正确：职责分离 {#正确-职责分离}
+</span><span class="k">class</span> <span class="nc">DataLoader</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ModelTrainer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ResultSaver</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">save_results</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="2-开闭原则-2-开闭原则">2. 开闭原则 {#2-开闭原则}</h4>
+<p>对扩展开放，对修改关闭：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+</pre></td><td class="rouge-code"><pre><span class="c1"># 基础注意力接口 {#基础注意力接口}
+</span><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="k">class</span> <span class="nc">AttentionMechanism</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">注意力机制基类</span><span class="sh">"""</span>
+    
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span>
+        <span class="n">self</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">前向传播</span><span class="sh">"""</span>
+        <span class="k">pass</span>
+
+<span class="c1"># 具体实现 {#具体实现}
+</span><span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">AttentionMechanism</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="c1"># 多头注意力实现
+</span>        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">SparseAttention</span><span class="p">(</span><span class="n">AttentionMechanism</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="c1"># 稀疏注意力实现
+</span>        <span class="k">pass</span>
+
+<span class="c1"># 注意力工厂 {#注意力工厂}
+</span><span class="k">class</span> <span class="nc">AttentionFactory</span><span class="p">:</span>
+    <span class="n">_registry</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">multi_head</span><span class="sh">'</span><span class="p">:</span> <span class="n">MultiHeadAttention</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">sparse</span><span class="sh">'</span><span class="p">:</span> <span class="n">SparseAttention</span><span class="p">,</span>
+    <span class="p">}</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">attention_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AttentionMechanism</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">attention_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cls</span><span class="p">.</span><span class="n">_registry</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">未知的注意力类型: </span><span class="si">{</span><span class="n">attention_type</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">cls</span><span class="p">.</span><span class="n">_registry</span><span class="p">[</span><span class="n">attention_type</span><span class="p">](</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">attention_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">注册新的注意力机制</span><span class="sh">"""</span>
+        <span class="n">cls</span><span class="p">.</span><span class="n">_registry</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attention_class</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="3-依赖注入-3-依赖注入">3. 依赖注入 {#3-依赖注入}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">VIVTransformer主模型</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="n">self</span><span class="p">,</span>
+        <span class="n">attention_mechanism</span><span class="p">:</span> <span class="n">AttentionMechanism</span><span class="p">,</span>
+        <span class="n">loss_function</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">,</span>
+        <span class="n">optimizer_factory</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">attention_mechanism</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">loss_fn</span> <span class="o">=</span> <span class="n">loss_function</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">optimizer_factory</span> <span class="o">=</span> <span class="n">optimizer_factory</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        
+        <span class="c1"># 构建模型层
+</span>        <span class="n">self</span><span class="p">.</span><span class="nf">_build_layers</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">_build_layers</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">构建模型层</span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Embedding</span><span class="p">(</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">vocab_size</span><span class="sh">'</span><span class="p">],</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">]</span>
+        <span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">encoder_layers</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">ModuleList</span><span class="p">([</span>
+            <span class="nc">TransformerEncoderLayer</span><span class="p">(</span>
+                <span class="n">d_model</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">],</span>
+                <span class="n">attention</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">attention</span><span class="p">,</span>
+                <span class="n">dropout</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">dropout</span><span class="sh">'</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">num_layers</span><span class="sh">'</span><span class="p">])</span>
+        <span class="p">])</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">output_projection</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">],</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">output_size</span><span class="sh">'</span><span class="p">]</span>
+        <span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="开发流程">开发流程</h2>
+
+<h3 id="git工作流">🔄 Git工作流</h3>
+
+<h4 id="1-分支策略-1-分支策略">1. 分支策略 {#1-分支策略}</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>main                    # 主分支，稳定版本
+├── develop            # 开发分支，集成最新功能
+├── feature/xxx        # 功能分支
+├── bugfix/xxx         # 错误修复分支
+├── hotfix/xxx         # 热修复分支
+└── release/vx.x.x     # 发布分支
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="2-开发流程-2-开发流程">2. 开发流程 {#2-开发流程}</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td><td class="rouge-code"><pre><span class="c"># 1. 从develop创建功能分支 {#1-从develop创建功能分支}</span>
+git checkout develop
+git pull origin develop
+git checkout <span class="nt">-b</span> feature/new-attention-mechanism
+
+<span class="c"># 2. 开发功能 {#2-开发功能}</span>
+<span class="c"># 编写代码... {#编写代码}</span>
+<span class="c"># 编写测试... {#编写测试}</span>
+<span class="c"># 更新文档... {#更新文档}</span>
+
+<span class="c"># 3. 提交代码 {#3-提交代码}</span>
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"feat: 添加新的注意力机制
+
+- 实现稀疏注意力算法
+- 添加相应的单元测试
+- 更新API文档
+
+Closes #123"</span>
+
+<span class="c"># 4. 推送分支 {#4-推送分支}</span>
+git push origin feature/new-attention-mechanism
+
+<span class="c"># 5. 创建Pull Request {#5-创建pull-request}</span>
+<span class="c"># 在GitHub上创建PR，请求合并到develop分支 {#在github上创建pr-请求合并到develop分支}</span>
+
+<span class="c"># 6. 代码审查和合并 {#6-代码审查和合并}</span>
+<span class="c"># 经过代码审查后，合并到develop分支 {#经过代码审查后-合并到develop分支}</span>
+
+<span class="c"># 7. 清理分支 {#7-清理分支}</span>
+git checkout develop
+git pull origin develop
+git branch <span class="nt">-d</span> feature/new-attention-mechanism
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="3-提交信息规范-3-提交信息规范">3. 提交信息规范 {#3-提交信息规范}</h4>
+
+<p><strong>提交信息格式</strong>:</p>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;type&gt;</span>(<span class="nt">&lt;scope&gt;</span>): <span class="nt">&lt;subject&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;footer&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>类型说明</strong>:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">feat</code>: 新功能</li>
+  <li><code class="language-plaintext highlighter-rouge">fix</code>: 错误修复</li>
+  <li><code class="language-plaintext highlighter-rouge">docs</code>: 文档更新</li>
+  <li><code class="language-plaintext highlighter-rouge">style</code>: 代码格式化</li>
+  <li><code class="language-plaintext highlighter-rouge">refactor</code>: 代码重构</li>
+  <li><code class="language-plaintext highlighter-rouge">test</code>: 测试相关</li>
+  <li><code class="language-plaintext highlighter-rouge">chore</code>: 构建过程或辅助工具的变动</li>
+</ul>
+
+<p><strong>示例</strong>:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="rouge-code"><pre><span class="c"># 新功能 {#新功能}</span>
+git commit <span class="nt">-m</span> <span class="s2">"feat(attention): 添加线性注意力机制
+
+实现了O(n)复杂度的线性注意力算法，显著提升长序列处理效率。
+
+- 添加LinearAttention类
+- 实现高效的矩阵运算
+- 添加性能基准测试
+
+Closes #456"</span>
+
+<span class="c"># 错误修复 {#错误修复}</span>
+git commit <span class="nt">-m</span> <span class="s2">"fix(training): 修复梯度累积bug
+
+修复了在使用梯度累积时损失计算错误的问题。
+
+Fixes #789"</span>
+
+<span class="c"># 文档更新 {#文档更新}</span>
+git commit <span class="nt">-m</span> <span class="s2">"docs: 更新API文档
+
+- 添加新注意力机制的使用示例
+- 修正参数说明中的错误
+- 更新性能对比表格"</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="测试驱动开发">🧪 测试驱动开发</h3>
+
+<h4 id="1-tdd流程-1-tdd流程">1. TDD流程 {#1-tdd流程}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 编写失败的测试 {#1-编写失败的测试}
+</span><span class="k">def</span> <span class="nf">test_linear_attention_forward</span><span class="p">():</span>
+    <span class="sh">"""</span><span class="s">测试线性注意力前向传播</span><span class="sh">"""</span>
+    <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">64</span>
+    
+    <span class="n">attention</span> <span class="o">=</span> <span class="nc">LinearAttention</span><span class="p">(</span><span class="n">d_model</span><span class="o">=</span><span class="n">d_model</span><span class="p">)</span>
+    
+    <span class="n">query</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+    
+    <span class="n">output</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="nf">attention</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    
+    <span class="c1"># 检查输出形状
+</span>    <span class="k">assert</span> <span class="n">output</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">weights</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">)</span>
+    
+    <span class="c1"># 检查注意力权重归一化
+</span>    <span class="k">assert</span> <span class="n">torch</span><span class="p">.</span><span class="nf">allclose</span><span class="p">(</span><span class="n">weights</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">torch</span><span class="p">.</span><span class="nf">ones</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">))</span>
+
+<span class="c1"># 2. 运行测试（应该失败） {#2-运行测试-应该失败}
+# pytest tests/test_attention.py::test_linear_attention_forward {#pytest-tests-test-attention-py-test-linear-attention-forward}
+</span>
+<span class="c1"># 3. 编写最小实现 {#3-编写最小实现}
+</span><span class="k">class</span> <span class="nc">LinearAttention</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+        <span class="c1"># 最小实现...
+</span>    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># 最小实现使测试通过
+</span>        <span class="k">pass</span>
+
+<span class="c1"># 4. 运行测试（应该通过） {#4-运行测试-应该通过}
+# 5. 重构代码 {#5-重构代码}
+# 6. 重复循环 {#6-重复循环}
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="2-测试分层-2-测试分层">2. 测试分层 {#2-测试分层}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+</pre></td><td class="rouge-code"><pre><span class="c1"># 单元测试：测试单个函数或类 {#单元测试-测试单个函数或类}
+</span><span class="k">class</span> <span class="nc">TestMultiHeadAttention</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">test_init</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">测试初始化</span><span class="sh">"""</span>
+        <span class="n">attention</span> <span class="o">=</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d_model</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">attention</span><span class="p">.</span><span class="n">d_model</span> <span class="o">==</span> <span class="mi">512</span>
+        <span class="k">assert</span> <span class="n">attention</span><span class="p">.</span><span class="n">num_heads</span> <span class="o">==</span> <span class="mi">8</span>
+        <span class="k">assert</span> <span class="n">attention</span><span class="p">.</span><span class="n">d_k</span> <span class="o">==</span> <span class="mi">64</span>
+    
+    <span class="k">def</span> <span class="nf">test_forward_shape</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">测试前向传播输出形状</span><span class="sh">"""</span>
+        <span class="n">attention</span> <span class="o">=</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d_model</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+        
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>
+        
+        <span class="n">output</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="nf">attention</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        
+        <span class="k">assert</span> <span class="n">output</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">weights</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">)</span>
+    
+    <span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="sh">"</span><span class="s">d_model,num_heads</span><span class="sh">"</span><span class="p">,</span> <span class="p">[</span>
+        <span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">768</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="p">])</span>
+    <span class="k">def</span> <span class="nf">test_different_configs</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">测试不同配置</span><span class="sh">"""</span>
+        <span class="n">attention</span> <span class="o">=</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d_model</span><span class="o">=</span><span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="o">=</span><span class="n">num_heads</span><span class="p">)</span>
+        
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="n">output</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="nf">attention</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        
+        <span class="k">assert</span> <span class="n">output</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">weights</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">)</span>
+
+<span class="c1"># 集成测试：测试组件间交互 {#集成测试-测试组件间交互}
+</span><span class="k">class</span> <span class="nc">TestVIVTransformerIntegration</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">test_end_to_end_training</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">测试端到端训练</span><span class="sh">"""</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">num_heads</span><span class="sh">'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">num_layers</span><span class="sh">'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">vocab_size</span><span class="sh">'</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">output_size</span><span class="sh">'</span><span class="p">:</span> <span class="mi">10</span>
+        <span class="p">}</span>
+        
+        <span class="n">model</span> <span class="o">=</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span>
+        <span class="n">criterion</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">CrossEntropyLoss</span><span class="p">()</span>
+        
+        <span class="c1"># 模拟训练数据
+</span>        <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">20</span>
+        <span class="n">input_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">vocab_size</span><span class="sh">'</span><span class="p">],</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">))</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">output_size</span><span class="sh">'</span><span class="p">],</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,))</span>
+        
+        <span class="c1"># 前向传播
+</span>        <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+        
+        <span class="c1"># 反向传播
+</span>        <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="c1"># 验证训练步骤完成
+</span>        <span class="k">assert</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="nf">all</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">grad</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="测试指南">测试指南</h2>
+
+<h3 id="测试框架">🧪 测试框架</h3>
+
+<h4 id="1-pytest配置-1-pytest配置">1. pytest配置 {#1-pytest配置}</h4>
+
+<p><strong>conftest.py</strong>:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="n">pytest</span>
+<span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="nd">@pytest.fixture</span>
+<span class="k">def</span> <span class="nf">device</span><span class="p">():</span>
+    <span class="sh">"""</span><span class="s">测试设备</span><span class="sh">"""</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="p">.</span><span class="nf">device</span><span class="p">(</span><span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="nd">@pytest.fixture</span>
+<span class="k">def</span> <span class="nf">sample_config</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="sh">"""</span><span class="s">示例配置</span><span class="sh">"""</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">num_heads</span><span class="sh">'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">num_layers</span><span class="sh">'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">vocab_size</span><span class="sh">'</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">output_size</span><span class="sh">'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">dropout</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">max_seq_len</span><span class="sh">'</span><span class="p">:</span> <span class="mi">512</span>
+    <span class="p">}</span>
+
+<span class="nd">@pytest.fixture</span>
+<span class="k">def</span> <span class="nf">sample_data</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">示例数据</span><span class="sh">"""</span>
+    <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">256</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">input_ids</span><span class="sh">'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">)).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span>
+        <span class="sh">'</span><span class="s">attention_mask</span><span class="sh">'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="nf">ones</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span>
+        <span class="sh">'</span><span class="s">labels</span><span class="sh">'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,)).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span>
+        <span class="sh">'</span><span class="s">embeddings</span><span class="sh">'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">autouse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">set_random_seed</span><span class="p">():</span>
+    <span class="sh">"""</span><span class="s">设置随机种子以确保测试可重现</span><span class="sh">"""</span>
+    <span class="n">torch</span><span class="p">.</span><span class="nf">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+        <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">manual_seed_all</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="nd">@pytest.fixture</span>
+<span class="k">def</span> <span class="nf">mock_model</span><span class="p">(</span><span class="n">sample_config</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">模拟模型</span><span class="sh">"""</span>
+    <span class="kn">from</span> <span class="n">vivtransformer.models</span> <span class="kn">import</span> <span class="n">VIVTransformer</span>
+    
+    <span class="n">model</span> <span class="o">=</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">sample_config</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">model</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="2-测试工具函数-2-测试工具函数">2. 测试工具函数 {#2-测试工具函数}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+</pre></td><td class="rouge-code"><pre><span class="c1"># tests/utils.py {#tests-utils-py}
+</span><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="k">def</span> <span class="nf">assert_tensor_equal</span><span class="p">(</span><span class="n">actual</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">rtol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">断言张量相等</span><span class="sh">"""</span>
+    <span class="k">assert</span> <span class="n">actual</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">expected</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="sa">f</span><span class="sh">"</span><span class="s">形状不匹配: </span><span class="si">{</span><span class="n">actual</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="s"> vs </span><span class="si">{</span><span class="n">expected</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span>
+    <span class="k">assert</span> <span class="n">torch</span><span class="p">.</span><span class="nf">allclose</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">),</span> <span class="sh">"</span><span class="s">张量值不相等</span><span class="sh">"</span>
+
+<span class="k">def</span> <span class="nf">assert_tensor_shape</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">expected_shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">断言张量形状</span><span class="sh">"""</span>
+    <span class="k">assert</span> <span class="n">tensor</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">expected_shape</span><span class="p">,</span> <span class="sa">f</span><span class="sh">"</span><span class="s">形状不匹配: </span><span class="si">{</span><span class="n">tensor</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="s"> vs </span><span class="si">{</span><span class="n">expected_shape</span><span class="si">}</span><span class="sh">"</span>
+
+<span class="k">def</span> <span class="nf">assert_no_nan_inf</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">断言张量不包含NaN或Inf</span><span class="sh">"""</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isnan</span><span class="p">(</span><span class="n">tensor</span><span class="p">).</span><span class="nf">any</span><span class="p">(),</span> <span class="sh">"</span><span class="s">张量包含NaN</span><span class="sh">"</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isinf</span><span class="p">(</span><span class="n">tensor</span><span class="p">).</span><span class="nf">any</span><span class="p">(),</span> <span class="sh">"</span><span class="s">张量包含Inf</span><span class="sh">"</span>
+
+<span class="k">def</span> <span class="nf">assert_gradients_exist</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">断言模型参数有梯度</span><span class="sh">"""</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">named_parameters</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">param</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">param</span><span class="p">.</span><span class="n">grad</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">,</span> <span class="sa">f</span><span class="sh">"</span><span class="s">参数 </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> 没有梯度</span><span class="sh">"</span>
+
+<span class="k">def</span> <span class="nf">count_parameters</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">计算模型参数数量</span><span class="sh">"""</span>
+    <span class="k">return</span> <span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ModelTester</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">模型测试辅助类</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+    
+    <span class="k">def</span> <span class="nf">test_forward_pass</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">]):</span>
+        <span class="sh">"""</span><span class="s">测试前向传播</span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+        
+        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">model</span><span class="p">(</span><span class="o">**</span><span class="n">input_data</span><span class="p">)</span>
+        
+        <span class="c1"># 检查输出
+</span>        <span class="nf">assert_no_nan_inf</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">output</span>
+    
+    <span class="k">def</span> <span class="nf">test_backward_pass</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">测试反向传播</span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+        
+        <span class="c1"># 前向传播
+</span>        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">model</span><span class="p">(</span><span class="o">**</span><span class="n">input_data</span><span class="p">)</span>
+        
+        <span class="c1"># 计算损失
+</span>        <span class="n">criterion</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">CrossEntropyLoss</span><span class="p">()</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        
+        <span class="c1"># 反向传播
+</span>        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        
+        <span class="c1"># 检查梯度
+</span>        <span class="nf">assert_gradients_exist</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">loss</span>
+    
+    <span class="k">def</span> <span class="nf">test_model_determinism</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">num_runs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">测试模型确定性</span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+        
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_runs</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">model</span><span class="p">(</span><span class="o">**</span><span class="n">input_data</span><span class="p">)</span>
+                <span class="n">outputs</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">output</span><span class="p">.</span><span class="nf">clone</span><span class="p">())</span>
+        
+        <span class="c1"># 检查所有输出是否相同
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_runs</span><span class="p">):</span>
+            <span class="nf">assert_tensor_equal</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    
+    <span class="k">def</span> <span class="nf">test_model_device_consistency</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">]):</span>
+        <span class="sh">"""</span><span class="s">测试模型设备一致性</span><span class="sh">"""</span>
+        <span class="c1"># 检查模型参数设备
+</span>        <span class="n">model_device</span> <span class="o">=</span> <span class="nf">next</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">()).</span><span class="n">device</span>
+        <span class="k">assert</span> <span class="n">model_device</span> <span class="o">==</span> <span class="n">self</span><span class="p">.</span><span class="n">device</span>
+        
+        <span class="c1"># 检查输入数据设备
+</span>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">tensor</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+            <span class="k">assert</span> <span class="n">tensor</span><span class="p">.</span><span class="n">device</span> <span class="o">==</span> <span class="n">self</span><span class="p">.</span><span class="n">device</span><span class="p">,</span> <span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s"> 不在正确设备上</span><span class="sh">"</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="3-性能测试-3-性能测试">3. 性能测试 {#3-性能测试}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+</pre></td><td class="rouge-code"><pre><span class="c1"># tests/test_performance.py {#tests-test-performance-py}
+</span><span class="kn">import</span> <span class="n">time</span>
+<span class="kn">import</span> <span class="n">pytest</span>
+<span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">from</span> <span class="n">memory_profiler</span> <span class="kn">import</span> <span class="n">profile</span>
+
+<span class="k">class</span> <span class="nc">TestPerformance</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">性能测试</span><span class="sh">"""</span>
+    
+    <span class="nd">@pytest.mark.slow</span>
+    <span class="k">def</span> <span class="nf">test_inference_speed</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">mock_model</span><span class="p">,</span> <span class="n">sample_data</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">测试推理速度</span><span class="sh">"""</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">mock_model</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">[</span><span class="sh">'</span><span class="s">embeddings</span><span class="sh">'</span><span class="p">]</span>
+        
+        <span class="c1"># 预热
+</span>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        
+        <span class="c1"># 同步GPU
+</span>        <span class="k">if</span> <span class="n">device</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span><span class="p">:</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">synchronize</span><span class="p">()</span>
+        
+        <span class="c1"># 测量时间
+</span>        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span>
+        
+        <span class="n">num_runs</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_runs</span><span class="p">):</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">device</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span><span class="p">:</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">synchronize</span><span class="p">()</span>
+        
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span>
+        
+        <span class="n">avg_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_runs</span>
+        <span class="n">throughput</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">avg_time</span>  <span class="c1"># samples/second
+</span>        
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">平均推理时间: </span><span class="si">{</span><span class="n">avg_time</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">ms</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">吞吐量: </span><span class="si">{</span><span class="n">throughput</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> samples/second</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="c1"># 性能断言（根据实际情况调整）
+</span>        <span class="k">assert</span> <span class="n">avg_time</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">,</span> <span class="sa">f</span><span class="sh">"</span><span class="s">推理时间过长: </span><span class="si">{</span><span class="n">avg_time</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">s</span><span class="sh">"</span>
+    
+    <span class="nd">@pytest.mark.slow</span>
+    <span class="k">def</span> <span class="nf">test_memory_usage</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">mock_model</span><span class="p">,</span> <span class="n">sample_data</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">测试内存使用</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="n">device</span><span class="p">.</span><span class="nb">type</span> <span class="o">!=</span> <span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span><span class="p">:</span>
+            <span class="n">pytest</span><span class="p">.</span><span class="nf">skip</span><span class="p">(</span><span class="sh">"</span><span class="s">仅在CUDA设备上测试GPU内存</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="n">model</span> <span class="o">=</span> <span class="n">mock_model</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">[</span><span class="sh">'</span><span class="s">embeddings</span><span class="sh">'</span><span class="p">]</span>
+        
+        <span class="c1"># 清理内存
+</span>        <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">empty_cache</span><span class="p">()</span>
+        <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">reset_peak_memory_stats</span><span class="p">()</span>
+        
+        <span class="c1"># 测量内存使用
+</span>        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        
+        <span class="n">peak_memory</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">max_memory_allocated</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># MB
+</span>        <span class="n">current_memory</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">memory_allocated</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># MB
+</span>        
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">峰值内存使用: </span><span class="si">{</span><span class="n">peak_memory</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">MB</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">当前内存使用: </span><span class="si">{</span><span class="n">current_memory</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">MB</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="c1"># 内存断言（根据实际情况调整）
+</span>        <span class="k">assert</span> <span class="n">peak_memory</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">,</span> <span class="sa">f</span><span class="sh">"</span><span class="s">内存使用过多: </span><span class="si">{</span><span class="n">peak_memory</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">MB</span><span class="sh">"</span>
+    
+    <span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="sh">"</span><span class="s">batch_size</span><span class="sh">"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">test_batch_scaling</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">sample_config</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">测试批次大小扩展性</span><span class="sh">"""</span>
+        <span class="kn">from</span> <span class="n">vivtransformer.models</span> <span class="kn">import</span> <span class="n">VIVTransformer</span>
+        
+        <span class="n">model</span> <span class="o">=</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">sample_config</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        
+        <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">sample_config</span><span class="p">[</span><span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">]</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span>
+        
+        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">device</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span><span class="p">:</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">synchronize</span><span class="p">()</span>
+        
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span>
+        
+        <span class="n">time_per_sample</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="n">batch_size</span>
+        
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">批次大小 </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">time_per_sample</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">ms/sample</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="c1"># 检查输出形状
+</span>        <span class="n">expected_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">sample_config</span><span class="p">[</span><span class="sh">'</span><span class="s">output_size</span><span class="sh">'</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="n">output</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">expected_shape</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="测试覆盖率">📊 测试覆盖率</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c"># 运行测试并生成覆盖率报告 {#运行测试并生成覆盖率报告}</span>
+pytest <span class="nt">--cov</span><span class="o">=</span>vivtransformer <span class="nt">--cov-report</span><span class="o">=</span>html <span class="nt">--cov-report</span><span class="o">=</span>term-missing
+
+<span class="c"># 查看覆盖率报告 {#查看覆盖率报告}</span>
+open htmlcov/index.html
+
+<span class="c"># 设置覆盖率阈值 {#设置覆盖率阈值}</span>
+pytest <span class="nt">--cov</span><span class="o">=</span>vivtransformer <span class="nt">--cov-fail-under</span><span class="o">=</span>80
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="性能优化">性能优化</h2>
+
+<h3 id="性能分析工具">⚡ 性能分析工具</h3>
+
+<h4 id="1-代码性能分析-1-代码性能分析">1. 代码性能分析 {#1-代码性能分析}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="c1"># 使用line_profiler {#使用line-profiler}
+</span><span class="nd">@profile</span>
+<span class="k">def</span> <span class="nf">attention_computation</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">注意力计算函数</span><span class="sh">"""</span>
+    <span class="c1"># 计算注意力分数
+</span>    <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># 缩放
+</span>    <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span> <span class="o">/</span> <span class="n">math</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># Softmax
+</span>    <span class="n">attention_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># 应用到值
+</span>    <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">attention_weights</span>
+
+<span class="c1"># 运行分析 {#运行分析}
+# kernprof -l -v script.py {#kernprof-l-v-script-py}
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="2-内存分析-2-内存分析">2. 内存分析 {#2-内存分析}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="c1"># 使用memory_profiler {#使用memory-profiler}
+</span><span class="kn">from</span> <span class="n">memory_profiler</span> <span class="kn">import</span> <span class="n">profile</span>
+
+<span class="nd">@profile</span>
+<span class="k">def</span> <span class="nf">train_step</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">训练步骤</span><span class="sh">"""</span>
+    <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+    
+    <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    
+    <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+
+<span class="c1"># 运行分析 {#运行分析}
+# python -m memory_profiler script.py {#python-m-memory-profiler-script-py}
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="3-pytorch-profiler-3-pytorch-profiler">3. PyTorch Profiler {#3-pytorch-profiler}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="n">torch.profiler</span>
+
+<span class="k">def</span> <span class="nf">profile_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">使用PyTorch Profiler分析模型</span><span class="sh">"""</span>
+    
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">profiler</span><span class="p">.</span><span class="nf">profile</span><span class="p">(</span>
+        <span class="n">activities</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">profiler</span><span class="p">.</span><span class="n">ProfilerActivity</span><span class="p">.</span><span class="n">CPU</span><span class="p">,</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">profiler</span><span class="p">.</span><span class="n">ProfilerActivity</span><span class="p">.</span><span class="n">CUDA</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="n">schedule</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">profiler</span><span class="p">.</span><span class="nf">schedule</span><span class="p">(</span>
+            <span class="n">wait</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">warmup</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">active</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">),</span>
+        <span class="n">on_trace_ready</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">profiler</span><span class="p">.</span><span class="nf">tensorboard_trace_handler</span><span class="p">(</span><span class="sh">'</span><span class="s">./log/profiler</span><span class="sh">'</span><span class="p">),</span>
+        <span class="n">record_shapes</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">profile_memory</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">with_stack</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">prof</span><span class="p">:</span>
+        
+        <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+            
+            <span class="n">prof</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+    
+    <span class="c1"># 打印关键统计信息
+</span>    <span class="nf">print</span><span class="p">(</span><span class="n">prof</span><span class="p">.</span><span class="nf">key_averages</span><span class="p">().</span><span class="nf">table</span><span class="p">(</span><span class="n">sort_by</span><span class="o">=</span><span class="sh">"</span><span class="s">cuda_time_total</span><span class="sh">"</span><span class="p">,</span> <span class="n">row_limit</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">prof</span>
+
+<span class="c1"># 使用示例 {#使用示例}
+</span><span class="n">prof</span> <span class="o">=</span> <span class="nf">profile_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">sample_input</span><span class="p">)</span>
+
+<span class="c1"># 在TensorBoard中查看结果 {#在tensorboard中查看结果}
+# tensorboard --logdir=./log/profiler {#tensorboard-logdir-log-profiler}
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="优化技巧">🚀 优化技巧</h3>
+
+<h4 id="1-计算优化-1-计算优化">1. 计算优化 {#1-计算优化}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td><td class="rouge-code"><pre><span class="c1"># 使用torch.jit.script优化 {#使用torch-jit-script优化}
+</span><span class="nd">@torch.jit.script</span>
+<span class="k">def</span> <span class="nf">optimized_attention</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">优化的注意力计算</span><span class="sh">"""</span>
+    <span class="c1"># 批量矩阵乘法
+</span>    <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">bmm</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span><span class="p">.</span><span class="nf">masked_fill</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e9</span><span class="p">)</span>
+    
+    <span class="c1"># 使用更快的softmax实现
+</span>    <span class="n">attention_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">bmm</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">attention_weights</span>
+
+<span class="c1"># 使用混合精度训练 {#使用混合精度训练}
+</span><span class="kn">from</span> <span class="n">torch.cuda.amp</span> <span class="kn">import</span> <span class="n">autocast</span><span class="p">,</span> <span class="n">GradScaler</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="nc">GradScaler</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+    <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+    
+    <span class="k">with</span> <span class="nf">autocast</span><span class="p">():</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    
+    <span class="n">scaler</span><span class="p">.</span><span class="nf">scale</span><span class="p">(</span><span class="n">loss</span><span class="p">).</span><span class="nf">backward</span><span class="p">()</span>
+    <span class="n">scaler</span><span class="p">.</span><span class="nf">step</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span>
+    <span class="n">scaler</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="2-内存优化-2-内存优化">2. 内存优化 {#2-内存优化}</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre></td><td class="rouge-code"><pre><span class="c1"># 梯度检查点 {#梯度检查点}
+</span><span class="kn">from</span> <span class="n">torch.utils.checkpoint</span> <span class="kn">import</span> <span class="n">checkpoint</span>
+
+<span class="k">class</span> <span class="nc">MemoryEfficientTransformerLayer</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">attention</span><span class="p">,</span> <span class="n">feed_forward</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">attention</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">feed_forward</span> <span class="o">=</span> <span class="n">feed_forward</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># 使用梯度检查点节省内存
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="nf">checkpoint</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">attention</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nf">checkpoint</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">feed_forward</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+<span class="c1"># 动态批次大小 {#动态批次大小}
+</span><span class="k">class</span> <span class="nc">DynamicBatchSampler</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">4096</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">max_tokens</span> <span class="o">=</span> <span class="n">max_tokens</span>
+    
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">current_tokens</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">dataset</span><span class="p">)):</span>
+            <span class="n">item_tokens</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="sh">'</span><span class="s">input_ids</span><span class="sh">'</span><span class="p">])</span>
+            
+            <span class="k">if</span> <span class="n">current_tokens</span> <span class="o">+</span> <span class="n">item_tokens</span> <span class="o">&gt;</span> <span class="n">self</span><span class="p">.</span><span class="n">max_tokens</span> <span class="ow">and</span> <span class="n">batch</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">batch</span>
+                <span class="n">batch</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">current_tokens</span> <span class="o">=</span> <span class="mi">0</span>
+            
+            <span class="n">batch</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+            <span class="n">current_tokens</span> <span class="o">+=</span> <span class="n">item_tokens</span>
+        
+        <span class="k">if</span> <span class="n">batch</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">batch</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<hr />
+
+<p><strong>💡 开发提示</strong>:</p>
+<ol>
+  <li>始终编写测试先于实现代码</li>
+  <li>保持代码简洁和可读性</li>
+  <li>定期进行代码审查</li>
+  <li>使用类型注解提高代码质量</li>
+  <li>关注性能但不过早优化</li>
+  <li>及时更新文档和注释</li>
+</ol>
+
+<p><strong>🔧 工具推荐</strong>:</p>
+<ul>
+  <li>IDE: VS Code, PyCharm</li>
+  <li>调试: pdb, ipdb</li>
+  <li>性能分析: line_profiler, py-spy</li>
+  <li>可视化: TensorBoard, Weights &amp; Biases</li>
+  <li>协作: GitHub, GitLab</li>
+</ul>
+
+<hr />
+
+<p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
+
+        </div>
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3>🔗 快速链接</h3>
+          <ul class="sidebar-links">
+            <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/faq/">常见问题</a></li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3>📊 项目状态</h3>
+          <div class="project-badges">
+            <img src="https://img.shields.io/github/stars/yourusername/VIVTransformer?style=social" alt="GitHub stars">
+            <img src="https://img.shields.io/github/forks/yourusername/VIVTransformer?style=social" alt="GitHub forks">
+            <img src="https://img.shields.io/github/issues/yourusername/VIVTransformer" alt="GitHub issues">
+            <img src="https://img.shields.io/github/license/yourusername/VIVTransformer" alt="License">
+          </div>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3>💡 需要帮助？</h3>
+          <ul class="help-links">
+            <li><a href="/issues" target="_blank">🐛 报告问题</a></li>
+            <li><a href="/discussions" target="_blank">💬 讨论区</a></li>
+            <li><a href="mailto:1748492875@qq.com">📧 联系我们</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>VIVTransformer</h4>
+            <p>Advanced Transformer Architecture with Vision Integration</p>
+          </div>
+          
+          <div class="footer-section">
+            <h4>文档</h4>
+            <ul>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>社区</h4>
+            <ul>
+              <li><a href="" target="_blank">GitHub</a></li>
+              <li><a href="/issues" target="_blank">Issues</a></li>
+              <li><a href="/discussions" target="_blank">Discussions</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>许可证</h4>
+            <p><a href="/blob/main/LICENSE" target="_blank">MIT License</a></p>
+            <p>© 2025 VIVTransformer Team</p>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>Built with ❤️ using <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+          <p>Last updated: 2025-07-18 11:04</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      // Table of Contents Generator
+      function generateTOC() {
+        const toc = document.getElementById('toc');
+        if (!toc) return;
+        
+        const headings = document.querySelectorAll('.content h2, .content h3, .content h4');
+        if (headings.length === 0) {
+          document.querySelector('.toc-container').style.display = 'none';
+          return;
+        }
+        
+        let tocHTML = '<ul>';
+        headings.forEach((heading, index) => {
+          const id = heading.id || `heading-${index}`;
+          heading.id = id;
+          const level = parseInt(heading.tagName.charAt(1));
+          const indent = level > 2 ? ' style="margin-left: ' + ((level - 2) * 20) + 'px;"' : '';
+          tocHTML += `<li${indent}><a href="#${id}">${heading.textContent}</a></li>`;
+        });
+        tocHTML += '</ul>';
+        toc.innerHTML = tocHTML;
+      }
+      
+      // Smooth scrolling for anchor links
+      function setupSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
+        });
+      }
+      
+      // Initialize when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        generateTOC();
+        setupSmoothScrolling();
+      });
+    </script>
+    
+    
+  </body>
+</html>

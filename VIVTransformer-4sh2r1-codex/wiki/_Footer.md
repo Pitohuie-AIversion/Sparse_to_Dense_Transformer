@@ -20,7 +20,7 @@
 
 ## 📄 文档信息
 
-- **最后更新**: 2024年1月
+- **最后更新**: 2025年7月14日
 - **文档版本**: v1.0
 - **维护者**: VIVTransformer 开发团队
 - **许可证**: [MIT License](https://github.com/your-username/VIVTransformer/blob/main/LICENSE)

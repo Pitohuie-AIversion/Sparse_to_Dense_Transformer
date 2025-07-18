@@ -23,24 +23,12 @@ header_pages:
   - pages/deployment.md
   - pages/api.md
 
-# Collections
-collections:
-  docs:
-    output: true
-    permalink: /:collection/:name/
-
 # Defaults
 defaults:
   - scope:
       path: ""
-      type: "pages"
     values:
       layout: "default"
-  - scope:
-      path: "_docs"
-      type: "docs"
-    values:
-      layout: "doc"
 
 # Kramdown settings
 kramdown:

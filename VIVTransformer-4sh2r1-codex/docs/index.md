@@ -8,6 +8,8 @@ description: Advanced Transformer Architecture with Vision Integration for Vorte
 
 欢迎来到 VIVTransformer 项目文档！这是一个先进的 Transformer 架构，专门用于涡激振动（Vortex-Induced Vibration）分析，集成了视觉处理能力。
 
+*Last updated: $(date)*
+
 ## 🚀 快速开始
 
 - [快速入门教程](pages/quick-start-tutorial.html) - 5分钟上手指南

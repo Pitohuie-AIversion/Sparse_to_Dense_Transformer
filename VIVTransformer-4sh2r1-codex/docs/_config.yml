@@ -4,24 +4,42 @@ description: Advanced Transformer Architecture with Vision Integration
 baseurl: "/Sparse_to_Dense_Transformer"
 url: "https://Pitohuie-AIversion.github.io"
 
-# Use GitHub Pages supported theme
-remote_theme: pages-themes/minimal@v0.2.0
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: jekyll-theme-cayman
 
-# Plugins (GitHub Pages supported)
+# Plugins
 plugins:
-  - jekyll-remote-theme
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
 
-# Build settings
-markdown: kramdown
-highlighter: rouge
+# Navigation
+header_pages:
+  - pages/quick-start.md
+  - pages/architecture.md
+  - pages/training.md
+  - pages/deployment.md
+  - pages/api.md
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
 
 # Kramdown settings
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
 
 # SEO settings
 author:
@@ -33,15 +51,27 @@ social:
   links:
     - https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer
 
-# Show downloads button
-show_downloads: true
+# Google Analytics (可选)
+# google_analytics: UA-XXXXXXXX-X
 
 # Exclude from processing
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
-  - vendor/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
   - README.md
   - LICENSE
   - .gitignore
+
+# Include
+include:
+  - _pages
+
+# Sass
+sass:
+  sass_dir: _sass
+  style: compressed

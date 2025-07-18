@@ -4,7 +4,6 @@ title: Model Design
 parent: Core Documentation
 nav_order: 2
 description: "模型设计原理和架构细节"
-permalink: /pages/model-design/
 ---
 
 # 模型设计原理 {#模型设计原理}

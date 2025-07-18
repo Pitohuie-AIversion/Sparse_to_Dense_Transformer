@@ -7,7 +7,7 @@
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/api-reference/</loc>
 </url>
 <url>
-<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/architecture-overview/</loc>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/architecture-overview.html</loc>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/</loc>
@@ -73,7 +73,7 @@
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/loss-functions/</loc>
 </url>
 <url>
-<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/model-design/</loc>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/model-design.html</loc>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/</loc>

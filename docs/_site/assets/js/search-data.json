@@ -177,79 +177,79 @@
     "doc": "Architecture Overview",
     "title": "项目架构概览",
     "content": "本文档详细介绍VIVTransformer项目的整体架构设计、模块组织和数据流处理。 . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88",
     
-    "relUrl": "/pages/architecture-overview/#项目架构概览"
+    "relUrl": "/pages/architecture-overview.html#项目架构概览"
   },"26": {
     "doc": "Architecture Overview",
     "title": "📋 目录",
     "content": ". | 整体架构 | 核心模块 | 数据流处理 | 配置系统 | 实验管理 | 结果分析 | 扩展性设计 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#%E7%9B%AE%E5%BD%95",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#%E7%9B%AE%E5%BD%95",
     
-    "relUrl": "/pages/architecture-overview/#目录"
+    "relUrl": "/pages/architecture-overview.html#目录"
   },"27": {
     "doc": "Architecture Overview",
     "title": "整体架构",
     "content": "🏗️ 系统架构图 . VIVTransformer Project ├── 📁 modify_multi_attention/ # 核心代码目录 │ ├── 📁 configs/ # 配置文件 │ │ ├── config.yaml # 主配置文件 │ │ └── 📁 loss_configs/ # 损失函数配置 │ ├── 📁 data/ # 数据处理模块 │ │ ├── dataloader.py # 数据加载器 │ │ └── preprocessing.py # 数据预处理 │ ├── 📁 mymodels/ # 模型定义 │ │ ├── 📁 attention/ # 注意力机制实现 │ │ ├── model_factory.py # 模型工厂 │ │ └── vivtransformer.py # 主模型 │ ├── 📁 training/ # 训练模块 │ │ ├── experiment.py # 实验管理 │ │ ├── trainer.py # 训练器 │ │ └── evaluator.py # 评估器 │ ├── 📁 utils/ # 工具模块 │ │ ├── config.py # 配置管理 │ │ ├── logger.py # 日志系统 │ │ ├── svd10_loss.py # SVD损失函数 │ │ └── system.py # 系统工具 │ ├── main.py # 主程序入口 │ └── attention_test.py # 注意力测试 ├── 📁 attention_results/ # 实验结果 └── 📁 wiki/ # 项目文档 . 🔄 架构设计原则 . | 模块化设计：每个功能模块独立，便于维护和扩展 | 配置驱动：通过配置文件控制所有实验参数 | 工厂模式：使用工厂模式创建不同的注意力机制 | 插件化架构：新的注意力机制可以轻松集成 | 分层设计：数据层、模型层、训练层、应用层清晰分离 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84",
     
-    "relUrl": "/pages/architecture-overview/#整体架构"
+    "relUrl": "/pages/architecture-overview.html#整体架构"
   },"28": {
     "doc": "Architecture Overview",
     "title": "核心模块",
     "content": "🎯 1. 主程序模块 (main.py) {#1-主程序模块-main-py} . 职责： . | 解析命令行参数 | 加载配置文件 | 协调各模块执行 | 管理实验流程 | . 关键功能： . def main(config_path=None): # 1. 参数解析 parser = argparse.ArgumentParser() # 2. 配置加载 cfg = load_config(config_path) # 3. 环境设置 set_seed(cfg[\"global\"][\"seed\"]) # 4. 数据准备 train_loader, valid_loader, test_loader = get_loaders(...) # 5. 实验执行 for loss_cfg in loss_configs: for attn_type in ATTENTION_TYPES: run_experiment(...) . 🏭 2. 模型工厂 (mymodels/model_factory.py) {#2-模型工厂-mymodels-model-factory-py} . 职责： . | 创建不同类型的注意力机制 | 管理模型配置 | 提供统一的模型接口 | . 设计模式： . class ModelFactory: @staticmethod def create_attention(attention_type, **kwargs): attention_map = { 'self': SelfAttention, 'muse': MuseAttention, 'ufo': UFOAttention, # ... 其他注意力机制 } return attention_map[attention_type](**kwargs) . 📊 3. 数据处理模块 (data/) {#3-数据处理模块-data} . 组件： . | dataloader.py：数据加载和批处理 | preprocessing.py：数据预处理和增强 | . 特性： . | 支持多种数据格式 | 自动数据增强 | 内存优化的数据加载 | 分布式数据处理 | . def get_loaders(data_path, batch_size, use_augmentation, crop_size): # 数据集创建 dataset = VIVDataset(data_path, crop_size, use_augmentation) # 数据分割 train_set, valid_set, test_set = split_dataset(dataset) # 数据加载器 train_loader = DataLoader(train_set, batch_size, shuffle=True) valid_loader = DataLoader(valid_set, batch_size, shuffle=False) test_loader = DataLoader(test_set, batch_size, shuffle=False) return train_loader, valid_loader, test_loader . 🧠 4. 注意力机制模块 (mymodels/attention/) {#4-注意力机制模块-mymodels-attention} . 架构： . attention/ ├── base_attention.py # 基础注意力接口 ├── self_attention.py # 自注意力 ├── efficient_attention.py # 高效注意力 ├── mobile_attention.py # 移动端注意力 ├── spatial_attention.py # 空间注意力 ├── channel_attention.py # 通道注意力 └── hybrid_attention.py # 混合注意力 . 基础接口： . class BaseAttention(nn.Module): def __init__(self, d_model, num_heads): super().__init__() self.d_model = d_model self.num_heads = num_heads def forward(self, x): raise NotImplementedError def get_attention_weights(self, x): \"\"\"返回注意力权重用于可视化\"\"\" raise NotImplementedError . 🎓 5. 训练模块 (training/) {#5-训练模块-training} . 组件： . | experiment.py：实验管理和协调 | trainer.py：模型训练逻辑 | evaluator.py：模型评估逻辑 | . 实验管理流程： . def run_experiment(cfg, loss_cfg, loss_config_id, attn_type, parent_dir, train_loader, valid_loader, test_loader, device, logger, debug=False): # 1. 创建模型 model = create_model(cfg, attn_type) # 2. 设置损失函数 criterion = TotalLossWithSVD(loss_cfg) # 3. 创建训练器 trainer = Trainer(model, criterion, optimizer) # 4. 执行训练 trainer.train(train_loader, valid_loader) # 5. 模型评估 evaluator = Evaluator(model) test_loss = evaluator.evaluate(test_loader) return test_loss . 🛠️ 6. 工具模块 (utils/) {#6-工具模块-utils} . 组件功能： . | 模块 | 功能 | 关键特性 | . | config.py | 配置管理 | YAML解析、配置验证、默认值处理 | . | logger.py | 日志系统 | 多级日志、文件输出、实时监控 | . | svd10_loss.py | SVD损失 | 奇异值分解、正则化、TopK选择 | . | system.py | 系统工具 | GPU管理、内存控制、随机种子 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97",
     
-    "relUrl": "/pages/architecture-overview/#核心模块"
+    "relUrl": "/pages/architecture-overview.html#核心模块"
   },"29": {
     "doc": "Architecture Overview",
     "title": "数据流处理",
     "content": "📈 数据流图 . 原始数据 → 预处理 → 数据增强 → 批处理 → 模型输入 ↓ 配置文件 → 参数解析 → 模型创建 → 训练循环 ↓ 训练数据 → 前向传播 → 损失计算 → 反向传播 → 参数更新 ↓ 验证数据 → 模型评估 → 性能监控 → 早停判断 ↓ 测试数据 → 最终评估 → 结果保存 → 可视化输出 . 🔄 处理流程详解 . | 数据预处理阶段： # 数据加载 raw_data = torch.load(data_path) # 归一化处理 normalized_data = normalize(raw_data) # 数据增强 if use_augmentation: augmented_data = apply_augmentation(normalized_data) . | 模型前向传播： # 输入处理 x = input_data.to(device) # 注意力计算 attention_output = attention_layer(x) # 特征提取 features = feature_extractor(attention_output) # 输出预测 predictions = output_layer(features) . | 损失计算： # 基础损失 base_loss = criterion(predictions, targets) # SVD正则化 svd_loss = compute_svd_regularization(model_weights) # 总损失 total_loss = base_weight * base_loss + svd_weight * svd_loss . | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%A4%84%E7%90%86",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%A4%84%E7%90%86",
     
-    "relUrl": "/pages/architecture-overview/#数据流处理"
+    "relUrl": "/pages/architecture-overview.html#数据流处理"
   },"30": {
     "doc": "Architecture Overview",
     "title": "配置系统",
     "content": "⚙️ 配置层次结构 . # 全局配置 {#全局配置} global: seed: 42 device: cuda:0 deterministic: true # 数据配置 {#数据配置} data: path: \"/path/to/data\" batch_size: 128 use_augmentation: true # 模型配置 {#模型配置} model: attention_type: self d_model: 256 num_heads: 4 # 训练配置 {#训练配置} training: epochs: 10 learning_rate: 0.0001 early_stop_patience: 10 # 注意力测试配置 {#注意力测试配置} attention_test: types: [self, muse, ufo, ...] . 🔧 配置管理特性 . | 层次化配置：支持嵌套配置结构 | 类型验证：自动验证配置参数类型 | 默认值处理：提供合理的默认配置 | 环境变量支持：支持环境变量覆盖 | 配置继承：支持配置文件继承 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F",
     
-    "relUrl": "/pages/architecture-overview/#配置系统"
+    "relUrl": "/pages/architecture-overview.html#配置系统"
   },"31": {
     "doc": "Architecture Overview",
     "title": "实验管理",
     "content": "🧪 实验组织结构 . attention_results/ ├── loss_config_0/ # 损失配置0 │ ├── self/ # 自注意力实验 │ │ ├── model_best.pth # 最佳模型 │ │ ├── training_log.txt # 训练日志 │ │ ├── config.yaml # 实验配置 │ │ └── attention_vis.png # 注意力可视化 │ ├── muse/ # MUSE注意力实验 │ └── ... ├── loss_config_1/ # 损失配置1 ├── train.log # 全局训练日志 └── failed_attention_log.txt # 失败实验记录 . 📊 实验跟踪 . | 自动化实验：批量执行所有配置组合 | 结果记录：详细记录每个实验的结果 | 失败处理：记录和分析失败的实验 | 进度监控：实时显示实验进度 | 资源管理：智能管理GPU内存和计算资源 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#%E5%AE%9E%E9%AA%8C%E7%AE%A1%E7%90%86",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#%E5%AE%9E%E9%AA%8C%E7%AE%A1%E7%90%86",
     
-    "relUrl": "/pages/architecture-overview/#实验管理"
+    "relUrl": "/pages/architecture-overview.html#实验管理"
   },"32": {
     "doc": "Architecture Overview",
     "title": "结果分析",
     "content": "📈 分析工具 . | TensorBoard集成： # 启动TensorBoard python start_tensorboard.py . | 注意力可视化： def visualize_attention(attention_weights, save_path): plt.figure(figsize=(10, 8)) sns.heatmap(attention_weights, cmap='Blues') plt.savefig(save_path) . | 性能对比： def compare_attention_mechanisms(results_dir): # 加载所有实验结果 results = load_all_results(results_dir) # 生成对比图表 plot_performance_comparison(results) . | . 📊 输出格式 . | 训练曲线：损失和精度随时间变化 | 注意力热图：注意力权重可视化 | 性能对比表：不同机制的性能对比 | 统计报告：详细的实验统计信息 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90",
     
-    "relUrl": "/pages/architecture-overview/#结果分析"
+    "relUrl": "/pages/architecture-overview.html#结果分析"
   },"33": {
     "doc": "Architecture Overview",
     "title": "扩展性设计",
     "content": "🔌 插件化架构 . | 新注意力机制： # 1. 实现注意力类 class NewAttention(BaseAttention): def forward(self, x): # 实现注意力逻辑 pass # 2. 注册到工厂 ModelFactory.register('new_attention', NewAttention) # 3. 添加到配置 attention_test: types: [..., 'new_attention'] . | 新损失函数： class NewLoss(nn.Module): def forward(self, pred, target): # 实现损失逻辑 pass . | 新数据格式： class NewDataset(Dataset): def __getitem__(self, idx): # 实现数据加载逻辑 pass . | . 🚀 性能优化 . | 内存优化： . | 梯度累积 | 混合精度训练 | 动态内存管理 | . | 计算优化： . | 多GPU并行 | 模型并行 | 数据并行 | . | I/O优化： . | 异步数据加载 | 内存映射 | 数据预取 | . | . 🔧 维护性设计 . | 代码质量： . | 类型注解 | 文档字符串 | 单元测试 | . | 错误处理： . | 异常捕获 | 错误恢复 | 日志记录 | . | 版本控制： . | 配置版本化 | 模型版本化 | 结果版本化 | . | . 💡 提示：这个架构设计支持快速添加新的注意力机制和实验配置。如需了解具体实现细节，请参考相应的代码模块。 . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#%E6%89%A9%E5%B1%95%E6%80%A7%E8%AE%BE%E8%AE%A1",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#%E6%89%A9%E5%B1%95%E6%80%A7%E8%AE%BE%E8%AE%A1",
     
-    "relUrl": "/pages/architecture-overview/#扩展性设计"
+    "relUrl": "/pages/architecture-overview.html#扩展性设计"
   },"34": {
     "doc": "Architecture Overview",
     "title": "📚 相关文档",
     "content": ". | Model Design | Implementation Details | Attention Mechanisms | . 需要帮助？查看 FAQ 或 故障排除 页面。 . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/#-%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html#-%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3",
     
-    "relUrl": "/pages/architecture-overview/#-相关文档"
+    "relUrl": "/pages/architecture-overview.html#-相关文档"
   },"35": {
     "doc": "Architecture Overview",
     "title": "Architecture Overview",
     "content": " ",
-    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview/",
+    "url": "/Sparse_to_Dense_Transformer/pages/architecture-overview.html",
     
-    "relUrl": "/pages/architecture-overview/"
+    "relUrl": "/pages/architecture-overview.html"
   },"36": {
     "doc": "Attention Mechanisms Guide",
     "title": "注意力机制完整指南",
@@ -407,7 +407,7 @@
   },"58": {
     "doc": "Basic Concepts",
     "title": "📚 延伸阅读",
-    "content": "📖 推荐资料 . 基础理论 . | 流体力学：《流体力学基础》- Frank M. White | 振动理论：《机械振动》- Singiresu S. Rao | 深度学习：《深度学习》- Ian Goodfellow | . 专业文献 . | VIV综述：”Vortex-induced vibrations” - Williamson &amp; Govardhan (2004) | Transformer：”Attention is All You Need” - Vaswani et al. (2017) | 多模态学习：”Multimodal Deep Learning” - Ngiam et al. (2011) | . 🔗 相关链接 . | PyTorch官方文档 | Transformer详解 | VIV数据库 | 流体力学CFD | . 最后更新：2025-07-18 . ",
+    "content": "📖 推荐资料 . 基础理论 . | 流体力学：《流体力学基础》- Frank M. White | 振动理论：《机械振动》- Singiresu S. Rao | 深度学习：《深度学习》- Ian Goodfellow | . 专业文献 . | VIV综述：”Vortex-induced vibrations” - Williamson &amp; Govardhan (2004) | Transformer：”Attention is All You Need” - Vaswani et al. (2017) | 多模态学习：”Multimodal Deep Learning” - Ngiam et al. (2011) | . 🔗 相关链接 . | PyTorch官方文档 | Transformer详解 | VIV数据库 | 流体力学CFD | . 最后更新：2025-07-19 . ",
     "url": "/Sparse_to_Dense_Transformer/pages/basic-concepts/#%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB",
     
     "relUrl": "/pages/basic-concepts/#延伸阅读"
@@ -1590,7 +1590,7 @@
   },"227": {
     "doc": "Home",
     "title": "📄 许可证",
-    "content": "本项目采用 MIT 许可证。 . 最后更新：2025-07-18 . ",
+    "content": "本项目采用 MIT 许可证。 . 最后更新：2025-07-19 . ",
     "url": "/Sparse_to_Dense_Transformer/#-%E8%AE%B8%E5%8F%AF%E8%AF%81",
     
     "relUrl": "/#-许可证"
@@ -1667,7 +1667,7 @@
   },"238": {
     "doc": "Installation Guide",
     "title": "📞 获取帮助",
-    "content": "如果在安装过程中遇到问题： . | 📖 查看 故障排除指南 | 🐛 提交 GitHub Issue | 💬 参与 讨论区 | 📧 发送邮件至：1748492875@qq.com | . 最后更新：2025-07-18 . ",
+    "content": "如果在安装过程中遇到问题： . | 📖 查看 故障排除指南 | 🐛 提交 GitHub Issue | 💬 参与 讨论区 | 📧 发送邮件至：1748492875@qq.com | . 最后更新：2025-07-19 . ",
     "url": "/Sparse_to_Dense_Transformer/pages/installation-guide/#%E8%8E%B7%E5%8F%96%E5%B8%AE%E5%8A%A9",
     
     "relUrl": "/pages/installation-guide/#获取帮助"
@@ -1752,72 +1752,72 @@
     "doc": "Model Design",
     "title": "模型设计原理",
     "content": "本文档详细介绍VIVTransformer项目的模型设计原理、架构选择和设计决策。 . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/#%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html#%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86",
     
-    "relUrl": "/pages/model-design/#模型设计原理"
+    "relUrl": "/pages/model-design.html#模型设计原理"
   },"251": {
     "doc": "Model Design",
     "title": "📋 目录",
     "content": ". | 设计理念 | 模型架构 | 注意力机制集成 | 损失函数设计 | 优化策略 | 设计权衡 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/#%E7%9B%AE%E5%BD%95",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html#%E7%9B%AE%E5%BD%95",
     
-    "relUrl": "/pages/model-design/#目录"
+    "relUrl": "/pages/model-design.html#目录"
   },"252": {
     "doc": "Model Design",
     "title": "设计理念",
     "content": "🎯 核心设计原则 . | 模块化设计 . | 每个注意力机制独立实现 | 统一的接口标准 | 易于扩展和维护 | . | 可配置性 . | 通过配置文件控制所有参数 | 支持动态模型构建 | 灵活的实验设置 | . | 高效性 . | 优化的计算流程 | 内存使用优化 | 支持分布式训练 | . | 可重现性 . | 确定性随机种子 | 详细的实验记录 | 标准化的评估流程 | . | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/#%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html#%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5",
     
-    "relUrl": "/pages/model-design/#设计理念"
+    "relUrl": "/pages/model-design.html#设计理念"
   },"253": {
     "doc": "Model Design",
     "title": "模型架构",
     "content": "🏗️ 整体架构 . class VIVTransformer(nn.Module): def __init__(self, config): super().__init__() self.input_projection = nn.Linear(input_dim, d_model) self.attention_layers = nn.ModuleList([ AttentionLayer(config) for _ in range(num_layers) ]) self.output_projection = nn.Linear(d_model, output_dim) def forward(self, x): x = self.input_projection(x) for layer in self.attention_layers: x = layer(x) return self.output_projection(x) . 🔧 关键组件 . 1. 输入投影层 {#1-输入投影层} . | 功能: 将输入特征映射到模型维度 | 实现: 线性变换 + 层归一化 | 参数: input_dim → d_model | . 2. 注意力层堆叠 {#2-注意力层堆叠} . | 结构: 多层注意力机制 | 连接: 残差连接 + 层归一化 | 可配置: 层数、注意力类型 | . 3. 输出投影层 {#3-输出投影层} . | 功能: 映射到目标维度 | 实现: 线性变换 | 参数: d_model → output_dim | . 📐 维度设计 . | 组件 | 输入维度 | 输出维度 | 说明 | . | 输入投影 | 400 | d_model | 特征维度映射 | . | 注意力层 | d_model | d_model | 特征变换 | . | 输出投影 | d_model | 40000 | 目标维度 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/#%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html#%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84",
     
-    "relUrl": "/pages/model-design/#模型架构"
+    "relUrl": "/pages/model-design.html#模型架构"
   },"254": {
     "doc": "Model Design",
     "title": "注意力机制集成",
     "content": "🔄 统一接口设计 . class BaseAttention(nn.Module): \"\"\"所有注意力机制的基类\"\"\" def __init__(self, d_model, num_heads, **kwargs): super().__init__() self.d_model = d_model self.num_heads = num_heads def forward(self, x, mask=None): \"\"\"前向传播接口\"\"\" raise NotImplementedError def get_attention_weights(self, x): \"\"\"获取注意力权重用于可视化\"\"\" raise NotImplementedError . 🏭 工厂模式实现 . class AttentionFactory: \"\"\"注意力机制工厂类\"\"\" _registry = { 'self': SelfAttention, 'muse': MuseAttention, 'ufo': UFOAttention, # ... 其他注意力机制 } @classmethod def create(cls, attention_type, **kwargs): if attention_type not in cls._registry: raise ValueError(f\"Unknown attention type: {attention_type}\") return cls._registry[attention_type](**kwargs) . 🔌 动态加载机制 . | 配置解析: 从YAML文件读取注意力类型 | 动态创建: 使用工厂模式创建实例 | 参数传递: 自动传递配置参数 | 错误处理: 优雅的错误提示 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/#%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E9%9B%86%E6%88%90",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html#%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E9%9B%86%E6%88%90",
     
-    "relUrl": "/pages/model-design/#注意力机制集成"
+    "relUrl": "/pages/model-design.html#注意力机制集成"
   },"255": {
     "doc": "Model Design",
     "title": "损失函数设计",
     "content": "📊 多损失组合策略 . class TotalLossWithSVD(nn.Module): def __init__(self, loss_config): super().__init__() self.base_weight = loss_config['base_weight'] self.svd_weights = loss_config['svd_weights'] self.mse_loss = nn.MSELoss() def forward(self, pred, target): # 基础MSE损失 base_loss = self.mse_loss(pred, target) # SVD正则化损失 svd_loss = self.compute_svd_loss(pred) # 组合损失 total_loss = self.base_weight * base_loss + svd_loss return total_loss . 🎯 SVD正则化原理 . | 目标: 控制模型复杂度，防止过拟合 | 方法: 对预测结果进行SVD分解 | 正则化: 惩罚过大的奇异值 | 权重: 可配置的正则化强度 | . 📈 损失配置策略 . | 50种配置: 系统性探索损失空间 | 权重范围: base_weight ∈ [0.1, 1.0] | SVD权重: 10个分量的独立权重 | 自动生成: 脚本化配置生成 | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1",
     
-    "relUrl": "/pages/model-design/#损失函数设计"
+    "relUrl": "/pages/model-design.html#损失函数设计"
   },"256": {
     "doc": "Model Design",
     "title": "优化策略",
     "content": "⚡ 训练优化 . | 优化器选择 . | AdamW: 默认选择，权重衰减 | SGD: 可选，动量优化 | 学习率调度: 余弦退火 | . | 批处理策略 . | 动态批大小: 根据GPU内存调整 | 梯度累积: 模拟大批大小 | 混合精度: 加速训练 | . | 正则化技术 . | Dropout: 防止过拟合 | 层归一化: 稳定训练 | 权重衰减: L2正则化 | . | . 🚀 推理优化 . | 模型压缩 . | 权重剪枝: 移除冗余参数 | 量化: 降低精度要求 | 知识蒸馏: 小模型学习 | . | 计算优化 . | 算子融合: 减少内存访问 | 并行计算: 多线程推理 | 缓存优化: 重用计算结果 | . | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/#%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html#%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5",
     
-    "relUrl": "/pages/model-design/#优化策略"
+    "relUrl": "/pages/model-design.html#优化策略"
   },"257": {
     "doc": "Model Design",
     "title": "设计权衡",
     "content": "⚖️ 性能 vs 精度 . | 方面 | 高性能选择 | 高精度选择 | 权衡策略 | . | 注意力机制 | MUSE, UFO | Self, Relative | 任务导向选择 | . | 模型深度 | 4-6层 | 8-12层 | 渐进式增加 | . | 注意力头数 | 4-8个 | 12-16个 | 动态调整 | . | 批大小 | 256+ | 64-128 | 内存约束 | . 🎯 通用性 vs 专用性 . | 通用设计 . | 统一接口: 支持多种注意力 | 配置驱动: 灵活参数设置 | 模块化: 易于扩展 | . | 专用优化 . | 任务特定: 针对VIV问题优化 | 数据特定: 适配输入输出维度 | 硬件特定: GPU内存优化 | . | . 🔄 开发效率 vs 运行效率 . | 开发友好 . | 清晰的代码结构 | 详细的文档说明 | 完善的测试覆盖 | . | 运行优化 . | 高效的计算实现 | 内存使用优化 | 并行处理支持 | . | . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/#%E8%AE%BE%E8%AE%A1%E6%9D%83%E8%A1%A1",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html#%E8%AE%BE%E8%AE%A1%E6%9D%83%E8%A1%A1",
     
-    "relUrl": "/pages/model-design/#设计权衡"
+    "relUrl": "/pages/model-design.html#设计权衡"
   },"258": {
     "doc": "Model Design",
     "title": "🔮 未来扩展",
     "content": "📈 模型改进方向 . | 新注意力机制 . | 更高效的稀疏注意力 | 自适应注意力模式 | 多模态注意力融合 | . | 架构创新 . | 动态深度网络 | 神经架构搜索 | 可微分架构 | . | 训练策略 . | 自监督预训练 | 对抗训练 | 元学习方法 | . | . 🛠️ 工程改进 . | 性能优化 . | 自定义CUDA算子 | 图优化编译 | 硬件加速支持 | . | 易用性提升 . | 自动超参数调优 | 可视化界面 | 一键部署工具 | . | . 💡 提示: 模型设计是一个迭代过程，需要在性能、精度、通用性等多个维度之间找到最佳平衡点。 . 需要帮助？查看 FAQ 或 故障排除 页面。 . ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/#%E6%9C%AA%E6%9D%A5%E6%89%A9%E5%B1%95",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html#%E6%9C%AA%E6%9D%A5%E6%89%A9%E5%B1%95",
     
-    "relUrl": "/pages/model-design/#未来扩展"
+    "relUrl": "/pages/model-design.html#未来扩展"
   },"259": {
     "doc": "Model Design",
     "title": "Model Design",
     "content": " ",
-    "url": "/Sparse_to_Dense_Transformer/pages/model-design/",
+    "url": "/Sparse_to_Dense_Transformer/pages/model-design.html",
     
-    "relUrl": "/pages/model-design/"
+    "relUrl": "/pages/model-design.html"
   },"260": {
     "doc": "Multi-Loss Strategy",
     "title": "多损失配置策略",

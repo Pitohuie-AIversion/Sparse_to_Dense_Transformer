@@ -4,7 +4,6 @@ title: Architecture Overview
 parent: Core Documentation
 nav_order: 1
 description: "VIVTransformer整体架构设计和核心组件"
-permalink: /pages/architecture-overview/
 ---
 
 # 项目架构概览 {#项目架构概览}

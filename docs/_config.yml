@@ -1,0 +1,47 @@
+# VIVTransformer Documentation Site Configuration
+title: VIVTransformer Documentation
+description: Advanced Transformer Architecture with Vision Integration
+baseurl: "/Sparse_to_Dense_Transformer"
+url: "https://Pitohuie-AIversion.github.io"
+
+# Use GitHub Pages supported theme
+remote_theme: pages-themes/minimal@v0.2.0
+
+# Plugins (GitHub Pages supported)
+plugins:
+  - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Kramdown settings
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# SEO settings
+author:
+  name: Pitohuie
+  email: 1748492875@qq.com
+
+social:
+  name: Pitohuie
+  links:
+    - https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer
+
+# Show downloads button
+show_downloads: true
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/
+  - README.md
+  - LICENSE
+  - .gitignore

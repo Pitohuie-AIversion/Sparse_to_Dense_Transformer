@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Attention Mechanisms Guide | VIVTransformer Documentation</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Attention Mechanisms Guide" />
+<meta name="author" content="Pitohuie" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="多头注意力机制的实现和使用指南" />
+<meta property="og:description" content="多头注意力机制的实现和使用指南" />
+<link rel="canonical" href="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" />
+<meta property="og:url" content="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" />
+<meta property="og:site_name" content="VIVTransformer Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Attention Mechanisms Guide" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"多头注意力机制的实现和使用指南","headline":"Attention Mechanisms Guide","url":"https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
+    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/custom.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/Sparse_to_Dense_Transformer/assets/images/favicon.ico">
+    
+    <!-- Math support -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      <!-- Header -->
+      <header class="site-header">
+        <div class="header-content">
+          <h1 class="site-title">
+            <a href="/Sparse_to_Dense_Transformer/" class="site-title-link">
+              🔬 VIVTransformer Documentation
+            </a>
+          </h1>
+          <p class="site-description">Advanced Transformer Architecture with Vision Integration</p>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="site-nav">
+          <div class="nav-links">
+            <a href="/Sparse_to_Dense_Transformer/" class="nav-link ">🏠 首页</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-link">🚀 快速开始</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-link">🏗️ 架构</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-link">📚 训练</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-link">🚀 部署</a>
+            <a href="" class="nav-link" target="_blank">📦 GitHub</a>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Breadcrumb -->
+      
+      <nav class="breadcrumb">
+        <a href="/Sparse_to_Dense_Transformer/">首页</a>
+        
+        
+        
+          
+        
+          
+            
+            
+              <span class="breadcrumb-separator">></span>
+              <a href="/pages">Pages</a>
+            
+          
+        
+          
+            
+            
+              <span class="breadcrumb-separator">></span>
+              <span class="breadcrumb-current">Attention Mechanisms Guide</span>
+            
+          
+        
+      </nav>
+      
+
+      <!-- Main Content -->
+      <main class="main-content">
+        
+        <div class="page-header">
+          <h1 class="page-title">Attention Mechanisms Guide</h1>
+          
+          <p class="page-description">多头注意力机制的实现和使用指南</p>
+          
+        </div>
+        
+
+        <!-- Table of Contents -->
+        
+        <div class="toc-container">
+          <details class="toc" open>
+            <summary class="toc-title">📋 目录</summary>
+            <div class="toc-content" id="toc"></div>
+          </details>
+        </div>
+        
+
+        <!-- Content -->
+        <div class="content">
+          <h1 id="注意力机制完整指南">注意力机制完整指南</h1>
+
+<p>本指南详细介绍了VIVTransformer项目中支持的38种注意力机制，包括其原理、特点、适用场景和性能表现。</p>
+
+<h2 id="目录">📋 目录</h2>
+
+<ul>
+  <li><a href="#基础注意力机制">基础注意力机制</a></li>
+  <li><a href="#高效注意力机制">高效注意力机制</a></li>
+  <li><a href="#位置感知注意力">位置感知注意力</a></li>
+  <li><a href="#移动端优化注意力">移动端优化注意力</a></li>
+  <li><a href="#高级注意力机制">高级注意力机制</a></li>
+  <li><a href="#通道注意力机制">通道注意力机制</a></li>
+  <li><a href="#空间注意力机制">空间注意力机制</a></li>
+  <li><a href="#混合注意力机制">混合注意力机制</a></li>
+  <li><a href="#其他创新机制">其他创新机制</a></li>
+  <li><a href="#性能对比总结">性能对比总结</a></li>
+</ul>
+
+<h2 id="基础注意力机制">基础注意力机制</h2>
+
+<h3 id="1-self-attention-自注意力-1-self-attention-自注意力">1. Self Attention (自注意力) {#1-self-attention-自注意力}</h3>
+
+<p><strong>原理</strong>：标准的自注意力机制，通过Query、Key、Value三个矩阵计算注意力权重。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nc">Attention</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span> <span class="o">=</span> <span class="nf">softmax</span><span class="p">(</span><span class="n">QK</span><span class="o">^</span><span class="n">T</span> <span class="o">/</span> <span class="err">√</span><span class="n">d_k</span><span class="p">)</span><span class="n">V</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 经典且稳定的注意力机制</li>
+  <li>✅ 理论基础扎实，可解释性强</li>
+  <li>❌ 计算复杂度为O(n²)，对长序列不友好</li>
+  <li>❌ 内存消耗较大</li>
+</ul>
+
+<p><strong>适用场景</strong>：</p>
+<ul>
+  <li>中等长度序列（&lt; 512）</li>
+  <li>需要高精度的任务</li>
+  <li>作为基线模型对比</li>
+</ul>
+
+<h3 id="2-simplified-self-attention-简化自注意力-2-simplified-self-attention-简化自注意力">2. Simplified Self Attention (简化自注意力) {#2-simplified-self-attention-简化自注意力}</h3>
+
+<p><strong>原理</strong>：简化版的自注意力机制，减少了部分计算步骤以提高效率。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 计算效率比标准自注意力高</li>
+  <li>✅ 保持了较好的性能</li>
+  <li>❌ 表达能力略有下降</li>
+</ul>
+
+<p><strong>适用场景</strong>：</p>
+<ul>
+  <li>资源受限的环境</li>
+  <li>需要快速推理的应用</li>
+</ul>
+
+<h2 id="高效注意力机制">高效注意力机制</h2>
+
+<h3 id="3-muse-multi-scale-efficient-attention-3-muse-multi-scale-efficient-attention">3. MUSE (Multi-Scale Efficient Attention) {#3-muse-multi-scale-efficient-attention}</h3>
+
+<p><strong>原理</strong>：多尺度高效注意力，通过不同尺度的特征融合提高效率。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 多尺度特征融合</li>
+  <li>✅ 计算效率高</li>
+  <li>✅ 适合处理多分辨率数据</li>
+</ul>
+
+<p><strong>性能指标</strong>：</p>
+<ul>
+  <li>计算复杂度：O(n log n)</li>
+  <li>内存使用：中等</li>
+  <li>精度保持：90-95%</li>
+</ul>
+
+<h3 id="4-ufo-unified-feature-operation-4-ufo-unified-feature-operation">4. UFO (Unified Feature Operation) {#4-ufo-unified-feature-operation}</h3>
+
+<p><strong>原理</strong>：统一特征操作注意力，通过特征统一处理减少计算开销。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 统一的特征处理流程</li>
+  <li>✅ 减少了冗余计算</li>
+  <li>✅ 易于硬件加速</li>
+</ul>
+
+<h3 id="5-sparse-attention-稀疏注意力-5-sparse-attention-稀疏注意力">5. Sparse Attention (稀疏注意力) {#5-sparse-attention-稀疏注意力}</h3>
+
+<p><strong>原理</strong>：只计算部分注意力权重，通过稀疏化减少计算量。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 大幅减少计算量</li>
+  <li>✅ 适合超长序列</li>
+  <li>❌ 可能丢失部分长距离依赖</li>
+</ul>
+
+<p><strong>稀疏模式</strong>：</p>
+<ul>
+  <li>局部窗口：只关注邻近位置</li>
+  <li>随机采样：随机选择注意力位置</li>
+  <li>结构化稀疏：按特定模式稀疏化</li>
+</ul>
+
+<h3 id="6-lsh-locality-sensitive-hashing-attention-6-lsh-locality-sensitive-hashing-attention">6. LSH (Locality Sensitive Hashing) Attention {#6-lsh-locality-sensitive-hashing-attention}</h3>
+
+<p><strong>原理</strong>：使用局部敏感哈希将相似的查询和键聚类，减少注意力计算。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 亚线性时间复杂度</li>
+  <li>✅ 适合超长序列</li>
+  <li>❌ 哈希冲突可能影响精度</li>
+</ul>
+
+<h2 id="位置感知注意力">位置感知注意力</h2>
+
+<h3 id="7-relative-attention-相对位置注意力-7-relative-attention-相对位置注意力">7. Relative Attention (相对位置注意力) {#7-relative-attention-相对位置注意力}</h3>
+
+<p><strong>原理</strong>：在注意力计算中加入相对位置编码，增强位置感知能力。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">Attention</span> <span class="o">=</span> <span class="nf">softmax</span><span class="p">((</span><span class="n">QK</span><span class="o">^</span><span class="n">T</span> <span class="o">+</span> <span class="n">R</span><span class="p">)</span> <span class="o">/</span> <span class="err">√</span><span class="n">d_k</span><span class="p">)</span><span class="n">V</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 更好的位置感知能力</li>
+  <li>✅ 对序列长度变化鲁棒</li>
+  <li>✅ 适合需要位置信息的任务</li>
+</ul>
+
+<h3 id="8-axial-attention-轴向注意力-8-axial-attention-轴向注意力">8. Axial Attention (轴向注意力) {#8-axial-attention-轴向注意力}</h3>
+
+<p><strong>原理</strong>：分别在不同轴向（如高度、宽度）计算注意力，适合2D数据。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 适合图像等2D数据</li>
+  <li>✅ 计算效率高</li>
+  <li>✅ 保持空间结构信息</li>
+</ul>
+
+<h2 id="移动端优化注意力">移动端优化注意力</h2>
+
+<h3 id="9-mobilevit-attention-9-mobilevit-attention">9. MobileViT Attention {#9-mobilevit-attention}</h3>
+
+<p><strong>原理</strong>：专为移动设备优化的注意力机制，平衡精度和效率。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 移动端友好</li>
+  <li>✅ 低功耗</li>
+  <li>✅ 小模型尺寸</li>
+</ul>
+
+<p><strong>优化策略</strong>：</p>
+<ul>
+  <li>深度可分离卷积</li>
+  <li>通道混洗</li>
+  <li>量化友好设计</li>
+</ul>
+
+<h3 id="10-mobilevitv2-attention-10-mobilevitv2-attention">10. MobileViTv2 Attention {#10-mobilevitv2-attention}</h3>
+
+<p><strong>原理</strong>：MobileViT的改进版本，进一步优化了移动端性能。</p>
+
+<p><strong>改进点</strong>：</p>
+<ul>
+  <li>更高效的特征融合</li>
+  <li>改进的注意力计算</li>
+  <li>更好的量化支持</li>
+</ul>
+
+<h2 id="高级注意力机制">高级注意力机制</h2>
+
+<h3 id="11-emsa-efficient-multi-scale-attention-11-emsa-efficient-multi-scale-attention">11. EMSA (Efficient Multi-Scale Attention) {#11-emsa-efficient-multi-scale-attention}</h3>
+
+<p><strong>原理</strong>：高效多尺度注意力，通过多尺度特征金字塔增强表达能力。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 多尺度特征融合</li>
+  <li>✅ 高效的计算设计</li>
+  <li>✅ 适合多分辨率任务</li>
+</ul>
+
+<h3 id="12-dat-dual-attention-transformer-12-dat-dual-attention-transformer">12. DAT (Dual Attention Transformer) {#12-dat-dual-attention-transformer}</h3>
+
+<p><strong>原理</strong>：双重注意力机制，同时考虑空间和通道维度的注意力。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 空间-通道双重注意力</li>
+  <li>✅ 更强的表达能力</li>
+  <li>❌ 计算开销较大</li>
+</ul>
+
+<h3 id="13-crossformer-attention-13-crossformer-attention">13. CrossFormer Attention {#13-crossformer-attention}</h3>
+
+<p><strong>原理</strong>：跨尺度注意力机制，在不同尺度间建立连接。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 跨尺度信息交互</li>
+  <li>✅ 层次化特征学习</li>
+  <li>✅ 适合多尺度任务</li>
+</ul>
+
+<h3 id="14-moa-mixture-of-attention-14-moa-mixture-of-attention">14. MOA (Mixture of Attention) {#14-moa-mixture-of-attention}</h3>
+
+<p><strong>原理</strong>：混合注意力机制，组合多种注意力模式。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 多种注意力模式融合</li>
+  <li>✅ 自适应权重分配</li>
+  <li>❌ 参数量较大</li>
+</ul>
+
+<h3 id="15-crisscross-attention-15-crisscross-attention">15. CrissCross Attention {#15-crisscross-attention}</h3>
+
+<p><strong>原理</strong>：十字交叉注意力，在水平和垂直方向分别计算注意力。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 适合2D数据</li>
+  <li>✅ 减少计算复杂度</li>
+  <li>✅ 保持全局感受野</li>
+</ul>
+
+<h2 id="通道注意力机制">通道注意力机制</h2>
+
+<h3 id="16-se-squeeze-and-excitation-attention-16-se-squeeze-and-excitation-attention">16. SE (Squeeze-and-Excitation) Attention {#16-se-squeeze-and-excitation-attention}</h3>
+
+<p><strong>原理</strong>：通过全局平均池化和全连接层学习通道权重。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nc">SE</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">=</span> <span class="n">X</span> <span class="err">⊙</span> <span class="n">σ</span><span class="p">(</span><span class="nc">FC</span><span class="p">(</span><span class="nc">GAP</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 简单有效</li>
+  <li>✅ 计算开销小</li>
+  <li>✅ 易于集成</li>
+</ul>
+
+<h3 id="17-sk-selective-kernel-attention-17-sk-selective-kernel-attention">17. SK (Selective Kernel) Attention {#17-sk-selective-kernel-attention}</h3>
+
+<p><strong>原理</strong>：选择性核注意力，动态选择不同大小的卷积核。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 自适应核选择</li>
+  <li>✅ 多尺度特征融合</li>
+  <li>✅ 提高模型表达能力</li>
+</ul>
+
+<h3 id="18-cbam-convolutional-block-attention-module-18-cbam-convolutional-block-attention-module">18. CBAM (Convolutional Block Attention Module) {#18-cbam-convolutional-block-attention-module}</h3>
+
+<p><strong>原理</strong>：结合通道和空间注意力的卷积注意力模块。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 通道+空间双重注意力</li>
+  <li>✅ 即插即用</li>
+  <li>✅ 广泛适用性</li>
+</ul>
+
+<h3 id="19-bam-bottleneck-attention-module-19-bam-bottleneck-attention-module">19. BAM (Bottleneck Attention Module) {#19-bam-bottleneck-attention-module}</h3>
+
+<p><strong>原理</strong>：瓶颈注意力模块，在网络瓶颈处应用注意力。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 专注于关键特征</li>
+  <li>✅ 减少冗余计算</li>
+  <li>✅ 提高特征质量</li>
+</ul>
+
+<h3 id="20-eca-efficient-channel-attention-20-eca-efficient-channel-attention">20. ECA (Efficient Channel Attention) {#20-eca-efficient-channel-attention}</h3>
+
+<p><strong>原理</strong>：高效通道注意力，使用1D卷积替代全连接层。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 参数量少</li>
+  <li>✅ 计算效率高</li>
+  <li>✅ 性能优秀</li>
+</ul>
+
+<h2 id="空间注意力机制">空间注意力机制</h2>
+
+<h3 id="21-psa-point-wise-spatial-attention-21-psa-point-wise-spatial-attention">21. PSA (Point-wise Spatial Attention) {#21-psa-point-wise-spatial-attention}</h3>
+
+<p><strong>原理</strong>：逐点空间注意力，为每个空间位置学习注意力权重。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 精细的空间控制</li>
+  <li>✅ 适合密集预测任务</li>
+  <li>❌ 计算开销较大</li>
+</ul>
+
+<h3 id="22-danet-dual-attention-network-22-danet-dual-attention-network">22. DANet (Dual Attention Network) {#22-danet-dual-attention-network}</h3>
+
+<p><strong>原理</strong>：双重注意力网络，结合位置注意力和通道注意力。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 位置+通道双重注意力</li>
+  <li>✅ 全局上下文建模</li>
+  <li>✅ 适合语义分割</li>
+</ul>
+
+<h3 id="23-cot-contextual-transformer-23-cot-contextual-transformer">23. CoT (Contextual Transformer) {#23-cot-contextual-transformer}</h3>
+
+<p><strong>原理</strong>：上下文变换器，增强局部上下文信息。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 强化局部上下文</li>
+  <li>✅ 保持全局信息</li>
+  <li>✅ 平衡局部-全局关系</li>
+</ul>
+
+<h3 id="24-polarized-attention-24-polarized-attention">24. Polarized Attention {#24-polarized-attention}</h3>
+
+<p><strong>原理</strong>：极化注意力，分别处理不同极化的特征。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 特征极化处理</li>
+  <li>✅ 增强特征区分度</li>
+  <li>✅ 适合细粒度任务</li>
+</ul>
+
+<h2 id="混合注意力机制">混合注意力机制</h2>
+
+<h3 id="25-coatnet-attention-25-coatnet-attention">25. CoAtNet Attention {#25-coatnet-attention}</h3>
+
+<p><strong>原理</strong>：结合卷积和注意力的混合架构。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 卷积+注意力融合</li>
+  <li>✅ 兼顾局部和全局</li>
+  <li>✅ 性能优秀</li>
+</ul>
+
+<h3 id="26-halo-attention-26-halo-attention">26. Halo Attention {#26-halo-attention}</h3>
+
+<p><strong>原理</strong>：光环注意力，在局部窗口周围添加”光环”区域。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 扩展感受野</li>
+  <li>✅ 保持计算效率</li>
+  <li>✅ 适合高分辨率图像</li>
+</ul>
+
+<h3 id="27-a2-attention-augmented-attention-27-a2-attention-augmented-attention">27. A2 (Attention Augmented) Attention {#27-a2-attention-augmented-attention}</h3>
+
+<p><strong>原理</strong>：注意力增强机制，在卷积中加入注意力。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 增强卷积表达能力</li>
+  <li>✅ 保持卷积优势</li>
+  <li>✅ 易于集成</li>
+</ul>
+
+<h3 id="28-parnet-attention-28-parnet-attention">28. ParNet Attention {#28-parnet-attention}</h3>
+
+<p><strong>原理</strong>：并行网络注意力，通过并行分支处理不同类型的注意力。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 并行处理</li>
+  <li>✅ 多类型注意力融合</li>
+  <li>✅ 高效计算</li>
+</ul>
+
+<h3 id="29-external-attention-29-external-attention">29. External Attention {#29-external-attention}</h3>
+
+<p><strong>原理</strong>：外部注意力，使用外部存储的注意力权重。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 参数共享</li>
+  <li>✅ 减少计算量</li>
+  <li>✅ 适合大规模数据</li>
+</ul>
+
+<h3 id="30-aft-attention-free-transformer-30-aft-attention-free-transformer">30. AFT (Attention Free Transformer) {#30-aft-attention-free-transformer}</h3>
+
+<p><strong>原理</strong>：无注意力变换器，使用其他机制替代传统注意力。</p>
+
+<p><strong>特点</strong>：</p>
+<ul>
+  <li>✅ 避免注意力计算</li>
+  <li>✅ 线性复杂度</li>
+  <li>✅ 适合长序列</li>
+</ul>
+
+<h2 id="其他创新机制">其他创新机制</h2>
+
+<h3 id="31-38-其他机制-31-38-其他机制">31-38. 其他机制 {#31-38-其他机制}</h3>
+
+<p>包括GFNet、Shuffle、Residual、S2、Triplet、Coord、Outlook、VIP等创新注意力机制，每种都有其独特的设计理念和适用场景。</p>
+
+<h2 id="性能对比总结">性能对比总结</h2>
+
+<h3 id="计算复杂度对比">计算复杂度对比</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>机制类别</th>
+      <th>时间复杂度</th>
+      <th>空间复杂度</th>
+      <th>适用序列长度</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>基础注意力</td>
+      <td>O(n²)</td>
+      <td>O(n²)</td>
+      <td>&lt; 512</td>
+    </tr>
+    <tr>
+      <td>高效注意力</td>
+      <td>O(n log n)</td>
+      <td>O(n)</td>
+      <td>&lt; 4096</td>
+    </tr>
+    <tr>
+      <td>稀疏注意力</td>
+      <td>O(n√n)</td>
+      <td>O(n)</td>
+      <td>&lt; 16384</td>
+    </tr>
+    <tr>
+      <td>线性注意力</td>
+      <td>O(n)</td>
+      <td>O(n)</td>
+      <td>无限制</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="精度保持率">精度保持率</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>机制类型</th>
+      <th>精度保持率</th>
+      <th>推荐场景</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Self Attention</td>
+      <td>100%</td>
+      <td>基线对比</td>
+    </tr>
+    <tr>
+      <td>Efficient Attention</td>
+      <td>90-95%</td>
+      <td>平衡性能</td>
+    </tr>
+    <tr>
+      <td>Sparse Attention</td>
+      <td>85-90%</td>
+      <td>长序列</td>
+    </tr>
+    <tr>
+      <td>Mobile Attention</td>
+      <td>80-85%</td>
+      <td>移动端</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="选择建议">选择建议</h3>
+
+<ol>
+  <li><strong>高精度需求</strong>：Self, Relative, CBAM</li>
+  <li><strong>效率优先</strong>：MUSE, UFO, Sparse</li>
+  <li><strong>移动端部署</strong>：MobileViT, ECA</li>
+  <li><strong>长序列处理</strong>：LSH, AFT, Sparse</li>
+  <li><strong>图像任务</strong>：Axial, Halo, CoAtNet</li>
+  <li><strong>多尺度任务</strong>：EMSA, CrossFormer</li>
+</ol>
+
+<h2 id="使用建议">🔧 使用建议</h2>
+
+<h3 id="选择流程">选择流程</h3>
+
+<ol>
+  <li><strong>确定任务类型</strong>：分类、检测、分割等</li>
+  <li><strong>评估资源限制</strong>：计算能力、内存、延迟要求</li>
+  <li><strong>分析数据特点</strong>：序列长度、维度、模态</li>
+  <li><strong>选择候选机制</strong>：根据上述分析筛选</li>
+  <li><strong>实验验证</strong>：使用本项目进行对比实验</li>
+</ol>
+
+<h3 id="实验建议">实验建议</h3>
+
+<ol>
+  <li><strong>基线对比</strong>：始终包含Self Attention作为基线</li>
+  <li><strong>多机制测试</strong>：同时测试3-5种候选机制</li>
+  <li><strong>多指标评估</strong>：精度、速度、内存使用</li>
+  <li><strong>消融研究</strong>：分析各组件的贡献</li>
+</ol>
+
+<hr />
+
+<p><strong>💡 提示</strong>：本指南会随着新机制的加入持续更新。如需了解特定机制的详细实现，请参考代码中的相应模块。</p>
+
+<hr />
+
+<p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
+
+        </div>
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3>🔗 快速链接</h3>
+          <ul class="sidebar-links">
+            <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/faq/">常见问题</a></li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3>📊 项目状态</h3>
+          <div class="project-badges">
+            <img src="https://img.shields.io/github/stars/yourusername/VIVTransformer?style=social" alt="GitHub stars">
+            <img src="https://img.shields.io/github/forks/yourusername/VIVTransformer?style=social" alt="GitHub forks">
+            <img src="https://img.shields.io/github/issues/yourusername/VIVTransformer" alt="GitHub issues">
+            <img src="https://img.shields.io/github/license/yourusername/VIVTransformer" alt="License">
+          </div>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3>💡 需要帮助？</h3>
+          <ul class="help-links">
+            <li><a href="/issues" target="_blank">🐛 报告问题</a></li>
+            <li><a href="/discussions" target="_blank">💬 讨论区</a></li>
+            <li><a href="mailto:1748492875@qq.com">📧 联系我们</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>VIVTransformer</h4>
+            <p>Advanced Transformer Architecture with Vision Integration</p>
+          </div>
+          
+          <div class="footer-section">
+            <h4>文档</h4>
+            <ul>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>社区</h4>
+            <ul>
+              <li><a href="" target="_blank">GitHub</a></li>
+              <li><a href="/issues" target="_blank">Issues</a></li>
+              <li><a href="/discussions" target="_blank">Discussions</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>许可证</h4>
+            <p><a href="/blob/main/LICENSE" target="_blank">MIT License</a></p>
+            <p>© 2025 VIVTransformer Team</p>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>Built with ❤️ using <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+          <p>Last updated: 2025-07-18 11:04</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      // Table of Contents Generator
+      function generateTOC() {
+        const toc = document.getElementById('toc');
+        if (!toc) return;
+        
+        const headings = document.querySelectorAll('.content h2, .content h3, .content h4');
+        if (headings.length === 0) {
+          document.querySelector('.toc-container').style.display = 'none';
+          return;
+        }
+        
+        let tocHTML = '<ul>';
+        headings.forEach((heading, index) => {
+          const id = heading.id || `heading-${index}`;
+          heading.id = id;
+          const level = parseInt(heading.tagName.charAt(1));
+          const indent = level > 2 ? ' style="margin-left: ' + ((level - 2) * 20) + 'px;"' : '';
+          tocHTML += `<li${indent}><a href="#${id}">${heading.textContent}</a></li>`;
+        });
+        tocHTML += '</ul>';
+        toc.innerHTML = tocHTML;
+      }
+      
+      // Smooth scrolling for anchor links
+      function setupSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
+        });
+      }
+      
+      // Initialize when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        generateTOC();
+        setupSmoothScrolling();
+      });
+    </script>
+    
+    
+  </body>
+</html>

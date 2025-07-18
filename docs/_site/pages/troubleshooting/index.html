@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Troubleshooting | VIVTransformer Documentation</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Troubleshooting" />
+<meta name="author" content="Pitohuie" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="故障排除和问题解决" />
+<meta property="og:description" content="故障排除和问题解决" />
+<link rel="canonical" href="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/troubleshooting/" />
+<meta property="og:url" content="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/troubleshooting/" />
+<meta property="og:site_name" content="VIVTransformer Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Troubleshooting" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"故障排除和问题解决","headline":"Troubleshooting","url":"https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/troubleshooting/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
+    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/custom.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/Sparse_to_Dense_Transformer/assets/images/favicon.ico">
+    
+    <!-- Math support -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      <!-- Header -->
+      <header class="site-header">
+        <div class="header-content">
+          <h1 class="site-title">
+            <a href="/Sparse_to_Dense_Transformer/" class="site-title-link">
+              🔬 VIVTransformer Documentation
+            </a>
+          </h1>
+          <p class="site-description">Advanced Transformer Architecture with Vision Integration</p>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="site-nav">
+          <div class="nav-links">
+            <a href="/Sparse_to_Dense_Transformer/" class="nav-link ">🏠 首页</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-link">🚀 快速开始</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-link">🏗️ 架构</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-link">📚 训练</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-link">🚀 部署</a>
+            <a href="" class="nav-link" target="_blank">📦 GitHub</a>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Breadcrumb -->
+      
+      <nav class="breadcrumb">
+        <a href="/Sparse_to_Dense_Transformer/">首页</a>
+        
+        
+        
+          
+        
+          
+            
+            
+              <span class="breadcrumb-separator">></span>
+              <a href="/pages">Pages</a>
+            
+          
+        
+          
+            
+            
+              <span class="breadcrumb-separator">></span>
+              <span class="breadcrumb-current">Troubleshooting</span>
+            
+          
+        
+      </nav>
+      
+
+      <!-- Main Content -->
+      <main class="main-content">
+        
+        <div class="page-header">
+          <h1 class="page-title">Troubleshooting</h1>
+          
+          <p class="page-description">故障排除和问题解决</p>
+          
+        </div>
+        
+
+        <!-- Table of Contents -->
+        
+        <div class="toc-container">
+          <details class="toc" open>
+            <summary class="toc-title">📋 目录</summary>
+            <div class="toc-content" id="toc"></div>
+          </details>
+        </div>
+        
+
+        <!-- Content -->
+        <div class="content">
+          <h1 id="故障排除指南">故障排除指南</h1>
+
+<p>本文档提供VIVTransformer项目常见问题的解决方案和调试技巧。</p>
+
+<h2 id="目录">📋 目录</h2>
+
+<ul>
+  <li><a href="#安装问题">安装问题</a></li>
+  <li><a href="#配置问题">配置问题</a></li>
+  <li><a href="#训练问题">训练问题</a></li>
+  <li><a href="#推理问题">推理问题</a></li>
+  <li><a href="#性能问题">性能问题</a></li>
+  <li><a href="#内存问题">内存问题</a></li>
+  <li><a href="#注意力机制问题">注意力机制问题</a></li>
+  <li><a href="#数据处理问题">数据处理问题</a></li>
+  <li><a href="#调试工具">调试工具</a></li>
+  <li><a href="#常见错误代码">常见错误代码</a></li>
+</ul>
+
+<h2 id="安装问题">安装问题</h2>
+
+<h3 id="依赖包安装失败">❌ 依赖包安装失败</h3>
+
+<p><strong>问题描述</strong>: 运行 <code class="language-plaintext highlighter-rouge">pip install -r requirements.txt</code> 时出现错误</p>
+
+<p><strong>常见原因</strong>:</p>
+<ol>
+  <li>Python版本不兼容</li>
+  <li>CUDA版本不匹配</li>
+  <li>网络连接问题</li>
+  <li>权限不足</li>
+</ol>
+
+<p><strong>解决方案</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="c"># 1. 检查Python版本（需要3.8+） {#1-检查python版本-需要3-8}</span>
+python <span class="nt">--version</span>
+
+<span class="c"># 2. 升级pip {#2-升级pip}</span>
+python <span class="nt">-m</span> pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip
+
+<span class="c"># 3. 使用国内镜像源 {#3-使用国内镜像源}</span>
+pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt <span class="nt">-i</span> https://pypi.tuna.tsinghua.edu.cn/simple/
+
+<span class="c"># 4. 分步安装关键依赖 {#4-分步安装关键依赖}</span>
+pip <span class="nb">install </span>torch torchvision torchaudio <span class="nt">--index-url</span> https://download.pytorch.org/whl/cu118
+pip <span class="nb">install </span>transformers
+pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+
+<span class="c"># 5. 使用conda环境（推荐） {#5-使用conda环境-推荐}</span>
+conda create <span class="nt">-n</span> vivtransformer <span class="nv">python</span><span class="o">=</span>3.9
+conda activate vivtransformer
+pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="cuda相关错误">❌ CUDA相关错误</h3>
+
+<p><strong>问题描述</strong>: <code class="language-plaintext highlighter-rouge">RuntimeError: CUDA out of memory</code> 或 <code class="language-plaintext highlighter-rouge">CUDA device not found</code></p>
+
+<p><strong>解决方案</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="c1"># 检查CUDA可用性 {#检查cuda可用性}
+</span><span class="kn">import</span> <span class="n">torch</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">CUDA可用: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">CUDA版本: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="n">version</span><span class="p">.</span><span class="n">cuda</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">GPU数量: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">device_count</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 如果CUDA不可用，强制使用CPU {#如果cuda不可用-强制使用cpu}
+</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">device</span><span class="p">(</span><span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># 清理GPU内存 {#清理gpu内存}
+</span><span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">empty_cache</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>CUDA版本兼容性</strong>:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="c"># 检查系统CUDA版本 {#检查系统cuda版本}</span>
+nvcc <span class="nt">--version</span>
+
+<span class="c"># 安装对应的PyTorch版本 {#安装对应的pytorch版本}</span>
+<span class="c"># CUDA 11.8 {#cuda-11-8}</span>
+pip <span class="nb">install </span>torch torchvision torchaudio <span class="nt">--index-url</span> https://download.pytorch.org/whl/cu118
+
+<span class="c"># CUDA 12.1 {#cuda-12-1}</span>
+pip <span class="nb">install </span>torch torchvision torchaudio <span class="nt">--index-url</span> https://download.pytorch.org/whl/cu121
+
+<span class="c"># CPU版本 {#cpu版本}</span>
+pip <span class="nb">install </span>torch torchvision torchaudio <span class="nt">--index-url</span> https://download.pytorch.org/whl/cpu
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="配置问题">配置问题</h2>
+
+<h3 id="配置文件格式错误">❌ 配置文件格式错误</h3>
+
+<p><strong>问题描述</strong>: <code class="language-plaintext highlighter-rouge">yaml.scanner.ScannerError</code> 或配置解析失败</p>
+
+<p><strong>解决方案</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="c1"># 验证YAML格式 {#验证yaml格式}
+</span><span class="kn">import</span> <span class="n">yaml</span>
+
+<span class="k">def</span> <span class="nf">validate_config</span><span class="p">(</span><span class="n">config_path</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="p">.</span><span class="nf">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">配置文件格式正确</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">config</span>
+    <span class="k">except</span> <span class="n">yaml</span><span class="p">.</span><span class="n">YAMLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">YAML格式错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">配置文件错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="c1"># 使用示例 {#使用示例}
+</span><span class="n">config</span> <span class="o">=</span> <span class="nf">validate_config</span><span class="p">(</span><span class="sh">'</span><span class="s">config/default_config.yaml</span><span class="sh">'</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">请检查配置文件格式</span><span class="sh">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>常见YAML格式问题</strong>:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="c1"># ❌ 错误：缩进不一致 {#错误-缩进不一致}</span>
+<span class="na">model</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">vivtransformer</span>
+   <span class="s">hidden_size</span><span class="err">:</span> <span class="m">512</span>  <span class="c1"># 缩进错误</span>
+
+<span class="c1"># ✅ 正确：统一使用2空格缩进 {#正确-统一使用2空格缩进}</span>
+<span class="na">model</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">vivtransformer</span>
+  <span class="na">hidden_size</span><span class="pi">:</span> <span class="m">512</span>
+
+<span class="c1"># ❌ 错误：冒号后没有空格 {#错误-冒号后没有空格}</span>
+<span class="s">learning_rate:0.001</span>
+
+<span class="c1"># ✅ 正确：冒号后有空格 {#正确-冒号后有空格}</span>
+<span class="na">learning_rate</span><span class="pi">:</span> <span class="m">0.001</span>
+
+<span class="c1"># ❌ 错误：字符串包含特殊字符未加引号 {#错误-字符串包含特殊字符未加引号}</span>
+<span class="na">data_path</span><span class="pi">:</span> <span class="s">C:\Users\data</span>  <span class="c1"># Windows路径</span>
+
+<span class="c1"># ✅ 正确：使用引号或正斜杠 {#正确-使用引号或正斜杠}</span>
+<span class="na">data_path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">C:</span><span class="se">\\</span><span class="s">Users</span><span class="se">\\</span><span class="s">data"</span>
+<span class="c1"># 或 {#或}</span>
+<span class="na">data_path</span><span class="pi">:</span> <span class="s">C:/Users/data</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="参数验证失败">❌ 参数验证失败</h3>
+
+<p><strong>问题描述</strong>: 配置参数超出有效范围或类型错误</p>
+
+<p><strong>解决方案</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+</pre></td><td class="rouge-code"><pre><span class="c1"># 配置验证函数 {#配置验证函数}
+</span><span class="k">def</span> <span class="nf">validate_training_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">验证训练配置</span><span class="sh">"""</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># 检查学习率
+</span>    <span class="n">lr</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">learning_rate</span><span class="sh">'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">or</span> <span class="n">lr</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">学习率必须为正数，当前值: </span><span class="si">{</span><span class="n">lr</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查批次大小
+</span>    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">batch_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">批次大小必须为正整数，当前值: </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查注意力机制
+</span>    <span class="n">attention_type</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">attention_type</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">)</span>
+    <span class="n">valid_attentions</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">standard</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">multi_head</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">sparse</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">linear</span><span class="sh">'</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">attention_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_attentions</span><span class="p">:</span>
+        <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">无效的注意力类型: </span><span class="si">{</span><span class="n">attention_type</span><span class="si">}</span><span class="s">，有效选项: </span><span class="si">{</span><span class="n">valid_attentions</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查设备配置
+</span>    <span class="n">device</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">device</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">device</span> <span class="o">==</span> <span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+        <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sh">"</span><span class="s">配置使用CUDA但CUDA不可用，将自动切换到CPU</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">device</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span>
+    
+    <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">配置验证失败:</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">errors</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  - </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">配置验证通过</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">True</span>
+
+<span class="c1"># 使用示例 {#使用示例}
+</span><span class="k">if</span> <span class="ow">not</span> <span class="nf">validate_training_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">请修正配置文件后重试</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="训练问题">训练问题</h2>
+
+<h3 id="损失不收敛">❌ 损失不收敛</h3>
+
+<p><strong>问题描述</strong>: 训练损失不下降或震荡严重</p>
+
+<p><strong>诊断步骤</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 检查学习率 {#1-检查学习率}
+</span><span class="k">def</span> <span class="nf">diagnose_learning_rate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">lr_range</span><span class="o">=</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">)):</span>
+    <span class="sh">"""</span><span class="s">学习率诊断</span><span class="sh">"""</span>
+    <span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+    
+    <span class="n">lrs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">MSELoss</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>  <span class="c1"># 只测试100个批次
+</span>            <span class="k">break</span>
+        
+        <span class="c1"># 指数增长学习率
+</span>        <span class="n">lr</span> <span class="o">=</span> <span class="n">lr_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">lr_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">lr_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">param_group</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="p">.</span><span class="n">param_groups</span><span class="p">:</span>
+            <span class="n">param_group</span><span class="p">[</span><span class="sh">'</span><span class="s">lr</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">lr</span>
+        
+        <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="n">lrs</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
+        <span class="n">losses</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">())</span>
+    
+    <span class="c1"># 绘制学习率-损失曲线
+</span>    <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">semilogx</span><span class="p">(</span><span class="n">lrs</span><span class="p">,</span> <span class="n">losses</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Learning Rate</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">'</span><span class="s">Learning Rate vs Loss</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="sh">'</span><span class="s">lr_diagnosis.png</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+    
+    <span class="c1"># 找到最优学习率
+</span>    <span class="n">min_loss_idx</span> <span class="o">=</span> <span class="n">losses</span><span class="p">.</span><span class="nf">index</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">losses</span><span class="p">))</span>
+    <span class="n">optimal_lr</span> <span class="o">=</span> <span class="n">lrs</span><span class="p">[</span><span class="n">min_loss_idx</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">建议学习率: </span><span class="si">{</span><span class="n">optimal_lr</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">optimal_lr</span>
+
+<span class="c1"># 2. 检查梯度 {#2-检查梯度}
+</span><span class="k">def</span> <span class="nf">check_gradients</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">检查梯度状态</span><span class="sh">"""</span>
+    <span class="n">total_norm</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">param_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">zero_grad_count</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">named_parameters</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">param</span><span class="p">.</span><span class="n">grad</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">param_norm</span> <span class="o">=</span> <span class="n">param</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nf">norm</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">total_norm</span> <span class="o">+=</span> <span class="n">param_norm</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">param_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+            <span class="k">if</span> <span class="n">param_norm</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">zero_grad_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">警告: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> 的梯度为零</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">警告: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> 没有梯度</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="n">total_norm</span> <span class="o">=</span> <span class="n">total_norm</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">总梯度范数: </span><span class="si">{</span><span class="n">total_norm</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">零梯度参数数量: </span><span class="si">{</span><span class="n">zero_grad_count</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">param_count</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">total_norm</span> <span class="o">&lt;</span> <span class="mf">1e-7</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">⚠️ 梯度过小，可能存在梯度消失问题</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">total_norm</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">⚠️ 梯度过大，可能存在梯度爆炸问题</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">total_norm</span>
+
+<span class="c1"># 3. 数据检查 {#3-数据检查}
+</span><span class="k">def</span> <span class="nf">check_data_distribution</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">检查数据分布</span><span class="sh">"""</span>
+    <span class="n">all_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_targets</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+        <span class="n">all_data</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">all_targets</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">all_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>  <span class="c1"># 只检查前10个批次
+</span>            <span class="k">break</span>
+    
+    <span class="n">data_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">all_data</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">target_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">all_targets</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">数据统计:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  输入范围: [</span><span class="si">{</span><span class="n">data_tensor</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">data_tensor</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  输入均值: </span><span class="si">{</span><span class="n">data_tensor</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  输入标准差: </span><span class="si">{</span><span class="n">data_tensor</span><span class="p">.</span><span class="nf">std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  目标范围: [</span><span class="si">{</span><span class="n">target_tensor</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">target_tensor</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  目标均值: </span><span class="si">{</span><span class="n">target_tensor</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  目标标准差: </span><span class="si">{</span><span class="n">target_tensor</span><span class="p">.</span><span class="nf">std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查是否需要标准化
+</span>    <span class="k">if</span> <span class="nf">abs</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">.</span><span class="nf">mean</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">data_tensor</span><span class="p">.</span><span class="nf">std</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">⚠️ 建议对输入数据进行标准化</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nf">abs</span><span class="p">(</span><span class="n">target_tensor</span><span class="p">.</span><span class="nf">mean</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">target_tensor</span><span class="p">.</span><span class="nf">std</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">⚠️ 建议对目标数据进行标准化</span><span class="sh">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>解决方案</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 调整学习率 {#1-调整学习率}
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">lr_scheduler</span><span class="p">.</span><span class="nc">ReduceLROnPlateau</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="sh">'</span><span class="s">min</span><span class="sh">'</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+
+<span class="c1"># 2. 梯度裁剪 {#2-梯度裁剪}
+</span><span class="n">max_grad_norm</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nf">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">max_grad_norm</span><span class="p">)</span>
+
+<span class="c1"># 3. 权重初始化 {#3-权重初始化}
+</span><span class="k">def</span> <span class="nf">init_weights</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">):</span>
+        <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">xavier_uniform_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">weight</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">m</span><span class="p">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">zeros_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">bias</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">LayerNorm</span><span class="p">):</span>
+        <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">ones_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">weight</span><span class="p">)</span>
+        <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">zeros_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">bias</span><span class="p">)</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">apply</span><span class="p">(</span><span class="n">init_weights</span><span class="p">)</span>
+
+<span class="c1"># 4. 使用预热学习率 {#4-使用预热学习率}
+</span><span class="k">class</span> <span class="nc">WarmupScheduler</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">warmup_steps</span><span class="p">,</span> <span class="n">max_lr</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">warmup_steps</span> <span class="o">=</span> <span class="n">warmup_steps</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">max_lr</span> <span class="o">=</span> <span class="n">max_lr</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">step_count</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">step_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">step_count</span> <span class="o">&lt;=</span> <span class="n">self</span><span class="p">.</span><span class="n">warmup_steps</span><span class="p">:</span>
+            <span class="n">lr</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">max_lr</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">step_count</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">warmup_steps</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lr</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">max_lr</span>
+        
+        <span class="k">for</span> <span class="n">param_group</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">optimizer</span><span class="p">.</span><span class="n">param_groups</span><span class="p">:</span>
+            <span class="n">param_group</span><span class="p">[</span><span class="sh">'</span><span class="s">lr</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">lr</span>
+
+<span class="n">warmup_scheduler</span> <span class="o">=</span> <span class="nc">WarmupScheduler</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">warmup_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">max_lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="过拟合问题">❌ 过拟合问题</h3>
+
+<p><strong>问题描述</strong>: 训练损失下降但验证损失上升</p>
+
+<p><strong>解决方案</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 添加正则化 {#1-添加正则化}
+</span><span class="k">class</span> <span class="nc">RegularizedModel</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">base_model</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">base_model</span> <span class="o">=</span> <span class="n">base_model</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout_rate</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">weight_decay</span> <span class="o">=</span> <span class="n">weight_decay</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">base_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">l2_regularization</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">l2_reg</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="nf">parameters</span><span class="p">():</span>
+            <span class="n">l2_reg</span> <span class="o">+=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">norm</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">weight_decay</span> <span class="o">*</span> <span class="n">l2_reg</span>
+
+<span class="c1"># 2. 早停机制 {#2-早停机制}
+</span><span class="k">class</span> <span class="nc">EarlyStopping</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">min_delta</span><span class="o">=</span><span class="mf">0.001</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">patience</span> <span class="o">=</span> <span class="n">patience</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">min_delta</span> <span class="o">=</span> <span class="n">min_delta</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">best_loss</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">val_loss</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">val_loss</span> <span class="o">&lt;</span> <span class="n">self</span><span class="p">.</span><span class="n">best_loss</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">min_delta</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">best_loss</span> <span class="o">=</span> <span class="n">val_loss</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">counter</span> <span class="o">&gt;=</span> <span class="n">self</span><span class="p">.</span><span class="n">patience</span>
+
+<span class="c1"># 使用示例 {#使用示例}
+</span><span class="n">early_stopping</span> <span class="o">=</span> <span class="nc">EarlyStopping</span><span class="p">(</span><span class="n">patience</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+    <span class="c1"># 训练...
+</span>    <span class="n">val_loss</span> <span class="o">=</span> <span class="nf">validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">val_dataloader</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nf">early_stopping</span><span class="p">(</span><span class="n">val_loss</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">早停在第 </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s"> 轮</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">break</span>
+
+<span class="c1"># 3. 数据增强 {#3-数据增强}
+</span><span class="kn">from</span> <span class="n">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+
+<span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="nc">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">RandomHorizontalFlip</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">RandomRotation</span><span class="p">(</span><span class="n">degrees</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">ColorJitter</span><span class="p">(</span><span class="n">brightness</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="mf">0.2</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+<span class="p">])</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="训练速度慢">❌ 训练速度慢</h3>
+
+<p><strong>问题描述</strong>: 训练时间过长，效率低下</p>
+
+<p><strong>性能优化</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 混合精度训练 {#1-混合精度训练}
+</span><span class="kn">from</span> <span class="n">torch.cuda.amp</span> <span class="kn">import</span> <span class="n">autocast</span><span class="p">,</span> <span class="n">GradScaler</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="nc">GradScaler</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+    <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+    
+    <span class="k">with</span> <span class="nf">autocast</span><span class="p">():</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    
+    <span class="n">scaler</span><span class="p">.</span><span class="nf">scale</span><span class="p">(</span><span class="n">loss</span><span class="p">).</span><span class="nf">backward</span><span class="p">()</span>
+    <span class="n">scaler</span><span class="p">.</span><span class="nf">step</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span>
+    <span class="n">scaler</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+
+<span class="c1"># 2. 数据加载优化 {#2-数据加载优化}
+</span><span class="n">dataloader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nc">DataLoader</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>  <span class="c1"># 增加工作进程
+</span>    <span class="n">pin_memory</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="c1"># 固定内存
+</span>    <span class="n">persistent_workers</span><span class="o">=</span><span class="bp">True</span>  <span class="c1"># 持久化工作进程
+</span><span class="p">)</span>
+
+<span class="c1"># 3. 模型编译（PyTorch 2.0+） {#3-模型编译-pytorch-2-0}
+</span><span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="c1"># 4. 梯度累积 {#4-梯度累积}
+</span><span class="n">accumulation_steps</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="o">/</span> <span class="n">accumulation_steps</span>
+    <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+    
+    <span class="nf">if </span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">accumulation_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+
+<span class="c1"># 5. 检查点保存优化 {#5-检查点保存优化}
+</span><span class="k">def</span> <span class="nf">save_checkpoint</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">epoch</span><span class="sh">'</span><span class="p">:</span> <span class="n">epoch</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">model_state_dict</span><span class="sh">'</span><span class="p">:</span> <span class="n">model</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
+        <span class="sh">'</span><span class="s">optimizer_state_dict</span><span class="sh">'</span><span class="p">:</span> <span class="n">optimizer</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
+        <span class="sh">'</span><span class="s">loss</span><span class="sh">'</span><span class="p">:</span> <span class="n">loss</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">torch</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+
+<span class="c1"># 每N个epoch保存一次 {#每n个epoch保存一次}
+</span><span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="n">save_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nf">save_checkpoint</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="sa">f</span><span class="sh">'</span><span class="s">checkpoint_epoch_</span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s">.pth</span><span class="sh">'</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="推理问题">推理问题</h2>
+
+<h3 id="推理结果异常">❌ 推理结果异常</h3>
+
+<p><strong>问题描述</strong>: 模型推理输出NaN、Inf或不合理的值</p>
+
+<p><strong>诊断和解决</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 检查模型状态 {#1-检查模型状态}
+</span><span class="k">def</span> <span class="nf">check_model_health</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">检查模型健康状态</span><span class="sh">"""</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">named_parameters</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isnan</span><span class="p">(</span><span class="n">param</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">⚠️ 参数 </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> 包含NaN</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isinf</span><span class="p">(</span><span class="n">param</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">⚠️ 参数 </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> 包含Inf</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">param</span><span class="p">.</span><span class="nf">abs</span><span class="p">().</span><span class="nf">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">1e6</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">⚠️ 参数 </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> 数值过大: </span><span class="si">{</span><span class="n">param</span><span class="p">.</span><span class="nf">abs</span><span class="p">().</span><span class="nf">max</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. 安全推理函数 {#2-安全推理函数}
+</span><span class="k">def</span> <span class="nf">safe_inference</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">check_output</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">安全推理，包含异常检测</span><span class="sh">"""</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+    
+    <span class="c1"># 检查输入
+</span>    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isnan</span><span class="p">(</span><span class="n">input_data</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sh">"</span><span class="s">输入数据包含NaN</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isinf</span><span class="p">(</span><span class="n">input_data</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sh">"</span><span class="s">输入数据包含Inf</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">check_output</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isnan</span><span class="p">(</span><span class="n">output</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+                    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">⚠️ 输出包含NaN</span><span class="sh">"</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">None</span>
+                <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isinf</span><span class="p">(</span><span class="n">output</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+                    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">⚠️ 输出包含Inf</span><span class="sh">"</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">None</span>
+            
+            <span class="k">return</span> <span class="n">output</span>
+            
+        <span class="k">except</span> <span class="nb">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">推理错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+<span class="c1"># 3. 输出范围检查 {#3-输出范围检查}
+</span><span class="k">def</span> <span class="nf">validate_output_range</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">expected_range</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">验证输出范围</span><span class="sh">"""</span>
+    <span class="k">if</span> <span class="n">expected_range</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">expected_range</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># 默认合理范围
+</span>    
+    <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span> <span class="o">=</span> <span class="n">expected_range</span>
+    
+    <span class="k">if</span> <span class="n">output</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">min_val</span> <span class="ow">or</span> <span class="n">output</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">max_val</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">⚠️ 输出超出预期范围 </span><span class="si">{</span><span class="n">expected_range</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">实际范围: [</span><span class="si">{</span><span class="n">output</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">output</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    
+    <span class="k">return</span> <span class="bp">True</span>
+
+<span class="c1"># 使用示例 {#使用示例}
+</span><span class="n">output</span> <span class="o">=</span> <span class="nf">safe_inference</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_data</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nf">validate_output_range</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">推理结果正常</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">推理结果异常</span><span class="sh">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="推理速度慢">❌ 推理速度慢</h3>
+
+<p><strong>优化方案</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 模型量化 {#1-模型量化}
+</span><span class="kn">import</span> <span class="n">torch.quantization</span> <span class="k">as</span> <span class="n">quantization</span>
+
+<span class="c1"># 动态量化 {#动态量化}
+</span><span class="n">quantized_model</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">quantization</span><span class="p">.</span><span class="nf">quantize_dynamic</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="p">{</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">},</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">qint8</span>
+<span class="p">)</span>
+
+<span class="c1"># 2. 模型剪枝 {#2-模型剪枝}
+</span><span class="kn">import</span> <span class="n">torch.nn.utils.prune</span> <span class="k">as</span> <span class="n">prune</span>
+
+<span class="c1"># 结构化剪枝 {#结构化剪枝}
+</span><span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">modules</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">):</span>
+        <span class="n">prune</span><span class="p">.</span><span class="nf">l1_unstructured</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">'</span><span class="s">weight</span><span class="sh">'</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># 3. 批量推理 {#3-批量推理}
+</span><span class="k">def</span> <span class="nf">batch_inference</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_list</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">批量推理</span><span class="sh">"""</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">data_list</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">data_list</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">batch_size</span><span class="p">]</span>
+        <span class="n">batch_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">stack</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        
+        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+            <span class="n">batch_output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">batch_tensor</span><span class="p">)</span>
+            <span class="n">results</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="n">batch_output</span><span class="p">.</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">())</span>
+    
+    <span class="k">return</span> <span class="n">results</span>
+
+<span class="c1"># 4. TorchScript优化 {#4-torchscript优化}
+</span><span class="n">scripted_model</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">jit</span><span class="p">.</span><span class="nf">script</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">scripted_model</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="sh">'</span><span class="s">optimized_model.pt</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># 加载优化模型 {#加载优化模型}
+</span><span class="n">optimized_model</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">jit</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">'</span><span class="s">optimized_model.pt</span><span class="sh">'</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="内存问题">内存问题</h2>
+
+<h3 id="gpu内存不足">❌ GPU内存不足</h3>
+
+<p><strong>问题描述</strong>: <code class="language-plaintext highlighter-rouge">CUDA out of memory</code></p>
+
+<p><strong>解决方案</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 内存监控 {#1-内存监控}
+</span><span class="k">def</span> <span class="nf">monitor_gpu_memory</span><span class="p">():</span>
+    <span class="sh">"""</span><span class="s">监控GPU内存使用</span><span class="sh">"""</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+        <span class="n">allocated</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">memory_allocated</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">3</span>  <span class="c1"># GB
+</span>        <span class="n">reserved</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">memory_reserved</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">3</span>   <span class="c1"># GB
+</span>        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">GPU内存 - 已分配: </span><span class="si">{</span><span class="n">allocated</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">GB, 已保留: </span><span class="si">{</span><span class="n">reserved</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">GB</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">CUDA不可用</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. 内存清理 {#2-内存清理}
+</span><span class="k">def</span> <span class="nf">clear_gpu_memory</span><span class="p">():</span>
+    <span class="sh">"""</span><span class="s">清理GPU内存</span><span class="sh">"""</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+        <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">empty_cache</span><span class="p">()</span>
+        <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">synchronize</span><span class="p">()</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">GPU内存已清理</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 3. 梯度检查点 {#3-梯度检查点}
+</span><span class="kn">from</span> <span class="n">torch.utils.checkpoint</span> <span class="kn">import</span> <span class="n">checkpoint</span>
+
+<span class="k">class</span> <span class="nc">CheckpointedModel</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># 使用梯度检查点节省内存
+</span>        <span class="k">return</span> <span class="nf">checkpoint</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 4. 动态批次大小 {#4-动态批次大小}
+</span><span class="k">def</span> <span class="nf">find_optimal_batch_size</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">找到最优批次大小</span><span class="sh">"""</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">batch_size</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_batch_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># 创建测试输入
+</span>            <span class="n">test_input</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">*</span><span class="n">input_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+                <span class="n">test_input</span> <span class="o">=</span> <span class="n">test_input</span><span class="p">.</span><span class="nf">cuda</span><span class="p">()</span>
+                <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">cuda</span><span class="p">()</span>
+            
+            <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">test_input</span><span class="p">)</span>
+            
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">批次大小 </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s"> 可用</span><span class="sh">"</span><span class="p">)</span>
+            
+        <span class="k">except</span> <span class="nb">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="sh">"</span><span class="s">out of memory</span><span class="sh">"</span> <span class="ow">in</span> <span class="nf">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">批次大小 </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s"> 内存不足</span><span class="sh">"</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">batch_size</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+        
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="nf">clear_gpu_memory</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">max_batch_size</span>
+
+<span class="c1"># 5. 内存高效的数据加载 {#5-内存高效的数据加载}
+</span><span class="k">class</span> <span class="nc">MemoryEfficientDataset</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">data_paths</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">data_paths</span> <span class="o">=</span> <span class="n">data_paths</span>
+    
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">data_paths</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="c1"># 动态加载数据，而不是预加载到内存
+</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">data_paths</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+<span class="c1"># 使用示例 {#使用示例}
+</span><span class="n">optimal_batch_size</span> <span class="o">=</span> <span class="nf">find_optimal_batch_size</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">建议批次大小: </span><span class="si">{</span><span class="n">optimal_batch_size</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="注意力机制问题">注意力机制问题</h2>
+
+<h3 id="注意力权重异常">❌ 注意力权重异常</h3>
+
+<p><strong>问题描述</strong>: 注意力权重全为0、全为1或分布不合理</p>
+
+<p><strong>诊断和修复</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 注意力权重诊断 {#1-注意力权重诊断}
+</span><span class="k">def</span> <span class="nf">diagnose_attention_weights</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">诊断注意力权重</span><span class="sh">"""</span>
+    <span class="c1"># attention_weights: [batch_size, num_heads, seq_len, seq_len]
+</span>    
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">注意力权重诊断:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  形状: </span><span class="si">{</span><span class="n">attention_weights</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  范围: [</span><span class="si">{</span><span class="n">attention_weights</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">attention_weights</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  均值: </span><span class="si">{</span><span class="n">attention_weights</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  标准差: </span><span class="si">{</span><span class="n">attention_weights</span><span class="p">.</span><span class="nf">std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查是否包含NaN或Inf
+</span>    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isnan</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">⚠️ 注意力权重包含NaN</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isinf</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">⚠️ 注意力权重包含Inf</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查是否正确归一化
+</span>    <span class="n">row_sums</span> <span class="o">=</span> <span class="n">attention_weights</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="p">.</span><span class="nf">allclose</span><span class="p">(</span><span class="n">row_sums</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="nf">ones_like</span><span class="p">(</span><span class="n">row_sums</span><span class="p">),</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">⚠️ 注意力权重未正确归一化</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  行和范围: [</span><span class="si">{</span><span class="n">row_sums</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">row_sums</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查稀疏性
+</span>    <span class="n">zero_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">attention_weights</span> <span class="o">==</span> <span class="mi">0</span><span class="p">).</span><span class="nf">float</span><span class="p">().</span><span class="nf">mean</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  零值比例: </span><span class="si">{</span><span class="n">zero_ratio</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查对角线优势（自注意力）
+</span>    <span class="k">if</span> <span class="n">attention_weights</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">attention_weights</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">diag_values</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">diagonal</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">,</span> <span class="n">dim1</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim2</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">diag_mean</span> <span class="o">=</span> <span class="n">diag_values</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span>
+        <span class="n">off_diag_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">attention_weights</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="n">diag_values</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">attention_weights</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">attention_weights</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  对角线均值: </span><span class="si">{</span><span class="n">diag_mean</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  非对角线均值: </span><span class="si">{</span><span class="n">off_diag_mean</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. 修复注意力计算 {#2-修复注意力计算}
+</span><span class="k">class</span> <span class="nc">RobustAttention</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">d_k</span> <span class="o">=</span> <span class="n">d_model</span> <span class="o">//</span> <span class="n">num_heads</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">w_q</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">w_k</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">w_v</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">w_o</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">layer_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nc">LayerNorm</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span> <span class="o">=</span> <span class="n">query</span><span class="p">.</span><span class="n">shape</span>
+        
+        <span class="c1"># 线性变换
+</span>        <span class="n">Q</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">w_q</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">).</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">w_k</span><span class="p">(</span><span class="n">key</span><span class="p">).</span><span class="nf">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">).</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">w_v</span><span class="p">(</span><span class="n">value</span><span class="p">).</span><span class="nf">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">).</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        
+        <span class="c1"># 计算注意力分数
+</span>        <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">)</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">temperature</span><span class="p">)</span>
+        
+        <span class="c1"># 应用掩码
+</span>        <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span><span class="p">.</span><span class="nf">masked_fill</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e9</span><span class="p">)</span>
+        
+        <span class="c1"># 稳定的softmax
+</span>        <span class="n">attention_weights</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">stable_softmax</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        
+        <span class="c1"># 应用dropout
+</span>        <span class="n">attention_weights</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">dropout</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">)</span>
+        
+        <span class="c1"># 计算输出
+</span>        <span class="n">context</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">contiguous</span><span class="p">().</span><span class="nf">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">w_o</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        
+        <span class="c1"># 残差连接和层归一化
+</span>        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">layer_norm</span><span class="p">(</span><span class="n">output</span> <span class="o">+</span> <span class="n">query</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">attention_weights</span>
+    
+    <span class="k">def</span> <span class="nf">stable_softmax</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">数值稳定的softmax</span><span class="sh">"""</span>
+        <span class="c1"># 减去最大值以提高数值稳定性
+</span>        <span class="n">x_max</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">x_stable</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x_max</span>
+        
+        <span class="c1"># 计算softmax
+</span>        <span class="n">exp_x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">x_stable</span><span class="p">)</span>
+        <span class="n">sum_exp_x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">exp_x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># 避免除零
+</span>        <span class="n">sum_exp_x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">clamp</span><span class="p">(</span><span class="n">sum_exp_x</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">exp_x</span> <span class="o">/</span> <span class="n">sum_exp_x</span>
+
+<span class="c1"># 3. 注意力可视化 {#3-注意力可视化}
+</span><span class="k">def</span> <span class="nf">visualize_attention</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="sh">'</span><span class="s">attention_heatmap.png</span><span class="sh">'</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">可视化注意力权重</span><span class="sh">"""</span>
+    <span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+    <span class="kn">import</span> <span class="n">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+    
+    <span class="c1"># 取第一个样本的第一个头
+</span>    <span class="n">att_matrix</span> <span class="o">=</span> <span class="n">attention_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
+    
+    <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">sns</span><span class="p">.</span><span class="nf">heatmap</span><span class="p">(</span><span class="n">att_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="sh">'</span><span class="s">Blues</span><span class="sh">'</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">'</span><span class="s">Attention Weights Heatmap</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Key Position</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Query Position</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="sh">'</span><span class="s">tight</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">注意力热图已保存到: </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="调试工具">调试工具</h2>
+
+<h3 id="调试辅助函数">🔧 调试辅助函数</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+</pre></td><td class="rouge-code"><pre><span class="c1"># 1. 模型结构检查 {#1-模型结构检查}
+</span><span class="k">def</span> <span class="nf">print_model_structure</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">打印模型结构和参数信息</span><span class="sh">"""</span>
+    <span class="kn">from</span> <span class="n">torchsummary</span> <span class="kn">import</span> <span class="n">summary</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">模型结构:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">summary</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">详细参数信息:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">total_params</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">trainable_params</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">named_parameters</span><span class="p">():</span>
+        <span class="n">param_count</span> <span class="o">=</span> <span class="n">param</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span>
+        <span class="n">total_params</span> <span class="o">+=</span> <span class="n">param_count</span>
+        
+        <span class="k">if</span> <span class="n">param</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">:</span>
+            <span class="n">trainable_params</span> <span class="o">+=</span> <span class="n">param_count</span>
+        
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="mi">50</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="nf">str</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span><span class="si">:</span><span class="mi">20</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">param_count</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">10</span><span class="p">,</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="sh">'</span><span class="s">✓</span><span class="sh">'</span> <span class="k">if</span> <span class="n">param</span><span class="p">.</span><span class="n">requires_grad</span> <span class="k">else</span> <span class="sh">'</span><span class="s">✗</span><span class="sh">'</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">总参数量: </span><span class="si">{</span><span class="n">total_params</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">可训练参数: </span><span class="si">{</span><span class="n">trainable_params</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">不可训练参数: </span><span class="si">{</span><span class="n">total_params</span> <span class="o">-</span> <span class="n">trainable_params</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. 训练监控 {#2-训练监控}
+</span><span class="k">class</span> <span class="nc">TrainingMonitor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">log_interval</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">log_interval</span> <span class="o">=</span> <span class="n">log_interval</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">learning_rates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">gradient_norms</span> <span class="o">=</span> <span class="p">[]</span>
+        
+    <span class="k">def</span> <span class="nf">log_step</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">grad_norm</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">losses</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">learning_rates</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">gradient_norms</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">grad_norm</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">losses</span><span class="p">)</span> <span class="o">%</span> <span class="n">self</span><span class="p">.</span><span class="n">log_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">avg_loss</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">losses</span><span class="p">[</span><span class="o">-</span><span class="n">self</span><span class="p">.</span><span class="n">log_interval</span><span class="p">:])</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">log_interval</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">步骤 </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">losses</span><span class="p">)</span><span class="si">}</span><span class="s">: 平均损失=</span><span class="si">{</span><span class="n">avg_loss</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, 学习率=</span><span class="si">{</span><span class="n">lr</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">, 梯度范数=</span><span class="si">{</span><span class="n">grad_norm</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">plot_metrics</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="sh">'</span><span class="s">training_metrics.png</span><span class="sh">'</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+        
+        <span class="c1"># 损失曲线
+</span>        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">plot</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">losses</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Training Loss</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Step</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># 学习率曲线
+</span>        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">plot</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">learning_rates</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Learning Rate</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Step</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">LR</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">set_yscale</span><span class="p">(</span><span class="sh">'</span><span class="s">log</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># 梯度范数
+</span>        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">plot</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">gradient_norms</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Gradient Norm</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Step</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Norm</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># 损失分布
+</span>        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">hist</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">losses</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss Distribution</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Frequency</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">].</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="sh">'</span><span class="s">tight</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+
+<span class="c1"># 3. 数据检查工具 {#3-数据检查工具}
+</span><span class="k">def</span> <span class="nf">check_dataset_health</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">检查数据集健康状态</span><span class="sh">"""</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">检查数据集健康状态（样本数: </span><span class="si">{</span><span class="n">num_samples</span><span class="si">}</span><span class="s">）...</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="n">issues</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            
+            <span class="c1"># 检查数据类型
+</span>            <span class="k">if</span> <span class="ow">not</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">):</span>
+                <span class="n">issues</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">样本 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: 数据不是Tensor类型</span><span class="sh">"</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">):</span>
+                <span class="n">issues</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">样本 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: 标签不是Tensor类型</span><span class="sh">"</span><span class="p">)</span>
+            
+            <span class="c1"># 检查NaN和Inf
+</span>            <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+                <span class="n">issues</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">样本 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: 数据包含NaN</span><span class="sh">"</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isinf</span><span class="p">(</span><span class="n">data</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+                <span class="n">issues</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">样本 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: 数据包含Inf</span><span class="sh">"</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isnan</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+                <span class="n">issues</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">样本 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: 标签包含NaN</span><span class="sh">"</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="nf">isinf</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">any</span><span class="p">():</span>
+                <span class="n">issues</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">样本 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: 标签包含Inf</span><span class="sh">"</span><span class="p">)</span>
+            
+        <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">issues</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">样本 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: 加载失败 - </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">issues</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">发现 </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span><span class="si">}</span><span class="s"> 个问题:</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">issues</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>  <span class="c1"># 只显示前10个问题
+</span>            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  - </span><span class="si">{</span><span class="n">issue</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  ... 还有 </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span><span class="si">}</span><span class="s"> 个问题</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">✅ 数据集健康状态良好</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="nf">len</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="常见错误代码">常见错误代码</h2>
+
+<h3 id="错误代码对照表">📋 错误代码对照表</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>错误代码</th>
+      <th>错误描述</th>
+      <th>可能原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CUDA_ERROR_OUT_OF_MEMORY</code></td>
+      <td>GPU内存不足</td>
+      <td>批次大小过大、模型过大</td>
+      <td>减小批次大小、使用梯度累积</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">RuntimeError: Expected all tensors to be on the same device</code></td>
+      <td>设备不匹配</td>
+      <td>模型和数据在不同设备</td>
+      <td>确保模型和数据在同一设备</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ValueError: Target size mismatch</code></td>
+      <td>目标尺寸不匹配</td>
+      <td>输出和标签维度不一致</td>
+      <td>检查模型输出维度和标签格式</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">KeyError: 'attention_type'</code></td>
+      <td>配置键缺失</td>
+      <td>配置文件缺少必要参数</td>
+      <td>补充配置文件或使用默认值</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ImportError: No module named 'xxx'</code></td>
+      <td>模块导入失败</td>
+      <td>依赖包未安装</td>
+      <td>安装缺失的依赖包</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FileNotFoundError</code></td>
+      <td>文件未找到</td>
+      <td>路径错误或文件不存在</td>
+      <td>检查文件路径和权限</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">yaml.scanner.ScannerError</code></td>
+      <td>YAML格式错误</td>
+      <td>配置文件格式不正确</td>
+      <td>检查YAML语法和缩进</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">torch.nn.modules.module.ModuleAttributeError</code></td>
+      <td>模块属性错误</td>
+      <td>模型结构定义错误</td>
+      <td>检查模型定义和属性名称</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="快速诊断脚本">🔍 快速诊断脚本</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+</pre></td><td class="rouge-code"><pre><span class="c1">#!/usr/bin/env python3
+# -*- coding: utf-8 -*- {#coding-utf-8}
+</span><span class="sh">"""</span><span class="s">
+快速诊断脚本
+用于检查VIVTransformer项目的常见问题
+</span><span class="sh">"""</span>
+
+<span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">yaml</span>
+<span class="kn">import</span> <span class="n">os</span>
+<span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">from</span> <span class="n">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="k">def</span> <span class="nf">quick_diagnosis</span><span class="p">():</span>
+    <span class="sh">"""</span><span class="s">快速诊断系统状态</span><span class="sh">"""</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">VIVTransformer 快速诊断</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    
+    <span class="c1"># 1. Python环境检查
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">1. Python环境:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   Python版本: </span><span class="si">{</span><span class="n">sys</span><span class="p">.</span><span class="n">version</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   PyTorch版本: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="n">__version__</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 2. CUDA检查
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">2. CUDA环境:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   CUDA可用: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   CUDA版本: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="n">version</span><span class="p">.</span><span class="n">cuda</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   GPU数量: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">device_count</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">device_count</span><span class="p">()):</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   GPU </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">get_device_name</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 3. 依赖包检查
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">3. 依赖包检查:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">required_packages</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">numpy</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">matplotlib</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">seaborn</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tqdm</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">transformers</span><span class="sh">'</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">required_packages</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nf">__import__</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   ✅ </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s">: 已安装</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">except</span> <span class="nb">ImportError</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   ❌ </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s">: 未安装</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 4. 配置文件检查
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">4. 配置文件检查:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">config_files</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">config/default_config.yaml</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">config/training_config.yaml</span><span class="sh">'</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">config_file</span> <span class="ow">in</span> <span class="n">config_files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">yaml</span><span class="p">.</span><span class="nf">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   ✅ </span><span class="si">{</span><span class="n">config_file</span><span class="si">}</span><span class="s">: 格式正确</span><span class="sh">"</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">yaml</span><span class="p">.</span><span class="n">YAMLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   ❌ </span><span class="si">{</span><span class="n">config_file</span><span class="si">}</span><span class="s">: YAML格式错误 - </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+            <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   ❌ </span><span class="si">{</span><span class="n">config_file</span><span class="si">}</span><span class="s">: 读取失败 - </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   ⚠️ </span><span class="si">{</span><span class="n">config_file</span><span class="si">}</span><span class="s">: 文件不存在</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 5. 数据目录检查
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">5. 数据目录检查:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">data_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">data/</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">datasets/</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">checkpoints/</span><span class="sh">'</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">data_dir</span> <span class="ow">in</span> <span class="n">data_dirs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span>
+            <span class="n">file_count</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nc">Path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">).</span><span class="nf">rglob</span><span class="p">(</span><span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)))</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   ✅ </span><span class="si">{</span><span class="n">data_dir</span><span class="si">}</span><span class="s">: 存在 (</span><span class="si">{</span><span class="n">file_count</span><span class="si">}</span><span class="s"> 个文件)</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   ⚠️ </span><span class="si">{</span><span class="n">data_dir</span><span class="si">}</span><span class="s">: 不存在</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 6. 内存检查
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">6. 内存状态:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">device_count</span><span class="p">()):</span>
+            <span class="n">total_memory</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">get_device_properties</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">total_memory</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">3</span>
+            <span class="n">allocated_memory</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">memory_allocated</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">3</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   GPU </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">allocated_memory</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">GB / </span><span class="si">{</span><span class="n">total_memory</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">GB</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="kn">import</span> <span class="n">psutil</span>
+    <span class="n">memory</span> <span class="o">=</span> <span class="n">psutil</span><span class="p">.</span><span class="nf">virtual_memory</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   系统内存: </span><span class="si">{</span><span class="n">memory</span><span class="p">.</span><span class="n">used</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">3</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">GB / </span><span class="si">{</span><span class="n">memory</span><span class="p">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">3</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">GB (</span><span class="si">{</span><span class="n">memory</span><span class="p">.</span><span class="n">percent</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">%)</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">=</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">诊断完成</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">quick_diagnosis</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<hr />
+
+<p><strong>💡 提示</strong>: 遇到问题时，建议按照以下顺序进行排查：</p>
+<ol>
+  <li>运行快速诊断脚本</li>
+  <li>检查错误日志和堆栈跟踪</li>
+  <li>查阅本故障排除指南</li>
+  <li>在项目Issues中搜索类似问题</li>
+  <li>如果问题仍未解决，请提交详细的错误报告</li>
+</ol>
+
+<p><strong>🔧 调试技巧</strong>:</p>
+<ul>
+  <li>使用小数据集进行快速测试</li>
+  <li>逐步增加模型复杂度</li>
+  <li>保存中间结果进行分析</li>
+  <li>使用可视化工具辅助调试</li>
+</ul>
+
+<hr />
+
+<p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
+
+        </div>
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3>🔗 快速链接</h3>
+          <ul class="sidebar-links">
+            <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/faq/">常见问题</a></li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3>📊 项目状态</h3>
+          <div class="project-badges">
+            <img src="https://img.shields.io/github/stars/yourusername/VIVTransformer?style=social" alt="GitHub stars">
+            <img src="https://img.shields.io/github/forks/yourusername/VIVTransformer?style=social" alt="GitHub forks">
+            <img src="https://img.shields.io/github/issues/yourusername/VIVTransformer" alt="GitHub issues">
+            <img src="https://img.shields.io/github/license/yourusername/VIVTransformer" alt="License">
+          </div>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3>💡 需要帮助？</h3>
+          <ul class="help-links">
+            <li><a href="/issues" target="_blank">🐛 报告问题</a></li>
+            <li><a href="/discussions" target="_blank">💬 讨论区</a></li>
+            <li><a href="mailto:1748492875@qq.com">📧 联系我们</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>VIVTransformer</h4>
+            <p>Advanced Transformer Architecture with Vision Integration</p>
+          </div>
+          
+          <div class="footer-section">
+            <h4>文档</h4>
+            <ul>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>社区</h4>
+            <ul>
+              <li><a href="" target="_blank">GitHub</a></li>
+              <li><a href="/issues" target="_blank">Issues</a></li>
+              <li><a href="/discussions" target="_blank">Discussions</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>许可证</h4>
+            <p><a href="/blob/main/LICENSE" target="_blank">MIT License</a></p>
+            <p>© 2025 VIVTransformer Team</p>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>Built with ❤️ using <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+          <p>Last updated: 2025-07-18 11:04</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      // Table of Contents Generator
+      function generateTOC() {
+        const toc = document.getElementById('toc');
+        if (!toc) return;
+        
+        const headings = document.querySelectorAll('.content h2, .content h3, .content h4');
+        if (headings.length === 0) {
+          document.querySelector('.toc-container').style.display = 'none';
+          return;
+        }
+        
+        let tocHTML = '<ul>';
+        headings.forEach((heading, index) => {
+          const id = heading.id || `heading-${index}`;
+          heading.id = id;
+          const level = parseInt(heading.tagName.charAt(1));
+          const indent = level > 2 ? ' style="margin-left: ' + ((level - 2) * 20) + 'px;"' : '';
+          tocHTML += `<li${indent}><a href="#${id}">${heading.textContent}</a></li>`;
+        });
+        tocHTML += '</ul>';
+        toc.innerHTML = tocHTML;
+      }
+      
+      // Smooth scrolling for anchor links
+      function setupSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
+        });
+      }
+      
+      // Initialize when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        generateTOC();
+        setupSmoothScrolling();
+      });
+    </script>
+    
+    
+  </body>
+</html>

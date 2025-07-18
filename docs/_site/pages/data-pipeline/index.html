@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Data Pipeline | VIVTransformer Documentation</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Data Pipeline" />
+<meta name="author" content="Pitohuie" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="数据处理管道的设计和实现" />
+<meta property="og:description" content="数据处理管道的设计和实现" />
+<link rel="canonical" href="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/data-pipeline/" />
+<meta property="og:url" content="https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/data-pipeline/" />
+<meta property="og:site_name" content="VIVTransformer Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Data Pipeline" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"数据处理管道的设计和实现","headline":"Data Pipeline","url":"https://pitohuie-aiversion.github.io/Sparse_to_Dense_Transformer/pages/data-pipeline/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
+    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/custom.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/Sparse_to_Dense_Transformer/assets/images/favicon.ico">
+    
+    <!-- Math support -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      <!-- Header -->
+      <header class="site-header">
+        <div class="header-content">
+          <h1 class="site-title">
+            <a href="/Sparse_to_Dense_Transformer/" class="site-title-link">
+              🔬 VIVTransformer Documentation
+            </a>
+          </h1>
+          <p class="site-description">Advanced Transformer Architecture with Vision Integration</p>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="site-nav">
+          <div class="nav-links">
+            <a href="/Sparse_to_Dense_Transformer/" class="nav-link ">🏠 首页</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-link">🚀 快速开始</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-link">🏗️ 架构</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-link">📚 训练</a>
+            <a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-link">🚀 部署</a>
+            <a href="" class="nav-link" target="_blank">📦 GitHub</a>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Breadcrumb -->
+      
+      <nav class="breadcrumb">
+        <a href="/Sparse_to_Dense_Transformer/">首页</a>
+        
+        
+        
+          
+        
+          
+            
+            
+              <span class="breadcrumb-separator">></span>
+              <a href="/pages">Pages</a>
+            
+          
+        
+          
+            
+            
+              <span class="breadcrumb-separator">></span>
+              <span class="breadcrumb-current">Data Pipeline</span>
+            
+          
+        
+      </nav>
+      
+
+      <!-- Main Content -->
+      <main class="main-content">
+        
+        <div class="page-header">
+          <h1 class="page-title">Data Pipeline</h1>
+          
+          <p class="page-description">数据处理管道的设计和实现</p>
+          
+        </div>
+        
+
+        <!-- Table of Contents -->
+        
+        <div class="toc-container">
+          <details class="toc" open>
+            <summary class="toc-title">📋 目录</summary>
+            <div class="toc-content" id="toc"></div>
+          </details>
+        </div>
+        
+
+        <!-- Content -->
+        <div class="content">
+          <h1 id="数据流处理">数据流处理</h1>
+
+<p>本文档详细介绍VIVTransformer项目的数据处理流程，包括数据加载、预处理、增强和批处理策略。</p>
+
+<h2 id="目录">📋 目录</h2>
+
+<ul>
+  <li><a href="#数据流概览">数据流概览</a></li>
+  <li><a href="#数据加载">数据加载</a></li>
+  <li><a href="#数据预处理">数据预处理</a></li>
+  <li><a href="#数据增强">数据增强</a></li>
+  <li><a href="#批处理策略">批处理策略</a></li>
+  <li><a href="#内存优化">内存优化</a></li>
+  <li><a href="#分布式处理">分布式处理</a></li>
+</ul>
+
+<h2 id="数据流概览">数据流概览</h2>
+
+<h3 id="完整数据流程">🔄 完整数据流程</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>原始数据 → 数据加载 → 预处理 → 数据增强 → 批处理 → 模型训练
+    ↓         ↓        ↓        ↓        ↓        ↓
+  .pt文件   Dataset   标准化    随机变换   DataLoader  训练循环
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="数据特征">📊 数据特征</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>属性</th>
+      <th>值</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>输入维度</strong></td>
+      <td>400</td>
+      <td>原始特征维度</td>
+    </tr>
+    <tr>
+      <td><strong>输出维度</strong></td>
+      <td>40000</td>
+      <td>目标预测维度</td>
+    </tr>
+    <tr>
+      <td><strong>序列长度</strong></td>
+      <td>49</td>
+      <td>时间步长度</td>
+    </tr>
+    <tr>
+      <td><strong>数据类型</strong></td>
+      <td>float32</td>
+      <td>浮点数精度</td>
+    </tr>
+    <tr>
+      <td><strong>存储格式</strong></td>
+      <td>PyTorch Tensor</td>
+      <td>.pt文件格式</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="数据加载">数据加载</h2>
+
+<h3 id="数据集类实现">📁 数据集类实现</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">VIVDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">VIV数据集类</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">crop_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">use_augmentation</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">crop_size</span> <span class="o">=</span> <span class="n">crop_size</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">use_augmentation</span> <span class="o">=</span> <span class="n">use_augmentation</span>
+        
+        <span class="c1"># 数据验证
+</span>        <span class="n">self</span><span class="p">.</span><span class="nf">_validate_data</span><span class="p">()</span>
+        
+        <span class="c1"># 预计算统计信息
+</span>        <span class="n">self</span><span class="p">.</span><span class="nf">_compute_statistics</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">])</span>
+    
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">target_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
+        
+        <span class="c1"># 应用预处理
+</span>        <span class="n">input_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_preprocess</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">target_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_preprocess</span><span class="p">(</span><span class="n">target_data</span><span class="p">)</span>
+        
+        <span class="c1"># 应用数据增强
+</span>        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">use_augmentation</span><span class="p">:</span>
+            <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_augment</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="数据验证">🔍 数据验证</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">_validate_data</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">验证数据完整性和格式</span><span class="sh">"""</span>
+    
+    <span class="c1"># 检查必要字段
+</span>    <span class="n">required_keys</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">required_keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Missing required key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查数据形状
+</span>    <span class="n">input_shape</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">].</span><span class="n">shape</span>
+    <span class="n">target_shape</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="n">shape</span>
+    
+    <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># [N, seq_len, input_dim]
+</span>        <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Invalid input shape: </span><span class="si">{</span><span class="n">input_shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">target_shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># [N, seq_len, output_dim]
+</span>        <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Invalid target shape: </span><span class="si">{</span><span class="n">target_shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 检查数据类型
+</span>    <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">].</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">torch</span><span class="p">.</span><span class="n">float32</span><span class="p">:</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">].</span><span class="nf">float</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">torch</span><span class="p">.</span><span class="n">float32</span><span class="p">:</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="nf">float</span><span class="p">()</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">✅ 数据验证通过: </span><span class="si">{</span><span class="n">input_shape</span><span class="si">}</span><span class="s"> → </span><span class="si">{</span><span class="n">target_shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="统计信息计算">📈 统计信息计算</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">_compute_statistics</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">计算数据集统计信息</span><span class="sh">"""</span>
+    
+    <span class="c1"># 输入数据统计
+</span>    <span class="n">self</span><span class="p">.</span><span class="n">input_mean</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">].</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">input_std</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">].</span><span class="nf">std</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># 目标数据统计
+</span>    <span class="n">self</span><span class="p">.</span><span class="n">target_mean</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">target_std</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="nf">std</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># 数据范围
+</span>    <span class="n">self</span><span class="p">.</span><span class="n">input_min</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">].</span><span class="nf">min</span><span class="p">()</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">input_max</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">input</span><span class="sh">'</span><span class="p">].</span><span class="nf">max</span><span class="p">()</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">target_min</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="nf">min</span><span class="p">()</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">target_max</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="nf">max</span><span class="p">()</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">📊 数据统计信息:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   输入范围: [</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">input_min</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">input_max</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   目标范围: [</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">target_min</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">target_max</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="数据预处理">数据预处理</h2>
+
+<h3 id="标准化处理">🔧 标准化处理</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">_preprocess</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">数据预处理流程</span><span class="sh">"""</span>
+    
+    <span class="c1"># 1. 标准化
+</span>    <span class="k">if</span> <span class="nf">hasattr</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="sh">'</span><span class="s">normalize</span><span class="sh">'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">self</span><span class="p">.</span><span class="n">normalize</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_normalize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    
+    <span class="c1"># 2. 裁剪
+</span>    <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">crop_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_crop</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    
+    <span class="c1"># 3. 填充
+</span>    <span class="k">if</span> <span class="nf">hasattr</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="sh">'</span><span class="s">pad_size</span><span class="sh">'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">self</span><span class="p">.</span><span class="n">pad_size</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_pad</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">数据标准化</span><span class="sh">"""</span>
+    <span class="c1"># Z-score标准化
+</span>    <span class="n">mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">std</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="nf">return </span><span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">std</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_crop</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">数据裁剪</span><span class="sh">"""</span>
+    <span class="k">if</span> <span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">self</span><span class="p">.</span><span class="n">crop_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">start_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">crop_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[...,</span> <span class="n">start_idx</span><span class="p">:</span><span class="n">start_idx</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">crop_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">def</span> <span class="nf">_pad</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">数据填充</span><span class="sh">"""</span>
+    <span class="k">if</span> <span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">self</span><span class="p">.</span><span class="n">pad_size</span><span class="p">:</span>
+        <span class="n">pad_width</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">pad_size</span> <span class="o">-</span> <span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">padding</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">pad_width</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">padding</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="特征工程">🎯 特征工程</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">FeatureEngineer</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">特征工程类</span><span class="sh">"""</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_temporal_features</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">添加时间特征</span><span class="sh">"""</span>
+        <span class="n">seq_len</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="c1"># 时间位置编码
+</span>        <span class="n">time_pos</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="n">seq_len</span><span class="p">).</span><span class="nf">float</span><span class="p">()</span> <span class="o">/</span> <span class="n">seq_len</span>
+        <span class="n">time_pos</span> <span class="o">=</span> <span class="n">time_pos</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">time_pos</span> <span class="o">=</span> <span class="n">time_pos</span><span class="p">.</span><span class="nf">expand</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># 拼接时间特征
+</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">time_pos</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_statistical_features</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">添加统计特征</span><span class="sh">"""</span>
+        <span class="c1"># 滑动窗口统计
+</span>        <span class="n">window_size</span> <span class="o">=</span> <span class="mi">5</span>
+        
+        <span class="c1"># 滑动平均
+</span>        <span class="n">moving_avg</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">avg_pool1d</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> 
+            <span class="n">kernel_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> 
+            <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+            <span class="n">padding</span><span class="o">=</span><span class="n">window_size</span><span class="o">//</span><span class="mi">2</span>
+        <span class="p">).</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        
+        <span class="c1"># 滑动标准差
+</span>        <span class="n">moving_std</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">moving_avg</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="n">window_size</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">i</span> <span class="o">+</span> <span class="n">window_size</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">moving_std</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">].</span><span class="nf">std</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># 拼接统计特征
+</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">moving_avg</span><span class="p">,</span> <span class="n">moving_std</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="数据增强">数据增强</h2>
+
+<h3 id="增强策略">🎲 增强策略</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">_augment</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">数据增强流程</span><span class="sh">"""</span>
+    
+    <span class="c1"># 随机选择增强策略
+</span>    <span class="n">augmentations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_add_noise</span><span class="p">,</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_time_shift</span><span class="p">,</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_amplitude_scale</span><span class="p">,</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">_frequency_mask</span>
+    <span class="p">]</span>
+    
+    <span class="c1"># 随机应用1-2种增强
+</span>    <span class="n">num_augs</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">()</span>
+    <span class="n">selected_augs</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randperm</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">augmentations</span><span class="p">))[:</span><span class="n">num_augs</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">aug_idx</span> <span class="ow">in</span> <span class="n">selected_augs</span><span class="p">:</span>
+        <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span> <span class="o">=</span> <span class="n">augmentations</span><span class="p">[</span><span class="n">aug_idx</span><span class="p">](</span><span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span>
+
+<span class="k">def</span> <span class="nf">_add_noise</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">添加高斯噪声</span><span class="sh">"""</span>
+    <span class="n">noise_level</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn_like</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span> <span class="o">*</span> <span class="n">noise_level</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span> <span class="o">+</span> <span class="n">noise</span>
+    <span class="k">return</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span>
+
+<span class="k">def</span> <span class="nf">_time_shift</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">时间偏移</span><span class="sh">"""</span>
+    <span class="n">max_shift</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">shift</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="o">-</span><span class="n">max_shift</span><span class="p">,</span> <span class="n">max_shift</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">shift</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">input_data</span><span class="p">[:,</span> <span class="n">shift</span><span class="p">:],</span> <span class="n">input_data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">shift</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">target_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">target_data</span><span class="p">[:,</span> <span class="n">shift</span><span class="p">:],</span> <span class="n">target_data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">shift</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">shift</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">input_data</span><span class="p">[:,</span> <span class="n">shift</span><span class="p">:],</span> <span class="n">input_data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">shift</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">target_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">target_data</span><span class="p">[:,</span> <span class="n">shift</span><span class="p">:],</span> <span class="n">target_data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">shift</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span>
+
+<span class="k">def</span> <span class="nf">_amplitude_scale</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">幅度缩放</span><span class="sh">"""</span>
+    <span class="n">scale_range</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">scale_range</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">()</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span> <span class="o">*</span> <span class="n">scale</span>
+    <span class="k">return</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span>
+
+<span class="k">def</span> <span class="nf">_frequency_mask</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">频域掩码</span><span class="sh">"""</span>
+    <span class="n">mask_ratio</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">mask_size</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">input_data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mask_ratio</span><span class="p">)</span>
+    
+    <span class="n">start_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">input_data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">mask_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">()</span>
+    <span class="n">input_data</span><span class="p">[...,</span> <span class="n">start_idx</span><span class="p">:</span><span class="n">start_idx</span> <span class="o">+</span> <span class="n">mask_size</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">return</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="批处理策略">批处理策略</h2>
+
+<h3 id="dataloader配置">📦 DataLoader配置</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">get_data_loaders</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">创建数据加载器</span><span class="sh">"""</span>
+    
+    <span class="c1"># 创建数据集
+</span>    <span class="n">dataset</span> <span class="o">=</span> <span class="nc">VIVDataset</span><span class="p">(</span>
+        <span class="n">data_path</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">][</span><span class="sh">'</span><span class="s">path</span><span class="sh">'</span><span class="p">],</span>
+        <span class="n">crop_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">crop_size</span><span class="sh">'</span><span class="p">),</span>
+        <span class="n">use_augmentation</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">use_augmentation</span><span class="sh">'</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># 数据分割
+</span>    <span class="n">train_size</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="mf">0.7</span> <span class="o">*</span> <span class="nf">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+    <span class="n">valid_size</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="mf">0.15</span> <span class="o">*</span> <span class="nf">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+    <span class="n">test_size</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">-</span> <span class="n">train_size</span> <span class="o">-</span> <span class="n">valid_size</span>
+    
+    <span class="n">train_dataset</span><span class="p">,</span> <span class="n">valid_dataset</span><span class="p">,</span> <span class="n">test_dataset</span> <span class="o">=</span> <span class="nf">random_split</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="p">,</span> <span class="p">[</span><span class="n">train_size</span><span class="p">,</span> <span class="n">valid_size</span><span class="p">,</span> <span class="n">test_size</span><span class="p">]</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># 创建数据加载器
+</span>    <span class="n">train_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span>
+        <span class="n">train_dataset</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">][</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">],</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">num_workers</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">num_workers</span><span class="sh">'</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">pin_memory</span><span class="sh">'</span><span class="p">,</span> <span class="bp">True</span><span class="p">),</span>
+        <span class="n">drop_last</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
+    
+    <span class="n">valid_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span>
+        <span class="n">valid_dataset</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">][</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">],</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">num_workers</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">num_workers</span><span class="sh">'</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">pin_memory</span><span class="sh">'</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="n">test_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span>
+        <span class="n">test_dataset</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">][</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">],</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">num_workers</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">num_workers</span><span class="sh">'</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">pin_memory</span><span class="sh">'</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">valid_loader</span><span class="p">,</span> <span class="n">test_loader</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="动态批大小">⚡ 动态批大小</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">DynamicBatchSampler</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">动态批大小采样器</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">max_batch_size</span><span class="p">,</span> <span class="n">max_memory_gb</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">max_batch_size</span> <span class="o">=</span> <span class="n">max_batch_size</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">max_memory_gb</span> <span class="o">=</span> <span class="n">max_memory_gb</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">current_batch_size</span> <span class="o">=</span> <span class="n">max_batch_size</span>
+    
+    <span class="k">def</span> <span class="nf">adjust_batch_size</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">根据GPU内存使用调整批大小</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+            <span class="n">memory_used</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">memory_allocated</span><span class="p">()</span> <span class="o">/</span> <span class="mf">1e9</span>
+            <span class="n">memory_ratio</span> <span class="o">=</span> <span class="n">memory_used</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">max_memory_gb</span>
+            
+            <span class="k">if</span> <span class="n">memory_ratio</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
+                <span class="n">self</span><span class="p">.</span><span class="n">current_batch_size</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">current_batch_size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">memory_ratio</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">self</span><span class="p">.</span><span class="n">current_batch_size</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">max_batch_size</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">current_batch_size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randperm</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">dataset</span><span class="p">))</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span> <span class="n">self</span><span class="p">.</span><span class="n">current_batch_size</span><span class="p">):</span>
+            <span class="n">batch_indices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">current_batch_size</span><span class="p">]</span>
+            <span class="k">yield</span> <span class="n">batch_indices</span><span class="p">.</span><span class="nf">tolist</span><span class="p">()</span>
+            
+            <span class="c1"># 动态调整批大小
+</span>            <span class="n">self</span><span class="p">.</span><span class="nf">adjust_batch_size</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="内存优化">内存优化</h2>
+
+<h3 id="内存管理策略">💾 内存管理策略</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">MemoryOptimizedDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">内存优化的数据集</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">cache_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">data_path</span> <span class="o">=</span> <span class="n">data_path</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">cache_size</span> <span class="o">=</span> <span class="n">cache_size</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">access_count</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># 只加载元数据
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_load_metadata</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="c1"># 检查缓存
+</span>        <span class="k">if</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">cache</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">access_count</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">cache</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        
+        <span class="c1"># 加载数据
+</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_load_single_item</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        
+        <span class="c1"># 更新缓存
+</span>        <span class="n">self</span><span class="p">.</span><span class="nf">_update_cache</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">data</span>
+    
+    <span class="k">def</span> <span class="nf">_update_cache</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">更新缓存，使用LRU策略</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">cache</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">self</span><span class="p">.</span><span class="n">cache_size</span><span class="p">:</span>
+            <span class="c1"># 移除最少使用的项
+</span>            <span class="n">lru_idx</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">access_count</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">access_count</span><span class="p">.</span><span class="n">get</span><span class="p">)</span>
+            <span class="k">del</span> <span class="n">self</span><span class="p">.</span><span class="n">cache</span><span class="p">[</span><span class="n">lru_idx</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">self</span><span class="p">.</span><span class="n">access_count</span><span class="p">[</span><span class="n">lru_idx</span><span class="p">]</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">cache</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">access_count</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="预取策略">🔄 预取策略</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">PrefetchDataLoader</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">预取数据加载器</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">prefetch_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">dataloader</span> <span class="o">=</span> <span class="n">dataloader</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">prefetch_factor</span> <span class="o">=</span> <span class="n">prefetch_factor</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">stream</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nc">Stream</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="bp">True</span>
+        
+        <span class="k">for</span> <span class="n">next_input</span><span class="p">,</span> <span class="n">next_target</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">dataloader</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">stream</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">stream</span><span class="p">):</span>
+                <span class="n">next_input</span> <span class="o">=</span> <span class="n">next_input</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">device</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">next_target</span> <span class="o">=</span> <span class="n">next_target</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">device</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">first</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="nb">input</span><span class="p">,</span> <span class="n">target</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="bp">False</span>
+            
+            <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">current_stream</span><span class="p">().</span><span class="nf">wait_stream</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">stream</span><span class="p">)</span>
+            <span class="nb">input</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">next_input</span><span class="p">,</span> <span class="n">next_target</span>
+        
+        <span class="k">yield</span> <span class="nb">input</span><span class="p">,</span> <span class="n">target</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="分布式处理">分布式处理</h2>
+
+<h3 id="分布式数据加载">🌐 分布式数据加载</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">setup_distributed_data</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">world_size</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">设置分布式数据加载</span><span class="sh">"""</span>
+    
+    <span class="c1"># 创建分布式采样器
+</span>    <span class="n">dataset</span> <span class="o">=</span> <span class="nc">VIVDataset</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">][</span><span class="sh">'</span><span class="s">path</span><span class="sh">'</span><span class="p">])</span>
+    <span class="n">sampler</span> <span class="o">=</span> <span class="nc">DistributedSampler</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="p">,</span> 
+        <span class="n">num_replicas</span><span class="o">=</span><span class="n">world_size</span><span class="p">,</span> 
+        <span class="n">rank</span><span class="o">=</span><span class="n">rank</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># 创建数据加载器
+</span>    <span class="n">dataloader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">][</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">]</span> <span class="o">//</span> <span class="n">world_size</span><span class="p">,</span>
+        <span class="n">sampler</span><span class="o">=</span><span class="n">sampler</span><span class="p">,</span>
+        <span class="n">num_workers</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">num_workers</span><span class="sh">'</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">sampler</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="数据并行策略">📊 数据并行策略</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">DataParallelStrategy</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">数据并行策略</span><span class="sh">"""</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">split_batch</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">num_gpus</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">将批次分割到多个GPU</span><span class="sh">"""</span>
+        <span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="c1"># 计算每个GPU的批大小
+</span>        <span class="n">per_gpu_batch_size</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="o">//</span> <span class="n">num_gpus</span>
+        
+        <span class="c1"># 分割数据
+</span>        <span class="n">input_splits</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">per_gpu_batch_size</span><span class="p">)</span>
+        <span class="n">target_splits</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="n">target_data</span><span class="p">,</span> <span class="n">per_gpu_batch_size</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="nf">list</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="n">input_splits</span><span class="p">,</span> <span class="n">target_splits</span><span class="p">))</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">gather_results</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">收集多GPU结果</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">gathered</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">keys</span><span class="p">():</span>
+                <span class="n">gathered</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">r</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">gathered</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">results</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="配置示例">🔧 配置示例</h2>
+
+<h3 id="完整数据配置">📝 完整数据配置</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="rouge-code"><pre><span class="na">data</span><span class="pi">:</span>
+  <span class="c1"># 基础配置</span>
+  <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">data/viv_dataset.pt"</span>
+  <span class="na">batch_size</span><span class="pi">:</span> <span class="m">128</span>
+  <span class="na">num_workers</span><span class="pi">:</span> <span class="m">4</span>
+  <span class="na">pin_memory</span><span class="pi">:</span> <span class="kc">true</span>
+  
+  <span class="c1"># 预处理配置</span>
+  <span class="na">normalize</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">crop_size</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">400</span><span class="pi">]</span>
+  <span class="na">pad_size</span><span class="pi">:</span> <span class="kc">null</span>
+  
+  <span class="c1"># 数据增强配置</span>
+  <span class="na">use_augmentation</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">augmentation</span><span class="pi">:</span>
+    <span class="na">noise_level</span><span class="pi">:</span> <span class="m">0.01</span>
+    <span class="na">time_shift_range</span><span class="pi">:</span> <span class="m">3</span>
+    <span class="na">amplitude_scale_range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.8</span><span class="pi">,</span> <span class="nv">1.2</span><span class="pi">]</span>
+    <span class="na">frequency_mask_ratio</span><span class="pi">:</span> <span class="m">0.1</span>
+  
+  <span class="c1"># 内存优化配置</span>
+  <span class="na">cache_size</span><span class="pi">:</span> <span class="m">1000</span>
+  <span class="na">prefetch_factor</span><span class="pi">:</span> <span class="m">2</span>
+  <span class="na">max_memory_gb</span><span class="pi">:</span> <span class="m">8</span>
+  
+  <span class="c1"># 分布式配置</span>
+  <span class="na">distributed</span><span class="pi">:</span> <span class="kc">false</span>
+  <span class="na">world_size</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">rank</span><span class="pi">:</span> <span class="m">0</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<hr />
+
+<p><strong>💡 提示</strong>: 数据处理是深度学习项目的基础，合理的数据流程设计能够显著提升训练效率和模型性能。</p>
+
+<hr />
+
+<p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
+
+        </div>
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3>🔗 快速链接</h3>
+          <ul class="sidebar-links">
+            <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
+            <li><a href="/Sparse_to_Dense_Transformer/pages/faq/">常见问题</a></li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3>📊 项目状态</h3>
+          <div class="project-badges">
+            <img src="https://img.shields.io/github/stars/yourusername/VIVTransformer?style=social" alt="GitHub stars">
+            <img src="https://img.shields.io/github/forks/yourusername/VIVTransformer?style=social" alt="GitHub forks">
+            <img src="https://img.shields.io/github/issues/yourusername/VIVTransformer" alt="GitHub issues">
+            <img src="https://img.shields.io/github/license/yourusername/VIVTransformer" alt="License">
+          </div>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3>💡 需要帮助？</h3>
+          <ul class="help-links">
+            <li><a href="/issues" target="_blank">🐛 报告问题</a></li>
+            <li><a href="/discussions" target="_blank">💬 讨论区</a></li>
+            <li><a href="mailto:1748492875@qq.com">📧 联系我们</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>VIVTransformer</h4>
+            <p>Advanced Transformer Architecture with Vision Integration</p>
+          </div>
+          
+          <div class="footer-section">
+            <h4>文档</h4>
+            <ul>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/">快速开始</a></li>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/">架构概览</a></li>
+              <li><a href="/Sparse_to_Dense_Transformer/pages/training-guide/">训练指南</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>社区</h4>
+            <ul>
+              <li><a href="" target="_blank">GitHub</a></li>
+              <li><a href="/issues" target="_blank">Issues</a></li>
+              <li><a href="/discussions" target="_blank">Discussions</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>许可证</h4>
+            <p><a href="/blob/main/LICENSE" target="_blank">MIT License</a></p>
+            <p>© 2025 VIVTransformer Team</p>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>Built with ❤️ using <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+          <p>Last updated: 2025-07-18 11:04</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      // Table of Contents Generator
+      function generateTOC() {
+        const toc = document.getElementById('toc');
+        if (!toc) return;
+        
+        const headings = document.querySelectorAll('.content h2, .content h3, .content h4');
+        if (headings.length === 0) {
+          document.querySelector('.toc-container').style.display = 'none';
+          return;
+        }
+        
+        let tocHTML = '<ul>';
+        headings.forEach((heading, index) => {
+          const id = heading.id || `heading-${index}`;
+          heading.id = id;
+          const level = parseInt(heading.tagName.charAt(1));
+          const indent = level > 2 ? ' style="margin-left: ' + ((level - 2) * 20) + 'px;"' : '';
+          tocHTML += `<li${indent}><a href="#${id}">${heading.textContent}</a></li>`;
+        });
+        tocHTML += '</ul>';
+        toc.innerHTML = tocHTML;
+      }
+      
+      // Smooth scrolling for anchor links
+      function setupSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
+        });
+      }
+      
+      // Initialize when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        generateTOC();
+        setupSmoothScrolling();
+      });
+    </script>
+    
+    
+  </body>
+</html>

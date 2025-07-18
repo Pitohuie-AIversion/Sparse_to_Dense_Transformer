@@ -1,11 +1,58 @@
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Begin Jekyll SEO tag v2.8.0 -->
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(1)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(1) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(1) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list > li.nav-list-item:nth-child(1) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Architecture Overview | VIVTransformer Documentation</title>
 <meta name="generator" content="Jekyll v4.3.4" />
 <meta property="og:title" content="Architecture Overview" />
@@ -23,35 +70,188 @@
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"VIVTransformer整体架构设计和核心组件","headline":"Architecture Overview","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/architecture-overview/"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
-    <!-- Custom head content for Just The Docs theme -->
-<!-- Add any custom meta tags, stylesheets, or scripts here -->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/">VIVTransformer Documentation</a></h1>
-        
-        
 
-        <p>Advanced Transformer Architecture with Vision Integration</p>
+  
 
-        
+</head>
 
-        
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
 
-        
-      </header>
-      <section>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
 
-      <h1 id="项目架构概览">项目架构概览</h1>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/Sparse_to_Dense_Transformer/" class="site-title lh-tight">
+  VIVTransformer Documentation
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Evaluation & Results category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/evaluation-results/" class="nav-list-link">Evaluation & Results</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/evaluation-metrics/" class="nav-list-link">Evaluation Metrics</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-results/" class="nav-list-link">Experimental Results</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/development-guide/" class="nav-list-link">Development Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul>
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
+            
+          >
+            GitHub Repository
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search VIVTransformer Documentation" aria-label="Search VIVTransformer Documentation" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/Sparse_to_Dense_Transformer/core-documentation/">Core Documentation</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Architecture Overview</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="项目架构概览">
+  
+  
+    <a href="#项目架构概览" class="anchor-heading" aria-labelledby="项目架构概览"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 项目架构概览
+  
+  
+</h1>
+    
 
 <p>本文档详细介绍VIVTransformer项目的整体架构设计、模块组织和数据流处理。</p>
-
-<h2 id="目录">📋 目录</h2>
+<h2 id="目录">
+  
+  
+    <a href="#目录" class="anchor-heading" aria-labelledby="目录"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 目录
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="#整体架构">整体架构</a></li>
@@ -62,10 +262,22 @@
   <li><a href="#结果分析">结果分析</a></li>
   <li><a href="#扩展性设计">扩展性设计</a></li>
 </ul>
-
-<h2 id="整体架构">整体架构</h2>
-
-<h3 id="系统架构图">🏗️ 系统架构图</h3>
+<h2 id="整体架构">
+  
+  
+    <a href="#整体架构" class="anchor-heading" aria-labelledby="整体架构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 整体架构
+  
+  
+</h2>
+    
+<h3 id="系统架构图">
+  
+  
+    <a href="#系统架构图" class="anchor-heading" aria-labelledby="系统架构图"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏗️ 系统架构图
+  
+  
+</h3>
+    
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VIVTransformer Project
 ├── 📁 modify_multi_attention/          # 核心代码目录
@@ -93,8 +305,14 @@
 ├── 📁 attention_results/               # 实验结果
 └── 📁 wiki/                           # 项目文档
 </code></pre></div></div>
-
-<h3 id="架构设计原则">🔄 架构设计原则</h3>
+<h3 id="架构设计原则">
+  
+  
+    <a href="#架构设计原则" class="anchor-heading" aria-labelledby="架构设计原则"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔄 架构设计原则
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>模块化设计</strong>：每个功能模块独立，便于维护和扩展</li>
@@ -103,10 +321,22 @@
   <li><strong>插件化架构</strong>：新的注意力机制可以轻松集成</li>
   <li><strong>分层设计</strong>：数据层、模型层、训练层、应用层清晰分离</li>
 </ol>
-
-<h2 id="核心模块">核心模块</h2>
-
-<h3 id="-1-主程序模块-mainpy-1-主程序模块-main-py">🎯 1. 主程序模块 (main.py) {#1-主程序模块-main-py}</h3>
+<h2 id="核心模块">
+  
+  
+    <a href="#核心模块" class="anchor-heading" aria-labelledby="核心模块"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 核心模块
+  
+  
+</h2>
+    
+<h3 id="-1-主程序模块-mainpy-1-主程序模块-main-py">
+  
+  
+    <a href="#-1-主程序模块-mainpy-1-主程序模块-main-py" class="anchor-heading" aria-labelledby="-1-主程序模块-mainpy-1-主程序模块-main-py"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 1. 主程序模块 (main.py) {#1-主程序模块-main-py}
+  
+  
+</h3>
+    
 
 <p><strong>职责</strong>：</p>
 <ul>
@@ -135,8 +365,14 @@
         <span class="k">for</span> <span class="n">attn_type</span> <span class="ow">in</span> <span class="n">ATTENTION_TYPES</span><span class="p">:</span>
             <span class="nf">run_experiment</span><span class="p">(...)</span>
 </code></pre></div></div>
-
-<h3 id="-2-模型工厂-mymodelsmodel_factorypy-2-模型工厂-mymodels-model-factory-py">🏭 2. 模型工厂 (mymodels/model_factory.py) {#2-模型工厂-mymodels-model-factory-py}</h3>
+<h3 id="-2-模型工厂-mymodelsmodel_factorypy-2-模型工厂-mymodels-model-factory-py">
+  
+  
+    <a href="#-2-模型工厂-mymodelsmodel_factorypy-2-模型工厂-mymodels-model-factory-py" class="anchor-heading" aria-labelledby="-2-模型工厂-mymodelsmodel_factorypy-2-模型工厂-mymodels-model-factory-py"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏭 2. 模型工厂 (mymodels/model_factory.py) {#2-模型工厂-mymodels-model-factory-py}
+  
+  
+</h3>
+    
 
 <p><strong>职责</strong>：</p>
 <ul>
@@ -157,8 +393,14 @@
 </span>        <span class="p">}</span>
         <span class="k">return</span> <span class="n">attention_map</span><span class="p">[</span><span class="n">attention_type</span><span class="p">](</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div></div>
-
-<h3 id="-3-数据处理模块-data-3-数据处理模块-data">📊 3. 数据处理模块 (data/) {#3-数据处理模块-data}</h3>
+<h3 id="-3-数据处理模块-data-3-数据处理模块-data">
+  
+  
+    <a href="#-3-数据处理模块-data-3-数据处理模块-data" class="anchor-heading" aria-labelledby="-3-数据处理模块-data-3-数据处理模块-data"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 3. 数据处理模块 (data/) {#3-数据处理模块-data}
+  
+  
+</h3>
+    
 
 <p><strong>组件</strong>：</p>
 <ul>
@@ -188,8 +430,14 @@
     
     <span class="k">return</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">valid_loader</span><span class="p">,</span> <span class="n">test_loader</span>
 </code></pre></div></div>
-
-<h3 id="-4-注意力机制模块-mymodelsattention-4-注意力机制模块-mymodels-attention">🧠 4. 注意力机制模块 (mymodels/attention/) {#4-注意力机制模块-mymodels-attention}</h3>
+<h3 id="-4-注意力机制模块-mymodelsattention-4-注意力机制模块-mymodels-attention">
+  
+  
+    <a href="#-4-注意力机制模块-mymodelsattention-4-注意力机制模块-mymodels-attention" class="anchor-heading" aria-labelledby="-4-注意力机制模块-mymodelsattention-4-注意力机制模块-mymodels-attention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🧠 4. 注意力机制模块 (mymodels/attention/) {#4-注意力机制模块-mymodels-attention}
+  
+  
+</h3>
+    
 
 <p><strong>架构</strong>：</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>attention/
@@ -216,8 +464,14 @@
         <span class="sh">"""</span><span class="s">返回注意力权重用于可视化</span><span class="sh">"""</span>
         <span class="k">raise</span> <span class="nb">NotImplementedError</span>
 </code></pre></div></div>
-
-<h3 id="-5-训练模块-training-5-训练模块-training">🎓 5. 训练模块 (training/) {#5-训练模块-training}</h3>
+<h3 id="-5-训练模块-training-5-训练模块-training">
+  
+  
+    <a href="#-5-训练模块-training-5-训练模块-training" class="anchor-heading" aria-labelledby="-5-训练模块-training-5-训练模块-training"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎓 5. 训练模块 (training/) {#5-训练模块-training}
+  
+  
+</h3>
+    
 
 <p><strong>组件</strong>：</p>
 <ul>
@@ -248,12 +502,18 @@
     
     <span class="k">return</span> <span class="n">test_loss</span>
 </code></pre></div></div>
-
-<h3 id="️-6-工具模块-utils-6-工具模块-utils">🛠️ 6. 工具模块 (utils/) {#6-工具模块-utils}</h3>
+<h3 id="️-6-工具模块-utils-6-工具模块-utils">
+  
+  
+    <a href="#️-6-工具模块-utils-6-工具模块-utils" class="anchor-heading" aria-labelledby="️-6-工具模块-utils-6-工具模块-utils"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🛠️ 6. 工具模块 (utils/) {#6-工具模块-utils}
+  
+  
+</h3>
+    
 
 <p><strong>组件功能</strong>：</p>
 
-<table>
+<div class="table-wrapper"><table>
   <thead>
     <tr>
       <th>模块</th>
@@ -283,11 +543,23 @@
       <td>GPU管理、内存控制、随机种子</td>
     </tr>
   </tbody>
-</table>
-
-<h2 id="数据流处理">数据流处理</h2>
-
-<h3 id="数据流图">📈 数据流图</h3>
+</table></div>
+<h2 id="数据流处理">
+  
+  
+    <a href="#数据流处理" class="anchor-heading" aria-labelledby="数据流处理"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 数据流处理
+  
+  
+</h2>
+    
+<h3 id="数据流图">
+  
+  
+    <a href="#数据流图" class="anchor-heading" aria-labelledby="数据流图"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📈 数据流图
+  
+  
+</h3>
+    
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>原始数据 → 预处理 → 数据增强 → 批处理 → 模型输入
     ↓
@@ -299,8 +571,14 @@
     ↓
 测试数据 → 最终评估 → 结果保存 → 可视化输出
 </code></pre></div></div>
-
-<h3 id="处理流程详解">🔄 处理流程详解</h3>
+<h3 id="处理流程详解">
+  
+  
+    <a href="#处理流程详解" class="anchor-heading" aria-labelledby="处理流程详解"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔄 处理流程详解
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>数据预处理阶段</strong>：
@@ -341,10 +619,22 @@
 </code></pre></div>    </div>
   </li>
 </ol>
-
-<h2 id="配置系统">配置系统</h2>
-
-<h3 id="配置层次结构">⚙️ 配置层次结构</h3>
+<h2 id="配置系统">
+  
+  
+    <a href="#配置系统" class="anchor-heading" aria-labelledby="配置系统"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 配置系统
+  
+  
+</h2>
+    
+<h3 id="配置层次结构">
+  
+  
+    <a href="#配置层次结构" class="anchor-heading" aria-labelledby="配置层次结构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ⚙️ 配置层次结构
+  
+  
+</h3>
+    
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 全局配置 {#全局配置}</span>
 <span class="na">global</span><span class="pi">:</span>
@@ -374,8 +664,14 @@
 <span class="na">attention_test</span><span class="pi">:</span>
   <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">self</span><span class="pi">,</span> <span class="nv">muse</span><span class="pi">,</span> <span class="nv">ufo</span><span class="pi">,</span> <span class="nv">...</span><span class="pi">]</span>
 </code></pre></div></div>
-
-<h3 id="配置管理特性">🔧 配置管理特性</h3>
+<h3 id="配置管理特性">
+  
+  
+    <a href="#配置管理特性" class="anchor-heading" aria-labelledby="配置管理特性"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 配置管理特性
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>层次化配置</strong>：支持嵌套配置结构</li>
@@ -384,10 +680,22 @@
   <li><strong>环境变量支持</strong>：支持环境变量覆盖</li>
   <li><strong>配置继承</strong>：支持配置文件继承</li>
 </ol>
-
-<h2 id="实验管理">实验管理</h2>
-
-<h3 id="实验组织结构">🧪 实验组织结构</h3>
+<h2 id="实验管理">
+  
+  
+    <a href="#实验管理" class="anchor-heading" aria-labelledby="实验管理"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 实验管理
+  
+  
+</h2>
+    
+<h3 id="实验组织结构">
+  
+  
+    <a href="#实验组织结构" class="anchor-heading" aria-labelledby="实验组织结构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🧪 实验组织结构
+  
+  
+</h3>
+    
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>attention_results/
 ├── loss_config_0/                 # 损失配置0
@@ -402,8 +710,14 @@
 ├── train.log                      # 全局训练日志
 └── failed_attention_log.txt       # 失败实验记录
 </code></pre></div></div>
-
-<h3 id="实验跟踪">📊 实验跟踪</h3>
+<h3 id="实验跟踪">
+  
+  
+    <a href="#实验跟踪" class="anchor-heading" aria-labelledby="实验跟踪"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 实验跟踪
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>自动化实验</strong>：批量执行所有配置组合</li>
@@ -412,10 +726,22 @@
   <li><strong>进度监控</strong>：实时显示实验进度</li>
   <li><strong>资源管理</strong>：智能管理GPU内存和计算资源</li>
 </ol>
-
-<h2 id="结果分析">结果分析</h2>
-
-<h3 id="分析工具">📈 分析工具</h3>
+<h2 id="结果分析">
+  
+  
+    <a href="#结果分析" class="anchor-heading" aria-labelledby="结果分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 结果分析
+  
+  
+</h2>
+    
+<h3 id="分析工具">
+  
+  
+    <a href="#分析工具" class="anchor-heading" aria-labelledby="分析工具"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📈 分析工具
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>TensorBoard集成</strong>：
@@ -440,8 +766,14 @@
 </code></pre></div>    </div>
   </li>
 </ol>
-
-<h3 id="输出格式">📊 输出格式</h3>
+<h3 id="输出格式">
+  
+  
+    <a href="#输出格式" class="anchor-heading" aria-labelledby="输出格式"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 输出格式
+  
+  
+</h3>
+    
 
 <ul>
   <li><strong>训练曲线</strong>：损失和精度随时间变化</li>
@@ -449,10 +781,22 @@
   <li><strong>性能对比表</strong>：不同机制的性能对比</li>
   <li><strong>统计报告</strong>：详细的实验统计信息</li>
 </ul>
-
-<h2 id="扩展性设计">扩展性设计</h2>
-
-<h3 id="插件化架构">🔌 插件化架构</h3>
+<h2 id="扩展性设计">
+  
+  
+    <a href="#扩展性设计" class="anchor-heading" aria-labelledby="扩展性设计"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 扩展性设计
+  
+  
+</h2>
+    
+<h3 id="插件化架构">
+  
+  
+    <a href="#插件化架构" class="anchor-heading" aria-labelledby="插件化架构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔌 插件化架构
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>新注意力机制</strong>：
@@ -485,8 +829,14 @@
 </code></pre></div>    </div>
   </li>
 </ol>
-
-<h3 id="性能优化">🚀 性能优化</h3>
+<h3 id="性能优化">
+  
+  
+    <a href="#性能优化" class="anchor-heading" aria-labelledby="性能优化"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 性能优化
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>内存优化</strong>：
@@ -511,8 +861,14 @@
     </ul>
   </li>
 </ol>
-
-<h3 id="维护性设计">🔧 维护性设计</h3>
+<h3 id="维护性设计">
+  
+  
+    <a href="#维护性设计" class="anchor-heading" aria-labelledby="维护性设计"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 维护性设计
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>代码质量</strong>：
@@ -536,31 +892,57 @@
       <li>结果版本化</li>
     </ul>
   </li>
-</ol>
-
-<hr />
+</ol><hr />
 
 <p><strong>💡 提示</strong>：这个架构设计支持快速添加新的注意力机制和实验配置。如需了解具体实现细节，请参考相应的代码模块。</p>
-
-<h2 id="-相关文档">📚 相关文档</h2>
+<h2 id="-相关文档">
+  
+  
+    <a href="#-相关文档" class="anchor-heading" aria-labelledby="-相关文档"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📚 相关文档
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="model-design.html">Model Design</a></li>
   <li><a href="implementation-details.html">Implementation Details</a></li>
   <li><a href="attention-mechanisms-guide.html">Attention Mechanisms</a></li>
-</ul>
-
-<hr />
+</ul><hr />
 
 <p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
 
+          
 
-      </section>
-      <footer>
+          
+            
+          
+        </main>
         
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+
+  <hr>
+  <footer>
+    
+      <p><a href="#top" id="back-to-top">Back to top</a></p>
+    
+
+    <p class="text-small text-grey-dk-100 mb-0">Copyright &copy; 2024 Pitohuie. Distributed by an <a href="https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt">MIT license.</a></p>
+
+    
+  </footer>
+
+
+      </div>
     </div>
-    <script src="/Sparse_to_Dense_Transformer/assets/js/scale.fix.js"></script>
-  </body>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
 </html>
+

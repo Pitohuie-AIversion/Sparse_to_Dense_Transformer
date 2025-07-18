@@ -3,8 +3,8 @@ source "https://rubygems.org"
 # Jekyll version
 gem "jekyll", "~> 4.3.0"
 
-# Theme
-gem "jekyll-theme-cayman"
+# Theme (using remote theme instead)
+# gem "jekyll-theme-cayman"
 
 # Plugins
 group :jekyll_plugins do

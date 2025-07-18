@@ -1,11 +1,55 @@
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Begin Jekyll SEO tag v2.8.0 -->
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(14)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Hyperparameter Tuning | VIVTransformer Documentation</title>
 <meta name="generator" content="Jekyll v4.3.4" />
 <meta property="og:title" content="Hyperparameter Tuning" />
@@ -23,35 +67,181 @@
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"超参数调优策略和工具","headline":"Hyperparameter Tuning","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
-    <!-- Custom head content for Just The Docs theme -->
-<!-- Add any custom meta tags, stylesheets, or scripts here -->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/">VIVTransformer Documentation</a></h1>
-        
-        
 
-        <p>Advanced Transformer Architecture with Vision Integration</p>
+  
 
-        
+</head>
 
-        
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
 
-        
-      </header>
-      <section>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
 
-      <h1 id="超参数调优指南">超参数调优指南</h1>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/Sparse_to_Dense_Transformer/" class="site-title lh-tight">
+  VIVTransformer Documentation
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Evaluation & Results category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/evaluation-results/" class="nav-list-link">Evaluation & Results</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/evaluation-metrics/" class="nav-list-link">Evaluation Metrics</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-results/" class="nav-list-link">Experimental Results</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/development-guide/" class="nav-list-link">Development Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul>
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
+            
+          >
+            GitHub Repository
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search VIVTransformer Documentation" aria-label="Search VIVTransformer Documentation" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="超参数调优指南">
+  
+  
+    <a href="#超参数调优指南" class="anchor-heading" aria-labelledby="超参数调优指南"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 超参数调优指南
+  
+  
+</h1>
+    
 
 <p>本文档提供VIVTransformer项目的全面超参数调优指南，包括调优策略、工具使用、最佳实践和实验设计。</p>
-
-<h2 id="目录">📋 目录</h2>
+<h2 id="目录">
+  
+  
+    <a href="#目录" class="anchor-heading" aria-labelledby="目录"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 目录
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="#调优概述">调优概述</a></li>
@@ -63,10 +253,22 @@
   <li><a href="#最佳实践">最佳实践</a></li>
   <li><a href="#案例研究">案例研究</a></li>
 </ul>
-
-<h2 id="调优概述">调优概述</h2>
-
-<h3 id="调优目标">🎯 调优目标</h3>
+<h2 id="调优概述">
+  
+  
+    <a href="#调优概述" class="anchor-heading" aria-labelledby="调优概述"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 调优概述
+  
+  
+</h2>
+    
+<h3 id="调优目标">
+  
+  
+    <a href="#调优目标" class="anchor-heading" aria-labelledby="调优目标"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 调优目标
+  
+  
+</h3>
+    
 
 <p>超参数调优的主要目标：</p>
 
@@ -77,8 +279,14 @@
   <li><strong>稳定性</strong>: 确保训练过程的稳定性和可重复性</li>
   <li><strong>可解释性</strong>: 理解超参数对模型行为的影响</li>
 </ol>
-
-<h3 id="调优流程">📊 调优流程</h3>
+<h3 id="调优流程">
+  
+  
+    <a href="#调优流程" class="anchor-heading" aria-labelledby="调优流程"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 调优流程
+  
+  
+</h3>
+    
 
 <pre><code class="language-mermaid">graph TD
     A[定义搜索空间] --&gt; B[选择调优策略]
@@ -89,8 +297,14 @@
     F --&gt; G[精细调优]
     G --&gt; H[最终验证]
 </code></pre>
-
-<h3 id="调优原则">🔍 调优原则</h3>
+<h3 id="调优原则">
+  
+  
+    <a href="#调优原则" class="anchor-heading" aria-labelledby="调优原则"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔍 调优原则
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>由粗到细</strong>: 先进行粗粒度搜索，再进行精细调优</li>
@@ -99,10 +313,22 @@
   <li><strong>早停策略</strong>: 使用早停避免浪费计算资源</li>
   <li><strong>多目标优化</strong>: 同时考虑性能、效率和稳定性</li>
 </ol>
-
-<h2 id="核心超参数">核心超参数</h2>
-
-<h3 id="模型架构参数">🏗️ 模型架构参数</h3>
+<h2 id="核心超参数">
+  
+  
+    <a href="#核心超参数" class="anchor-heading" aria-labelledby="核心超参数"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 核心超参数
+  
+  
+</h2>
+    
+<h3 id="模型架构参数">
+  
+  
+    <a href="#模型架构参数" class="anchor-heading" aria-labelledby="模型架构参数"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏗️ 模型架构参数
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
@@ -492,10 +718,22 @@
         
         <span class="k">return</span> <span class="n">best_exp</span><span class="p">[</span><span class="sh">'</span><span class="s">config</span><span class="sh">'</span><span class="p">],</span> <span class="n">best_exp</span><span class="p">[</span><span class="sh">'</span><span class="s">metrics</span><span class="sh">'</span><span class="p">]</span>
 </code></pre></div></div>
-
-<h2 id="调优策略">调优策略</h2>
-
-<h3 id="随机搜索">🎲 随机搜索</h3>
+<h2 id="调优策略">
+  
+  
+    <a href="#调优策略" class="anchor-heading" aria-labelledby="调优策略"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 调优策略
+  
+  
+</h2>
+    
+<h3 id="随机搜索">
+  
+  
+    <a href="#随机搜索" class="anchor-heading" aria-labelledby="随机搜索"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎲 随机搜索
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">random</span>
 <span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterator</span>
@@ -640,8 +878,14 @@
         
         <span class="nf">return </span><span class="p">(</span><span class="n">first_score</span> <span class="o">-</span> <span class="n">last_score</span><span class="p">)</span> <span class="o">/</span> <span class="n">first_score</span>
 </code></pre></div></div>
-
-<h3 id="贝叶斯优化">🎯 贝叶斯优化</h3>
+<h3 id="贝叶斯优化">
+  
+  
+    <a href="#贝叶斯优化" class="anchor-heading" aria-labelledby="贝叶斯优化"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 贝叶斯优化
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="n">skopt</span> <span class="kn">import</span> <span class="n">gp_minimize</span>
@@ -789,8 +1033,14 @@
             <span class="p">}</span>
         <span class="p">}</span>
 </code></pre></div></div>
-
-<h3 id="网格搜索">🔄 网格搜索</h3>
+<h3 id="网格搜索">
+  
+  
+    <a href="#网格搜索" class="anchor-heading" aria-labelledby="网格搜索"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔄 网格搜索
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">itertools</span> <span class="kn">import</span> <span class="n">product</span>
 <span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Generator</span>
@@ -927,10 +1177,22 @@
             <span class="p">}</span>
         <span class="p">}</span>
 </code></pre></div></div>
-
-<h2 id="自动化工具">自动化工具</h2>
-
-<h3 id="optuna集成">🤖 Optuna集成</h3>
+<h2 id="自动化工具">
+  
+  
+    <a href="#自动化工具" class="anchor-heading" aria-labelledby="自动化工具"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 自动化工具
+  
+  
+</h2>
+    
+<h3 id="optuna集成">
+  
+  
+    <a href="#optuna集成" class="anchor-heading" aria-labelledby="optuna集成"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🤖 Optuna集成
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="n">optuna</span>
@@ -1112,10 +1374,22 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Optuna visualization not available</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
-
-<h2 id="实验设计">实验设计</h2>
-
-<h3 id="实验管理器">📊 实验管理器</h3>
+<h2 id="实验设计">
+  
+  
+    <a href="#实验设计" class="anchor-heading" aria-labelledby="实验设计"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 实验设计
+  
+  
+</h2>
+    
+<h3 id="实验管理器">
+  
+  
+    <a href="#实验管理器" class="anchor-heading" aria-labelledby="实验管理器"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 实验管理器
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
 <span class="kn">import</span> <span class="n">os</span>
@@ -1345,10 +1619,22 @@
                 <span class="k">return</span> <span class="n">json</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{}</span>
 </code></pre></div></div>
-
-<h2 id="性能评估">性能评估</h2>
-
-<h3 id="评估指标">📈 评估指标</h3>
+<h2 id="性能评估">
+  
+  
+    <a href="#性能评估" class="anchor-heading" aria-labelledby="性能评估"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 性能评估
+  
+  
+</h2>
+    
+<h3 id="评估指标">
+  
+  
+    <a href="#评估指标" class="anchor-heading" aria-labelledby="评估指标"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📈 评估指标
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">HyperparameterEvaluator</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">超参数评估器</span><span class="sh">"""</span>
@@ -1562,10 +1848,22 @@
         
         <span class="n">current</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div></div>
-
-<h2 id="最佳实践">最佳实践</h2>
-
-<h3 id="调优策略建议">🎯 调优策略建议</h3>
+<h2 id="最佳实践">
+  
+  
+    <a href="#最佳实践" class="anchor-heading" aria-labelledby="最佳实践"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 最佳实践
+  
+  
+</h2>
+    
+<h3 id="调优策略建议">
+  
+  
+    <a href="#调优策略建议" class="anchor-heading" aria-labelledby="调优策略建议"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 调优策略建议
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">HyperparameterTuningBestPractices</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">超参数调优最佳实践</span><span class="sh">"""</span>
@@ -1703,8 +2001,14 @@
         
         <span class="k">return</span> <span class="n">warnings</span>
 </code></pre></div></div>
-
-<h3 id="调优结果分析">📊 调优结果分析</h3>
+<h3 id="调优结果分析">
+  
+  
+    <a href="#调优结果分析" class="anchor-heading" aria-labelledby="调优结果分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 调优结果分析
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TuningResultAnalyzer</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">调优结果分析器</span><span class="sh">"""</span>
@@ -1824,10 +2128,22 @@
         
         <span class="k">return</span> <span class="n">report</span>
 </code></pre></div></div>
-
-<h2 id="使用示例">使用示例</h2>
-
-<h3 id="完整调优流程">🚀 完整调优流程</h3>
+<h2 id="使用示例">
+  
+  
+    <a href="#使用示例" class="anchor-heading" aria-labelledby="使用示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 使用示例
+  
+  
+</h2>
+    
+<h3 id="完整调优流程">
+  
+  
+    <a href="#完整调优流程" class="anchor-heading" aria-labelledby="完整调优流程"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 完整调优流程
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 示例：完整的超参数调优流程 {#示例-完整的超参数调优流程}
 </span><span class="k">def</span> <span class="nf">run_hyperparameter_tuning</span><span class="p">():</span>
@@ -1914,8 +2230,14 @@
     <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">最佳配置: </span><span class="si">{</span><span class="n">best_config</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
     <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">最佳分数: </span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
-
-<h3 id="可视化调优过程">📈 可视化调优过程</h3>
+<h3 id="可视化调优过程">
+  
+  
+    <a href="#可视化调优过程" class="anchor-heading" aria-labelledby="可视化调优过程"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📈 可视化调优过程
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">visualize_tuning_results</span><span class="p">(</span><span class="n">study_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">可视化调优结果</span><span class="sh">"""</span>
@@ -1951,12 +2273,24 @@
     <span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="sh">'</span><span class="s">tuning_visualization.png</span><span class="sh">'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="sh">'</span><span class="s">tight</span><span class="sh">'</span><span class="p">)</span>
     <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
 </code></pre></div></div>
-
-<h2 id="总结">总结</h2>
+<h2 id="总结">
+  
+  
+    <a href="#总结" class="anchor-heading" aria-labelledby="总结"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 总结
+  
+  
+</h2>
+    
 
 <p>超参数调优是提升 VIVTransformer 模型性能的关键步骤。本指南提供了：</p>
-
-<h3 id="核心要点">✅ 核心要点</h3>
+<h3 id="核心要点">
+  
+  
+    <a href="#核心要点" class="anchor-heading" aria-labelledby="核心要点"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ✅ 核心要点
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>系统化方法</strong>: 从搜索空间定义到结果分析的完整流程</li>
@@ -1965,8 +2299,14 @@
   <li><strong>最佳实践</strong>: 避免常见陷阱，提高调优效率</li>
   <li><strong>结果分析</strong>: 收敛性分析、参数重要性、敏感性分析</li>
 </ol>
-
-<h3 id="使用建议">🎯 使用建议</h3>
+<h3 id="使用建议">
+  
+  
+    <a href="#使用建议" class="anchor-heading" aria-labelledby="使用建议"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 使用建议
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>分阶段调优</strong>: 先调重要参数，再细化次要参数</li>
@@ -1974,27 +2314,55 @@
   <li><strong>结果验证</strong>: 使用独立测试集验证最终结果</li>
   <li><strong>文档记录</strong>: 详细记录调优过程和结果</li>
 </ol>
-
-<h3 id="相关链接">🔗 相关链接</h3>
+<h3 id="相关链接">
+  
+  
+    <a href="#相关链接" class="anchor-heading" aria-labelledby="相关链接"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔗 相关链接
+  
+  
+</h3>
+    
 
 <ul>
   <li><a href="Training-Guide">Training Guide</a> - 训练配置详解</li>
   <li><a href="Configuration-System">Configuration System</a> - 配置系统说明</li>
   <li><a href="Performance-Comparison">Performance Comparison</a> - 性能对比分析</li>
   <li><a href="Experimental-Results">Experimental Results</a> - 实验结果展示</li>
-</ul>
-
-<hr />
+</ul><hr />
 
 <p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
 
+          
 
-      </section>
-      <footer>
+          
+            
+          
+        </main>
         
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+
+  <hr>
+  <footer>
+    
+      <p><a href="#top" id="back-to-top">Back to top</a></p>
+    
+
+    <p class="text-small text-grey-dk-100 mb-0">Copyright &copy; 2024 Pitohuie. Distributed by an <a href="https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt">MIT license.</a></p>
+
+    
+  </footer>
+
+
+      </div>
     </div>
-    <script src="/Sparse_to_Dense_Transformer/assets/js/scale.fix.js"></script>
-  </body>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
 </html>
+

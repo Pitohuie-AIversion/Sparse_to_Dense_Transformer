@@ -1,11 +1,55 @@
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Begin Jekyll SEO tag v2.8.0 -->
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(16)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(16) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(16) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(16) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Multi-Loss Strategy | VIVTransformer Documentation</title>
 <meta name="generator" content="Jekyll v4.3.4" />
 <meta property="og:title" content="Multi-Loss Strategy" />
@@ -23,35 +67,181 @@
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"多损失函数策略和配置","headline":"Multi-Loss Strategy","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/style.css?v=">
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
-    <!-- Custom head content for Just The Docs theme -->
-<!-- Add any custom meta tags, stylesheets, or scripts here -->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/">VIVTransformer Documentation</a></h1>
-        
-        
 
-        <p>Advanced Transformer Architecture with Vision Integration</p>
+  
 
-        
+</head>
 
-        
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
 
-        
-      </header>
-      <section>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
 
-      <h1 id="多损失配置策略">多损失配置策略</h1>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/Sparse_to_Dense_Transformer/" class="site-title lh-tight">
+  VIVTransformer Documentation
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Evaluation & Results category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/evaluation-results/" class="nav-list-link">Evaluation & Results</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/evaluation-metrics/" class="nav-list-link">Evaluation Metrics</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-results/" class="nav-list-link">Experimental Results</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/development-guide/" class="nav-list-link">Development Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul>
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
+            
+          >
+            GitHub Repository
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search VIVTransformer Documentation" aria-label="Search VIVTransformer Documentation" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="多损失配置策略">
+  
+  
+    <a href="#多损失配置策略" class="anchor-heading" aria-labelledby="多损失配置策略"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 多损失配置策略
+  
+  
+</h1>
+    
 
 <p>本指南详细介绍了 VIVTransformer 中多损失函数的配置策略和最佳实践。</p>
-
-<h2 id="目录">目录</h2>
+<h2 id="目录">
+  
+  
+    <a href="#目录" class="anchor-heading" aria-labelledby="目录"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 目录
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="#策略概述">策略概述</a></li>
@@ -63,10 +253,22 @@
   <li><a href="#最佳实践">最佳实践</a></li>
   <li><a href="#故障排除">故障排除</a></li>
 </ul>
-
-<h2 id="策略概述">策略概述</h2>
-
-<h3 id="多损失策略的优势">🎯 多损失策略的优势</h3>
+<h2 id="策略概述">
+  
+  
+    <a href="#策略概述" class="anchor-heading" aria-labelledby="策略概述"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 策略概述
+  
+  
+</h2>
+    
+<h3 id="多损失策略的优势">
+  
+  
+    <a href="#多损失策略的优势" class="anchor-heading" aria-labelledby="多损失策略的优势"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 多损失策略的优势
+  
+  
+</h3>
+    
 
 <p>多损失函数策略通过组合不同类型的损失函数，可以：</p>
 
@@ -76,8 +278,14 @@
   <li><strong>改善收敛性</strong>: 提供多重梯度信号</li>
   <li><strong>防止过拟合</strong>: 通过正则化项约束模型</li>
 </ol>
-
-<h3 id="支持的损失函数类型">📊 支持的损失函数类型</h3>
+<h3 id="支持的损失函数类型">
+  
+  
+    <a href="#支持的损失函数类型" class="anchor-heading" aria-labelledby="支持的损失函数类型"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 支持的损失函数类型
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LossType</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">支持的损失函数类型</span><span class="sh">"""</span>
@@ -101,10 +309,22 @@
 </span>    <span class="n">CONTRASTIVE</span> <span class="o">=</span> <span class="sh">"</span><span class="s">contrastive</span><span class="sh">"</span>    <span class="c1"># 对比损失
 </span>    <span class="n">TRIPLET</span> <span class="o">=</span> <span class="sh">"</span><span class="s">triplet</span><span class="sh">"</span>            <span class="c1"># 三元组损失
 </span></code></pre></div></div>
-
-<h2 id="损失函数组合">损失函数组合</h2>
-
-<h3 id="基础组合策略">🔄 基础组合策略</h3>
+<h2 id="损失函数组合">
+  
+  
+    <a href="#损失函数组合" class="anchor-heading" aria-labelledby="损失函数组合"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 损失函数组合
+  
+  
+</h2>
+    
+<h3 id="基础组合策略">
+  
+  
+    <a href="#基础组合策略" class="anchor-heading" aria-labelledby="基础组合策略"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔄 基础组合策略
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MultiLossStrategy</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">多损失策略管理器</span><span class="sh">"""</span>
@@ -208,8 +428,14 @@
         
         <span class="k">return</span> <span class="n">reg_loss</span>
 </code></pre></div></div>
-
-<h3 id="高级组合策略">🎛️ 高级组合策略</h3>
+<h3 id="高级组合策略">
+  
+  
+    <a href="#高级组合策略" class="anchor-heading" aria-labelledby="高级组合策略"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎛️ 高级组合策略
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AdvancedMultiLossStrategy</span><span class="p">(</span><span class="n">MultiLossStrategy</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">高级多损失策略</span><span class="sh">"""</span>
@@ -277,10 +503,22 @@
                 <span class="c1"># 限制权重范围
 </span>                <span class="n">self</span><span class="p">.</span><span class="n">weights</span><span class="p">[</span><span class="n">loss_type</span><span class="p">]</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="nf">min</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">weights</span><span class="p">[</span><span class="n">loss_type</span><span class="p">]))</span>
 </code></pre></div></div>
-
-<h2 id="权重配置策略">权重配置策略</h2>
-
-<h3 id="静态权重配置">⚖️ 静态权重配置</h3>
+<h2 id="权重配置策略">
+  
+  
+    <a href="#权重配置策略" class="anchor-heading" aria-labelledby="权重配置策略"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 权重配置策略
+  
+  
+</h2>
+    
+<h3 id="静态权重配置">
+  
+  
+    <a href="#静态权重配置" class="anchor-heading" aria-labelledby="静态权重配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ⚖️ 静态权重配置
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">StaticWeightConfig</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">静态权重配置</span><span class="sh">"""</span>
@@ -329,8 +567,14 @@
             <span class="p">]</span>
         <span class="p">}</span>
 </code></pre></div></div>
-
-<h3 id="动态权重调整">📈 动态权重调整</h3>
+<h3 id="动态权重调整">
+  
+  
+    <a href="#动态权重调整" class="anchor-heading" aria-labelledby="动态权重调整"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📈 动态权重调整
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DynamicWeightScheduler</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">动态权重调度器</span><span class="sh">"""</span>
@@ -404,10 +648,22 @@
         
         <span class="k">return</span> <span class="n">weights</span>
 </code></pre></div></div>
-
-<h2 id="配置示例">配置示例</h2>
-
-<h3 id="基础配置示例">📝 基础配置示例</h3>
+<h2 id="配置示例">
+  
+  
+    <a href="#配置示例" class="anchor-heading" aria-labelledby="配置示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 配置示例
+  
+  
+</h2>
+    
+<h3 id="基础配置示例">
+  
+  
+    <a href="#基础配置示例" class="anchor-heading" aria-labelledby="基础配置示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📝 基础配置示例
+  
+  
+</h3>
+    
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/multi_loss_basic.yaml {#config-multi-loss-basic-yaml}</span>
 <span class="na">loss</span><span class="pi">:</span>
@@ -437,8 +693,14 @@
   <span class="c1"># 自适应权重</span>
   <span class="na">adaptive_weights</span><span class="pi">:</span> <span class="kc">false</span>
 </code></pre></div></div>
-
-<h3 id="高级配置示例">🔧 高级配置示例</h3>
+<h3 id="高级配置示例">
+  
+  
+    <a href="#高级配置示例" class="anchor-heading" aria-labelledby="高级配置示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 高级配置示例
+  
+  
+</h3>
+    
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># config/multi_loss_advanced.yaml {#config-multi-loss-advanced-yaml}</span>
 <span class="na">loss</span><span class="pi">:</span>
@@ -487,8 +749,14 @@
   <span class="na">use_loss_balancer</span><span class="pi">:</span> <span class="kc">true</span>
   <span class="na">balancing_method</span><span class="pi">:</span> <span class="s2">"</span><span class="s">uncertainty"</span>  <span class="c1"># 或 "gradient_norm"</span>
 </code></pre></div></div>
-
-<h3 id="任务特定配置">🎯 任务特定配置</h3>
+<h3 id="任务特定配置">
+  
+  
+    <a href="#任务特定配置" class="anchor-heading" aria-labelledby="任务特定配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 任务特定配置
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TaskSpecificConfigs</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">任务特定的多损失配置</span><span class="sh">"""</span>
@@ -543,10 +811,22 @@
             <span class="sh">'</span><span class="s">adaptive_weights</span><span class="sh">'</span><span class="p">:</span> <span class="bp">True</span>
         <span class="p">}</span>
 </code></pre></div></div>
-
-<h2 id="性能分析">性能分析</h2>
-
-<h3 id="损失监控和分析">📊 损失监控和分析</h3>
+<h2 id="性能分析">
+  
+  
+    <a href="#性能分析" class="anchor-heading" aria-labelledby="性能分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 性能分析
+  
+  
+</h2>
+    
+<h3 id="损失监控和分析">
+  
+  
+    <a href="#损失监控和分析" class="anchor-heading" aria-labelledby="损失监控和分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 损失监控和分析
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LossAnalyzer</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">损失分析器</span><span class="sh">"""</span>
@@ -639,8 +919,14 @@
         
         <span class="k">return</span> <span class="n">report</span>
 </code></pre></div></div>
-
-<h3 id="可视化工具">📈 可视化工具</h3>
+<h3 id="可视化工具">
+  
+  
+    <a href="#可视化工具" class="anchor-heading" aria-labelledby="可视化工具"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📈 可视化工具
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">visualize_multi_loss_training</span><span class="p">(</span><span class="n">analyzer</span><span class="p">:</span> <span class="n">LossAnalyzer</span><span class="p">,</span> <span class="n">save_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
     <span class="sh">"""</span><span class="s">可视化多损失训练过程</span><span class="sh">"""</span>
@@ -704,10 +990,22 @@
     
     <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
 </code></pre></div></div>
-
-<h2 id="最佳实践">最佳实践</h2>
-
-<h3 id="配置建议">✅ 配置建议</h3>
+<h2 id="最佳实践">
+  
+  
+    <a href="#最佳实践" class="anchor-heading" aria-labelledby="最佳实践"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 最佳实践
+  
+  
+</h2>
+    
+<h3 id="配置建议">
+  
+  
+    <a href="#配置建议" class="anchor-heading" aria-labelledby="配置建议"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ✅ 配置建议
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>开始简单</strong>: 从2-3个损失函数开始</li>
@@ -716,8 +1014,14 @@
   <li><strong>监控收敛</strong>: 密切关注各损失的收敛情况</li>
   <li><strong>验证效果</strong>: 在验证集上验证多损失策略的效果</li>
 </ol>
-
-<h3 id="常见陷阱">🚫 常见陷阱</h3>
+<h3 id="常见陷阱">
+  
+  
+    <a href="#常见陷阱" class="anchor-heading" aria-labelledby="常见陷阱"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚫 常见陷阱
+  
+  
+</h3>
+    
 
 <ol>
   <li><strong>权重过大</strong>: 正则化损失权重过大导致欠拟合</li>
@@ -726,8 +1030,14 @@
   <li><strong>计算开销</strong>: 过多损失函数增加计算成本</li>
   <li><strong>调试困难</strong>: 多损失使得问题诊断复杂化</li>
 </ol>
-
-<h3 id="调试技巧">🔧 调试技巧</h3>
+<h3 id="调试技巧">
+  
+  
+    <a href="#调试技巧" class="anchor-heading" aria-labelledby="调试技巧"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 调试技巧
+  
+  
+</h3>
+    
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MultiLossDebugger</span><span class="p">:</span>
     <span class="sh">"""</span><span class="s">多损失调试器</span><span class="sh">"""</span>
@@ -777,12 +1087,30 @@
         
         <span class="k">return</span> <span class="n">warnings</span>
 </code></pre></div></div>
-
-<h2 id="故障排除">故障排除</h2>
-
-<h3 id="常见问题">🔍 常见问题</h3>
-
-<h4 id="问题1-训练不稳定">问题1: 训练不稳定</h4>
+<h2 id="故障排除">
+  
+  
+    <a href="#故障排除" class="anchor-heading" aria-labelledby="故障排除"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 故障排除
+  
+  
+</h2>
+    
+<h3 id="常见问题">
+  
+  
+    <a href="#常见问题" class="anchor-heading" aria-labelledby="常见问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔍 常见问题
+  
+  
+</h3>
+    
+<h4 id="问题1-训练不稳定">
+  
+  
+    <a href="#问题1-训练不稳定" class="anchor-heading" aria-labelledby="问题1-训练不稳定"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 问题1: 训练不稳定
+  
+  
+</h4>
+    
 
 <p><strong>症状</strong>: 损失震荡，训练过程不稳定</p>
 
@@ -796,8 +1124,14 @@
 <span class="c1"># 3. 调整学习率 {#3-调整学习率}
 </span><span class="n">optimizer_config</span><span class="p">[</span><span class="sh">'</span><span class="s">learning_rate</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-4</span>  <span class="c1"># 降低学习率
 </span></code></pre></div></div>
-
-<h4 id="问题2-某个损失不收敛">问题2: 某个损失不收敛</h4>
+<h4 id="问题2-某个损失不收敛">
+  
+  
+    <a href="#问题2-某个损失不收敛" class="anchor-heading" aria-labelledby="问题2-某个损失不收敛"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 问题2: 某个损失不收敛
+  
+  
+</h4>
+    
 
 <p><strong>症状</strong>: 特定损失函数值不下降</p>
 
@@ -808,8 +1142,14 @@
 <span class="c1"># 2. 检查损失函数实现 {#2-检查损失函数实现}
 # 3. 调整损失函数参数 {#3-调整损失函数参数}
 </span></code></pre></div></div>
-
-<h4 id="问题3-过拟合">问题3: 过拟合</h4>
+<h4 id="问题3-过拟合">
+  
+  
+    <a href="#问题3-过拟合" class="anchor-heading" aria-labelledby="问题3-过拟合"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 问题3: 过拟合
+  
+  
+</h4>
+    
 
 <p><strong>症状</strong>: 训练损失下降但验证损失上升</p>
 
@@ -820,8 +1160,14 @@
     <span class="sh">'</span><span class="s">weight</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.1</span>
 <span class="p">})</span>
 </code></pre></div></div>
-
-<h3 id="检查清单">📋 检查清单</h3>
+<h3 id="检查清单">
+  
+  
+    <a href="#检查清单" class="anchor-heading" aria-labelledby="检查清单"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 检查清单
+  
+  
+</h3>
+    
 
 <ul class="task-list">
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />损失函数权重是否合理</li>
@@ -832,8 +1178,14 @@
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />损失尺度是否平衡</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />是否存在损失冲突</li>
 </ul>
-
-<h2 id="总结">总结</h2>
+<h2 id="总结">
+  
+  
+    <a href="#总结" class="anchor-heading" aria-labelledby="总结"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 总结
+  
+  
+</h2>
+    
 
 <p>多损失配置策略是提升 VIVTransformer 性能的重要手段。通过合理配置和调整多个损失函数，可以：</p>
 
@@ -843,27 +1195,55 @@
   <li><strong>防止过拟合</strong>: 通过正则化约束</li>
   <li><strong>适应不同任务</strong>: 灵活配置损失组合</li>
 </ol>
-
-<h3 id="相关链接">🔗 相关链接</h3>
+<h3 id="相关链接">
+  
+  
+    <a href="#相关链接" class="anchor-heading" aria-labelledby="相关链接"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔗 相关链接
+  
+  
+</h3>
+    
 
 <ul>
   <li><a href="SVD-Loss-Functions">SVD Loss Functions</a> - SVD损失函数详解</li>
   <li><a href="Loss-Functions">Loss Functions</a> - 损失函数概览</li>
   <li><a href="Training-Guide">Training Guide</a> - 训练指南</li>
   <li><a href="Hyperparameter-Tuning">Hyperparameter Tuning</a> - 超参数调优</li>
-</ul>
-
-<hr />
+</ul><hr />
 
 <p><em>需要帮助？查看 <a href="faq.html">FAQ</a> 或 <a href="troubleshooting.html">故障排除</a> 页面。</em></p>
 
+          
 
-      </section>
-      <footer>
+          
+            
+          
+        </main>
         
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+
+  <hr>
+  <footer>
+    
+      <p><a href="#top" id="back-to-top">Back to top</a></p>
+    
+
+    <p class="text-small text-grey-dk-100 mb-0">Copyright &copy; 2024 Pitohuie. Distributed by an <a href="https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt">MIT license.</a></p>
+
+    
+  </footer>
+
+
+      </div>
     </div>
-    <script src="/Sparse_to_Dense_Transformer/assets/js/scale.fix.js"></script>
-  </body>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
 </html>
+

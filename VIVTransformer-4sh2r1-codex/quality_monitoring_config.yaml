@@ -1,0 +1,164 @@
+advanced:
+  caching:
+    enabled: true
+    ttl: 3600
+  debug:
+    enabled: false
+    log_level: INFO
+    save_logs: true
+  parallel_processing:
+    enabled: true
+    max_workers: 4
+  performance:
+    memory_limit: 2GB
+    timeout: 600
+alerts:
+  channels:
+    email:
+      enabled: false
+      from_address: ''
+      password: ''
+      smtp_port: 587
+      smtp_server: smtp.gmail.com
+      to_addresses: []
+      username: ''
+    slack:
+      channel: '#quality-alerts'
+      enabled: false
+      icon_emoji: ':robot_face:'
+      username: QualityBot
+      webhook_url: ''
+    webhook:
+      enabled: false
+      headers:
+        Content-Type: application/json
+      url: ''
+  enabled: true
+  levels:
+  - critical
+  - warning
+  - info
+  rules:
+  - condition: overall_score < 60
+    cooldown: 3600
+    level: critical
+    message: 项目总体质量分数过低，需要立即关注
+    name: 总体质量过低
+  - condition: critical_issues > 5
+    cooldown: 1800
+    level: critical
+    message: 发现过多严重问题，需要立即处理
+    name: 严重问题过多
+  - condition: security_score < 70
+    cooldown: 3600
+    level: warning
+    message: 安全分数过低，存在安全风险
+    name: 安全分数过低
+  - condition: coverage < 70
+    cooldown: 7200
+    level: warning
+    message: 测试覆盖率不足，建议增加测试
+    name: 测试覆盖率不足
+dashboard:
+  charts:
+    enabled: true
+    time_range: 30d
+    types:
+    - line
+    - bar
+    - pie
+  export:
+    auto_export: false
+    formats:
+    - html
+    - pdf
+    - json
+    schedule: daily
+  server:
+    auto_open: true
+    host: 127.0.0.1
+    port: 8080
+  ui:
+    refresh_interval: 30
+    show_details: true
+    show_trends: true
+    theme: light
+database:
+  backup:
+    enabled: true
+    interval: daily
+    retention: 30
+  cleanup:
+    enabled: true
+    older_than_days: 90
+  path: quality_monitoring.db
+  type: sqlite
+integrations:
+  ci_cd:
+    github_actions:
+      enabled: false
+      token: ''
+    jenkins:
+      enabled: false
+      token: ''
+      url: ''
+  git:
+    enabled: true
+    track_branches: true
+    track_commits: true
+monitoring:
+  auto_collect: true
+  branches:
+  - main
+  - develop
+  exclude_patterns:
+  - '*/node_modules/*'
+  - '*/venv/*'
+  - '*/env/*'
+  - '*/__pycache__/*'
+  - '*/build/*'
+  - '*/dist/*'
+  - '*/target/*'
+  file_types:
+  - .py
+  - .js
+  - .ts
+  - .java
+  - .cpp
+  - .c
+  - .h
+  interval: 300
+  retention_days: 90
+project:
+  description: VIVTransformer项目质量监控
+  name: VIVTransformer
+  path: X:\2025\Graduation_project\report\VIVTransformer-4sh2r1-codex
+thresholds:
+  code_quality:
+    max_critical: 5
+    max_issues: 100
+    min_score: 70.0
+  coverage:
+    min_branch_coverage: 70.0
+    min_function_coverage: 85.0
+    min_line_coverage: 80.0
+  documentation:
+    min_api_docs: 80.0
+    min_coverage: 60.0
+  overall_score:
+    acceptable: 70.0
+    critical: 50.0
+    excellent: 90.0
+    good: 80.0
+    poor: 60.0
+  performance:
+    max_complexity: 10
+    max_response_time: 1000
+    min_score: 75.0
+  security:
+    max_high_severity: 2
+    max_vulnerabilities: 10
+    min_score: 80.0
+  team_collaboration:
+    max_knowledge_gaps: 5
+    min_score: 70.0

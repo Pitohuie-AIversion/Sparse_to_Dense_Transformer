@@ -1,0 +1,550 @@
+# VIVTransformer 高级代码质量配置文件
+# 支持智能化分析、性能监控、安全扫描等高级功能
+
+# AI辅助代码审查配置
+ai_code_review:
+  enabled: true
+  provider: "openai"  # openai, anthropic, local
+  model: "gpt-4"
+  api_key_env: "OPENAI_API_KEY"
+  max_file_size: 5000  # 最大文件大小（行数）
+  analysis_focus:
+    - "code_structure"
+    - "performance_optimization"
+    - "readability"
+    - "maintainability"
+    - "security_issues"
+    - "best_practices"
+  
+  # 审查触发条件
+  triggers:
+    - "pull_request"
+    - "commit_to_main"
+    - "manual_request"
+  
+  # 输出格式
+  output_format: "markdown"
+  include_suggestions: true
+  include_examples: true
+
+# 智能重构建议配置
+refactoring_analyzer:
+  enabled: true
+  
+  # 代码异味检测阈值
+  code_smells:
+    long_method:
+      max_lines: 50
+      max_complexity: 10
+    
+    large_class:
+      max_methods: 20
+      max_lines: 500
+    
+    duplicate_code:
+      min_lines: 6
+      similarity_threshold: 0.8
+    
+    complex_conditionals:
+      max_nesting_depth: 4
+      max_conditions: 5
+    
+    god_object:
+      max_responsibilities: 5
+      max_dependencies: 10
+  
+  # 重构建议优先级
+  suggestion_priority:
+    - "extract_method"
+    - "extract_class"
+    - "simplify_conditionals"
+    - "remove_duplicates"
+    - "reduce_dependencies"
+
+# 预测性质量分析配置
+quality_predictor:
+  enabled: true
+  
+  # 历史数据收集
+  data_collection:
+    metrics:
+      - "complexity"
+      - "test_coverage"
+      - "code_churn"
+      - "bug_count"
+      - "review_comments"
+      - "build_failures"
+    
+    retention_days: 365
+    update_frequency: "daily"
+  
+  # 预测模型配置
+  model:
+    type: "linear_regression"  # linear_regression, random_forest, neural_network
+    features:
+      - "complexity_trend"
+      - "coverage_trend"
+      - "churn_rate"
+      - "defect_density"
+    
+    prediction_horizon: 30  # 预测天数
+    confidence_threshold: 0.7
+  
+  # 预警配置
+  alerts:
+    quality_decline:
+      threshold: -0.2  # 质量下降20%触发预警
+      notification: ["email", "slack"]
+    
+    high_risk_areas:
+      complexity_increase: 0.3
+      coverage_decrease: 0.15
+
+# 性能监控配置
+performance_monitoring:
+  enabled: true
+  
+  # 基准测试配置
+  benchmarking:
+    auto_benchmark: true
+    benchmark_on:
+      - "pull_request"
+      - "release_candidate"
+    
+    performance_thresholds:
+      execution_time_increase: 0.2  # 20%性能下降触发警告
+      memory_usage_increase: 0.3    # 30%内存增长触发警告
+    
+    critical_functions:
+      - "modify_multi_attention.models.vivtransformer.VIVTransformer.forward"
+      - "modify_multi_attention.models.attention.MultiHeadAttention.forward"
+  
+  # 内存监控配置
+  memory_monitoring:
+    enabled: true
+    snapshot_interval: 300  # 5分钟
+    leak_detection:
+      growth_threshold: 0.1  # 10%内存增长
+      monitoring_duration: 3600  # 1小时监控周期
+    
+    profiling:
+      auto_profile: false
+      profile_on_memory_spike: true
+      spike_threshold: 0.5  # 50%内存突增
+
+# 高级安全扫描配置
+advanced_security:
+  enabled: true
+  
+  # 自定义安全规则
+  custom_rules:
+    sql_injection:
+      enabled: true
+      severity: "HIGH"
+      patterns:
+        - "SELECT.*%s"
+        - "INSERT.*%s"
+        - "UPDATE.*%s"
+        - "DELETE.*%s"
+    
+    xss_vulnerability:
+      enabled: true
+      severity: "HIGH"
+      patterns:
+        - "innerHTML.*\+"
+        - "document\.write.*\+"
+    
+    path_traversal:
+      enabled: true
+      severity: "MEDIUM"
+      patterns:
+        - "\.\./"
+        - "\\.\.\\"  
+    
+    hardcoded_secrets:
+      enabled: true
+      severity: "CRITICAL"
+      patterns:
+        - "password\\s*=\\s*[\"\'][^\"\'
+]{8,}[\"\']"  
+        - "api_key\\s*=\\s*[\"\'][^\"\'
+]{20,}[\"\']"  
+        - "secret\\s*=\\s*[\"\'][^\"\'
+]{16,}[\"\']"  
+  
+  # 依赖安全扫描
+  dependency_scanning:
+    enabled: true
+    vulnerability_databases:
+      - "pyup.io"
+      - "snyk.io"
+      - "github_advisory"
+    
+    scan_frequency: "daily"
+    auto_update_safe_dependencies: false
+    
+    severity_thresholds:
+      block_build:
+        - "CRITICAL"
+        - "HIGH"
+      warn_only:
+        - "MEDIUM"
+        - "LOW"
+
+# 架构质量配置
+architecture_validation:
+  enabled: true
+  
+  # 分层架构规则
+  layer_rules:
+    - layer: "models"
+      can_depend_on: ["utils", "config"]
+      cannot_depend_on: ["views", "controllers", "tests"]
+    
+    - layer: "utils"
+      can_depend_on: ["config"]
+      cannot_depend_on: ["models", "views", "controllers", "tests"]
+    
+    - layer: "tests"
+      can_depend_on: ["models", "utils", "config"]
+      cannot_depend_on: []
+  
+  # 循环依赖检测
+  circular_dependency_detection:
+    enabled: true
+    max_allowed_cycles: 0
+    ignore_patterns:
+      - "__pycache__"
+      - "*.pyc"
+  
+  # 设计模式检测
+  design_patterns:
+    detect_patterns: true
+    preferred_patterns:
+      - "factory"
+      - "strategy"
+      - "observer"
+    
+    anti_patterns:
+      - "god_object"
+      - "spaghetti_code"
+      - "copy_paste_programming"
+
+# 文档质量配置
+documentation_quality:
+  enabled: true
+  
+  # 文档覆盖率要求
+  coverage_requirements:
+    functions:
+      public_functions: 90
+      private_functions: 70
+      complex_functions: 100  # 复杂度>10的函数
+    
+    classes:
+      public_classes: 95
+      private_classes: 80
+    
+    modules:
+      public_modules: 100
+      internal_modules: 85
+  
+  # 文档质量检查
+  quality_checks:
+    min_docstring_length: 20
+    require_param_docs: true
+    require_return_docs: true
+    require_raises_docs: true
+    
+    style_guide: "google"  # google, numpy, sphinx
+    
+    # 文档内容检查
+    content_validation:
+      check_grammar: false  # 需要额外的语法检查工具
+      check_spelling: false  # 需要拼写检查工具
+      require_examples: true
+      require_type_hints: true
+  
+  # API文档生成
+  api_doc_generation:
+    enabled: true
+    output_format: "markdown"  # markdown, html, rst
+    include_private: false
+    include_source_links: true
+    
+    auto_generate_on:
+      - "release"
+      - "documentation_update"
+
+# 团队协作配置
+team_collaboration:
+  enabled: true
+  
+  # 代码所有权
+  code_ownership:
+    track_ownership: true
+    ownership_threshold: 30  # 30%以上贡献认为是主要负责人
+    
+    auto_generate_codeowners: true
+    codeowners_file: ".github/CODEOWNERS"
+    
+    ownership_metrics:
+      - "lines_contributed"
+      - "commits_count"
+      - "review_participation"
+  
+  # 知识图谱
+  knowledge_graph:
+    build_dependency_graph: true
+    identify_critical_modules: true
+    
+    criticality_factors:
+      - "betweenness_centrality"  # 中介中心性
+      - "in_degree"              # 入度
+      - "out_degree"             # 出度
+      - "modification_frequency" # 修改频率
+    
+    update_frequency: "weekly"
+
+# 质量游戏化配置
+quality_gamification:
+  enabled: true
+  
+  # 积分系统
+  point_system:
+    high_coverage: 10      # 高测试覆盖率
+    high_quality: 15       # 高代码质量
+    secure_code: 20        # 安全代码
+    good_documentation: 8  # 良好文档
+    code_review: 5         # 代码审查参与
+    bug_fix: 12           # Bug修复
+    improvement_multiplier: 2  # 改进倍数
+  
+  # 成就系统
+  achievements:
+    quality_guardian:
+      name: "Quality Guardian"
+      description: "Maintain code quality score above 9.0 for 30 days"
+      criteria:
+        code_quality_score: ">= 9.0"
+        duration_days: 30
+      points: 100
+    
+    test_champion:
+      name: "Test Champion"
+      description: "Achieve 95% test coverage"
+      criteria:
+        test_coverage: ">= 95"
+      points: 75
+    
+    security_sentinel:
+      name: "Security Sentinel"
+      description: "Zero security issues for 60 days"
+      criteria:
+        security_issues: "== 0"
+        duration_days: 60
+      points: 150
+    
+    documentation_master:
+      name: "Documentation Master"
+      description: "100% documentation coverage for owned modules"
+      criteria:
+        doc_coverage: ">= 100"
+      points: 80
+  
+  # 排行榜配置
+  leaderboard:
+    enabled: true
+    update_frequency: "daily"
+    display_top: 10
+    
+    categories:
+      - "overall_quality"
+      - "test_coverage"
+      - "security_score"
+      - "documentation_score"
+      - "code_review_participation"
+
+# 自适应质量阈值配置
+adaptive_thresholds:
+  enabled: true
+  
+  # 阈值调整策略
+  adjustment_strategy:
+    min_history_points: 10  # 最少历史数据点
+    confidence_threshold: 0.7  # 置信度阈值
+    
+    trend_sensitivity: 0.5  # 趋势敏感度
+    volatility_factor: 0.3  # 波动性因子
+  
+  # 监控指标
+  monitored_metrics:
+    - "test_coverage"
+    - "code_quality_score"
+    - "complexity_score"
+    - "security_score"
+    - "documentation_coverage"
+  
+  # 调整频率
+  update_frequency: "weekly"
+  
+  # 阈值边界
+  threshold_bounds:
+    test_coverage:
+      min: 70
+      max: 95
+    
+    code_quality_score:
+      min: 7.0
+      max: 10.0
+    
+    complexity_score:
+      min: 1
+      max: 15
+
+# 报告配置
+reporting:
+  enabled: true
+  
+  # 报告类型
+  report_types:
+    - "quality_dashboard"
+    - "security_report"
+    - "performance_report"
+    - "architecture_report"
+    - "team_report"
+  
+  # 报告频率
+  schedule:
+    daily:
+      - "quality_dashboard"
+    
+    weekly:
+      - "security_report"
+      - "performance_report"
+    
+    monthly:
+      - "architecture_report"
+      - "team_report"
+  
+  # 报告分发
+  distribution:
+    email:
+      enabled: false
+      recipients: []
+    
+    slack:
+      enabled: false
+      webhook_url: ""
+      channels: []
+    
+    file_output:
+      enabled: true
+      output_dir: "reports/"
+      formats: ["html", "pdf", "json"]
+
+# 集成配置
+integrations:
+  # CI/CD集成
+  ci_cd:
+    github_actions:
+      enabled: true
+      workflow_file: ".github/workflows/advanced-quality.yml"
+    
+    jenkins:
+      enabled: false
+      pipeline_script: "Jenkinsfile.quality"
+  
+  # 外部工具集成
+  external_tools:
+    sonarqube:
+      enabled: false
+      server_url: ""
+      project_key: ""
+    
+    codecov:
+      enabled: false
+      token_env: "CODECOV_TOKEN"
+    
+    snyk:
+      enabled: false
+      token_env: "SNYK_TOKEN"
+  
+  # 通知集成
+  notifications:
+    email:
+      smtp_server: ""
+      smtp_port: 587
+      username: ""
+      password_env: "EMAIL_PASSWORD"
+    
+    slack:
+      webhook_url_env: "SLACK_WEBHOOK_URL"
+      default_channel: "#quality-alerts"
+    
+    teams:
+      webhook_url_env: "TEAMS_WEBHOOK_URL"
+
+# 性能配置
+performance:
+  # 并行处理
+  parallel_processing:
+    enabled: true
+    max_workers: 4
+    
+    # 并行化的任务
+    parallel_tasks:
+      - "file_analysis"
+      - "security_scanning"
+      - "performance_testing"
+  
+  # 缓存配置
+  caching:
+    enabled: true
+    cache_dir: ".quality_cache"
+    
+    # 缓存策略
+    cache_strategies:
+      file_analysis:
+        ttl: 3600  # 1小时
+        invalidate_on_change: true
+      
+      dependency_analysis:
+        ttl: 86400  # 24小时
+        invalidate_on_change: false
+  
+  # 资源限制
+  resource_limits:
+    max_memory_mb: 2048
+    max_execution_time: 1800  # 30分钟
+    
+    per_file_limits:
+      max_file_size_mb: 10
+      max_analysis_time: 300  # 5分钟
+
+# 调试和日志配置
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  
+  # 日志输出
+  handlers:
+    console:
+      enabled: true
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    
+    file:
+      enabled: true
+      filename: "logs/quality_analysis.log"
+      max_size_mb: 100
+      backup_count: 5
+    
+    json:
+      enabled: false
+      filename: "logs/quality_analysis.json"
+  
+  # 组件日志级别
+  loggers:
+    "ai_code_review": "INFO"
+    "performance_monitoring": "WARNING"
+    "security_scanner": "INFO"
+    "architecture_validator": "INFO"

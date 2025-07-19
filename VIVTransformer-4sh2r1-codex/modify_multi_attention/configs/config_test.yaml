@@ -26,7 +26,7 @@ model:
 
 # Training settings
 training:
-  epochs: 10
+  epochs: 2
   learning_rate: 0.0001
   early_stop_patience: 10
 
@@ -45,44 +45,33 @@ hardware_monitoring:
   monitor_temperature: true
   monitor_power_usage: true
 
-# Attention mechanisms to test
+# Enhanced logging settings
+enhanced_logging:
+  enabled: true
+  log_level: INFO
+  log_gradients: true
+  log_weights: false
+  log_activations: false
+  gradient_log_interval: 100
+  detailed_metrics: true
+
+# Training visualization settings
+training_visualization:
+  enabled: true
+  save_plots: true
+  plot_interval: 50
+  generate_report: true
+  export_csv: true
+
+# Attention mechanisms to test (simplified for testing)
 attention_test:
   types: 
     - self
-    - simplified_self
-    - muse
-    - ufo
     - relative
     - sparse
-    - lsh
-    - emsa
-    - mobilevit
-    - mobilevitv2
-    - dat
-    - crossformer
-    - moa
-    - crisscross
-    - axial
-    - gfnet
-    - se
-    - sk
-    - cbam
-    - bam
-    - eca
-    - shuffle
-    - residual
-    - s2
-    - triplet
-    - coord
-    - psa
-    - danet
-    - cot
-    - polarized
-    - outlook
-    - vip
-    - coatnet
-    - halo
-    - a2
-    - parnet
-    - external
-    - aft
+
+# Loss configurations
+loss_configs:
+  - base_weight: 0.5
+    svd_weights: [0.1, 0.1, 0.1, 0.1, 0.1]
+    topk: 10

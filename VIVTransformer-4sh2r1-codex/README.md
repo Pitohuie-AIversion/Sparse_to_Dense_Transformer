@@ -12,6 +12,7 @@ A comprehensive research platform for training and evaluating VIVTransformer mod
 - **Multiple Loss Configurations**: Support for 50 different loss configurations with SVD-based regularization
 - **Automated Experimentation**: Batch processing of all attention-loss combinations
 - **Comprehensive Logging**: Detailed training logs, visualization, and result tracking
+- **Advanced Training Monitoring**: Real-time hardware monitoring, enhanced logging, and automatic report generation
 - **GPU Acceleration**: CUDA support with memory management and DataParallel
 - **Reproducible Results**: Deterministic training with seed control
 - **TensorBoard Integration**: Real-time training monitoring and visualization
@@ -176,6 +177,54 @@ global:
 python modify_multi_attention/start_tensorboard.py
 # Open http://localhost:6006 in browser
 ```
+
+### Advanced Training Monitoring
+
+The platform includes comprehensive training monitoring capabilities:
+
+#### Hardware Monitoring
+- **Real-time GPU/CPU monitoring**: Track usage, memory, temperature, and power
+- **Training time analysis**: Detailed timing statistics for epochs and batches
+- **System resource tracking**: Monitor system performance during training
+
+#### Enhanced Logging
+- **Structured logging**: JSON and CSV format outputs
+- **Batch-level metrics**: Detailed training progress tracking
+- **Automatic timestamping**: Precise time tracking for all events
+
+#### Training Visualization
+- **Loss curves**: Interactive training/validation/test loss plots
+- **Hardware usage charts**: GPU/CPU utilization over time
+- **Training dashboard**: Comprehensive overview of training progress
+- **HTML reports**: Interactive training reports with detailed statistics
+
+#### Quick Start with Monitoring
+
+```bash
+# Run training with full monitoring enabled
+python examples/training_with_monitoring.py
+
+# View generated reports
+# - Hardware logs: ./results/hardware_logs/
+# - Visualizations: ./results/hardware_logs/visualizations/
+# - HTML report: ./results/hardware_logs/visualizations/training_report.html
+```
+
+#### Configuration
+
+Enable monitoring in `config.yaml`:
+
+```yaml
+hardware_monitoring:
+  enable_gpu_monitoring: true
+  log_batch_metrics: true
+  batch_log_interval: 10
+  save_detailed_metrics: true
+  monitor_temperature: true
+  monitor_power_usage: true
+```
+
+For detailed documentation, see [Training Monitoring Guide](docs/TRAINING_MONITORING.md).
 
 ### Attention Visualization
 

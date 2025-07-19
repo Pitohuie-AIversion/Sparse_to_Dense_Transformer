@@ -15,15 +15,21 @@ from modify_multi_attention.utils.visualization import (
     plot_difference_figure,
     plot_losses,
 )
+from modify_multi_attention.utils.hardware_monitor import HardwareMonitor
+from modify_multi_attention.utils.training_visualizer import TrainingVisualizer
 
 
 def _train_epoch(
-    model, loader, criterion, optimizer, device, debug, epoch, attention_type, result_dir
+    model, loader, criterion, optimizer, device, debug, epoch, attention_type, result_dir, hardware_monitor=None
 ):
     model.train()
     total_loss = 0
     logger = logging.getLogger(__name__)
     for i, (in_press, out_pressure, time_steps) in enumerate(loader):
+        # 开始batch监控
+        if hardware_monitor:
+            hardware_monitor.start_batch(epoch, i)
+        
         in_press, out_pressure, time_steps = (
             in_press.to(device),
             out_pressure.to(device),
@@ -47,6 +53,11 @@ def _train_epoch(
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
+        
+        # 结束batch监控
+        if hardware_monitor:
+            hardware_monitor.end_batch(epoch, i, loss.item())
+        
         if (i + 1) % 50 == 0 or i == 0:
             logger.info(
                 f"    🔄 Epoch [{epoch + 1}], Batch [{i + 1}/{len(loader)}], Loss: {loss.item():.6f}"
@@ -187,6 +198,13 @@ def train_model(
     result_dir = Path(result_dir)
     writer = SummaryWriter(log_dir=result_dir / 'runs')
 
+    # 初始化硬件监控器
+    hardware_monitor = HardwareMonitor(
+        log_dir=str(result_dir / "hardware_logs"),
+        enable_gpu_monitoring=cfg.get("hardware_monitoring", {}).get("enable_gpu_monitoring", True)
+    )
+    hardware_monitor.start_training()
+
     # 标准 MSELoss（保证横向可比）
     import torch.nn as nn
 
@@ -236,8 +254,11 @@ def train_model(
 
     # ========== 主训练循环 ==========
     for epoch in range(start_epoch, num_epochs):
+        # 开始epoch监控
+        hardware_monitor.start_epoch(epoch + 1)
+        
         avg_train_loss = _train_epoch(
-            model, train_loader, criterion, optimizer, device, debug, epoch, attention_type, result_dir
+            model, train_loader, criterion, optimizer, device, debug, epoch, attention_type, result_dir, hardware_monitor
         )
         train_loss_history.append(avg_train_loss)
         writer.add_scalar('Loss/train', avg_train_loss, epoch)
@@ -251,6 +272,9 @@ def train_model(
         avg_test_loss = _evaluate_model(model, test_loader, mse_loss, device, False, 0, '', '')
         test_loss_history.append(avg_test_loss)
         writer.add_scalar('Loss/test', avg_test_loss, epoch)
+
+        # 结束epoch监控
+        hardware_monitor.end_epoch(epoch + 1, avg_train_loss, avg_valid_loss, avg_test_loss)
 
         logger.info(
             f"🎯 Epoch [{epoch + 1}/{num_epochs}], Train Loss: {avg_train_loss:.6f}, Valid Loss: {avg_valid_loss:.6f}, Test Loss: {avg_test_loss:.6f}"
@@ -299,6 +323,23 @@ def train_model(
                 save_path=loss_fig_path,
             )
 
+    # 结束训练监控
+    hardware_monitor.end_training()
+    
+    # 记录训练摘要统计
+    summary_stats = hardware_monitor.get_summary_stats()
+    logger.info("📊 训练统计摘要:")
+    for key, value in summary_stats.items():
+        logger.info(f"  {key}: {value}")
+    
+    # 生成训练可视化报告
+    try:
+        visualizer = TrainingVisualizer(str(result_dir / "hardware_logs"))
+        visualizer.generate_complete_report()
+        logger.info(f"训练可视化报告已生成到: {result_dir / 'hardware_logs' / 'visualizations'}")
+    except Exception as e:
+        logger.warning(f"生成训练可视化报告失败: {e}")
+    
     plt.ioff()
     writer.close()
     return model, train_loss_history, valid_loss_history, test_loss_history

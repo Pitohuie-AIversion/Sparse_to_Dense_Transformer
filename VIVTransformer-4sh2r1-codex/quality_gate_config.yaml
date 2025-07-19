@@ -1,0 +1,401 @@
+# VIVTransformer 质量门禁配置
+# 定义不同环境下的质量标准和阈值
+
+# 质量门禁规则配置
+quality_gates:
+  # 开发环境 - 相对宽松的标准
+  development:
+    description: "开发环境质量门禁 - 基础质量保证"
+    rules:
+      - name: "overall_quality_score"
+        metric: "overall_score"
+        operator: ">="
+        threshold: 70.0
+        weight: 1.0
+        mandatory: true
+        description: "总体质量分数必须达到70分以上"
+        
+      - name: "critical_issues_limit"
+        metric: "critical_issues"
+        operator: "<="
+        threshold: 0
+        weight: 1.0
+        mandatory: true
+        description: "不允许存在严重问题"
+        
+      - name: "code_quality_minimum"
+        metric: "code_quality_score"
+        operator: ">="
+        threshold: 75.0
+        weight: 0.8
+        mandatory: false
+        description: "代码质量分数建议达到75分以上"
+        
+      - name: "security_score_minimum"
+        metric: "security_score"
+        operator: ">="
+        threshold: 80.0
+        weight: 0.9
+        mandatory: true
+        description: "安全分数必须达到80分以上"
+        
+      - name: "architecture_basic_check"
+        metric: "architecture_quality_score"
+        operator: ">="
+        threshold: 60.0
+        weight: 0.6
+        mandatory: false
+        description: "架构质量基础检查"
+
+  # 测试环境 - 中等严格标准
+  staging:
+    description: "测试环境质量门禁 - 提升质量要求"
+    rules:
+      - name: "overall_quality_score"
+        metric: "overall_score"
+        operator: ">="
+        threshold: 80.0
+        weight: 1.0
+        mandatory: true
+        description: "总体质量分数必须达到80分以上"
+        
+      - name: "critical_issues_limit"
+        metric: "critical_issues"
+        operator: "<="
+        threshold: 0
+        weight: 1.0
+        mandatory: true
+        description: "不允许存在严重问题"
+        
+      - name: "code_quality_minimum"
+        metric: "code_quality_score"
+        operator: ">="
+        threshold: 80.0
+        weight: 0.9
+        mandatory: true
+        description: "代码质量分数必须达到80分以上"
+        
+      - name: "architecture_quality_minimum"
+        metric: "architecture_quality_score"
+        operator: ">="
+        threshold: 75.0
+        weight: 0.8
+        mandatory: true
+        description: "架构质量分数必须达到75分以上"
+        
+      - name: "security_score_minimum"
+        metric: "security_score"
+        operator: ">="
+        threshold: 85.0
+        weight: 1.0
+        mandatory: true
+        description: "安全分数必须达到85分以上"
+        
+      - name: "performance_score_minimum"
+        metric: "performance_score"
+        operator: ">="
+        threshold: 70.0
+        weight: 0.7
+        mandatory: false
+        description: "性能分数建议达到70分以上"
+        
+      - name: "documentation_coverage"
+        metric: "documentation_score"
+        operator: ">="
+        threshold: 60.0
+        weight: 0.5
+        mandatory: false
+        description: "文档覆盖率建议达到60分以上"
+
+  # 生产环境 - 最严格标准
+  production:
+    description: "生产环境质量门禁 - 最高质量标准"
+    rules:
+      - name: "overall_quality_score"
+        metric: "overall_score"
+        operator: ">="
+        threshold: 85.0
+        weight: 1.0
+        mandatory: true
+        description: "总体质量分数必须达到85分以上"
+        
+      - name: "critical_issues_limit"
+        metric: "critical_issues"
+        operator: "<="
+        threshold: 0
+        weight: 1.0
+        mandatory: true
+        description: "不允许存在任何严重问题"
+        
+      - name: "code_quality_minimum"
+        metric: "code_quality_score"
+        operator: ">="
+        threshold: 85.0
+        weight: 1.0
+        mandatory: true
+        description: "代码质量分数必须达到85分以上"
+        
+      - name: "architecture_quality_minimum"
+        metric: "architecture_quality_score"
+        operator: ">="
+        threshold: 80.0
+        weight: 0.9
+        mandatory: true
+        description: "架构质量分数必须达到80分以上"
+        
+      - name: "security_score_minimum"
+        metric: "security_score"
+        operator: ">="
+        threshold: 90.0
+        weight: 1.0
+        mandatory: true
+        description: "安全分数必须达到90分以上"
+        
+      - name: "performance_score_minimum"
+        metric: "performance_score"
+        operator: ">="
+        threshold: 80.0
+        weight: 0.8
+        mandatory: true
+        description: "性能分数必须达到80分以上"
+        
+      - name: "documentation_coverage"
+        metric: "documentation_score"
+        operator: ">="
+        threshold: 80.0
+        weight: 0.6
+        mandatory: true
+        description: "文档覆盖率必须达到80分以上"
+        
+      - name: "team_collaboration_minimum"
+        metric: "team_collaboration_score"
+        operator: ">="
+        threshold: 75.0
+        weight: 0.5
+        mandatory: false
+        description: "团队协作分数建议达到75分以上"
+
+# 通知配置
+notifications:
+  # Slack通知
+  slack:
+    enabled: false
+    webhook_url: ""
+    channel: "#quality"
+    mention_on_failure: true
+    mention_users: []
+    
+  # 邮件通知
+  email:
+    enabled: false
+    smtp_server: ""
+    smtp_port: 587
+    username: ""
+    password: ""
+    from_address: ""
+    recipients: []
+    
+  # 企业微信通知
+  wechat:
+    enabled: false
+    webhook_url: ""
+    
+  # 钉钉通知
+  dingtalk:
+    enabled: false
+    webhook_url: ""
+    secret: ""
+
+# 报告配置
+reporting:
+  # 保存历史记录
+  save_history: true
+  history_path: "quality_gate_history"
+  max_history_days: 30
+  
+  # 报告格式
+  formats:
+    - markdown
+    - json
+    - html
+  
+  # 包含的内容
+  include_trends: true
+  include_recommendations: true
+  include_detailed_metrics: true
+  
+  # 报告模板
+  templates:
+    success: |
+      ✅ **质量门禁通过**
+      
+      项目: {project_name}
+      环境: {environment}
+      分数: {overall_score:.2f}/100
+      时间: {timestamp}
+      
+      🎉 恭喜！代码质量符合{environment}环境标准。
+      
+    failure: |
+      ❌ **质量门禁失败**
+      
+      项目: {project_name}
+      环境: {environment}
+      分数: {overall_score:.2f}/100
+      时间: {timestamp}
+      
+      ⚠️ 请修复以下问题后重新提交：
+      {failure_reasons}
+
+# CI/CD集成配置
+ci_cd:
+  # Jenkins集成
+  jenkins:
+    enabled: false
+    build_status_url: ""
+    
+  # GitHub Actions集成
+  github_actions:
+    enabled: true
+    set_output: true
+    create_check: true
+    
+  # GitLab CI集成
+  gitlab_ci:
+    enabled: false
+    
+  # Azure DevOps集成
+  azure_devops:
+    enabled: false
+
+# 高级配置
+advanced:
+  # 并行执行
+  parallel_execution: true
+  max_workers: 3
+  
+  # 超时设置
+  timeout_seconds: 600
+  
+  # 重试配置
+  retry_on_failure: true
+  max_retries: 2
+  retry_delay: 5
+  
+  # 缓存配置
+  enable_cache: true
+  cache_duration_hours: 24
+  
+  # 增量分析
+  incremental_analysis: false
+  base_branch: "main"
+  
+  # 自定义脚本
+  pre_analysis_script: ""
+  post_analysis_script: ""
+  
+  # 排除规则
+  exclude_patterns:
+    - "**/test_*"
+    - "**/tests/**"
+    - "**/__pycache__/**"
+    - "**/venv/**"
+    - "**/node_modules/**"
+    - "**/.git/**"
+
+# 质量指标权重配置
+metric_weights:
+  overall_score: 1.0
+  code_quality_score: 0.25
+  architecture_quality_score: 0.20
+  security_score: 0.20
+  performance_score: 0.15
+  documentation_score: 0.10
+  team_collaboration_score: 0.10
+
+# 阈值配置
+thresholds:
+  # 质量等级阈值
+  excellent: 90
+  good: 75
+  acceptable: 60
+  poor: 40
+  
+  # 问题数量阈值
+  max_critical_issues: 0
+  max_high_issues: 5
+  max_medium_issues: 20
+  max_low_issues: 50
+  
+  # 复杂度阈值
+  max_cyclomatic_complexity: 10
+  max_cognitive_complexity: 15
+  
+  # 覆盖率阈值
+  min_test_coverage: 80.0
+  min_doc_coverage: 70.0
+
+# 工具配置
+tools:
+  # 代码质量工具
+  code_quality:
+    pylint:
+      enabled: true
+      config_file: ".pylintrc"
+      score_threshold: 8.0
+      
+    flake8:
+      enabled: true
+      config_file: ".flake8"
+      max_line_length: 88
+      
+    mypy:
+      enabled: true
+      config_file: "mypy.ini"
+      strict_mode: false
+      
+    black:
+      enabled: true
+      line_length: 88
+      
+  # 安全工具
+  security:
+    bandit:
+      enabled: true
+      config_file: ".bandit"
+      severity_level: "medium"
+      
+    safety:
+      enabled: true
+      ignore_ids: []
+      
+  # 性能工具
+  performance:
+    py_spy:
+      enabled: false
+      duration: 30
+      
+    memory_profiler:
+      enabled: false
+      
+  # 文档工具
+  documentation:
+    pydoc:
+      enabled: true
+      
+    sphinx:
+      enabled: false
+      config_dir: "docs"
+
+# 环境变量
+environment_variables:
+  PYTHONPATH: "."
+  QUALITY_GATE_ENV: "development"
+  QUALITY_GATE_STRICT: "false"
+
+# 调试配置
+debug:
+  enabled: false
+  log_level: "INFO"
+  save_intermediate_results: false
+  verbose_output: false

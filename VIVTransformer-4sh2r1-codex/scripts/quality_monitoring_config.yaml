@@ -1,0 +1,442 @@
+# VIVTransformer 质量监控配置文件
+# 用于配置质量门禁、监控阈值、报警规则等
+
+# 项目基本信息
+project:
+  name: "VIVTransformer"
+  version: "1.0.0"
+  description: "Vision-Language Transformer for Multi-Modal Tasks"
+  repository: "https://github.com/your-org/VIVTransformer"
+  maintainers:
+    - "VIVTransformer Team"
+
+# 质量监控配置
+monitoring:
+  # 监控间隔（秒）
+  interval: 300
+  
+  # 自动收集数据
+  auto_collect: true
+  
+  # 数据保留天数
+  retention_days: 90
+  
+  # 监控的分支
+  branches:
+    - "main"
+    - "develop"
+    - "release/*"
+  
+  # 监控的文件类型
+  file_patterns:
+    - "**/*.py"
+    - "**/*.js"
+    - "**/*.ts"
+    - "**/*.java"
+    - "**/*.cpp"
+    - "**/*.h"
+  
+  # 排除的目录
+  exclude_patterns:
+    - "**/node_modules/**"
+    - "**/venv/**"
+    - "**/env/**"
+    - "**/__pycache__/**"
+    - "**/build/**"
+    - "**/dist/**"
+    - "**/target/**"
+    - "**/.git/**"
+    - "**/tests/**"
+    - "**/test/**"
+
+# 质量阈值配置
+thresholds:
+  # 总体质量分数阈值
+  overall_score:
+    excellent: 90.0    # 优秀
+    good: 80.0         # 良好
+    acceptable: 70.0   # 可接受
+    poor: 60.0         # 较差
+    critical: 50.0     # 严重
+  
+  # 代码质量阈值
+  code_quality:
+    complexity:
+      cyclomatic: 10      # 圈复杂度
+      cognitive: 15       # 认知复杂度
+      nesting: 4          # 嵌套深度
+    
+    duplication:
+      percentage: 5.0     # 重复代码百分比
+      lines: 50           # 重复代码行数
+    
+    maintainability:
+      index: 70.0         # 可维护性指数
+    
+    technical_debt:
+      ratio: 5.0          # 技术债务比率（%）
+      hours: 8.0          # 技术债务小时数
+  
+  # 安全阈值
+  security:
+    vulnerabilities:
+      critical: 0         # 严重漏洞
+      high: 2             # 高危漏洞
+      medium: 5           # 中危漏洞
+      low: 10             # 低危漏洞
+    
+    security_score: 80.0  # 安全分数
+  
+  # 性能阈值
+  performance:
+    response_time: 200    # 响应时间（毫秒）
+    memory_usage: 80.0    # 内存使用率（%）
+    cpu_usage: 70.0       # CPU使用率（%）
+    performance_score: 75.0
+  
+  # 测试覆盖率阈值
+  coverage:
+    line_coverage: 80.0   # 行覆盖率
+    branch_coverage: 70.0 # 分支覆盖率
+    function_coverage: 85.0 # 函数覆盖率
+  
+  # 文档质量阈值
+  documentation:
+    coverage: 70.0        # 文档覆盖率
+    quality_score: 75.0   # 文档质量分数
+  
+  # 团队协作阈值
+  collaboration:
+    knowledge_sharing: 60.0  # 知识共享度
+    code_review_rate: 80.0   # 代码审查率
+    collaboration_score: 70.0
+
+# 报警配置
+alerts:
+  # 启用报警
+  enabled: true
+  
+  # 报警级别
+  levels:
+    critical:
+      color: "#FF0000"
+      icon: "🚨"
+      sound: true
+      email: true
+      slack: true
+    
+    warning:
+      color: "#FFA500"
+      icon: "⚠️"
+      sound: false
+      email: true
+      slack: true
+    
+    info:
+      color: "#0000FF"
+      icon: "ℹ️"
+      sound: false
+      email: false
+      slack: true
+  
+  # 报警规则
+  rules:
+    # 质量分数下降
+    - name: "quality_score_drop"
+      condition: "overall_score < 70"
+      level: "warning"
+      message: "总体质量分数低于70分"
+      cooldown: 3600  # 冷却时间（秒）
+    
+    - name: "quality_score_critical"
+      condition: "overall_score < 50"
+      level: "critical"
+      message: "总体质量分数严重偏低"
+      cooldown: 1800
+    
+    # 严重问题增加
+    - name: "critical_issues_increase"
+      condition: "critical_issues > 0"
+      level: "critical"
+      message: "发现严重质量问题"
+      cooldown: 0
+    
+    # 安全漏洞
+    - name: "security_vulnerabilities"
+      condition: "security.critical_vulnerabilities > 0"
+      level: "critical"
+      message: "发现严重安全漏洞"
+      cooldown: 0
+    
+    # 测试覆盖率下降
+    - name: "coverage_drop"
+      condition: "coverage.line_coverage < 70"
+      level: "warning"
+      message: "测试覆盖率低于70%"
+      cooldown: 7200
+    
+    # 技术债务增加
+    - name: "technical_debt_high"
+      condition: "technical_debt.ratio > 10"
+      level: "warning"
+      message: "技术债务比率过高"
+      cooldown: 86400  # 24小时
+  
+  # 通知渠道配置
+  channels:
+    email:
+      enabled: true
+      smtp_server: "smtp.gmail.com"
+      smtp_port: 587
+      username: "${EMAIL_USERNAME}"
+      password: "${EMAIL_PASSWORD}"
+      from_address: "quality@vivtransformer.com"
+      to_addresses:
+        - "team@vivtransformer.com"
+        - "qa@vivtransformer.com"
+    
+    slack:
+      enabled: true
+      webhook_url: "${SLACK_WEBHOOK_URL}"
+      channel: "#quality-alerts"
+      username: "QualityBot"
+      icon_emoji: ":robot_face:"
+    
+    webhook:
+      enabled: false
+      url: "${WEBHOOK_URL}"
+      headers:
+        Content-Type: "application/json"
+        Authorization: "Bearer ${WEBHOOK_TOKEN}"
+
+# 仪表板配置
+dashboard:
+  # Web服务器配置
+  server:
+    host: "127.0.0.1"
+    port: 8080
+    debug: false
+  
+  # 界面配置
+  ui:
+    theme: "light"  # light, dark, auto
+    language: "zh-CN"
+    timezone: "Asia/Shanghai"
+    refresh_interval: 30  # 秒
+    auto_refresh: true
+  
+  # 图表配置
+  charts:
+    # 默认图表类型
+    default_type: "line"  # line, bar, area, pie
+    
+    # 颜色主题
+    color_scheme: "default"  # default, colorblind, dark
+    
+    # 数据点数量限制
+    max_data_points: 100
+    
+    # 图表配置
+    trend_chart:
+      enabled: true
+      type: "line"
+      time_range: 30  # 天
+    
+    distribution_chart:
+      enabled: true
+      type: "pie"
+    
+    comparison_chart:
+      enabled: true
+      type: "bar"
+    
+    heatmap:
+      enabled: true
+      granularity: "daily"  # hourly, daily, weekly
+  
+  # 导出配置
+  export:
+    formats:
+      - "html"
+      - "pdf"
+      - "json"
+      - "csv"
+    
+    schedule:
+      daily: true
+      weekly: true
+      monthly: true
+
+# 数据存储配置
+storage:
+  # 数据库配置
+  database:
+    type: "sqlite"  # sqlite, postgresql, mysql
+    path: "quality_history.db"
+    # 对于其他数据库类型
+    # host: "localhost"
+    # port: 5432
+    # username: "${DB_USERNAME}"
+    # password: "${DB_PASSWORD}"
+    # database: "quality_db"
+  
+  # 备份配置
+  backup:
+    enabled: true
+    interval: "daily"  # hourly, daily, weekly
+    retention: 30  # 天
+    location: "backups/"
+    compress: true
+  
+  # 数据清理配置
+  cleanup:
+    enabled: true
+    old_data_days: 90
+    temp_files_hours: 24
+
+# 集成配置
+integrations:
+  # Git集成
+  git:
+    enabled: true
+    auto_detect_commits: true
+    track_authors: true
+    track_branches: true
+  
+  # CI/CD集成
+  ci_cd:
+    # Jenkins
+    jenkins:
+      enabled: false
+      url: "${JENKINS_URL}"
+      username: "${JENKINS_USERNAME}"
+      token: "${JENKINS_TOKEN}"
+    
+    # GitHub Actions
+    github_actions:
+      enabled: false
+      token: "${GITHUB_TOKEN}"
+      repository: "${GITHUB_REPOSITORY}"
+    
+    # GitLab CI
+    gitlab_ci:
+      enabled: false
+      url: "${GITLAB_URL}"
+      token: "${GITLAB_TOKEN}"
+      project_id: "${GITLAB_PROJECT_ID}"
+  
+  # 外部工具集成
+  external_tools:
+    # SonarQube
+    sonarqube:
+      enabled: false
+      url: "${SONAR_URL}"
+      token: "${SONAR_TOKEN}"
+      project_key: "${SONAR_PROJECT_KEY}"
+    
+    # CodeClimate
+    codeclimate:
+      enabled: false
+      token: "${CODECLIMATE_TOKEN}"
+      repo_id: "${CODECLIMATE_REPO_ID}"
+    
+    # Codecov
+    codecov:
+      enabled: false
+      token: "${CODECOV_TOKEN}"
+
+# 高级配置
+advanced:
+  # 并行处理
+  parallel:
+    enabled: true
+    max_workers: 4
+  
+  # 缓存配置
+  cache:
+    enabled: true
+    ttl: 3600  # 秒
+    max_size: 100  # MB
+  
+  # 性能优化
+  performance:
+    lazy_loading: true
+    compression: true
+    minification: true
+  
+  # 调试配置
+  debug:
+    enabled: false
+    log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+    log_file: "quality_monitor.log"
+    max_log_size: 10  # MB
+    log_rotation: 5
+  
+  # 实验性功能
+  experimental:
+    ai_suggestions: false
+    predictive_analysis: false
+    auto_remediation: false
+
+# 环境变量
+environment:
+  # 开发环境
+  development:
+    debug: true
+    log_level: "DEBUG"
+    auto_refresh: true
+    refresh_interval: 10
+  
+  # 测试环境
+  testing:
+    debug: false
+    log_level: "INFO"
+    auto_refresh: false
+    mock_data: true
+  
+  # 生产环境
+  production:
+    debug: false
+    log_level: "WARNING"
+    auto_refresh: true
+    refresh_interval: 300
+    security_enhanced: true
+
+# 自定义配置
+custom:
+  # 自定义指标
+  metrics:
+    - name: "api_response_time"
+      description: "API响应时间"
+      unit: "ms"
+      threshold: 200
+    
+    - name: "database_query_time"
+      description: "数据库查询时间"
+      unit: "ms"
+      threshold: 100
+  
+  # 自定义规则
+  rules:
+    - name: "no_todo_comments"
+      pattern: "TODO|FIXME|HACK"
+      severity: "warning"
+      message: "代码中包含TODO注释"
+    
+    - name: "max_function_length"
+      threshold: 50
+      severity: "warning"
+      message: "函数长度超过50行"
+  
+  # 自定义报告
+  reports:
+    - name: "weekly_summary"
+      schedule: "weekly"
+      format: "pdf"
+      recipients:
+        - "manager@vivtransformer.com"
+    
+    - name: "monthly_trend"
+      schedule: "monthly"
+      format: "html"
+      include_charts: true

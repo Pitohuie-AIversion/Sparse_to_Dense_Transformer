@@ -1,0 +1,99 @@
+# VIVTransformer 简化测试配置文件
+# 用于测试训练监控系统的集成效果
+
+# 全局设置
+global:
+  project_name: "VIVTransformer-Test"
+  experiment_name: "monitoring_system_test"
+  seed: 42
+  device: "auto"  # auto, cpu, cuda
+  mixed_precision: true
+  compile_model: false
+
+# 数据设置
+data:
+  path: "data/synthetic"  # 必需字段：数据路径
+  dataset_name: "synthetic"  # 使用合成数据进行快速测试
+  batch_size: 32
+  num_workers: 2
+  pin_memory: true
+  sequence_length: 128
+  vocab_size: 1000
+  num_samples: 1000  # 小数据集用于快速测试
+
+# 模型设置
+model:
+  d_model: 256
+  n_heads: 8
+  n_layers: 4
+  d_ff: 1024
+  dropout: 0.1
+  max_seq_length: 128
+
+# 训练设置
+training:
+  epochs: 3  # 只训练3个epoch用于测试
+  learning_rate: 0.0001
+  early_stop_patience: 10  # 必需字段：早停耐心值
+  weight_decay: 0.01
+  warmup_steps: 100
+  gradient_clip_norm: 1.0
+  save_every_n_epochs: 1
+  validate_every_n_epochs: 1
+
+# 可视化设置
+visualization:
+  enabled: true
+  save_plots: true
+  plot_frequency: 1
+  dashboard_update_frequency: 1
+
+# 硬件监控设置
+hardware_monitoring:
+  enabled: true
+  log_interval: 10
+  save_detailed_metrics: true
+  monitor_gpu: true
+  monitor_memory: true
+  monitor_cpu: true
+
+# 注意力机制测试（简化版本）
+attention_test:
+  enabled: true
+  types:  # 必需字段：注意力类型列表
+    - "self"      # 标准自注意力
+    - "relative"  # 相对位置注意力
+    - "sparse"    # 稀疏注意力
+  mechanisms:
+    - "self"      # 标准自注意力
+    - "relative"  # 相对位置注意力
+    - "sparse"    # 稀疏注意力
+  
+  # 每种注意力机制的配置
+  configs:
+    self:
+      type: "self_attention"
+      
+    relative:
+      type: "relative_attention"
+      max_relative_position: 32
+      
+    sparse:
+      type: "sparse_attention"
+      sparsity_pattern: "local"
+      window_size: 64
+
+# 日志设置
+logging:
+  level: "INFO"
+  save_logs: true
+  log_to_console: true
+  detailed_logging: true
+
+# 输出设置
+output:
+  base_dir: "results"
+  save_model: true
+  save_metrics: true
+  save_visualizations: true
+  generate_report: true

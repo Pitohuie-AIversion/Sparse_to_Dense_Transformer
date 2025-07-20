@@ -4,7 +4,7 @@ title: Quick Start Tutorial
 parent: Getting Started
 nav_order: 1
 description: "5分钟快速上手指南"
-permalink: /pages/quick-start-tutorial/
+permalink: /pages/quick-start-tutorial.html
 ---
 
 # 快速开始教程 {#快速开始教程}

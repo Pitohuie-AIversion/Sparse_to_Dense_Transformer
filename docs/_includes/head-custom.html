@@ -1,114 +1,114 @@
 <!-- Custom head content for Just The Docs theme -->
 <!-- Add any custom meta tags, stylesheets, or scripts here -->
 
-<!-- Custom CSS for enhanced styling and dark mode -->
+<!-- Custom CSS for enhanced styling -->
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 
-<!-- Theme toggle functionality -->
+<!-- Auto dark mode support using CSS media queries -->
+<style>
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --body-background-color: #0f172a;
+      --sidebar-color: #1e293b;
+      --search-background-color: #334155;
+      --table-background-color: #1e293b;
+      --code-background-color: #334155;
+      --border-color: #475569;
+      --body-text-color: #f1f5f9;
+      --body-heading-color: #ffffff;
+      --link-color: #60a5fa;
+    }
+    
+    body {
+      background-color: var(--body-background-color) !important;
+      color: var(--body-text-color) !important;
+    }
+    
+    .site-nav, .main-content {
+      background-color: var(--body-background-color) !important;
+      color: var(--body-text-color) !important;
+    }
+    
+    .side-bar {
+      background-color: var(--sidebar-color) !important;
+    }
+    
+    a {
+      color: var(--link-color) !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--body-heading-color) !important;
+    }
+    
+    .search-input {
+      background-color: var(--search-background-color) !important;
+      color: var(--body-text-color) !important;
+      border-color: var(--border-color) !important;
+    }
+    
+    code, pre {
+      background-color: var(--code-background-color) !important;
+      color: var(--body-text-color) !important;
+    }
+    
+    table {
+      background-color: var(--table-background-color) !important;
+    }
+    
+    .btn {
+      background-color: var(--sidebar-color) !important;
+      color: var(--body-text-color) !important;
+      border-color: var(--border-color) !important;
+    }
+  }
+</style>
+
+<!-- Simple theme toggle functionality -->
 <script>
-  // Theme management
-  const THEME_KEY = 'vivtransformer-theme';
-  
-  // Get saved theme or detect system preference
-  function getInitialTheme() {
-    const savedTheme = localStorage.getItem(THEME_KEY);
-    if (savedTheme) {
-      return savedTheme;
-    }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-  
-  // Apply theme to document
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(THEME_KEY, theme);
+  // Simple manual theme override
+  function toggleManualTheme() {
+    const body = document.body;
+    const isDark = body.classList.contains('manual-dark-mode');
     
-    // Update theme toggle button text
-    const toggleText = document.querySelector('.theme-toggle-text');
-    if (toggleText) {
-      toggleText.textContent = theme === 'dark' ? 'Light' : 'Dark';
+    if (isDark) {
+      body.classList.remove('manual-dark-mode');
+      localStorage.setItem('manual-theme', 'light');
+    } else {
+      body.classList.add('manual-dark-mode');
+      localStorage.setItem('manual-theme', 'dark');
     }
   }
   
-  // Toggle between light and dark themes
-  function toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    applyTheme(newTheme);
-  }
-  
-  // Initialize theme on page load
-  function initializeTheme() {
-    const initialTheme = getInitialTheme();
-    applyTheme(initialTheme);
+  // Initialize manual theme on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('manual-theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('manual-dark-mode');
+    }
     
-    // Create and insert theme toggle button
-    const themeToggle = document.createElement('button');
-    themeToggle.className = 'theme-toggle';
-    themeToggle.setAttribute('aria-label', 'Toggle dark mode');
-    themeToggle.innerHTML = `
-      <svg class="theme-toggle-icon sun" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
-      </svg>
-      <svg class="theme-toggle-icon moon" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-      </svg>
-      <span class="theme-toggle-text">${initialTheme === 'dark' ? 'Light' : 'Dark'}</span>
+    // Create simple toggle button
+    const toggleBtn = document.createElement('button');
+    toggleBtn.innerHTML = '🌙/☀️';
+    toggleBtn.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: rgba(255,255,255,0.9);
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
     `;
+    toggleBtn.onclick = toggleManualTheme;
+    toggleBtn.title = 'Toggle Dark/Light Mode';
     
-    themeToggle.addEventListener('click', toggleTheme);
-    
-    // Try multiple insertion strategies
-    const insertButton = () => {
-      // Remove existing button if any
-      const existingButton = document.querySelector('.theme-toggle');
-      if (existingButton) {
-        existingButton.remove();
-      }
-      
-      // Try to insert into header first
-      const header = document.querySelector('.site-header') || document.querySelector('header') || document.querySelector('.main-header');
-      if (header) {
-        header.style.position = 'relative';
-        header.appendChild(themeToggle);
-        return;
-      }
-      
-      // Fallback to body
-      document.body.appendChild(themeToggle);
-    };
-    
-    insertButton();
-    
-    // Create scroll progress indicator
-    const scrollProgress = document.createElement('div');
-    scrollProgress.className = 'scroll-progress';
-    document.body.appendChild(scrollProgress);
-    
-    // Update scroll progress
-    function updateScrollProgress() {
-      const scrollTop = window.pageYOffset;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
-      scrollProgress.style.width = scrollPercent + '%';
-    }
-    
-    window.addEventListener('scroll', updateScrollProgress);
-    
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-      if (!localStorage.getItem(THEME_KEY)) {
-        applyTheme(e.matches ? 'dark' : 'light');
-      }
-    });
-  }
-  
-  // Initialize when DOM is ready
-  document.addEventListener('DOMContentLoaded', initializeTheme);
-  
-  // Also try to initialize after a short delay to ensure all elements are loaded
-  window.addEventListener('load', function() {
-    setTimeout(initializeTheme, 100);
+    document.body.appendChild(toggleBtn);
   });
 </script>
 

@@ -160,6 +160,103 @@ body {
   }
 }
 
+/* Manual dark mode styles */
+.manual-dark-mode {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.manual-dark-mode .site-header {
+  background-color: #2d2d2d !important;
+  border-bottom-color: #404040 !important;
+}
+
+.manual-dark-mode .site-nav {
+  background-color: #2d2d2d !important;
+}
+
+.manual-dark-mode .main-content {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.manual-dark-mode .side-bar {
+  background-color: #2d2d2d !important;
+  border-right-color: #404040 !important;
+}
+
+.manual-dark-mode a {
+  color: #64b5f6 !important;
+}
+
+.manual-dark-mode a:hover {
+  color: #90caf9 !important;
+}
+
+.manual-dark-mode h1, 
+.manual-dark-mode h2, 
+.manual-dark-mode h3, 
+.manual-dark-mode h4, 
+.manual-dark-mode h5, 
+.manual-dark-mode h6 {
+  color: #ffffff !important;
+}
+
+.manual-dark-mode .search-input {
+  background-color: #404040 !important;
+  border-color: #606060 !important;
+  color: #e0e0e0 !important;
+}
+
+.manual-dark-mode code {
+  background-color: #404040 !important;
+  color: #ffcc80 !important;
+}
+
+.manual-dark-mode pre {
+  background-color: #2d2d2d !important;
+  border-color: #404040 !important;
+}
+
+.manual-dark-mode table {
+  border-color: #404040 !important;
+}
+
+.manual-dark-mode th, 
+.manual-dark-mode td {
+  border-color: #404040 !important;
+  background-color: #2d2d2d !important;
+}
+
+.manual-dark-mode .btn {
+  background-color: #404040 !important;
+  border-color: #606060 !important;
+  color: #e0e0e0 !important;
+}
+
+.manual-dark-mode .btn:hover {
+  background-color: #606060 !important;
+}
+
+.manual-dark-mode .navigation {
+  background-color: #2d2d2d !important;
+}
+
+.manual-dark-mode .navigation-list-item a {
+  color: #b0b0b0 !important;
+}
+
+.manual-dark-mode .navigation-list-item a:hover {
+  color: #e0e0e0 !important;
+  background-color: #404040 !important;
+}
+
+.manual-dark-mode .site-footer {
+  background-color: #2d2d2d !important;
+  border-top-color: #404040 !important;
+  color: #b0b0b0 !important;
+}
+
 /* Container and layout */
 .container-lg {
   max-width: 1200px;

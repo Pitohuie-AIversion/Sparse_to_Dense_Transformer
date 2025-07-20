@@ -38,7 +38,7 @@
   }
   
   // Initialize theme on page load
-  document.addEventListener('DOMContentLoaded', function() {
+  function initializeTheme() {
     const initialTheme = getInitialTheme();
     applyTheme(initialTheme);
     
@@ -57,7 +57,28 @@
     `;
     
     themeToggle.addEventListener('click', toggleTheme);
-    document.body.appendChild(themeToggle);
+    
+    // Try multiple insertion strategies
+    const insertButton = () => {
+      // Remove existing button if any
+      const existingButton = document.querySelector('.theme-toggle');
+      if (existingButton) {
+        existingButton.remove();
+      }
+      
+      // Try to insert into header first
+      const header = document.querySelector('.site-header') || document.querySelector('header') || document.querySelector('.main-header');
+      if (header) {
+        header.style.position = 'relative';
+        header.appendChild(themeToggle);
+        return;
+      }
+      
+      // Fallback to body
+      document.body.appendChild(themeToggle);
+    };
+    
+    insertButton();
     
     // Create scroll progress indicator
     const scrollProgress = document.createElement('div');
@@ -80,6 +101,14 @@
         applyTheme(e.matches ? 'dark' : 'light');
       }
     });
+  }
+  
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', initializeTheme);
+  
+  // Also try to initialize after a short delay to ensure all elements are loaded
+  window.addEventListener('load', function() {
+    setTimeout(initializeTheme, 100);
   });
 </script>
 

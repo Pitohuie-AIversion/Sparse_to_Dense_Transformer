@@ -9,39 +9,39 @@ permalink: /sitemap/
 
 ## 🚀 快速开始
 
-- [quick-start-tutorial.html](quick-start-tutorial.html)
+- [quick-start-tutorial](quick-start-tutorial)
 
 ## 🏗️ 架构设计
 
-- [architecture-overview.html](architecture-overview.html)
-- [model-design.html](model-design.html)
-- [attention-mechanisms-guide.html](attention-mechanisms-guide.html)
-- [custom-attention.html](custom-attention.html)
+- [architecture-overview](architecture-overview)
+- [model-design](model-design)
+- [attention-mechanisms-guide](attention-mechanisms-guide)
+- [custom-attention](custom-attention)
 
 ## 📚 训练指南
 
-- [training-guide.html](training-guide.html)
-- [loss-functions.html](loss-functions.html)
-- [svd-loss-functions.html](svd-loss-functions.html)
-- [multi-loss-strategy.html](multi-loss-strategy.html)
-- [hyperparameter-tuning.html](hyperparameter-tuning.html)
-- [convergence-analysis.html](convergence-analysis.html)
+- [training-guide](training-guide)
+- [loss-functions](loss-functions)
+- [svd-loss-functions](svd-loss-functions)
+- [multi-loss-strategy](multi-loss-strategy)
+- [hyperparameter-tuning](hyperparameter-tuning)
+- [convergence-analysis](convergence-analysis)
 
 ## ⚙️ 配置与实现
 
-- [configuration-system.html](configuration-system.html)
-- [implementation-details.html](implementation-details.html)
-- [data-pipeline.html](data-pipeline.html)
+- [configuration-system](configuration-system)
+- [implementation-details](implementation-details)
+- [data-pipeline](data-pipeline)
 
 ## 📊 评估与部署
 
-- [evaluation-metrics.html](evaluation-metrics.html)
-- [experimental-results.html](experimental-results.html)
-- [performance-comparison.html](performance-comparison.html)
-- [deployment-guide.html](deployment-guide.html)
+- [evaluation-metrics](evaluation-metrics)
+- [experimental-results](experimental-results)
+- [performance-comparison](performance-comparison)
+- [deployment-guide](deployment-guide)
 
 ## 🛠️ 开发与维护
 
-- [development-guide.html](development-guide.html)
-- [troubleshooting.html](troubleshooting.html)
-- [faq.html](faq.html)
+- [development-guide](development-guide)
+- [troubleshooting](troubleshooting)
+- [faq](faq)

@@ -13,17 +13,17 @@ permalink: /core-documentation/
 ## 📚 文档结构
 
 ### 🏗️ 架构与设计
-- **[架构概览](architecture-overview.html)** - 整体架构设计
-- **[模型设计](model-design.html)** - 详细模型结构
-- **[实现细节](implementation-details.html)** - 核心实现说明
+- **[架构概览](architecture-overview)** - 整体架构设计
+- **[模型设计](model-design)** - 详细模型结构
+- **[实现细节](implementation-details)** - 核心实现说明
 
 ### 🧠 注意力机制
-- **[注意力机制指南](attention-mechanisms-guide.html)** - 多头注意力实现
-- **[自定义注意力](custom-attention.html)** - 扩展注意力机制
+- **[注意力机制指南](attention-mechanisms-guide)** - 多头注意力实现
+- **[自定义注意力](custom-attention)** - 扩展注意力机制
 
 ### 📊 数据与配置
-- **[数据管道](data-pipeline.html)** - 数据处理流程
-- **[配置系统](configuration-system.html)** - 配置文件管理
+- **[数据管道](data-pipeline)** - 数据处理流程
+- **[配置系统](configuration-system)** - 配置文件管理
 
 ## 🎯 阅读建议
 
@@ -33,6 +33,6 @@ permalink: /core-documentation/
 
 ## 💡 相关资源
 
-- [训练指南](../training-guide.html) - 了解如何训练模型
-- [API 参考](../api-reference.html) - 查看详细的 API 文档
-- [示例代码](../examples.html) - 查看实际使用示例
+- [训练指南](../training-guide) - 了解如何训练模型
+- [API 参考](../api-reference) - 查看详细的 API 文档
+- [示例代码](../examples) - 查看实际使用示例

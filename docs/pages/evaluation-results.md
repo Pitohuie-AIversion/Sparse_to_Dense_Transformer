@@ -13,14 +13,14 @@ permalink: /evaluation-results/
 ## 📊 评估文档
 
 ### 🎯 评估方法
-- **[评估指标](evaluation-metrics.html)** - 模型评估方法和指标
-- **[性能对比](performance-comparison.html)** - 与其他方法的对比分析
-- **[收敛性分析](convergence-analysis.html)** - 训练收敛性监控
+- **[评估指标](evaluation-metrics)** - 模型评估方法和指标
+- **[性能对比](performance-comparison)** - 与其他方法的对比分析
+- **[收敛性分析](convergence-analysis)** - 训练收敛性监控
 
 ### 📈 实验结果
-- **[实验结果](experimental-results.html)** - 详细的实验数据和分析
-- **[基准测试](benchmark-results.html)** - 标准数据集上的性能
-- **[消融研究](ablation-study.html)** - 组件重要性分析
+- **[实验结果](experimental-results)** - 详细的实验数据和分析
+- **[基准测试](benchmark-results)** - 标准数据集上的性能
+- **[消融研究](ablation-study)** - 组件重要性分析
 
 ## 🎯 关键发现
 
@@ -56,6 +56,6 @@ permalink: /evaluation-results/
 
 ## 🔗 相关资源
 
-- [训练指南](../training-optimization/training-guide.html) - 了解如何训练模型
-- [部署指南](../deployment-guide.html) - 学习模型部署
-- [故障排除](../troubleshooting.html) - 解决评估中的问题
+- [训练指南](../training-optimization/training-guide) - 了解如何训练模型
+- [部署指南](../deployment-guide) - 学习模型部署
+- [故障排除](../troubleshooting) - 解决评估中的问题

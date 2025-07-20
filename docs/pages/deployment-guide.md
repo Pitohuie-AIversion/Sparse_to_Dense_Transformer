@@ -2870,17 +2870,17 @@ class SecurityManager:
 
 ### 🔗 相关链接 {#相关链接}
 
-- [模型设计](model-design.html) - 了解模型架构
-- [训练指南](training-guide.html) - 模型训练方法
-- [性能比较](performance-comparison.html) - 性能基准测试
-- [故障排除](troubleshooting.html) - 详细故障排除指南
-- [开发指南](development-guide.html) - 开发环境配置
+- [模型设计](model-design) - 了解模型架构
+- [训练指南](training-guide) - 模型训练方法
+- [性能比较](performance-comparison) - 性能基准测试
+- [故障排除](troubleshooting) - 详细故障排除指南
+- [开发指南](development-guide) - 开发环境配置
 
 ### 📞 支持 {#支持}
 
 如果在部署过程中遇到问题，请：
-1. 查阅[故障排除指南](troubleshooting.html)
-2. 检查[FAQ](faq.html)中的常见问题
+1. 查阅[故障排除指南](troubleshooting)
+2. 检查[FAQ](faq)中的常见问题
 3. 在GitHub Issues中提交问题报告
 
 ---
@@ -2889,11 +2889,11 @@ class SecurityManager:
 
 ## 📚 相关文档
 
-- [Performance Comparison](performance-comparison.html)
-- [Troubleshooting](troubleshooting.html)
-- [Configuration System](configuration-system.html)
+- [Performance Comparison](performance-comparison)
+- [Troubleshooting](troubleshooting)
+- [Configuration System](configuration-system)
 
 
 ---
 
-*需要帮助？查看 [FAQ](faq.html) 或 [故障排除](troubleshooting.html) 页面。*
+*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*

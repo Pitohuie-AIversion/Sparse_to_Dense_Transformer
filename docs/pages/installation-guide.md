@@ -368,7 +368,7 @@ cp -r modify_multi_attention/data/ ~/backup/
 
 如果在安装过程中遇到问题：
 
-- 📖 查看 [故障排除指南](troubleshooting.html)
+- 📖 查看 [故障排除指南](troubleshooting)
 - 🐛 提交 [GitHub Issue](https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer/issues)
 - 💬 参与 [讨论区](https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer/discussions)
 - 📧 发送邮件至：1748492875@qq.com

@@ -909,9 +909,9 @@ plot_viv_trajectory(displacement, time_steps, 'visualizations/viv_trajectory.png
 
 ## 相关链接
 
-- [API 参考](api-reference.html) - 详细的 API 文档
-- [训练指南](training-guide.html) - 深入的训练说明
-- [架构概览](architecture-overview.html) - 了解模型架构
-- [故障排除](troubleshooting.html) - 常见问题解决
+- [API 参考](api-reference) - 详细的 API 文档
+- [训练指南](training-guide) - 深入的训练说明
+- [架构概览](architecture-overview) - 了解模型架构
+- [故障排除](troubleshooting) - 常见问题解决
 
-*需要帮助？查看 [FAQ](faq.html) 或 [故障排除](troubleshooting.html) 页面。*
+*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*

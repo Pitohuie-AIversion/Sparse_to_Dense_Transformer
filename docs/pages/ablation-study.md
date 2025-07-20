@@ -572,9 +572,9 @@ ablation.generate_report('ablation_report.html')
 
 ## 相关链接
 
-- [基准测试结果](benchmark-results.html) - 完整基准测试
-- [性能对比](performance-comparison.html) - 与其他方法对比
-- [实验结果](experimental-results.html) - 详细实验数据
-- [架构概览](architecture-overview.html) - 了解模型架构
+- [基准测试结果](benchmark-results) - 完整基准测试
+- [性能对比](performance-comparison) - 与其他方法对比
+- [实验结果](experimental-results) - 详细实验数据
+- [架构概览](architecture-overview) - 了解模型架构
 
-*需要帮助？查看 [FAQ](faq.html) 或 [故障排除](troubleshooting.html) 页面。*
+*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*

@@ -567,10 +567,10 @@ with torch.no_grad():
 
 ## 相关链接
 
-- [快速入门教程](quick-start-tutorial.html) - 快速上手指南
-- [架构概览](architecture-overview.html) - 了解整体架构
-- [训练指南](training-guide.html) - 详细训练说明
-- [示例代码](examples.html) - 实际使用示例
-- [故障排除](troubleshooting.html) - 常见问题解决
+- [快速入门教程](quick-start-tutorial) - 快速上手指南
+- [架构概览](architecture-overview) - 了解整体架构
+- [训练指南](training-guide) - 详细训练说明
+- [示例代码](examples) - 实际使用示例
+- [故障排除](troubleshooting) - 常见问题解决
 
-*需要帮助？查看 [FAQ](faq.html) 或 [故障排除](troubleshooting.html) 页面。*
+*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*

@@ -13,14 +13,14 @@ permalink: /training-optimization/
 ## 📚 训练文档
 
 ### 🎯 基础训练
-- **[训练指南](training-guide.html)** - 完整的模型训练流程
-- **[损失函数](loss-functions.html)** - 损失函数设计与使用
-- **[SVD损失函数](svd-loss-functions.html)** - 特殊损失函数详解
+- **[训练指南](training-guide)** - 完整的模型训练流程
+- **[损失函数](loss-functions)** - 损失函数设计与使用
+- **[SVD损失函数](svd-loss-functions)** - 特殊损失函数详解
 
 ### 🔧 优化策略
-- **[多损失策略](multi-loss-strategy.html)** - 多损失函数配置
-- **[超参数调优](hyperparameter-tuning.html)** - 自动化参数优化
-- **[收敛性分析](convergence-analysis.html)** - 训练收敛监控
+- **[多损失策略](multi-loss-strategy)** - 多损失函数配置
+- **[超参数调优](hyperparameter-tuning)** - 自动化参数优化
+- **[收敛性分析](convergence-analysis)** - 训练收敛监控
 
 ## 🎯 学习路径
 
@@ -48,6 +48,6 @@ permalink: /training-optimization/
 
 ## 🔗 相关资源
 
-- [评估指标](../evaluation-metrics.html) - 了解模型评估方法
-- [实验结果](../experimental-results.html) - 查看基准测试结果
-- [故障排除](../troubleshooting.html) - 解决常见训练问题
+- [评估指标](../evaluation-metrics) - 了解模型评估方法
+- [实验结果](../experimental-results) - 查看基准测试结果
+- [故障排除](../troubleshooting) - 解决常见训练问题

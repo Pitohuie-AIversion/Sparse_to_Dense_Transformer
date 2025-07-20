@@ -378,11 +378,11 @@ cp modify_multi_attention/configs/config.yaml modify_multi_attention/configs/con
 
 ## 📚 相关文档
 
-- [Architecture Overview](architecture-overview.html)
-- [Training Guide](training-guide.html)
-- [Configuration System](configuration-system.html)
+- [Architecture Overview](architecture-overview)
+- [Training Guide](training-guide)
+- [Configuration System](configuration-system)
 
 
 ---
 
-*需要帮助？查看 [FAQ](faq.html) 或 [故障排除](troubleshooting.html) 页面。*
+*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*

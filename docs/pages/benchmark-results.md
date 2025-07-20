@@ -396,9 +396,9 @@ benchmark.generate_report(results, 'benchmark_report.html')
 
 ## 相关链接
 
-- [性能对比](performance-comparison.html) - 详细性能分析
-- [消融研究](ablation-study.html) - 组件重要性分析
-- [实验结果](experimental-results.html) - 完整实验数据
-- [评估指标](evaluation-metrics.html) - 评估方法说明
+- [性能对比](performance-comparison) - 详细性能分析
+- [消融研究](ablation-study) - 组件重要性分析
+- [实验结果](experimental-results) - 完整实验数据
+- [评估指标](evaluation-metrics) - 评估方法说明
 
-*需要帮助？查看 [FAQ](faq.html) 或 [故障排除](troubleshooting.html) 页面。*
+*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*

@@ -12,9 +12,9 @@ permalink: /getting-started/
 
 ## 📚 本节内容
 
-- **[快速开始教程](quick-start-tutorial.html)** - 5分钟快速上手指南
-- **[安装指南](installation-guide.html)** - 详细的安装说明
-- **[基础概念](basic-concepts.html)** - 核心概念介绍
+- **[快速开始教程](quick-start-tutorial)** - 5分钟快速上手指南
+- **[安装指南](installation-guide)** - 详细的安装说明
+- **[基础概念](basic-concepts)** - 核心概念介绍
 
 ## 🎯 学习路径
 

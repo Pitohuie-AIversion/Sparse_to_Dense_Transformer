@@ -450,11 +450,11 @@ attention_results/
 
 ## 📚 相关文档
 
-- [Model Design](model-design.html)
-- [Implementation Details](implementation-details.html)
-- [Attention Mechanisms](attention-mechanisms-guide.html)
+- [Model Design](model-design)
+- [Implementation Details](implementation-details)
+- [Attention Mechanisms](attention-mechanisms-guide)
 
 
 ---
 
-*需要帮助？查看 [FAQ](faq.html) 或 [故障排除](troubleshooting.html) 页面。*
+*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*

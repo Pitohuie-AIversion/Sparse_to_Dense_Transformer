@@ -1516,11 +1516,11 @@ class AutoTroubleshooter:
 
 ## 📚 相关文档
 
-- [Loss Functions](loss-functions.html)
-- [Hyperparameter Tuning](hyperparameter-tuning.html)
-- [Convergence Analysis](convergence-analysis.html)
+- [Loss Functions](loss-functions)
+- [Hyperparameter Tuning](hyperparameter-tuning)
+- [Convergence Analysis](convergence-analysis)
 
 
 ---
 
-*需要帮助？查看 [FAQ](faq.html) 或 [故障排除](troubleshooting.html) 页面。*
+*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*

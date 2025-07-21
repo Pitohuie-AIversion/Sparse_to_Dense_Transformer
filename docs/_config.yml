@@ -1,6 +1,9 @@
 # VIVTransformer Documentation Site Configuration
 title: VIVTransformer Documentation
 description: Advanced Transformer Architecture with Vision Integration
+
+# Set a path/url to a logo that will be displayed instead of the title
+logo: "/pitoyounglogopink.png"
 baseurl: "/Sparse_to_Dense_Transformer"
 url: "https://Pitohuie-AIversion.github.io"
 

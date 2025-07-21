@@ -1,0 +1,52 @@
+# 分析脚本和结果文件
+analyze_loss_configs.py
+loss_analysis_results.csv
+plot_loss_analysis.py
+detailed_analysis.py
+create_research_dashboard.py
+code_quality_enhancement_suggestions.md
+
+# Python缓存文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 临时文件
+*.tmp
+*.temp
+
+# 日志文件
+*.log
+analysis.log
+
+# 数据分析相关
+*.pkl
+*.pickle
+plots/
+detailed_plots/
+dashboard/
+*.png
+*.jpg
+*.jpeg
+*.svg
+
+# 测试和开发文件
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.env
+.venv/
+venv/
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 文档构建
+docs/_build/
+*.pdf

@@ -14,41 +14,41 @@ permalink: /
 
 ## 🚀 快速开始
 
-- [快速入门教程](pages/quick-start-tutorial.html) - 5分钟上手指南
-- [安装指南](pages/quick-start-tutorial.html#installation) - 环境配置和依赖安装
-- [第一个示例](pages/quick-start-tutorial.html#first-example) - 运行您的第一个模型
+- [快速入门教程](/pages/quick-start-tutorial/) - 5分钟上手指南
+- [安装指南](/pages/installation-guide/) - 环境配置和依赖安装
+- [第一个示例](/pages/examples/) - 运行您的第一个模型
 
 ## 📚 核心文档
 
 ### 模型架构
-- [架构概览](pages/architecture-overview.html) - 整体架构设计
-- [模型设计](pages/model-design.html) - 详细模型结构
-- [注意力机制指南](pages/attention-mechanisms-guide.html) - 多头注意力实现
-- [自定义注意力](pages/custom-attention.html) - 扩展注意力机制
+- [架构概览](/pages/architecture-overview/) - 整体架构设计
+- [模型设计](/pages/model-design/) - 详细模型结构
+- [注意力机制指南](/pages/attention-mechanisms-guide/) - 多头注意力实现
+- [自定义注意力](/pages/custom-attention/) - 扩展注意力机制
 
 ### 训练与优化
-- [训练指南](pages/training-guide.html) - 完整训练流程
-- [损失函数](pages/loss-functions.html) - 损失函数设计
-- [SVD损失函数](pages/svd-loss-functions.html) - 特殊损失函数详解
-- [多损失策略](pages/multi-loss-strategy.html) - 多损失函数配置
-- [超参数调优](pages/hyperparameter-tuning.html) - 自动化调优
-- [收敛性分析](pages/convergence-analysis.html) - 训练收敛监控
+- [训练指南](/pages/training-guide/) - 完整训练流程
+- [损失函数](/pages/loss-functions/) - 损失函数设计
+- [SVD损失函数](/pages/svd-loss-functions/) - 特殊损失函数详解
+- [多损失策略](/pages/multi-loss-strategy/) - 多损失函数配置
+- [超参数调优](/pages/hyperparameter-tuning/) - 自动化调优
+- [收敛性分析](/pages/convergence-analysis/) - 训练收敛监控
 
 ### 实现与配置
-- [实现细节](pages/implementation-details.html) - 核心实现说明
-- [配置系统](pages/configuration-system.html) - 配置文件管理
-- [数据管道](pages/data-pipeline.html) - 数据处理流程
+- [实现细节](/pages/implementation-details/) - 核心实现说明
+- [配置系统](/pages/configuration-system/) - 配置文件管理
+- [数据管道](/pages/data-pipeline/) - 数据处理流程
 
 ### 评估与部署
-- [评估指标](pages/evaluation-metrics.html) - 模型评估方法
-- [实验结果](pages/experimental-results.html) - 基准测试结果
-- [性能对比](pages/performance-comparison.html) - 与其他方法对比
-- [部署指南](pages/deployment-guide.html) - 生产环境部署
+- [评估指标](/pages/evaluation-metrics/) - 模型评估方法
+- [实验结果](/pages/experimental-results/) - 基准测试结果
+- [性能对比](/pages/performance-comparison/) - 与其他方法对比
+- [部署指南](/pages/deployment-guide/) - 生产环境部署
 
 ### 开发与维护
-- [开发指南](pages/development-guide.html) - 开发环境配置
-- [故障排除](pages/troubleshooting.html) - 常见问题解决
-- [FAQ](pages/faq.html) - 常见问题答疑
+- [开发指南](/pages/development-guide/) - 开发环境配置
+- [故障排除](/pages/troubleshooting/) - 常见问题解决
+- [FAQ](/pages/faq/) - 常见问题答疑
 
 ## 🎯 项目特色
 
@@ -85,10 +85,11 @@ permalink: /
 
 ## 📞 获取帮助
 
-- 📖 [完整文档](pages/)
+- 📖 [获取帮助](/pages/getting-help/) - 完整的帮助资源
+- 🔧 [故障排除](/pages/troubleshooting/) - 问题诊断和解决
+- ❓ [常见问题](/pages/faq/) - FAQ和快速解答
 - 🐛 [问题反馈](https://github.com/yourusername/VIVTransformer/issues)
 - 💬 [讨论区](https://github.com/yourusername/VIVTransformer/discussions)
-- 📧 [联系我们](mailto:your-email@example.com)
 
 ## 🤝 贡献
 

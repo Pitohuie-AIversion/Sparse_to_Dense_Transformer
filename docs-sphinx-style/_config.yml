@@ -1,0 +1,115 @@
+# VIVTransformer Documentation Site Configuration (Sphinx Style)
+title: VIVTransformer Documentation
+description: Advanced Transformer Architecture with Vision Integration - Sphinx Style Layout
+
+# Set a path/url to a logo that will be displayed instead of the title
+logo: "/pitoyounglogopink.png"
+baseurl: "/Sparse_to_Dense_Transformer"
+url: "https://Pitohuie-AIversion.github.io"
+
+# Default layout for pages
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "sphinx"
+
+# Use Just The Docs theme
+remote_theme: just-the-docs/just-the-docs
+
+# Plugins (GitHub Pages supported)
+plugins:
+  - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Just The Docs theme configuration
+color_scheme: light
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 2
+  preview_words_before: 3
+  preview_words_after: 3
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+  button: false
+
+# Navigation structure
+nav_sort: case_insensitive
+nav_external_links:
+  - title: GitHub Repository
+    url: https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer
+    hide_icon: false
+
+# Footer content
+footer_content: "Copyright &copy; 2024 Pitohuie. Distributed by an <a href=\"https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt\">MIT license.</a>"
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Callouts
+callouts_level: quiet
+callouts:
+  highlight:
+    color: yellow
+  important:
+    title: Important
+    color: blue
+  new:
+    title: New
+    color: green
+  note:
+    title: Note
+    color: purple
+  warning:
+    title: Warning
+    color: red
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+encoding: utf-8
+
+# Kramdown settings
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+# SEO settings
+author:
+  name: Pitohuie
+  email: 1748492875@qq.com
+
+social:
+  name: Pitohuie
+  links:
+    - https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer
+
+# Enable aux links
+aux_links:
+  "View on GitHub":
+    - "https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer"
+
+# Aux links styling
+aux_links_new_tab: true
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/
+  - README.md
+  - LICENSE
+  - .gitignore

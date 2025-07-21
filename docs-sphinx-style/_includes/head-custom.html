@@ -1,0 +1,133 @@
+<!-- Custom head content for Sphinx-style theme -->
+<!-- Character encoding and viewport settings -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Add any custom meta tags, stylesheets, or scripts here -->
+
+<!-- Sphinx-style CSS -->
+<link rel="stylesheet" href="{{ '/assets/css/sphinx-style.css' | relative_url }}">
+<!-- Custom CSS for enhanced styling -->
+<link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+
+<!-- Auto dark mode support using CSS media queries -->
+<style>
+  /* 暗模式支持 */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --body-background-color: #0f172a;
+      --sidebar-color: #1e293b;
+      --search-background-color: #334155;
+      --table-background-color: #1e293b;
+      --code-background-color: #334155;
+      --border-color: #475569;
+      --body-text-color: #f1f5f9;
+      --body-heading-color: #ffffff;
+      --link-color: #60a5fa;
+    }
+    
+    body {
+      background-color: var(--body-background-color) !important;
+      color: var(--body-text-color) !important;
+    }
+    
+    .site-nav, .main-content {
+      background-color: var(--body-background-color) !important;
+      color: var(--body-text-color) !important;
+    }
+    
+    .side-bar {
+      background-color: var(--sidebar-color) !important;
+    }
+    
+    a {
+      color: var(--link-color) !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--body-heading-color) !important;
+    }
+    
+    .search-input {
+      background-color: var(--search-background-color) !important;
+      color: var(--body-text-color) !important;
+      border-color: var(--border-color) !important;
+    }
+    
+    code, pre {
+      background-color: var(--code-background-color) !important;
+      color: var(--body-text-color) !important;
+    }
+    
+    table {
+      background-color: var(--table-background-color) !important;
+    }
+    
+    .btn {
+      background-color: var(--sidebar-color) !important;
+      color: var(--body-text-color) !important;
+      border-color: var(--border-color) !important;
+    }
+  }
+</style>
+
+<!-- Simple theme toggle functionality -->
+<script>
+  // Simple manual theme override
+  function toggleManualTheme() {
+    const body = document.body;
+    const isDark = body.classList.contains('manual-dark-mode');
+    
+    if (isDark) {
+      body.classList.remove('manual-dark-mode');
+      localStorage.setItem('manual-theme', 'light');
+    } else {
+      body.classList.add('manual-dark-mode');
+      localStorage.setItem('manual-theme', 'dark');
+    }
+  }
+  
+  // Initialize manual theme on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('manual-theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('manual-dark-mode');
+    }
+    
+    // Create simple toggle button
+    const toggleBtn = document.createElement('button');
+    toggleBtn.innerHTML = '🌙/☀️';
+    toggleBtn.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: rgba(255,255,255,0.9);
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+    `;
+    toggleBtn.onclick = toggleManualTheme;
+    toggleBtn.title = 'Toggle Dark/Light Mode';
+    
+    document.body.appendChild(toggleBtn);
+  });
+</script>
+
+<!-- Enhanced meta tags for better SEO and social sharing -->
+<meta name="theme-color" content="#2563eb">
+<meta name="msapplication-TileColor" content="#2563eb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<!-- Preload critical fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Performance optimizations -->
+<link rel="dns-prefetch" href="//github.com">
+<link rel="dns-prefetch" href="//api.github.com">

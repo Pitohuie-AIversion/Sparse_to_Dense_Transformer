@@ -1,0 +1,29 @@
+// Custom dark color scheme for Just The Docs
+// Based on the built-in dark scheme with enhancements
+
+@import "./dark";
+
+// Enhanced dark mode variables
+$body-background-color: #0f172a;
+$sidebar-color: #1e293b;
+$search-background-color: #334155;
+$table-background-color: #1e293b;
+$code-background-color: #334155;
+$feedback-color: #64748b;
+
+// Custom button and interactive elements
+$btn-primary-color: #3b82f6;
+$link-color: #60a5fa;
+$nav-child-link-color: #cbd5e1;
+
+// Border and accent colors
+$border-color: #475569;
+$grey-dk-000: #334155;
+$grey-dk-100: #475569;
+$grey-dk-200: #64748b;
+$grey-dk-300: #94a3b8;
+
+// Text colors
+$body-text-color: #f1f5f9;
+$body-heading-color: #ffffff;
+$search-result-preview-color: #cbd5e1;

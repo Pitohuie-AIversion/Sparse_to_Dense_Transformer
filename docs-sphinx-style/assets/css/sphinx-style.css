@@ -1,0 +1,378 @@
+/* Sphinx-style layout for Jekyll Just the Docs theme */
+
+/* Root variables for Sphinx-like styling */
+:root {
+  --sphinx-sidebar-width: 300px;
+  --sphinx-toc-width: 250px;
+  --sphinx-content-max-width: 800px;
+  --sphinx-header-height: 60px;
+  --sphinx-primary-color: #2980b9;
+  --sphinx-secondary-color: #3498db;
+  --sphinx-background-color: #fcfcfc;
+  --sphinx-sidebar-bg: #f8f9fa;
+  --sphinx-border-color: #e1e4e8;
+  --sphinx-text-color: #24292e;
+  --sphinx-heading-color: #1f2328;
+}
+
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sphinx-background-color: #0d1117;
+    --sphinx-sidebar-bg: #161b22;
+    --sphinx-border-color: #30363d;
+    --sphinx-text-color: #e6edf3;
+    --sphinx-heading-color: #f0f6fc;
+  }
+}
+
+/* Main layout structure - Sphinx three-column layout */
+.main {
+  display: grid;
+  grid-template-columns: var(--sphinx-sidebar-width) 1fr var(--sphinx-toc-width);
+  grid-template-areas: "sidebar content toc";
+  min-height: 100vh;
+  background-color: var(--sphinx-background-color);
+}
+
+/* Left sidebar - navigation */
+.side-bar {
+  grid-area: sidebar;
+  background-color: var(--sphinx-sidebar-bg);
+  border-right: 1px solid var(--sphinx-border-color);
+  position: fixed;
+  width: var(--sphinx-sidebar-width);
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+/* Main content area */
+.main-content {
+  grid-area: content;
+  margin-left: var(--sphinx-sidebar-width);
+  margin-right: var(--sphinx-toc-width);
+  max-width: var(--sphinx-content-max-width);
+  padding: 2rem;
+  background-color: var(--sphinx-background-color);
+}
+
+/* Right sidebar - table of contents */
+.sphinx-toc {
+  grid-area: toc;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: var(--sphinx-toc-width);
+  height: 100vh;
+  background-color: var(--sphinx-sidebar-bg);
+  border-left: 1px solid var(--sphinx-border-color);
+  padding: 1rem;
+  overflow-y: auto;
+  z-index: 99;
+}
+
+/* Sphinx-style breadcrumb navigation */
+.sphinx-breadcrumb {
+  background-color: var(--sphinx-sidebar-bg);
+  border-bottom: 1px solid var(--sphinx-border-color);
+  padding: 0.75rem 2rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.sphinx-breadcrumb a {
+  color: var(--sphinx-primary-color);
+  text-decoration: none;
+}
+
+.sphinx-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.sphinx-breadcrumb .separator {
+  margin: 0 0.5rem;
+  color: #666;
+}
+
+/* Sphinx-style navigation tree */
+.sphinx-nav-tree {
+  padding: 1rem;
+}
+
+.sphinx-nav-tree ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.sphinx-nav-tree li {
+  margin: 0.25rem 0;
+}
+
+.sphinx-nav-tree a {
+  display: block;
+  padding: 0.375rem 0.75rem;
+  color: var(--sphinx-text-color);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.sphinx-nav-tree a:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.sphinx-nav-tree a.current {
+  background-color: var(--sphinx-primary-color);
+  color: white;
+}
+
+/* Expandable navigation items */
+.sphinx-nav-tree .expandable > a::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.sphinx-nav-tree .expandable.expanded > a::before {
+  transform: rotate(90deg);
+}
+
+.sphinx-nav-tree .expandable ul {
+  display: none;
+  padding-left: 1rem;
+}
+
+.sphinx-nav-tree .expandable.expanded ul {
+  display: block;
+}
+
+/* Right TOC styling */
+.sphinx-toc h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--sphinx-heading-color);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--sphinx-border-color);
+}
+
+.sphinx-toc ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.sphinx-toc li {
+  margin: 0.25rem 0;
+}
+
+.sphinx-toc a {
+  display: block;
+  padding: 0.25rem 0.5rem;
+  color: var(--sphinx-text-color);
+  text-decoration: none;
+  font-size: 0.875rem;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+}
+
+.sphinx-toc a:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.sphinx-toc a.active {
+  background-color: var(--sphinx-primary-color);
+  color: white;
+}
+
+/* Nested TOC items */
+.sphinx-toc ul ul {
+  padding-left: 1rem;
+  border-left: 1px solid var(--sphinx-border-color);
+  margin-left: 0.5rem;
+}
+
+/* Sphinx-style content styling */
+.sphinx-content h1,
+.sphinx-content h2,
+.sphinx-content h3,
+.sphinx-content h4,
+.sphinx-content h5,
+.sphinx-content h6 {
+  color: var(--sphinx-heading-color);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.sphinx-content h1 {
+  font-size: 2.25rem;
+  border-bottom: 2px solid var(--sphinx-border-color);
+  padding-bottom: 0.5rem;
+}
+
+.sphinx-content h2 {
+  font-size: 1.875rem;
+  border-bottom: 1px solid var(--sphinx-border-color);
+  padding-bottom: 0.25rem;
+}
+
+/* Sphinx-style code blocks */
+.sphinx-content pre {
+  background-color: #f6f8fa;
+  border: 1px solid var(--sphinx-border-color);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sphinx-content pre {
+    background-color: #161b22;
+  }
+}
+
+/* Sphinx-style admonitions */
+.sphinx-admonition {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-left: 4px solid var(--sphinx-primary-color);
+  background-color: rgba(59, 130, 246, 0.05);
+  border-radius: 0 4px 4px 0;
+}
+
+.sphinx-admonition.note {
+  border-left-color: #3498db;
+  background-color: rgba(52, 152, 219, 0.05);
+}
+
+.sphinx-admonition.warning {
+  border-left-color: #f39c12;
+  background-color: rgba(243, 156, 18, 0.05);
+}
+
+.sphinx-admonition.important {
+  border-left-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.05);
+}
+
+/* Previous/Next navigation */
+.sphinx-nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--sphinx-border-color);
+}
+
+.sphinx-nav-button {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: var(--sphinx-sidebar-bg);
+  border: 1px solid var(--sphinx-border-color);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--sphinx-text-color);
+  transition: background-color 0.2s;
+}
+
+.sphinx-nav-button:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .main {
+    grid-template-columns: var(--sphinx-sidebar-width) 1fr;
+    grid-template-areas: "sidebar content";
+  }
+  
+  .sphinx-toc {
+    display: none;
+  }
+  
+  .main-content {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-areas: "content";
+  }
+  
+  .side-bar {
+    position: fixed;
+    left: -100%;
+    transition: left 0.3s;
+    z-index: 1000;
+  }
+  
+  .side-bar.open {
+    left: 0;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  
+  /* Mobile menu toggle */
+  .sphinx-mobile-toggle {
+    display: block;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1001;
+    background: var(--sphinx-primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 769px) {
+  .sphinx-mobile-toggle {
+    display: none;
+  }
+}
+
+/* Search styling */
+.sphinx-search {
+  padding: 1rem;
+  border-bottom: 1px solid var(--sphinx-border-color);
+}
+
+.sphinx-search input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--sphinx-border-color);
+  border-radius: 4px;
+  background-color: var(--sphinx-background-color);
+  color: var(--sphinx-text-color);
+}
+
+/* Logo styling */
+.sphinx-logo {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--sphinx-border-color);
+}
+
+.sphinx-logo img {
+  max-width: 150px;
+  height: auto;
+}
+
+.sphinx-logo h1 {
+  margin: 0.5rem 0 0 0;
+  font-size: 1.25rem;
+  color: var(--sphinx-heading-color);
+}

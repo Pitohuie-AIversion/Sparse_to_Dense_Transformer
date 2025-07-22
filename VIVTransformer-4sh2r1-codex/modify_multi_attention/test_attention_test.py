@@ -8,7 +8,7 @@ from pathlib import Path
 # Add the parent directory to the path to allow imports
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from modify_multi_attention.attention_test import main
+from modify_multi_attention_svd10_results.attention_test import main
 
 class TestAttentionTest(unittest.TestCase):
 

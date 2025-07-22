@@ -11,13 +11,13 @@ import torch
 from .utils.config import load_config
 from .utils.system import create_timestamped_dir
 
-from modify_multi_attention.data.dataloader import get_loaders
-from modify_multi_attention.mymodels.transformer import (
+from modify_multi_attention_svd10_results.data.dataloader import get_loaders
+from modify_multi_attention_svd10_results.mymodels.transformer import (
     TransformerFlowReconstructionModel,
 )
-from modify_multi_attention.training.trainer import train_model, test_model
-from modify_multi_attention.mymodels.components.attention_factory import ATTENTION_MODULES
-from modify_multi_attention.utils.visualization import plot_losses
+from modify_multi_attention_svd10_results.training.trainer import train_model, test_model
+from modify_multi_attention_svd10_results.mymodels.components.attention_factory import ATTENTION_MODULES
+from modify_multi_attention_svd10_results.utils.visualization import plot_losses
 
 matplotlib.use("Agg")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"

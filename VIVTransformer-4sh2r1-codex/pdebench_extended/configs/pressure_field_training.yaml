@@ -1,0 +1,395 @@
+# 压力场重建训练配置
+# 专门用于20x20→200x200压力场数据的训练配置
+
+# 全局设置
+global:
+  experiment_name: "pressure_field_reconstruction"
+  description: "20x20到200x200压力场重建任务"
+  task_type: "spatial_super_resolution"
+  physics_domain: "fluid_dynamics"
+  random_seed: 42
+  device: "cuda"  # 或 "cpu"
+  mixed_precision: true
+  compile_model: false  # PyTorch 2.0编译优化
+
+# 数据配置
+data:
+  # 数据路径（请根据实际情况修改）
+  path: "x:/2025/Graduation_project/report/VIVTransformer-4sh2r1-codex/modify_multi_attention/data/pressure_data.pt"
+  
+  # 数据类型
+  data_type: "pressure_field"
+  
+  # 数据维度
+  input_dim: 400      # 20x20 = 400
+  output_dim: 40000   # 200x200 = 40000
+  input_shape: [20, 20]
+  output_shape: [200, 200]
+  
+  # 数据加载
+  batch_size: 16
+  num_workers: 4
+  pin_memory: true
+  drop_last: false
+  
+  # 数据预处理
+  normalize: true
+  normalize_method: "minmax"  # "minmax", "zscore", "robust"
+  
+  # 数据增强
+  augmentation:
+    enabled: true
+    flip_horizontal: 0.5
+    flip_vertical: 0.5
+    rotation_angle: 15  # 最大旋转角度
+    rotation_prob: 0.3
+    noise_std_ratio: 0.01  # 噪声标准差相对于数据标准差的比例
+    noise_prob: 0.3
+  
+  # 数据分割
+  split_ratios:
+    train: 0.7
+    val: 0.15
+    test: 0.15
+  
+  # 物理约束验证
+  physics_validation:
+    enabled: true
+    max_gradient_threshold: 10.0
+    check_nan: true
+    check_inf: true
+
+# 模型配置
+model:
+  # 模型类型
+  type: "transformer"  # "transformer", "cnn", "unet", "hybrid"
+  
+  # Transformer配置
+  transformer:
+    # 基本参数
+    d_model: 512
+    nhead: 8
+    num_encoder_layers: 6
+    num_decoder_layers: 6
+    dim_feedforward: 2048
+    dropout: 0.1
+    activation: "gelu"
+    
+    # 位置编码
+    positional_encoding:
+      type: "learned"  # "sinusoidal", "learned", "coordinate_aware"
+      max_len: 5000
+      coordinate_aware: true  # 是否使用坐标感知的位置编码
+    
+    # 输入/输出投影
+    input_projection:
+      type: "linear"  # "linear", "conv1d", "embedding"
+      hidden_dim: 512
+    
+    output_projection:
+      type: "linear"  # "linear", "conv1d", "mlp"
+      hidden_dims: [1024, 2048, 40000]
+      activation: "gelu"
+      dropout: 0.1
+    
+    # 空间处理
+    spatial_processing:
+      # 输入处理（20x20 → patches）
+      input_patching:
+        enabled: true
+        patch_size: [4, 4]  # 将20x20分成5x5个4x4的patch
+        overlap: 0
+      
+      # 输出重建（patches → 200x200）
+      output_reconstruction:
+        method: "upsampling"  # "upsampling", "deconv", "interpolation"
+        upsampling_factor: 10
+        upsampling_mode: "bilinear"  # "nearest", "bilinear", "bicubic"
+        align_corners: true
+  
+  # CNN配置（备选）
+  cnn:
+    channels: [64, 128, 256, 512]
+    kernel_sizes: [3, 3, 3, 3]
+    strides: [1, 1, 1, 1]
+    paddings: [1, 1, 1, 1]
+    activation: "relu"
+    batch_norm: true
+    dropout: 0.1
+  
+  # 初始化
+  initialization:
+    type: "xavier_uniform"  # "xavier_uniform", "xavier_normal", "kaiming_uniform", "kaiming_normal"
+    gain: 1.0
+
+# 训练配置
+training:
+  # 基本参数
+  epochs: 200
+  learning_rate: 1e-4
+  weight_decay: 1e-5
+  gradient_clip_norm: 1.0
+  
+  # 优化器
+  optimizer:
+    type: "adamw"  # "adam", "adamw", "sgd", "rmsprop"
+    betas: [0.9, 0.999]
+    eps: 1e-8
+    amsgrad: false
+  
+  # 学习率调度
+  scheduler:
+    type: "cosine_annealing"  # "step", "exponential", "cosine_annealing", "reduce_on_plateau"
+    
+    # CosineAnnealingLR参数
+    T_max: 200
+    eta_min: 1e-6
+    
+    # StepLR参数
+    step_size: 50
+    gamma: 0.5
+    
+    # ReduceLROnPlateau参数
+    mode: "min"
+    factor: 0.5
+    patience: 10
+    threshold: 1e-4
+  
+  # 早停
+  early_stopping:
+    enabled: true
+    patience: 20
+    min_delta: 1e-5
+    monitor: "val_loss"
+    mode: "min"
+  
+  # 梯度累积
+  gradient_accumulation_steps: 1
+  
+  # 模型平均
+  ema:
+    enabled: false
+    decay: 0.999
+
+# 损失函数配置
+loss:
+  # 主损失函数
+  primary:
+    type: "mse"  # "mse", "mae", "huber", "smooth_l1"
+    weight: 1.0
+  
+  # 辅助损失函数
+  auxiliary:
+    # 感知损失（基于预训练网络的特征）
+    perceptual:
+      enabled: true
+      weight: 0.1
+      network: "vgg16"  # "vgg16", "vgg19", "resnet50"
+      layers: ["relu1_2", "relu2_2", "relu3_3"]
+    
+    # 梯度损失（保持空间连续性）
+    gradient:
+      enabled: true
+      weight: 0.05
+      order: 1  # 1阶或2阶梯度
+    
+    # 频域损失（保持频率特性）
+    frequency:
+      enabled: true
+      weight: 0.02
+      fft_type: "2d"  # "1d", "2d"
+    
+    # 物理约束损失
+    physics:
+      enabled: true
+      weight: 0.01
+      
+      # 连续性约束
+      continuity:
+        enabled: true
+        weight: 1.0
+      
+      # 边界条件约束
+      boundary:
+        enabled: false
+        weight: 0.5
+        boundary_type: "dirichlet"  # "dirichlet", "neumann", "mixed"
+
+# 评估配置
+evaluation:
+  # 评估指标
+  metrics:
+    - "mse"
+    - "mae"
+    - "rmse"
+    - "psnr"
+    - "ssim"
+    - "lpips"  # 感知相似性
+    - "gradient_error"
+    - "frequency_error"
+  
+  # 评估频率
+  eval_frequency: 5  # 每5个epoch评估一次
+  
+  # 测试时数据增强
+  test_time_augmentation:
+    enabled: false
+    num_augmentations: 5
+    aggregation: "mean"  # "mean", "median"
+
+# 可视化配置
+visualization:
+  # 可视化频率
+  frequency: 10  # 每10个epoch可视化一次
+  
+  # 可视化内容
+  content:
+    - "input_output_comparison"
+    - "prediction_error"
+    - "gradient_field"
+    - "frequency_spectrum"
+    - "attention_maps"  # 如果使用Transformer
+  
+  # 可视化样本数
+  num_samples: 4
+  
+  # 保存格式
+  save_format: "png"  # "png", "pdf", "svg"
+  dpi: 300
+  
+  # 颜色映射
+  colormap: "coolwarm"  # "viridis", "plasma", "coolwarm", "seismic"
+
+# 日志配置
+logging:
+  # 日志级别
+  level: "INFO"  # "DEBUG", "INFO", "WARNING", "ERROR"
+  
+  # 日志频率
+  log_frequency: 10  # 每10个batch记录一次
+  
+  # TensorBoard
+  tensorboard:
+    enabled: true
+    log_dir: "./logs/pressure_field"
+    
+  # Weights & Biases
+  wandb:
+    enabled: false
+    project: "pressure_field_reconstruction"
+    entity: "your_username"
+    tags: ["pressure_field", "super_resolution", "transformer"]
+  
+  # 保存配置
+  save_config: true
+  config_format: "yaml"  # "yaml", "json"
+
+# 检查点配置
+checkpoint:
+  # 保存设置
+  save_frequency: 10  # 每10个epoch保存一次
+  save_best: true
+  save_last: true
+  
+  # 保存路径
+  save_dir: "./checkpoints/pressure_field"
+  
+  # 保存内容
+  save_optimizer: true
+  save_scheduler: true
+  save_scaler: true  # 混合精度训练时
+  
+  # 自动清理
+  max_checkpoints: 5  # 最多保存5个检查点
+
+# 硬件监控
+hardware_monitoring:
+  enabled: true
+  
+  # 监控内容
+  monitor:
+    - "gpu_utilization"
+    - "gpu_memory"
+    - "cpu_utilization"
+    - "ram_usage"
+    - "disk_io"
+  
+  # 监控频率
+  frequency: 30  # 每30秒监控一次
+  
+  # 警告阈值
+  thresholds:
+    gpu_memory: 0.9  # GPU内存使用率超过90%时警告
+    cpu_utilization: 0.8
+    ram_usage: 0.8
+
+# 实验配置
+experiment:
+  # 实验矩阵（用于超参数搜索）
+  matrix:
+    learning_rate: [1e-4, 5e-4, 1e-3]
+    batch_size: [8, 16, 32]
+    d_model: [256, 512, 768]
+    num_encoder_layers: [4, 6, 8]
+  
+  # 搜索策略
+  search_strategy: "grid"  # "grid", "random", "bayesian"
+  
+  # 并行实验
+  parallel_experiments: 1
+
+# 压力场特定配置
+pressure_field:
+  # 物理参数
+  physics:
+    reynolds_number: 1000  # 雷诺数
+    mach_number: 0.1       # 马赫数
+    density: 1.0           # 密度
+    viscosity: 1e-3        # 粘度
+  
+  # 空间参数
+  spatial:
+    domain_size: [1.0, 1.0]  # 计算域大小
+    grid_spacing: [0.005, 0.005]  # 网格间距（200x200）
+    input_grid_spacing: [0.05, 0.05]  # 输入网格间距（20x20）
+  
+  # 时间参数
+  temporal:
+    time_step: 0.01
+    total_time: 10.0
+    num_time_steps: 1000
+  
+  # 重建质量评估
+  reconstruction_quality:
+    # 空间分辨率评估
+    spatial_resolution:
+      enabled: true
+      target_resolution: [200, 200]
+      evaluation_metrics: ["psnr", "ssim"]
+    
+    # 物理一致性评估
+    physics_consistency:
+      enabled: true
+      check_mass_conservation: true
+      check_momentum_conservation: true
+      check_energy_conservation: false
+    
+    # 边界条件评估
+    boundary_conditions:
+      enabled: true
+      boundary_types: ["wall", "inlet", "outlet"]
+      tolerance: 1e-3
+
+# 调试配置
+debug:
+  enabled: false
+  
+  # 调试选项
+  options:
+    check_gradients: true
+    profile_memory: true
+    profile_time: true
+    save_intermediate_outputs: true
+  
+  # 调试频率
+  frequency: 1  # 每个epoch调试一次

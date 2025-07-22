@@ -14,9 +14,9 @@ from pathlib import Path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-from modify_multi_attention.utils.hardware_monitor import HardwareMonitor
-from modify_multi_attention.utils.enhanced_logger import EnhancedTrainingLogger
-from modify_multi_attention.utils.training_visualizer import TrainingVisualizer
+from modify_multi_attention_svd10_results.utils.hardware_monitor import HardwareMonitor
+from modify_multi_attention_svd10_results.utils.enhanced_logger import EnhancedTrainingLogger
+from modify_multi_attention_svd10_results.utils.training_visualizer import TrainingVisualizer
 
 def test_hardware_monitor():
     """测试硬件监控功能"""

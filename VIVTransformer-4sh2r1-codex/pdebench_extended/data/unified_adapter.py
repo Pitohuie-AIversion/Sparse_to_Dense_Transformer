@@ -21,6 +21,20 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from .dataset import PressureDataset
 from .pdebench_adapter import PDEBenchDataset, PDEBenchDataLoader
 
+# 导入新的压力场适配器
+try:
+    from .pressure_field_adapter import (
+        PressureFieldDataset, 
+        PressureFieldDataLoader,
+        create_pressure_field_datasets,
+        analyze_pressure_field_data
+    )
+except ImportError:
+    PressureFieldDataset = None
+    PressureFieldDataLoader = None
+    create_pressure_field_datasets = None
+    analyze_pressure_field_data = None
+
 
 class UnifiedDataAdapter:
     """统一数据适配器
@@ -88,7 +102,11 @@ class UnifiedDataAdapter:
     def create_datasets(self) -> Dict[str, Union[Dataset, DataLoader]]:
         """创建数据集"""
         if self.data_type == 'pressure_field':
-            return self._create_pressure_field_datasets()
+            # 优先使用新的压力场适配器
+            if create_pressure_field_datasets is not None:
+                return self._create_pressure_field_datasets_advanced()
+            else:
+                return self._create_pressure_field_datasets()
         elif self.data_type == 'pdebench_hdf5':
             return self._create_pdebench_datasets()
         else:
@@ -240,6 +258,35 @@ class UnifiedDataAdapter:
             'info': data_info
         }
     
+    def _create_pressure_field_datasets_advanced(self) -> Dict[str, Union[DataLoader, Dict]]:
+        """使用高级压力场适配器创建数据集"""
+        logging.info("使用高级压力场适配器创建数据集")
+        
+        # 使用新的压力场适配器
+        datasets = create_pressure_field_datasets(
+            data_path=self.data_path,
+            batch_size=self.batch_size,
+            normalize=self.normalize,
+            num_workers=self.config.get('data', {}).get('num_workers', 4),
+            pin_memory=self.config.get('data', {}).get('pin_memory', True)
+        )
+        
+        logging.info("高级压力场数据集创建完成")
+        return datasets
+    
+    def analyze_data(self) -> Dict[str, Any]:
+        """分析数据特性"""
+        if self.data_type == 'pressure_field' and analyze_pressure_field_data is not None:
+            return analyze_pressure_field_data(self.data_path)
+        else:
+            # 返回基本信息
+            return {
+                'data_type': self.data_type,
+                'data_path': self.data_path,
+                'batch_size': self.batch_size,
+                'normalize': self.normalize
+            }
+    
     def get_data_info(self) -> Dict[str, Any]:
         """获取数据信息"""
         datasets = self.create_datasets()
@@ -257,3 +304,16 @@ def create_unified_datasets(config: Dict[str, Any]) -> Dict[str, Union[DataLoade
     """
     adapter = UnifiedDataAdapter(config)
     return adapter.create_datasets()
+
+
+def analyze_unified_data(config: Dict[str, Any]) -> Dict[str, Any]:
+    """分析统一数据的便捷函数
+    
+    Args:
+        config: 配置字典
+    
+    Returns:
+        数据分析结果
+    """
+    adapter = UnifiedDataAdapter(config)
+    return adapter.analyze_data()

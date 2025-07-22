@@ -21,7 +21,7 @@ from datetime import datetime
 import sys
 sys.path.append(str(Path(__file__).parent.parent))
 
-from modify_multi_attention.attention_test import (
+from modify_multi_attention_svd10_results.attention_test import (
     StandardAttention, MultiHeadAttention, 
     MultiLossFunction, SVDLoss, SparsityLoss, ReconstructionLoss
 )

@@ -1,0 +1,211 @@
+# PDEBench数据集配置文件
+# 用于集成PDEBench基准数据集到多注意力机制项目中
+
+# 全局设置
+global:
+  seed: 42
+  deterministic: true
+  device: cuda:0
+  max_memory_fraction: 0.8
+  use_dataparallel: true
+  experiment_name: "pdebench_multi_attention"
+
+# PDEBench数据设置
+pdebench:
+  # 数据路径配置
+  data_root: "./data/pdebench"  # PDEBench数据根目录
+  
+  # 支持的PDE类型及其配置
+  pde_configs:
+    ns_incom:  # 2D不可压缩Navier-Stokes方程
+      data_file: "2D_NavierStokes_incomp.h5"
+      description: "2D不可压缩Navier-Stokes方程"
+      spatial_resolution: [64, 64]
+      sequence_length: 49
+      input_dim: 4096
+      output_dim: 4096
+      
+    darcy:  # 2D Darcy Flow
+      data_file: "2D_DarcyFlow_beta1.0_Train.hdf5"
+      description: "2D Darcy Flow方程"
+      spatial_resolution: [85, 85]
+      sequence_length: 1
+      input_dim: 7225
+      output_dim: 7225
+      
+    swe:  # 2D Shallow Water方程
+      data_file: "2D_rdb_NA_NA.h5"
+      description: "2D Shallow Water方程"
+      spatial_resolution: [128, 128]
+      sequence_length: 49
+      input_dim: 16384
+      output_dim: 16384
+      
+    advection:  # 1D Advection方程
+      data_file: "1D_Advection_Sols_beta1.0.hdf5"
+      description: "1D Advection方程"
+      spatial_resolution: null
+      sequence_length: 49
+      input_dim: 1024
+      output_dim: 1024
+      
+    burgers:  # 1D Burgers方程
+      data_file: "1D_Burgers_Sols_Nu0.001.hdf5"
+      description: "1D Burgers方程"
+      spatial_resolution: null
+      sequence_length: 49
+      input_dim: 1024
+      output_dim: 1024
+      
+    diff_react:  # 1D Reaction-Diffusion方程
+      data_file: "1D_diff-react_NA_NA.h5"
+      description: "1D Reaction-Diffusion方程"
+      spatial_resolution: null
+      sequence_length: 49
+      input_dim: 1024
+      output_dim: 1024
+
+# 当前实验的PDE类型
+current_pde: "ns_incom"  # 可选: ns_incom, darcy, swe, advection, burgers, diff_react
+
+# 数据设置
+data:
+  use_pdebench: true  # 启用PDEBench数据集
+  batch_size: 32  # 根据PDEBench数据调整
+  use_augmentation: false  # PDEBench数据通常不需要增强
+  normalize: true
+  train_split: 0.7
+  val_split: 0.2
+  test_split: 0.1
+  num_workers: 4
+  pin_memory: true
+
+# 模型设置 - 根据PDEBench数据动态调整
+model:
+  attention_type: relative
+  d_model: 512  # 可能需要根据数据维度调整
+  num_heads: 8
+  num_layers: 6
+  # input_dim和output_dim将根据选择的PDE类型自动设置
+  seq_len: 49  # 将根据PDE类型自动调整
+  max_time_steps: 100
+  dropout: 0.1
+
+# 训练设置
+training:
+  epochs: 50  # PDEBench可能需要更多训练轮次
+  learning_rate: 0.0001
+  weight_decay: 1e-5
+  early_stop_patience: 15
+  gradient_clip_norm: 1.0
+  
+# 损失函数配置
+loss_configs:
+  # 基础配置
+  - base_weight: 1.0
+    svd_weights: [1, 1, 1]
+    topk: 10
+    
+  # 物理约束增强配置
+  - base_weight: 0.8
+    svd_weights: [1, 2, 1]
+    topk: 15
+    physics_weight: 0.2  # 添加物理约束损失
+    
+  # 多尺度配置
+  - base_weight: 0.7
+    svd_weights: [2, 1, 1]
+    topk: 20
+    multiscale_weight: 0.3
+
+# 可视化设置
+visualization:
+  enabled: true
+  interval: 10  # 更频繁的可视化
+  max_samples: 3
+  save_predictions: true
+  plot_fields: true  # 绘制物理场
+  plot_errors: true  # 绘制误差分布
+
+# 硬件监控设置
+hardware_monitoring:
+  enable_gpu_monitoring: true
+  log_batch_metrics: true
+  batch_log_interval: 25
+  save_detailed_metrics: true
+  monitor_temperature: true
+  monitor_power_usage: true
+
+# 注意力机制测试配置
+attention_test:
+  # 针对PDEBench优化的注意力机制
+  types:
+    # 适合物理场建模的注意力机制
+    - relative      # 相对位置注意力，适合空间相关性
+    - sparse        # 稀疏注意力，适合大规模数据
+    - self          # 标准自注意力
+    - simplified_self
+    
+    # CNN风格注意力，适合空间特征
+    - se            # Squeeze-and-Excitation
+    - cbam          # Convolutional Block Attention
+    - coord         # Coordinate Attention
+    - psa           # Point-wise Spatial Attention
+    
+    # 高级注意力机制
+    - muse          # Multi-Scale Attention
+    - emsa          # Efficient Multi-Scale Attention
+    - crossformer   # Cross-scale Attention
+    - dat           # Dual Attention Transformer
+    
+    # 移动端优化注意力
+    - mobilevit     # MobileViT Attention
+    - mobilevitv2   # MobileViT v2 Attention
+    
+    # 特殊用途注意力
+    - external      # External Attention
+    - aft           # Attention Free Transformer
+    - outlook       # Outlook Attention
+
+# 评估指标
+evaluation:
+  metrics:
+    - mse           # 均方误差
+    - mae           # 平均绝对误差
+    - rmse          # 均方根误差
+    - r2_score      # R²分数
+    - physics_loss  # 物理约束损失
+    - spectral_loss # 频谱损失
+  
+  # PDEBench特定评估
+  pdebench_metrics:
+    - relative_l2   # 相对L2误差
+    - energy_spectrum  # 能量谱分析
+    - vorticity_error  # 涡度误差（适用于流体方程）
+
+# 实验记录
+logging:
+  log_level: INFO
+  save_model_checkpoints: true
+  checkpoint_interval: 10
+  tensorboard_logging: true
+  wandb_logging: false  # 可选启用Weights & Biases
+  
+# 输出设置
+output:
+  results_dir: "./results/pdebench"
+  model_save_dir: "./models/pdebench"
+  plots_dir: "./plots/pdebench"
+  logs_dir: "./logs/pdebench"
+  
+# PDEBench基准测试设置
+benchmark:
+  compare_with_baselines: true
+  baseline_methods:
+    - "FNO"          # Fourier Neural Operator
+    - "U-Net"        # U-Net
+    - "ResNet"       # ResNet
+    - "Transformer"  # 标准Transformer
+  
+  save_benchmark_results: true
+  generate_comparison_plots: true

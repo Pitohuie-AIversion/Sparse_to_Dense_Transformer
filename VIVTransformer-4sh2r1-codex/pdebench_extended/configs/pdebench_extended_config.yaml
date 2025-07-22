@@ -1,0 +1,98 @@
+# PDEBench扩展配置 - 2D Darcy Flow 和 Compressible Navier-Stokes
+attention_test:
+  types:
+  - MultiHeadAttention
+  - ECAAttention
+  - SEAttention
+  - CBAM
+  - CoordinateAttention
+
+# 当前使用的PDE类型 (darcy_flow 或 ns_compressible)
+current_pde: darcy_flow
+
+data:
+  path: "../../data/pdebench/2D/DarcyFlow/2D_DarcyFlow_beta0.01_Train.hdf5"
+  batch_size: 16
+  normalize: true
+  num_workers: 4
+  pin_memory: true
+  use_augmentation: false
+  use_pdebench: true
+
+global:
+  device: cuda
+  result_dir: ./results/pdebench_extended
+  seed: 42
+
+model:
+  attention_type: MultiHeadAttention
+  d_model: 256
+  input_dim: 1024  # 对应Darcy Flow的32x32分辨率
+  num_heads: 8
+  num_layers: 4
+  output_dim: 1024
+
+pdebench:
+  data_root: ../../data/pdebench
+  pde_configs:
+    darcy_flow:
+      data_file: 2D/DarcyFlow/2D_DarcyFlow_beta0.01_Train.hdf5
+      description: "2D Darcy Flow with beta=0.01"
+      input_dim: 1024  # 32x32 = 1024
+      output_dim: 1024
+      sequence_length: 1  # Darcy Flow通常是单时间步
+      spatial_resolution:
+      - 32
+      - 32
+      channels: 1
+      physics_type: "elliptic_pde"
+      
+    ns_compressible:
+      data_file: 2D/NS_incom/ns_incom_inhom_2d_512-0.h5
+      description: "2D Compressible Navier-Stokes Equations"
+      input_dim: 4096  # 64x64 = 4096
+      output_dim: 4096
+      sequence_length: 49  # 时间序列长度
+      spatial_resolution:
+      - 64
+      - 64
+      channels: 1
+      physics_type: "hyperbolic_pde"
+      
+    # 添加更多PDE配置
+    shallow_water:
+      data_file: 2D/ShallowWater/shallow_water_2d.h5
+      description: "2D Shallow Water Equations"
+      input_dim: 16384  # 128x128 = 16384
+      output_dim: 16384
+      sequence_length: 40
+      spatial_resolution:
+      - 128
+      - 128
+      channels: 1
+      physics_type: "hyperbolic_pde"
+
+training:
+  epochs: 20
+  learning_rate: 0.0001
+  scheduler: cosine
+  weight_decay: 1.0e-05
+  early_stop_patience: 15
+  
+# 实验配置
+experiment:
+  name: "pdebench_extended_comparison"
+  description: "比较不同PDE类型和注意力机制的性能"
+  save_checkpoints: true
+  log_interval: 10
+  eval_interval: 50
+  
+# 可视化配置
+visualization:
+  enabled: true
+  save_plots: true
+  plot_interval: 100
+  fields_to_plot:
+  - "pressure"
+  - "velocity"
+  - "density"

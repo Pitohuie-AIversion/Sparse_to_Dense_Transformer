@@ -1,0 +1,251 @@
+# 多PDE类型训练配置文件
+# 支持Darcy Flow, Compressible Navier-Stokes, 和Shallow Water方程
+
+# 全局配置
+global:
+  device: cuda
+  result_dir: ./results/multi_pde_training
+  seed: 42
+  experiment_name: "multi_attention_pde_comparison"
+
+# 数据配置
+data:
+  batch_size: 16
+  normalize: true
+  num_workers: 4
+  pin_memory: true
+  use_augmentation: false
+  use_pdebench: true
+
+# 模型配置
+model:
+  d_model: 256
+  num_heads: 8
+  num_layers: 4
+  max_time_steps: 100
+  seq_len: 49
+  dropout: 0.1
+  dim_feedforward: 1024
+
+# 训练配置
+training:
+  epochs: 50
+  learning_rate: 0.0001
+  scheduler: cosine
+  weight_decay: 1.0e-05
+  early_stop_patience: 15
+  gradient_clip_norm: 1.0
+  save_checkpoint_every: 10
+  validate_every: 5
+
+# 注意力机制测试配置
+attention_test:
+  types:
+    - MultiHeadAttention
+    - ECAAttention
+    - SEAttention
+    - CBAM
+    - CoordinateAttention
+    - ExternalAttention
+    - ScaledDotProductAttention
+    - TripletAttention
+
+# PDEBench数据集配置
+pdebench:
+  data_root: ../../data/pdebench
+  
+  # PDE类型配置
+  pde_configs:
+    # 2D Darcy Flow - 椭圆型PDE
+    darcy_flow:
+      data_file: 2D/DarcyFlow/2D_DarcyFlow_beta0.01_Train.hdf5
+      description: "2D Darcy Flow with beta=0.01 - Elliptic PDE"
+      input_dim: 1024  # 32x32 = 1024
+      output_dim: 1024
+      sequence_length: 1  # 稳态问题
+      spatial_resolution: [32, 32]
+      channels: 1
+      physics_type: "elliptic_pde"
+      data_fields: ["tensor", "nu"]
+      train_split: 0.7
+      val_split: 0.15
+      test_split: 0.15
+      
+    # 2D Compressible Navier-Stokes - 双曲型PDE  
+    ns_compressible:
+      data_file: 2D/NS_incom/ns_incom_inhom_2d_512-0.h5
+      description: "2D Compressible Navier-Stokes - Hyperbolic PDE"
+      input_dim: 4096  # 64x64 = 4096
+      output_dim: 4096
+      sequence_length: 49  # 时间演化问题
+      spatial_resolution: [64, 64]
+      channels: 1
+      physics_type: "hyperbolic_pde"
+      data_fields: ["density", "pressure", "Vx", "Vy"]
+      train_split: 0.7
+      val_split: 0.15
+      test_split: 0.15
+      
+    # 2D Shallow Water - 双曲型PDE
+    shallow_water:
+      data_file: 2D/ShallowWater/shallow_water_2d.h5
+      description: "2D Shallow Water Equations - Hyperbolic PDE"
+      input_dim: 16384  # 128x128 = 16384
+      output_dim: 16384
+      sequence_length: 40  # 时间演化问题
+      spatial_resolution: [128, 128]
+      channels: 1
+      physics_type: "hyperbolic_pde"
+      data_fields: ["height", "Vx", "Vy"]
+      train_split: 0.7
+      val_split: 0.15
+      test_split: 0.15
+      
+    # 1D Burgers方程 - 双曲型PDE
+    burgers_1d:
+      data_file: 1D/Burgers/burgers_1d.h5
+      description: "1D Burgers Equation - Hyperbolic PDE"
+      input_dim: 256  # 1D空间分辨率
+      output_dim: 256
+      sequence_length: 100
+      spatial_resolution: [256]
+      channels: 1
+      physics_type: "hyperbolic_pde"
+      data_fields: ["tensor"]
+      train_split: 0.7
+      val_split: 0.15
+      test_split: 0.15
+      
+    # 2D Reaction-Diffusion - 抛物型PDE
+    reaction_diffusion:
+      data_file: 2D/ReactionDiffusion/reaction_diffusion_2d.h5
+      description: "2D Reaction-Diffusion - Parabolic PDE"
+      input_dim: 4096  # 64x64 = 4096
+      output_dim: 4096
+      sequence_length: 50
+      spatial_resolution: [64, 64]
+      channels: 2  # 两个化学物质浓度
+      physics_type: "parabolic_pde"
+      data_fields: ["tensor", "nu"]
+      train_split: 0.7
+      val_split: 0.15
+      test_split: 0.15
+
+# 实验配置
+experiment:
+  name: "multi_pde_attention_comparison"
+  description: "比较不同注意力机制在多种PDE类型上的性能"
+  save_checkpoints: true
+  log_interval: 10
+  eval_interval: 50
+  save_predictions: true
+  save_attention_maps: true
+  
+  # 实验矩阵：PDE类型 × 注意力机制
+  run_matrix:
+    enabled: true
+    pde_types: ["darcy_flow", "ns_compressible", "shallow_water"]
+    attention_types: ["MultiHeadAttention", "ECAAttention", "SEAttention", "CBAM"]
+    
+# 可视化配置
+visualization:
+  enabled: true
+  save_plots: true
+  plot_interval: 100
+  fields_to_plot:
+    darcy_flow: ["pressure", "permeability"]
+    ns_compressible: ["density", "pressure", "velocity"]
+    shallow_water: ["height", "velocity"]
+    burgers_1d: ["velocity"]
+    reaction_diffusion: ["concentration_A", "concentration_B"]
+    
+  # 注意力图可视化
+  attention_visualization:
+    enabled: true
+    save_every_n_epochs: 10
+    num_samples: 5
+    
+# 评估指标
+metrics:
+  primary: ["mse", "mae", "rmse"]
+  physics_informed: ["conservation_error", "boundary_condition_error"]
+  
+  # 针对不同PDE类型的特定指标
+  pde_specific:
+    darcy_flow: ["permeability_preservation", "mass_conservation"]
+    ns_compressible: ["momentum_conservation", "energy_conservation"]
+    shallow_water: ["mass_conservation", "momentum_conservation"]
+    
+# 损失函数配置
+loss:
+  type: "composite"  # 复合损失函数
+  components:
+    mse:
+      weight: 1.0
+      description: "Mean Squared Error"
+    physics_informed:
+      weight: 0.1
+      description: "Physics-informed loss"
+    gradient_penalty:
+      weight: 0.01
+      description: "Gradient penalty for smoothness"
+      
+# 优化器配置
+optimizer:
+  type: "adamw"
+  lr: 0.0001
+  weight_decay: 1e-5
+  betas: [0.9, 0.999]
+  eps: 1e-8
+  
+# 学习率调度器
+scheduler:
+  type: "cosine_annealing"
+  T_max: 50
+  eta_min: 1e-6
+  warmup_epochs: 5
+  
+# 数据增强配置
+augmentation:
+  enabled: false  # 对于PDE数据需要谨慎使用
+  types:
+    - "gaussian_noise"  # 添加高斯噪声
+    - "temporal_shift"  # 时间偏移（仅适用于时间序列）
+  parameters:
+    gaussian_noise:
+      std: 0.01
+    temporal_shift:
+      max_shift: 2
+      
+# 硬件配置
+hardware:
+  mixed_precision: true  # 使用混合精度训练
+  gradient_accumulation_steps: 1
+  dataloader_num_workers: 4
+  pin_memory: true
+  
+# 日志配置
+logging:
+  level: "INFO"
+  save_to_file: true
+  tensorboard: true
+  wandb:
+    enabled: false
+    project: "pde_attention_comparison"
+    entity: "your_username"
+    
+# 检查点配置
+checkpoint:
+  save_best: true
+  save_last: true
+  save_every_n_epochs: 10
+  monitor_metric: "val_mse"
+  mode: "min"
+  
+# 早停配置
+early_stopping:
+  enabled: true
+  patience: 15
+  monitor_metric: "val_mse"
+  mode: "min"
+  min_delta: 1e-6

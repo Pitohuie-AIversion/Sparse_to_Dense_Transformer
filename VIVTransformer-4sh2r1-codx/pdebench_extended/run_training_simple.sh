@@ -154,10 +154,42 @@ if [[ ! -f "$DATA_PATH" ]]; then
                         cd - > /dev/null
                         
                         # 搜索数据文件
-                        DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" 2>/dev/null | head -5))
+                        echo "正在搜索下载的数据文件..."
+                        DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" -o -name "*.h5" 2>/dev/null | head -10))
                         if [[ ${#DOWNLOADED_FILES[@]} -gt 0 ]]; then
                             DATA_PATH="${DOWNLOADED_FILES[0]}"
                             echo -e "${GREEN}找到数据文件: $DATA_PATH${NC}"
+                        else
+                            echo -e "${YELLOW}PDEBench仓库中未找到数据文件，可能需要git-lfs下载大文件${NC}"
+                            echo "尝试手动下载数据文件..."
+                            
+                            # 提供备用下载方案
+                            mkdir -p "$DATA_DIR/manual"
+                            echo "正在尝试从备用源下载数据..."
+                            
+                            # 检查下载工具
+                            if command -v wget &> /dev/null; then
+                                DOWNLOAD_CMD="wget -O"
+                            elif command -v curl &> /dev/null; then
+                                DOWNLOAD_CMD="curl -L -o"
+                            else
+                                echo -e "${YELLOW}未找到下载工具，跳过自动下载${NC}"
+                            fi
+                            
+                            if [[ -n "$DOWNLOAD_CMD" ]]; then
+                                # 尝试下载示例数据文件
+                                SAMPLE_FILE="$DATA_DIR/manual/sample_pressure_data.hdf5"
+                                echo "尝试下载示例数据文件..."
+                                
+                                # 这里可以添加实际的下载链接
+                                echo -e "${YELLOW}注意：需要手动下载数据文件${NC}"
+                                echo "建议操作："
+                                echo "1. 安装git-lfs: sudo yum install -y git-lfs"
+                                echo "2. 重新下载数据: cd $DATA_DIR/PDEBench && git lfs pull"
+                                echo "3. 或从以下地址手动下载:"
+                                echo "   - https://darus.uni-stuttgart.de/dataset.xhtml?persistentId=doi:10.18419/darus-2986"
+                                echo "   - https://github.com/pdebench/PDEBench/releases"
+                            fi
                         fi
                     else
                         echo -e "${RED}仓库克隆失败${NC}"
@@ -165,10 +197,30 @@ if [[ ! -f "$DATA_PATH" ]]; then
                 else
                     echo -e "${GREEN}PDEBench仓库已存在${NC}"
                     # 搜索现有文件
-                    DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" 2>/dev/null | head -5))
+                    echo "搜索现有数据文件..."
+                    DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" -o -name "*.h5" 2>/dev/null | head -10))
                     if [[ ${#DOWNLOADED_FILES[@]} -gt 0 ]]; then
                         DATA_PATH="${DOWNLOADED_FILES[0]}"
                         echo -e "${GREEN}使用现有数据文件: $DATA_PATH${NC}"
+                    else
+                        echo -e "${YELLOW}现有仓库中未找到数据文件${NC}"
+                        echo "尝试更新仓库并下载LFS文件..."
+                        cd "$DATA_DIR/PDEBench"
+                        git pull
+                        if command -v git-lfs &> /dev/null; then
+                            echo "正在下载LFS文件..."
+                            git lfs pull
+                            cd - > /dev/null
+                            # 重新搜索
+                            DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" -o -name "*.h5" 2>/dev/null | head -10))
+                            if [[ ${#DOWNLOADED_FILES[@]} -gt 0 ]]; then
+                                DATA_PATH="${DOWNLOADED_FILES[0]}"
+                                echo -e "${GREEN}LFS下载后找到数据文件: $DATA_PATH${NC}"
+                            fi
+                        else
+                            cd - > /dev/null
+                            echo -e "${YELLOW}git-lfs未安装，无法下载大文件${NC}"
+                        fi
                     fi
                 fi
                 ;;
@@ -221,10 +273,68 @@ if [[ ! -f "$DATA_PATH" ]]; then
                 ;;
         esac
         
-        # 如果仍然没有数据文件，再次搜索
+        # 如果仍然没有数据文件，进行全面搜索
         if [[ ! -f "$DATA_PATH" ]]; then
             echo "重新搜索数据文件..."
-            DATA_FILES=($(find . -name "*.pt" -o -name "*.hdf5" -type f 2>/dev/null | head -10))
+            DATA_FILES=($(find . -name "*.pt" -o -name "*.hdf5" -o -name "*.h5" -type f 2>/dev/null | head -15))
+            
+            # 如果还是没找到，提供生成示例数据的选项
+            if [[ ${#DATA_FILES[@]} -eq 0 ]]; then
+                echo -e "${YELLOW}未找到任何数据文件${NC}"
+                echo "选项："
+                echo "1. 生成示例数据文件（用于测试）"
+                echo "2. 手动指定数据文件路径"
+                echo "3. 退出并手动下载数据"
+                read -p "请选择 (1-3): " fallback_choice
+                
+                case $fallback_choice in
+                    1)
+                        echo -e "${BLUE}生成示例数据文件...${NC}"
+                        mkdir -p "$DATA_DIR/generated"
+                        SAMPLE_DATA="$DATA_DIR/generated/sample_data.pt"
+                        
+                        # 创建一个简单的示例数据文件
+                        python3 -c "
+import torch
+import os
+
+# 生成示例压力场数据
+data = {
+    'pressure': torch.randn(100, 64, 64),  # 100个样本，64x64网格
+    'velocity_x': torch.randn(100, 64, 64),
+    'velocity_y': torch.randn(100, 64, 64),
+    'time_steps': torch.linspace(0, 1, 100)
+}
+
+os.makedirs(os.path.dirname('$SAMPLE_DATA'), exist_ok=True)
+torch.save(data, '$SAMPLE_DATA')
+print('示例数据已生成: $SAMPLE_DATA')
+" 2>/dev/null
+                        
+                        if [[ -f "$SAMPLE_DATA" ]]; then
+                            DATA_PATH="$SAMPLE_DATA"
+                            echo -e "${GREEN}示例数据生成成功: $DATA_PATH${NC}"
+                            echo -e "${YELLOW}注意：这是示例数据，仅用于测试训练流程${NC}"
+                        else
+                            echo -e "${RED}示例数据生成失败${NC}"
+                        fi
+                        ;;
+                    2)
+                        read -p "请输入数据文件的完整路径: " manual_path
+                        if [[ -f "$manual_path" ]]; then
+                            DATA_PATH="$manual_path"
+                            echo -e "${GREEN}使用手动指定的数据文件: $DATA_PATH${NC}"
+                        else
+                            echo -e "${RED}指定的文件不存在: $manual_path${NC}"
+                        fi
+                        ;;
+                    3)
+                        echo -e "${YELLOW}退出脚本${NC}"
+                        echo "请手动下载数据后重新运行"
+                        exit 1
+                        ;;
+                esac
+            fi
         fi
     fi
     

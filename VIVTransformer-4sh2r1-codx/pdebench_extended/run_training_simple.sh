@@ -131,7 +131,30 @@ if [[ ! -f "$DATA_PATH" ]]; then
                 # 检查git lfs
                 if ! command -v git-lfs &> /dev/null; then
                     echo -e "${YELLOW}警告: git-lfs未安装，大文件可能下载失败${NC}"
-                    echo "建议安装: sudo yum install -y git-lfs"
+                    
+                    # 检查是否在conda环境中
+                    if [[ -n "$CONDA_DEFAULT_ENV" ]] || command -v conda &> /dev/null; then
+                        echo -e "${BLUE}检测到conda环境，尝试自动安装git-lfs...${NC}"
+                        read -p "是否尝试通过conda安装git-lfs? (y/n): " install_choice
+                        if [[ "$install_choice" =~ ^[Yy]$ ]]; then
+                            echo "正在安装git-lfs..."
+                            if conda install -c conda-forge git-lfs -y; then
+                                echo -e "${GREEN}git-lfs安装成功${NC}"
+                            else
+                                echo -e "${YELLOW}conda安装失败，尝试pip安装...${NC}"
+                                if pip install git-lfs; then
+                                    echo -e "${GREEN}git-lfs通过pip安装成功${NC}"
+                                else
+                                    echo -e "${RED}自动安装失败${NC}"
+                                fi
+                            fi
+                        fi
+                    else
+                        echo "安装选项:"
+                        echo "1. 系统安装 (需要sudo): sudo yum install -y git-lfs"
+                        echo "2. Conda安装 (推荐): conda install -c conda-forge git-lfs"
+                        echo "3. 手动安装到用户目录"
+                    fi
                 fi
                 
                 # 创建数据目录
@@ -184,11 +207,13 @@ if [[ ! -f "$DATA_PATH" ]]; then
                                 # 这里可以添加实际的下载链接
                                 echo -e "${YELLOW}注意：需要手动下载数据文件${NC}"
                                 echo "建议操作："
-                                echo "1. 安装git-lfs: sudo yum install -y git-lfs"
-                                echo "2. 重新下载数据: cd $DATA_DIR/PDEBench && git lfs pull"
-                                echo "3. 或从以下地址手动下载:"
+                                echo "1. 在conda环境中安装git-lfs: conda install -c conda-forge git-lfs"
+                                echo "2. 或系统安装 (需要sudo): sudo yum install -y git-lfs"
+                                echo "3. 安装后重新下载数据: cd $DATA_DIR/PDEBench && git lfs pull"
+                                echo "4. 或从以下地址手动下载:"
                                 echo "   - https://darus.uni-stuttgart.de/dataset.xhtml?persistentId=doi:10.18419/darus-2986"
                                 echo "   - https://github.com/pdebench/PDEBench/releases"
+                                echo "5. 如果在conda环境中，可以尝试: pip install git-lfs"
                             fi
                         fi
                     else

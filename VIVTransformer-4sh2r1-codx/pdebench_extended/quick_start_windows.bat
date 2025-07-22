@@ -71,16 +71,294 @@ if %errorlevel% == 0 (
 )
 
 echo.
-echo %PURPLE%=== 文件检查 ===%NC%
+echo %PURPLE%=== 数据集检查与下载 ===%NC%
+
+REM 定义数据集相关变量
+set "DATA_REPO_URL=https://github.com/pdebench/PDEBench.git"
+set "DATA_DIR=data"
+set "ALTERNATIVE_DATA_URLS[0]=https://darus.uni-stuttgart.de/api/access/datafile/132004"
+set "ALTERNATIVE_DATA_URLS[1]=https://zenodo.org/record/6222489/files/2D_CFD_Rand_M0.1_Eta1e-08_Zeta1e-08_periodic_Train.hdf5"
 
 REM 检查数据文件
+set "DATA_FOUND=0"
 if exist "%DATA_PATH%" (
     for %%A in ("%DATA_PATH%") do set "DATA_SIZE=%%~zA"
     set /a "DATA_SIZE_MB=!DATA_SIZE! / 1024 / 1024"
     echo %GREEN%✓%NC% 数据文件: !DATA_SIZE_MB!MB
+    set "DATA_FOUND=1"
 ) else (
-    echo %RED%❌ 数据文件未找到: %DATA_PATH%%NC%
-    echo 请确保数据文件存在
+    REM 搜索其他可能的数据文件
+    echo 搜索现有数据文件...
+    for %%f in (*.pt *.hdf5 *.h5) do (
+        if exist "%%f" (
+            set "DATA_PATH=%%f"
+            for %%A in ("%%f") do set "DATA_SIZE=%%~zA"
+            set /a "DATA_SIZE_MB=!DATA_SIZE! / 1024 / 1024"
+            echo %GREEN%✓%NC% 找到数据文件: %%f (!DATA_SIZE_MB!MB)
+            set "DATA_FOUND=1"
+            goto :data_found
+        )
+    )
+    
+    REM 在data目录中搜索
+    if exist "%DATA_DIR%" (
+        for /r "%DATA_DIR%" %%f in (*.pt *.hdf5 *.h5) do (
+            if exist "%%f" (
+                set "DATA_PATH=%%f"
+                for %%A in ("%%f") do set "DATA_SIZE=%%~zA"
+                set /a "DATA_SIZE_MB=!DATA_SIZE! / 1024 / 1024"
+                echo %GREEN%✓%NC% 找到数据文件: %%f (!DATA_SIZE_MB!MB)
+                set "DATA_FOUND=1"
+                goto :data_found
+            )
+        )
+    )
+    
+    :data_found
+    if "!DATA_FOUND!"=="0" (
+        echo %YELLOW%⚠️  未找到现有数据文件，启动下载...%NC%
+        echo.
+        echo 数据下载选项:
+        echo 1. 克隆PDEBench仓库 (推荐，包含完整数据集)
+        echo 2. 直接下载数据文件 (快速，仅下载训练数据)
+        echo 3. 生成示例数据 (用于测试)
+        echo 4. 手动指定路径
+        echo 0. 跳过下载 (稍后手动设置)
+        echo.
+        set /p "DOWNLOAD_CHOICE=请选择 [0-4]: "
+        
+        if "!DOWNLOAD_CHOICE!"=="1" goto :clone_repo
+        if "!DOWNLOAD_CHOICE!"=="2" goto :direct_download
+        if "!DOWNLOAD_CHOICE!"=="3" goto :generate_sample
+        if "!DOWNLOAD_CHOICE!"=="4" goto :manual_path
+        if "!DOWNLOAD_CHOICE!"=="0" goto :skip_download
+        
+        echo %RED%无效选择，跳过下载%NC%
+        goto :skip_download
+        
+        :clone_repo
+        echo.
+        echo %CYAN%=== 克隆PDEBench仓库 ===%NC%
+        
+        REM 检查git
+        git --version >nul 2>&1
+        if %errorlevel% neq 0 (
+            echo %RED%❌ Git未安装，请先安装Git%NC%
+            echo 下载地址: https://git-scm.com/download/win
+            pause
+            goto :skip_download
+        )
+        
+        if not exist "%DATA_DIR%" mkdir "%DATA_DIR%"
+        
+        if not exist "%DATA_DIR%\PDEBench" (
+            echo 正在克隆仓库...
+            cd /d "%DATA_DIR%"
+            git clone --depth 1 "%DATA_REPO_URL%" PDEBench
+            if %errorlevel% == 0 (
+                echo %GREEN%✓ 仓库克隆成功%NC%
+                
+                REM 搜索数据文件
+                for /r "PDEBench" %%f in (*.hdf5 *.pt *.h5) do (
+                    if exist "%%f" (
+                        set "DATA_PATH=%%f"
+                        echo %GREEN%✓ 找到数据文件: %%f%NC%
+                        set "DATA_FOUND=1"
+                        goto :clone_done
+                    )
+                )
+                :clone_done
+            ) else (
+                echo %RED%❌ 仓库克隆失败%NC%
+            )
+            cd /d "%~dp0"
+        ) else (
+            echo %GREEN%✓ PDEBench仓库已存在%NC%
+            for /r "%DATA_DIR%\PDEBench" %%f in (*.hdf5 *.pt *.h5) do (
+                if exist "%%f" (
+                    set "DATA_PATH=%%f"
+                    echo %GREEN%✓ 使用现有数据文件: %%f%NC%
+                    set "DATA_FOUND=1"
+                    goto :repo_exists_done
+                )
+            )
+            :repo_exists_done
+        )
+        goto :download_complete
+        
+        :direct_download
+        echo.
+        echo %CYAN%=== 直接下载数据文件 ===%NC%
+        
+        REM 检查下载工具
+        set "DOWNLOAD_TOOL="
+        curl --version >nul 2>&1
+        if %errorlevel% == 0 (
+            set "DOWNLOAD_TOOL=curl"
+        ) else (
+            powershell -Command "Get-Command Invoke-WebRequest" >nul 2>&1
+            if %errorlevel% == 0 (
+                set "DOWNLOAD_TOOL=powershell"
+            ) else (
+                echo %RED%❌ 未找到下载工具 (curl或PowerShell)%NC%
+                goto :skip_download
+            )
+        )
+        
+        if not exist "%DATA_DIR%" mkdir "%DATA_DIR%"
+        
+        echo 尝试下载数据文件...
+        set "DOWNLOAD_SUCCESS=0"
+        
+        REM 尝试第一个URL
+        set "FILENAME=%DATA_DIR%\pressure_data_1.hdf5"
+        echo 正在下载: !ALTERNATIVE_DATA_URLS[0]!
+        if "!DOWNLOAD_TOOL!"=="curl" (
+            curl -L -o "!FILENAME!" "!ALTERNATIVE_DATA_URLS[0]!"
+        ) else (
+            powershell -Command "Invoke-WebRequest -Uri '!ALTERNATIVE_DATA_URLS[0]!' -OutFile '!FILENAME!'"
+        )
+        
+        if exist "!FILENAME!" (
+            for %%A in ("!FILENAME!") do set "FILE_SIZE=%%~zA"
+            if !FILE_SIZE! gtr 1000000 (
+                set "DATA_PATH=!FILENAME!"
+                set "DATA_FOUND=1"
+                set "DOWNLOAD_SUCCESS=1"
+                echo %GREEN%✓ 下载成功: !FILENAME!%NC%
+            ) else (
+                del "!FILENAME!"
+                echo %YELLOW%⚠️  下载的文件太小，尝试下一个源%NC%
+            )
+        )
+        
+        REM 如果第一个失败，尝试第二个URL
+        if "!DOWNLOAD_SUCCESS!"=="0" (
+            set "FILENAME=%DATA_DIR%\pressure_data_2.hdf5"
+            echo 正在下载: !ALTERNATIVE_DATA_URLS[1]!
+            if "!DOWNLOAD_TOOL!"=="curl" (
+                curl -L -o "!FILENAME!" "!ALTERNATIVE_DATA_URLS[1]!"
+            ) else (
+                powershell -Command "Invoke-WebRequest -Uri '!ALTERNATIVE_DATA_URLS[1]!' -OutFile '!FILENAME!'"
+            )
+            
+            if exist "!FILENAME!" (
+                for %%A in ("!FILENAME!") do set "FILE_SIZE=%%~zA"
+                if !FILE_SIZE! gtr 1000000 (
+                    set "DATA_PATH=!FILENAME!"
+                    set "DATA_FOUND=1"
+                    echo %GREEN%✓ 下载成功: !FILENAME!%NC%
+                ) else (
+                    del "!FILENAME!"
+                    echo %RED%❌ 所有下载源都失败%NC%
+                )
+            )
+        )
+        goto :download_complete
+        
+        :generate_sample
+        echo.
+        echo %CYAN%=== 生成示例数据 ===%NC%
+        
+        if not exist "%DATA_DIR%" mkdir "%DATA_DIR%"
+        
+        REM 创建Python脚本生成示例数据
+        (
+            echo import torch
+            echo import numpy as np
+            echo from pathlib import Path
+            echo.
+            echo def generate_sample_data^(^):
+            echo     print^("生成示例压力场数据..."^)
+            echo     
+            echo     # 创建小规模示例数据
+            echo     batch_size = 100
+            echo     height, width = 64, 64
+            echo     time_steps = 10
+            echo     
+            echo     # 生成压力场数据
+            echo     pressure_data = torch.randn^(batch_size, time_steps, height, width, dtype=torch.float32^)
+            echo     
+            echo     # 添加边界条件
+            echo     pressure_data[:, :, 0, :] = 0  # 上边界
+            echo     pressure_data[:, :, -1, :] = 0  # 下边界
+            echo     pressure_data[:, :, :, 0] = 0  # 左边界
+            echo     pressure_data[:, :, :, -1] = 0  # 右边界
+            echo     
+            echo     # 保存为PyTorch格式
+            echo     output_file = Path^("sample_pressure_data.pt"^)
+            echo     torch.save^({
+            echo         'pressure': pressure_data,
+            echo         'time': torch.linspace^(0, 1, time_steps^),
+            echo         'metadata': {
+            echo             'description': 'Sample pressure field data for testing',
+            echo             'batch_size': batch_size,
+            echo             'spatial_dims': ^(height, width^),
+            echo             'time_steps': time_steps
+            echo         }
+            echo     }, output_file^)
+            echo     
+            echo     print^(f"示例数据已生成: {output_file}"^)
+            echo     print^(f"数据形状: {pressure_data.shape}"^)
+            echo     return str^(output_file^)
+            echo.
+            echo if __name__ == "__main__":
+            echo     generate_sample_data^(^)
+        ) > "%DATA_DIR%\generate_sample.py"
+        
+        cd /d "%DATA_DIR%"
+        python generate_sample.py
+        if %errorlevel% == 0 (
+            if exist "sample_pressure_data.pt" (
+                set "DATA_PATH=%DATA_DIR%\sample_pressure_data.pt"
+                set "DATA_FOUND=1"
+                echo %GREEN%✓ 示例数据生成成功%NC%
+                echo %YELLOW%⚠️  注意: 这是示例数据，仅用于测试%NC%
+            )
+        ) else (
+            echo %RED%❌ 示例数据生成失败%NC%
+        )
+        cd /d "%~dp0"
+        goto :download_complete
+        
+        :manual_path
+        echo.
+        set /p "MANUAL_PATH=请输入数据文件路径: "
+        if exist "!MANUAL_PATH!" (
+            set "DATA_PATH=!MANUAL_PATH!"
+            set "DATA_FOUND=1"
+            echo %GREEN%✓ 使用手动指定的数据文件%NC%
+        ) else (
+            echo %RED%❌ 指定的文件不存在: !MANUAL_PATH!%NC%
+        )
+        goto :download_complete
+        
+        :skip_download
+        echo %YELLOW%⚠️  跳过数据下载%NC%
+        echo 请手动下载数据集或设置正确的数据路径
+        goto :download_complete
+        
+        :download_complete
+    )
+)
+
+echo.
+echo %PURPLE%=== 文件检查 ===%NC%
+
+REM 最终数据文件检查
+if "!DATA_FOUND!"=="1" (
+    if exist "%DATA_PATH%" (
+        for %%A in ("%DATA_PATH%") do set "DATA_SIZE=%%~zA"
+        set /a "DATA_SIZE_MB=!DATA_SIZE! / 1024 / 1024"
+        echo %GREEN%✓%NC% 数据文件: !DATA_SIZE_MB!MB
+    ) else (
+        echo %RED%❌ 数据文件路径无效: %DATA_PATH%%NC%
+        pause
+        exit /b 1
+    )
+) else (
+    echo %RED%❌ 未找到数据文件%NC%
+    echo 请确保数据文件存在或重新运行脚本选择下载
     pause
     exit /b 1
 )

@@ -94,23 +94,153 @@ else
     echo -e "${YELLOW}未检测到GPU，使用CPU训练${NC}"
 fi
 
-# 检查数据文件
+# 数据集下载和检查
+echo -e "${BLUE}=== 数据集检查与下载 ===${NC}"
+
+# 定义数据集相关变量
+DATA_REPO_URL="https://github.com/pdebench/PDEBench.git"
+DATA_DIR="./data"
+DATA_SUBDIR="$DATA_DIR/2D/CFD/2D_Train_Rand"
+ALTERNATIVE_DATA_URLS=(
+    "https://darus.uni-stuttgart.de/api/access/datafile/132004"
+    "https://zenodo.org/record/6222489/files/2D_CFD_Rand_M0.1_Eta1e-08_Zeta1e-08_periodic_Train.hdf5"
+)
+
+# 检查数据文件是否存在
 if [[ ! -f "$DATA_PATH" ]]; then
     echo -e "${YELLOW}数据文件不存在: $DATA_PATH${NC}"
-    echo "正在搜索数据文件..."
+    echo "正在搜索现有数据文件..."
     
-    # 自动搜索.pt文件
-    DATA_FILES=($(find . -name "*.pt" -type f 2>/dev/null | head -5))
+    # 自动搜索.pt和.hdf5文件
+    DATA_FILES=($(find . -name "*.pt" -o -name "*.hdf5" -type f 2>/dev/null | head -10))
     
     if [[ ${#DATA_FILES[@]} -eq 0 ]]; then
-        echo -e "${RED}错误: 未找到数据文件${NC}"
-        echo "请确保数据文件存在，或设置环境变量:"
-        echo "DATA_PATH=/path/to/your/data.pt bash run_training_simple.sh"
-        exit 1
-    else
+        echo -e "${YELLOW}未找到现有数据文件，开始下载数据集...${NC}"
+        
+        # 询问用户下载方式
+        echo "数据集下载选项:"
+        echo "1. 从GitHub克隆完整PDEBench仓库 (推荐，包含所有数据)"
+        echo "2. 直接下载压力场数据文件 (快速)"
+        echo "3. 跳过下载，手动指定数据路径"
+        read -p "请选择下载方式 (1-3): " download_choice
+        
+        case $download_choice in
+            1)
+                echo -e "${BLUE}克隆PDEBench仓库...${NC}"
+                
+                # 检查git是否安装
+                if ! command -v git &> /dev/null; then
+                    echo -e "${RED}错误: git未安装${NC}"
+                    echo "请安装git: sudo yum install -y git"
+                    exit 1
+                fi
+                
+                # 检查git lfs
+                if ! command -v git-lfs &> /dev/null; then
+                    echo -e "${YELLOW}警告: git-lfs未安装，大文件可能下载失败${NC}"
+                    echo "建议安装: sudo yum install -y git-lfs"
+                fi
+                
+                # 创建数据目录
+                mkdir -p "$DATA_DIR"
+                
+                # 克隆仓库（浅克隆以节省时间）
+                if [[ ! -d "$DATA_DIR/PDEBench" ]]; then
+                    echo "正在克隆PDEBench仓库..."
+                    git clone --depth 1 "$DATA_REPO_URL" "$DATA_DIR/PDEBench"
+                    
+                    if [[ $? -eq 0 ]]; then
+                        echo -e "${GREEN}仓库克隆成功${NC}"
+                        
+                        # 尝试下载LFS文件
+                        cd "$DATA_DIR/PDEBench"
+                        if command -v git-lfs &> /dev/null; then
+                            echo "正在下载大文件..."
+                            git lfs pull
+                        fi
+                        cd - > /dev/null
+                        
+                        # 搜索数据文件
+                        DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" 2>/dev/null | head -5))
+                        if [[ ${#DOWNLOADED_FILES[@]} -gt 0 ]]; then
+                            DATA_PATH="${DOWNLOADED_FILES[0]}"
+                            echo -e "${GREEN}找到数据文件: $DATA_PATH${NC}"
+                        fi
+                    else
+                        echo -e "${RED}仓库克隆失败${NC}"
+                    fi
+                else
+                    echo -e "${GREEN}PDEBench仓库已存在${NC}"
+                    # 搜索现有文件
+                    DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" 2>/dev/null | head -5))
+                    if [[ ${#DOWNLOADED_FILES[@]} -gt 0 ]]; then
+                        DATA_PATH="${DOWNLOADED_FILES[0]}"
+                        echo -e "${GREEN}使用现有数据文件: $DATA_PATH${NC}"
+                    fi
+                fi
+                ;;
+            2)
+                echo -e "${BLUE}直接下载数据文件...${NC}"
+                
+                # 检查wget或curl
+                if command -v wget &> /dev/null; then
+                    DOWNLOAD_CMD="wget -O"
+                elif command -v curl &> /dev/null; then
+                    DOWNLOAD_CMD="curl -L -o"
+                else
+                    echo -e "${RED}错误: 未找到wget或curl${NC}"
+                    echo "请安装: sudo yum install -y wget"
+                    exit 1
+                fi
+                
+                mkdir -p "$DATA_DIR"
+                
+                # 尝试下载数据文件
+                for i in "${!ALTERNATIVE_DATA_URLS[@]}"; do
+                    url="${ALTERNATIVE_DATA_URLS[$i]}"
+                    filename="pressure_data_$((i+1)).hdf5"
+                    filepath="$DATA_DIR/$filename"
+                    
+                    echo "尝试下载: $url"
+                    if $DOWNLOAD_CMD "$filepath" "$url"; then
+                        if [[ -f "$filepath" && $(stat -f%z "$filepath" 2>/dev/null || stat -c%s "$filepath" 2>/dev/null) -gt 1000000 ]]; then
+                            DATA_PATH="$filepath"
+                            echo -e "${GREEN}下载成功: $DATA_PATH${NC}"
+                            break
+                        else
+                            echo -e "${YELLOW}下载的文件太小，可能下载失败${NC}"
+                            rm -f "$filepath"
+                        fi
+                    else
+                        echo -e "${YELLOW}下载失败，尝试下一个源...${NC}"
+                    fi
+                done
+                
+                if [[ ! -f "$DATA_PATH" ]]; then
+                    echo -e "${RED}所有下载源都失败${NC}"
+                fi
+                ;;
+            3)
+                echo -e "${YELLOW}跳过自动下载${NC}"
+                ;;
+            *)
+                echo -e "${YELLOW}无效选择，跳过下载${NC}"
+                ;;
+        esac
+        
+        # 如果仍然没有数据文件，再次搜索
+        if [[ ! -f "$DATA_PATH" ]]; then
+            echo "重新搜索数据文件..."
+            DATA_FILES=($(find . -name "*.pt" -o -name "*.hdf5" -type f 2>/dev/null | head -10))
+        fi
+    fi
+    
+    # 如果找到了数据文件，让用户选择
+    if [[ ${#DATA_FILES[@]} -gt 0 ]]; then
         echo "找到以下数据文件:"
         for i in "${!DATA_FILES[@]}"; do
-            echo "  $((i+1)). ${DATA_FILES[$i]}"
+            file_size=$(du -h "${DATA_FILES[$i]}" 2>/dev/null | cut -f1 || echo "未知")
+            echo "  $((i+1)). ${DATA_FILES[$i]} (大小: $file_size)"
         done
         
         if [[ ${#DATA_FILES[@]} -eq 1 ]]; then
@@ -118,9 +248,36 @@ if [[ ! -f "$DATA_PATH" ]]; then
             echo -e "${GREEN}自动选择: $DATA_PATH${NC}"
         else
             read -p "请选择数据文件 (1-${#DATA_FILES[@]}): " choice
-            DATA_PATH="${DATA_FILES[$((choice-1))]}"
+            if [[ $choice -ge 1 && $choice -le ${#DATA_FILES[@]} ]]; then
+                DATA_PATH="${DATA_FILES[$((choice-1))]}"
+            else
+                echo -e "${YELLOW}无效选择，使用第一个文件${NC}"
+                DATA_PATH="${DATA_FILES[0]}"
+            fi
         fi
+    else
+        echo -e "${RED}错误: 仍未找到数据文件${NC}"
+        echo "请手动下载数据集或设置环境变量:"
+        echo "DATA_PATH=/path/to/your/data.pt bash run_training_simple.sh"
+        echo ""
+        echo "数据集下载地址:"
+        echo "  - PDEBench GitHub: https://github.com/pdebench/PDEBench"
+        echo "  - 直接下载: https://darus.uni-stuttgart.de/dataset.xhtml?persistentId=doi:10.18419/darus-2986"
+        exit 1
     fi
+else
+    echo -e "${GREEN}数据文件已存在: $DATA_PATH${NC}"
+fi
+
+# 验证数据文件
+if [[ -f "$DATA_PATH" ]]; then
+    file_size=$(du -h "$DATA_PATH" 2>/dev/null | cut -f1 || echo "未知")
+    echo -e "${GREEN}数据文件验证通过${NC}"
+    echo "文件路径: $DATA_PATH"
+    echo "文件大小: $file_size"
+else
+    echo -e "${RED}数据文件验证失败${NC}"
+    exit 1
 fi
 
 # 检查配置文件

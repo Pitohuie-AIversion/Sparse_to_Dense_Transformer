@@ -123,6 +123,171 @@ check_system_status() {
     echo ""
 }
 
+# 数据集下载功能
+download_dataset() {
+    echo -e "${CYAN}=== 数据集下载 ===${NC}"
+    
+    # 定义数据集相关变量
+    DATA_REPO_URL="https://github.com/pdebench/PDEBench.git"
+    DATA_DIR="$SCRIPT_DIR/data"
+    ALTERNATIVE_DATA_URLS=(
+        "https://darus.uni-stuttgart.de/api/access/datafile/132004"
+        "https://zenodo.org/record/6222489/files/2D_CFD_Rand_M0.1_Eta1e-08_Zeta1e-08_periodic_Train.hdf5"
+    )
+    
+    echo "数据下载选项:"
+    echo -e "${GREEN}1.${NC} 克隆完整PDEBench仓库 (推荐)"
+    echo -e "${GREEN}2.${NC} 直接下载压力场数据文件"
+    echo -e "${GREEN}3.${NC} 生成示例数据 (用于测试)"
+    echo -e "${RED}0.${NC} 取消下载"
+    echo ""
+    echo -n -e "${YELLOW}请选择下载方式 [0-3]: ${NC}"
+    read download_choice
+    
+    case $download_choice in
+        1)
+            echo -e "${GREEN}克隆PDEBench仓库...${NC}"
+            
+            if ! command -v git &> /dev/null; then
+                echo -e "${RED}❌ Git未安装，请先安装git${NC}"
+                return 1
+            fi
+            
+            mkdir -p "$DATA_DIR"
+            
+            if [ ! -d "$DATA_DIR/PDEBench" ]; then
+                echo "正在克隆仓库..."
+                if git clone --depth 1 "$DATA_REPO_URL" "$DATA_DIR/PDEBench"; then
+                    echo -e "${GREEN}✓ 仓库克隆成功${NC}"
+                    
+                    # 搜索数据文件
+                    DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" -o -name "*.h5" 2>/dev/null | head -5))
+                    if [ ${#DOWNLOADED_FILES[@]} -gt 0 ]; then
+                        DATA_PATH="${DOWNLOADED_FILES[0]}"
+                        echo -e "${GREEN}✓ 找到数据文件: $DATA_PATH${NC}"
+                    fi
+                else
+                    echo -e "${RED}❌ 仓库克隆失败${NC}"
+                    return 1
+                fi
+            else
+                echo -e "${GREEN}✓ PDEBench仓库已存在${NC}"
+                DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" -o -name "*.h5" 2>/dev/null | head -5))
+                if [ ${#DOWNLOADED_FILES[@]} -gt 0 ]; then
+                    DATA_PATH="${DOWNLOADED_FILES[0]}"
+                    echo -e "${GREEN}✓ 使用现有数据文件: $DATA_PATH${NC}"
+                fi
+            fi
+            ;;
+        2)
+            echo -e "${GREEN}直接下载数据文件...${NC}"
+            
+            if command -v wget &> /dev/null; then
+                DOWNLOAD_CMD="wget -O"
+            elif command -v curl &> /dev/null; then
+                DOWNLOAD_CMD="curl -L -o"
+            else
+                echo -e "${RED}❌ 未找到wget或curl，无法下载${NC}"
+                return 1
+            fi
+            
+            mkdir -p "$DATA_DIR"
+            
+            for i in "${!ALTERNATIVE_DATA_URLS[@]}"; do
+                url="${ALTERNATIVE_DATA_URLS[$i]}"
+                filename="pressure_data_$((i+1)).hdf5"
+                filepath="$DATA_DIR/$filename"
+                
+                echo "尝试下载: $url"
+                if $DOWNLOAD_CMD "$filepath" "$url"; then
+                    if [ -f "$filepath" ] && [ $(stat -c%s "$filepath" 2>/dev/null || stat -f%z "$filepath" 2>/dev/null) -gt 1000000 ]; then
+                        DATA_PATH="$filepath"
+                        echo -e "${GREEN}✓ 下载成功: $DATA_PATH${NC}"
+                        break
+                    else
+                        echo -e "${YELLOW}⚠️  下载的文件太小，尝试下一个源${NC}"
+                        rm -f "$filepath"
+                    fi
+                else
+                    echo -e "${YELLOW}⚠️  下载失败，尝试下一个源${NC}"
+                fi
+            done
+            ;;
+        3)
+            echo -e "${GREEN}生成示例数据...${NC}"
+            
+            mkdir -p "$DATA_DIR"
+            
+            # 创建示例数据生成脚本
+            cat > "$DATA_DIR/generate_sample.py" << 'EOF'
+import torch
+import numpy as np
+from pathlib import Path
+
+def generate_sample_data():
+    print("生成示例压力场数据...")
+    
+    # 创建小规模示例数据
+    batch_size = 100
+    height, width = 64, 64
+    time_steps = 10
+    
+    # 生成压力场数据
+    pressure_data = torch.randn(batch_size, time_steps, height, width, dtype=torch.float32)
+    
+    # 添加边界条件
+    pressure_data[:, :, 0, :] = 0  # 上边界
+    pressure_data[:, :, -1, :] = 0  # 下边界
+    pressure_data[:, :, :, 0] = 0  # 左边界
+    pressure_data[:, :, :, -1] = 0  # 右边界
+    
+    # 保存为PyTorch格式
+    output_file = Path("sample_pressure_data.pt")
+    torch.save({
+        'pressure': pressure_data,
+        'time': torch.linspace(0, 1, time_steps),
+        'metadata': {
+            'description': 'Sample pressure field data for testing',
+            'batch_size': batch_size,
+            'spatial_dims': (height, width),
+            'time_steps': time_steps
+        }
+    }, output_file)
+    
+    print(f"示例数据已生成: {output_file}")
+    print(f"数据形状: {pressure_data.shape}")
+    return str(output_file)
+
+if __name__ == "__main__":
+    generate_sample_data()
+EOF
+            
+            cd "$DATA_DIR"
+            if python generate_sample.py; then
+                DATA_PATH="$DATA_DIR/sample_pressure_data.pt"
+                echo -e "${GREEN}✓ 示例数据生成成功: $DATA_PATH${NC}"
+                echo -e "${YELLOW}⚠️  注意: 这是示例数据，仅用于测试${NC}"
+            else
+                echo -e "${RED}❌ 示例数据生成失败${NC}"
+                return 1
+            fi
+            cd - > /dev/null
+            ;;
+        0)
+            echo "取消下载"
+            return 0
+            ;;
+        *)
+            echo -e "${RED}无效选择${NC}"
+            return 1
+            ;;
+    esac
+    
+    echo ""
+    echo -n "按Enter键继续..."
+    read
+}
+
 # 检查环境
 check_environment() {
     echo -e "${PURPLE}=== 环境检查 ===${NC}"
@@ -144,12 +309,39 @@ check_environment() {
         echo -e "${RED}❌ PyTorch未安装${NC}"
     fi
     
-    # 数据文件
+    # 数据文件检查和下载
+    data_found=false
+    
+    # 首先检查默认路径
     if [ -f "$DATA_PATH" ]; then
         data_size=$(du -h "$DATA_PATH" | cut -f1)
         echo -e "${GREEN}✓${NC} 数据文件: $data_size"
+        data_found=true
     else
-        echo -e "${YELLOW}⚠️  数据文件未找到: $DATA_PATH${NC}"
+        # 搜索其他可能的数据文件
+        echo "搜索现有数据文件..."
+        DATA_FILES=($(find "$SCRIPT_DIR" -name "*.pt" -o -name "*.hdf5" -o -name "*.h5" -type f 2>/dev/null | head -5))
+        
+        if [ ${#DATA_FILES[@]} -gt 0 ]; then
+            DATA_PATH="${DATA_FILES[0]}"
+            data_size=$(du -h "$DATA_PATH" | cut -f1)
+            echo -e "${GREEN}✓${NC} 找到数据文件: $DATA_PATH ($data_size)"
+            data_found=true
+        else
+            echo -e "${YELLOW}⚠️  数据文件未找到${NC}"
+            echo -n -e "${YELLOW}是否现在下载数据集? [y/N]: ${NC}"
+            read download_now
+            
+            if [[ "$download_now" =~ ^[Yy]$ ]]; then
+                download_dataset
+                # 重新检查数据文件
+                if [ -f "$DATA_PATH" ]; then
+                    data_size=$(du -h "$DATA_PATH" | cut -f1)
+                    echo -e "${GREEN}✓${NC} 数据文件: $data_size"
+                    data_found=true
+                fi
+            fi
+        fi
     fi
     
     # 配置文件

@@ -188,26 +188,262 @@ else
     OPTIMAL_BATCH_SIZE=8  # CPU模式使用较小批处理
 fi
 
-# 数据文件检查和选择
-echo -e "${BLUE}=== 数据文件检查 ===${NC}"
+# 数据集下载和检查 (服务器优化版)
+echo -e "${BLUE}=== 数据集检查与下载 (服务器优化) ===${NC}"
+
+# 定义数据集相关变量
+DATA_REPO_URL="https://github.com/pdebench/PDEBench.git"
+DATA_DIR="./data"
+DATA_SUBDIR="$DATA_DIR/2D/CFD/2D_Train_Rand"
+ALTERNATIVE_DATA_URLS=(
+    "https://darus.uni-stuttgart.de/api/access/datafile/132004"
+    "https://zenodo.org/record/6222489/files/2D_CFD_Rand_M0.1_Eta1e-08_Zeta1e-08_periodic_Train.hdf5"
+    "https://huggingface.co/datasets/pdebench/PDEBench/resolve/main/2D/CFD/2D_Train_Rand/2D_CFD_Rand_M0.1_Eta1e-08_Zeta1e-08_periodic_Train.hdf5"
+)
+
+# 检查数据文件是否存在
 if [[ ! -f "$DATA_PATH" ]]; then
     echo -e "${YELLOW}数据文件不存在: $DATA_PATH${NC}"
-    echo "搜索可用的数据文件..."
+    echo "正在搜索现有数据文件..."
     
     # 搜索多种数据文件格式
-    DATA_FILES=($(find . -name "*.pt" -o -name "*.h5" -o -name "*.hdf5" -o -name "*.npz" | head -10))
+    DATA_FILES=($(find . -name "*.pt" -o -name "*.h5" -o -name "*.hdf5" -o -name "*.npz" -type f 2>/dev/null | head -15))
     
     if [[ ${#DATA_FILES[@]} -eq 0 ]]; then
-        echo -e "${RED}错误: 未找到数据文件${NC}"
-        echo "支持的格式: .pt, .h5, .hdf5, .npz"
-        echo "请确保数据文件存在，或设置环境变量:"
-        echo "DATA_PATH=/path/to/your/data.pt bash run_training_optimized.sh"
-        exit 1
-    else
+        echo -e "${YELLOW}未找到现有数据文件，启动智能下载系统...${NC}"
+        
+        # 服务器优化的下载选项
+        echo "数据集下载选项 (服务器优化):"
+        echo "1. 高速克隆PDEBench仓库 (推荐，支持断点续传)"
+        echo "2. 并行下载压力场数据文件 (多源同时下载)"
+        echo "3. 轻量级下载 (仅下载必要文件)"
+        echo "4. 跳过下载，手动指定数据路径"
+        read -p "请选择下载方式 (1-4): " download_choice
+        
+        case $download_choice in
+            1)
+                echo -e "${BLUE}高速克隆PDEBench仓库...${NC}"
+                
+                # 检查必要工具
+                if ! command -v git &> /dev/null; then
+                    echo -e "${RED}错误: git未安装${NC}"
+                    echo "请安装git: sudo yum install -y git"
+                    exit 1
+                fi
+                
+                # 检查git lfs
+                if ! command -v git-lfs &> /dev/null; then
+                    echo -e "${YELLOW}警告: git-lfs未安装，将尝试安装...${NC}"
+                    if command -v yum &> /dev/null; then
+                        sudo yum install -y git-lfs 2>/dev/null || echo "git-lfs安装失败，继续尝试下载"
+                    fi
+                fi
+                
+                # 创建数据目录
+                mkdir -p "$DATA_DIR"
+                
+                # 服务器优化的克隆策略
+                if [[ ! -d "$DATA_DIR/PDEBench" ]]; then
+                    echo "正在高速克隆PDEBench仓库 (浅克隆优化)..."
+                    
+                    # 使用浅克隆和稀疏检出优化
+                    git clone --depth 1 --filter=blob:none --sparse "$DATA_REPO_URL" "$DATA_DIR/PDEBench"
+                    
+                    if [[ $? -eq 0 ]]; then
+                        echo -e "${GREEN}仓库克隆成功${NC}"
+                        
+                        cd "$DATA_DIR/PDEBench"
+                        
+                        # 配置稀疏检出，只下载需要的数据文件
+                        git sparse-checkout init --cone
+                        git sparse-checkout set pdebench/data_download 2D/CFD
+                        
+                        # 尝试下载LFS文件
+                        if command -v git-lfs &> /dev/null; then
+                            echo "正在下载大文件 (LFS)..."
+                            timeout 300 git lfs pull || echo "LFS下载超时，继续其他方式"
+                        fi
+                        
+                        cd - > /dev/null
+                        
+                        # 搜索下载的数据文件
+                        DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" -o -name "*.h5" 2>/dev/null | head -10))
+                        if [[ ${#DOWNLOADED_FILES[@]} -gt 0 ]]; then
+                            DATA_PATH="${DOWNLOADED_FILES[0]}"
+                            echo -e "${GREEN}找到数据文件: $DATA_PATH${NC}"
+                        fi
+                    else
+                        echo -e "${RED}仓库克隆失败，尝试其他方式...${NC}"
+                    fi
+                else
+                    echo -e "${GREEN}PDEBench仓库已存在，更新中...${NC}"
+                    cd "$DATA_DIR/PDEBench"
+                    git pull --depth 1 2>/dev/null || echo "更新失败，使用现有版本"
+                    cd - > /dev/null
+                    
+                    # 搜索现有文件
+                    DOWNLOADED_FILES=($(find "$DATA_DIR/PDEBench" -name "*.hdf5" -o -name "*.pt" -o -name "*.h5" 2>/dev/null | head -10))
+                    if [[ ${#DOWNLOADED_FILES[@]} -gt 0 ]]; then
+                        DATA_PATH="${DOWNLOADED_FILES[0]}"
+                        echo -e "${GREEN}使用现有数据文件: $DATA_PATH${NC}"
+                    fi
+                fi
+                ;;
+            2)
+                echo -e "${BLUE}并行下载数据文件...${NC}"
+                
+                # 检查下载工具
+                DOWNLOAD_CMD=""
+                if command -v wget &> /dev/null; then
+                    DOWNLOAD_CMD="wget -c -t 3 -T 30 -O"  # 支持断点续传
+                elif command -v curl &> /dev/null; then
+                    DOWNLOAD_CMD="curl -L -C - --retry 3 --max-time 30 -o"  # 支持断点续传
+                else
+                    echo -e "${RED}错误: 未找到wget或curl${NC}"
+                    echo "请安装: sudo yum install -y wget"
+                    exit 1
+                fi
+                
+                mkdir -p "$DATA_DIR"
+                
+                # 并行下载多个源
+                echo "启动并行下载 (最多3个并发)..."
+                download_pids=()
+                
+                for i in "${!ALTERNATIVE_DATA_URLS[@]}"; do
+                    url="${ALTERNATIVE_DATA_URLS[$i]}"
+                    filename="pressure_data_source_$((i+1)).hdf5"
+                    filepath="$DATA_DIR/$filename"
+                    
+                    echo "启动下载源 $((i+1)): $url"
+                    (
+                        if $DOWNLOAD_CMD "$filepath" "$url"; then
+                            if [[ -f "$filepath" && $(stat -c%s "$filepath" 2>/dev/null || stat -f%z "$filepath" 2>/dev/null) -gt 10000000 ]]; then
+                                echo "下载源 $((i+1)) 成功: $filepath"
+                                touch "$filepath.success"
+                            else
+                                echo "下载源 $((i+1)) 文件太小，可能失败"
+                                rm -f "$filepath"
+                            fi
+                        else
+                            echo "下载源 $((i+1)) 失败"
+                        fi
+                    ) &
+                    download_pids+=($!)
+                    
+                    # 限制并发数
+                    if [[ ${#download_pids[@]} -ge 3 ]]; then
+                        wait ${download_pids[0]}
+                        download_pids=("${download_pids[@]:1}")
+                    fi
+                done
+                
+                # 等待所有下载完成
+                echo "等待下载完成..."
+                for pid in "${download_pids[@]}"; do
+                    wait $pid
+                done
+                
+                # 检查下载结果
+                SUCCESS_FILES=($(find "$DATA_DIR" -name "*.success" 2>/dev/null))
+                if [[ ${#SUCCESS_FILES[@]} -gt 0 ]]; then
+                    # 选择最大的成功文件
+                    LARGEST_FILE=$(find "$DATA_DIR" -name "pressure_data_source_*.hdf5" -exec ls -la {} + 2>/dev/null | sort -k5 -nr | head -1 | awk '{print $NF}')
+                    if [[ -n "$LARGEST_FILE" ]]; then
+                        DATA_PATH="$LARGEST_FILE"
+                        echo -e "${GREEN}并行下载成功: $DATA_PATH${NC}"
+                        # 清理其他文件
+                        find "$DATA_DIR" -name "pressure_data_source_*.hdf5" ! -path "$DATA_PATH" -delete 2>/dev/null
+                        find "$DATA_DIR" -name "*.success" -delete 2>/dev/null
+                    fi
+                else
+                    echo -e "${RED}所有并行下载都失败${NC}"
+                fi
+                ;;
+            3)
+                echo -e "${BLUE}轻量级下载模式...${NC}"
+                
+                # 尝试下载预处理的小文件
+                mkdir -p "$DATA_DIR"
+                
+                # 生成示例数据的脚本
+                cat > "$DATA_DIR/generate_sample_data.py" << 'EOF'
+import torch
+import numpy as np
+import h5py
+from pathlib import Path
+
+def generate_sample_pressure_data():
+    """生成示例压力场数据用于测试"""
+    print("生成示例压力场数据...")
+    
+    # 创建示例数据
+    batch_size = 100
+    height, width = 64, 64
+    time_steps = 10
+    
+    # 生成压力场数据
+    pressure_data = np.random.randn(batch_size, time_steps, height, width).astype(np.float32)
+    
+    # 添加一些物理约束
+    for i in range(batch_size):
+        for t in range(time_steps):
+            # 添加边界条件
+            pressure_data[i, t, 0, :] = 0  # 上边界
+            pressure_data[i, t, -1, :] = 0  # 下边界
+            pressure_data[i, t, :, 0] = 0  # 左边界
+            pressure_data[i, t, :, -1] = 0  # 右边界
+    
+    # 保存为HDF5格式
+    output_file = Path("sample_pressure_data.hdf5")
+    with h5py.File(output_file, 'w') as f:
+        f.create_dataset('pressure', data=pressure_data)
+        f.create_dataset('time', data=np.linspace(0, 1, time_steps))
+        f.attrs['description'] = 'Sample pressure field data for testing'
+        f.attrs['batch_size'] = batch_size
+        f.attrs['spatial_dims'] = (height, width)
+        f.attrs['time_steps'] = time_steps
+    
+    print(f"示例数据已生成: {output_file}")
+    print(f"数据形状: {pressure_data.shape}")
+    return str(output_file)
+
+if __name__ == "__main__":
+    generate_sample_pressure_data()
+EOF
+                
+                cd "$DATA_DIR"
+                if python generate_sample_data.py; then
+                    DATA_PATH="$DATA_DIR/sample_pressure_data.hdf5"
+                    echo -e "${GREEN}示例数据生成成功: $DATA_PATH${NC}"
+                    echo -e "${YELLOW}注意: 这是示例数据，仅用于测试训练流程${NC}"
+                else
+                    echo -e "${RED}示例数据生成失败${NC}"
+                fi
+                cd - > /dev/null
+                ;;
+            4)
+                echo -e "${YELLOW}跳过自动下载${NC}"
+                ;;
+            *)
+                echo -e "${YELLOW}无效选择，跳过下载${NC}"
+                ;;
+        esac
+        
+        # 如果仍然没有数据文件，再次搜索
+        if [[ ! -f "$DATA_PATH" ]]; then
+            echo "重新搜索数据文件..."
+            DATA_FILES=($(find . -name "*.pt" -o -name "*.h5" -o -name "*.hdf5" -o -name "*.npz" -type f 2>/dev/null | head -15))
+        fi
+    fi
+    
+    # 如果找到了数据文件，让用户选择
+    if [[ ${#DATA_FILES[@]} -gt 0 ]]; then
         echo "找到以下数据文件:"
         for i in "${!DATA_FILES[@]}"; do
-            file_size=$(du -h "${DATA_FILES[$i]}" | cut -f1)
-            echo "  $((i+1)). ${DATA_FILES[$i]} (${file_size})"
+            file_size=$(du -h "${DATA_FILES[$i]}" 2>/dev/null | cut -f1 || echo "未知")
+            file_type=$(file "${DATA_FILES[$i]}" 2>/dev/null | cut -d':' -f2 | cut -c1-30 || echo "未知类型")
+            echo "  $((i+1)). ${DATA_FILES[$i]} (大小: $file_size, 类型: $file_type)"
         done
         
         if [[ ${#DATA_FILES[@]} -eq 1 ]]; then
@@ -218,11 +454,53 @@ if [[ ! -f "$DATA_PATH" ]]; then
             if [[ $choice -ge 1 && $choice -le ${#DATA_FILES[@]} ]]; then
                 DATA_PATH="${DATA_FILES[$((choice-1))]}"
             else
-                echo -e "${RED}无效选择，使用第一个文件${NC}"
+                echo -e "${YELLOW}无效选择，使用第一个文件${NC}"
                 DATA_PATH="${DATA_FILES[0]}"
             fi
         fi
+    else
+        echo -e "${RED}错误: 仍未找到数据文件${NC}"
+        echo "请手动下载数据集或设置环境变量:"
+        echo "DATA_PATH=/path/to/your/data.pt bash run_training_optimized.sh"
+        echo ""
+        echo "数据集下载地址:"
+        echo "  - PDEBench GitHub: https://github.com/pdebench/PDEBench"
+        echo "  - 直接下载: https://darus.uni-stuttgart.de/dataset.xhtml?persistentId=doi:10.18419/darus-2986"
+        echo "  - Hugging Face: https://huggingface.co/datasets/pdebench/PDEBench"
+        exit 1
     fi
+else
+    echo -e "${GREEN}数据文件已存在: $DATA_PATH${NC}"
+fi
+
+# 服务器优化的数据文件验证
+if [[ -f "$DATA_PATH" ]]; then
+    file_size=$(du -h "$DATA_PATH" 2>/dev/null | cut -f1 || echo "未知")
+    file_size_bytes=$(stat -c%s "$DATA_PATH" 2>/dev/null || stat -f%z "$DATA_PATH" 2>/dev/null || echo "0")
+    file_type=$(file "$DATA_PATH" 2>/dev/null | cut -d':' -f2 || echo "未知类型")
+    
+    echo -e "${GREEN}数据文件验证通过${NC}"
+    echo "文件路径: $DATA_PATH"
+    echo "文件大小: $file_size ($file_size_bytes bytes)"
+    echo "文件类型: $file_type"
+    
+    # 检查文件是否太小
+    if [[ $file_size_bytes -lt 1000000 ]]; then
+        echo -e "${YELLOW}警告: 数据文件较小 (<1MB)，可能是示例数据${NC}"
+    fi
+    
+    # 尝试快速验证文件格式
+    if [[ "$DATA_PATH" == *.hdf5 ]] || [[ "$DATA_PATH" == *.h5 ]]; then
+        if command -v h5dump &> /dev/null; then
+            echo "HDF5文件结构预览:"
+            h5dump -n "$DATA_PATH" 2>/dev/null | head -10 || echo "无法读取HDF5结构"
+        fi
+    elif [[ "$DATA_PATH" == *.pt ]]; then
+        echo "PyTorch文件格式检测通过"
+    fi
+else
+    echo -e "${RED}数据文件验证失败${NC}"
+    exit 1
 fi
 
 # 配置文件检查

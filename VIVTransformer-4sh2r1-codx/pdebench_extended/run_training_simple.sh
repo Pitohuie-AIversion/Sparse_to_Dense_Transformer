@@ -25,16 +25,9 @@ echo "时间: $(date)"
 echo "主机: $(hostname)"
 echo ""
 
-# 检查虚拟环境
-if [[ ! -d "venv" ]]; then
-    echo -e "${RED}错误: 虚拟环境不存在${NC}"
-    echo "请先运行: bash deploy_centos.sh"
-    exit 1
-fi
-
-# 激活虚拟环境
-echo -e "${BLUE}激活虚拟环境...${NC}"
-source venv/bin/activate
+# PyCharm环境运行 - 跳过虚拟环境检查
+echo -e "${BLUE}使用PyCharm当前环境...${NC}"
+echo "注意: 确保已安装所需的Python依赖包"
 
 # 设置环境变量
 export PYTHONPATH=$PWD/pdebench_extended:$PYTHONPATH
@@ -347,7 +340,6 @@ case $mode in
         
         # 创建screen会话并运行训练
         screen -dmS "$SESSION_NAME" bash -c "
-            source venv/bin/activate
             export PYTHONPATH=$PWD/pdebench_extended:\$PYTHONPATH
             export OMP_NUM_THREADS=4
             export MKL_NUM_THREADS=4

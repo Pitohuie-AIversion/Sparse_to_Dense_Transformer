@@ -72,13 +72,21 @@ def get_project_root():
     """获取项目根目录"""
     return Path(__file__).parent.absolute()
 
-def run_enhanced_training(epochs=20, output_dir="enhanced_training_output", batch_size=None):
+def run_enhanced_training(epochs=20, output_dir="enhanced_training_output", batch_size=None, config_file=None):
     """运行增强版可视化训练"""
-    print(f"🎯 启动增强版可视化训练 (轮数: {epochs})")
+    if config_file:
+        print(f"🎯 启动增强版可视化训练 (轮数: {epochs}, 配置文件: {config_file})")
+    else:
+        print(f"🎯 启动增强版可视化训练 (轮数: {epochs})")
     
     cmd = [sys.executable, "enhanced_visual_training.py", 
            "--epochs", str(epochs), 
            "--output-dir", output_dir]
+    
+    if config_file:
+        cmd.extend(["--config", config_file])
+    else:
+        cmd.append("--demo")
     
     if batch_size:
         cmd.extend(["--batch-size", str(batch_size)])
@@ -122,11 +130,12 @@ def interactive_mode():
     print("2. 增强版可视化训练 (自定义参数)")
     print("3. 预测可视化演示")
     print("4. 快速测试 (5轮训练)")
-    print("5. 退出")
+    print("5. 使用配置文件训练 (1000轮)")
+    print("6. 退出")
     
     while True:
         try:
-            choice = input("\n请输入选择 (1-5): ").strip()
+            choice = input("\n请输入选择 (1-6): ").strip()
             
             if choice == '1':
                 return run_enhanced_training()
@@ -137,7 +146,9 @@ def interactive_mode():
                     output_dir = input("输入输出目录 (默认enhanced_training_output): ") or "enhanced_training_output"
                     batch_size_input = input("输入批次大小 (默认自动): ")
                     batch_size = int(batch_size_input) if batch_size_input else None
-                    return run_enhanced_training(epochs, output_dir, batch_size)
+                    config_file_input = input("输入配置文件路径 (可选): ").strip()
+                    config_file = config_file_input if config_file_input else None
+                    return run_enhanced_training(epochs, output_dir, batch_size, config_file)
                 except ValueError:
                     print("❌ 输入无效，请输入数字")
                     continue
@@ -149,11 +160,20 @@ def interactive_mode():
                 return run_enhanced_training(epochs=5, output_dir="quick_test_output")
             
             elif choice == '5':
+                # 使用指定的配置文件运行1000轮训练
+                config_file = "x:\\2025\\Graduation_project\\report\\VIVTransformer-4sh2r1-codex\\modify_multi_attention\\configs\\loss_configs\\loss_config_36.yaml"
+                output_dir = "config_training_1000_epochs"
+                print(f"🎯 使用配置文件运行1000轮训练")
+                print(f"📁 配置文件: {config_file}")
+                print(f"📁 输出目录: {output_dir}")
+                return run_enhanced_training(epochs=1000, output_dir=output_dir, config_file=config_file)
+            
+            elif choice == '6':
                 print("👋 退出程序")
                 return True
             
             else:
-                print("❌ 无效选择，请输入1-5")
+                print("❌ 无效选择，请输入1-6")
                 continue
                 
         except KeyboardInterrupt:
@@ -166,12 +186,13 @@ def interactive_mode():
 def main():
     """主函数"""
     parser = argparse.ArgumentParser(description='PyCharm快速启动脚本')
-    parser.add_argument('--mode', choices=['enhanced', 'prediction', 'test'], 
+    parser.add_argument('--mode', choices=['enhanced', 'prediction', 'test', 'config'], 
                        help='运行模式')
     parser.add_argument('--epochs', type=int, default=20, help='训练轮数')
     parser.add_argument('--output-dir', default='enhanced_training_output', 
                        help='输出目录')
     parser.add_argument('--batch-size', type=int, help='批次大小')
+    parser.add_argument('--config', type=str, help='配置文件路径')
     parser.add_argument('--interactive', action='store_true', 
                        help='交互式模式')
     
@@ -191,11 +212,15 @@ def main():
     if args.interactive or not args.mode:
         success = interactive_mode()
     elif args.mode == 'enhanced':
-        success = run_enhanced_training(args.epochs, args.output_dir, args.batch_size)
+        success = run_enhanced_training(args.epochs, args.output_dir, args.batch_size, args.config)
     elif args.mode == 'prediction':
         success = run_prediction_demo()
     elif args.mode == 'test':
         success = run_enhanced_training(5, 'quick_test_output')
+    elif args.mode == 'config':
+        # 使用指定配置文件运行1000轮训练
+        config_file = args.config or "x:\\2025\\Graduation_project\\report\\VIVTransformer-4sh2r1-codex\\modify_multi_attention\\configs\\loss_configs\\loss_config_36.yaml"
+        success = run_enhanced_training(1000, 'config_training_1000_epochs', None, config_file)
     else:
         print("❌ 未知模式")
         return 1

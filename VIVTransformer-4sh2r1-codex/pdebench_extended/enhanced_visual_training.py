@@ -448,13 +448,14 @@ def generate_sample_data(batch_size: int = 8, input_size: int = 400, output_size
     return inputs, targets
 
 
-def enhanced_training_demo(num_epochs: int = 20, output_dir: str = "enhanced_training_output"):
+def enhanced_training_demo(num_epochs: int = 20, output_dir: str = "enhanced_training_output", config: Dict = None):
     """
     增强版训练演示
     
     Args:
         num_epochs: 训练轮数
         output_dir: 输出目录
+        config: 配置字典（可选）
     """
     logger.info("开始增强版可视化训练演示...")
     
@@ -563,14 +564,28 @@ def main():
     parser.add_argument('--epochs', type=int, default=20, help='训练轮数')
     parser.add_argument('--output-dir', type=str, default='enhanced_training_output', 
                        help='输出目录')
+    parser.add_argument('--config', type=str, help='配置文件路径 (YAML格式)')
     parser.add_argument('--demo', action='store_true', help='运行演示')
     
     args = parser.parse_args()
     
-    if args.demo:
-        enhanced_training_demo(args.epochs, args.output_dir)
+    # 如果指定了配置文件，加载配置
+    config = None
+    if args.config:
+        try:
+            with open(args.config, 'r', encoding='utf-8') as f:
+                config = yaml.safe_load(f)
+            logger.info(f"已加载配置文件: {args.config}")
+            logger.info(f"配置内容: {config}")
+        except Exception as e:
+            logger.error(f"加载配置文件失败: {e}")
+            return
+    
+    if args.demo or args.config:
+        enhanced_training_demo(args.epochs, args.output_dir, config)
     else:
         logger.info("请使用 --demo 参数运行演示")
+        logger.info("或使用 --config 参数指定配置文件")
         logger.info("或在代码中调用 enhanced_training_demo() 函数")
 
 

@@ -1,0 +1,150 @@
+# 演示配置文件 - 压力场重建训练
+# 这是一个简化的配置文件，用于快速测试可视化功能
+
+# 数据配置
+data:
+  input_dim: 784        # 输入维度 (28x28 = 784)
+  output_dim: 784       # 输出维度 (28x28 = 784)
+  batch_size: 16        # 批次大小（较小以便快速演示）
+  data_path: "./data"   # 数据路径
+
+# 模型配置
+model:
+  type: "transformer"   # 模型类型
+  transformer:
+    d_model: 256        # 模型维度（较小以便快速训练）
+    nhead: 8            # 注意力头数
+    num_layers: 4       # 层数（较少以便快速训练）
+    dim_feedforward: 1024  # 前馈网络维度
+    dropout: 0.1        # Dropout率
+    activation: "relu"  # 激活函数
+
+# 训练配置
+training:
+  num_epochs: 20        # 训练轮数（较少以便快速演示）
+  learning_rate: 0.001  # 学习率
+  batch_size: 16        # 批次大小
+  output_dir: "./demo_training_output"  # 输出目录
+  save_interval: 5      # 模型保存间隔
+  validation_interval: 2  # 验证间隔
+  
+  # 优化器配置
+  optimizer:
+    type: "adam"        # 优化器类型
+    weight_decay: 0.0001  # 权重衰减
+    
+  # 学习率调度
+  scheduler:
+    type: "cosine"      # 调度器类型
+    T_max: 20           # 余弦退火周期
+
+# 可视化配置
+visualization:
+  enabled: true         # 启用可视化
+  save_interval: 2      # 保存间隔（epoch）
+  update_interval: 1    # 更新间隔（batch）
+  plot_types:           # 绘图类型
+    - loss_curves       # 损失曲线
+    - hardware_usage    # 硬件使用
+    - prediction_comparison  # 预测对比
+    - learning_rate     # 学习率变化
+  
+  # 图表配置
+  figure_size: [15, 10] # 图形大小
+  dpi: 100              # 分辨率
+  style: "seaborn"      # 绘图风格
+  color_scheme: "viridis"  # 颜色方案
+
+# 日志配置
+logging:
+  level: "INFO"         # 日志级别
+  save_logs: true       # 保存日志
+  log_file: "training.log"  # 日志文件名
+  console_output: true  # 控制台输出
+
+# 硬件监控配置
+hardware_monitoring:
+  enabled: true         # 启用硬件监控
+  interval: 1.0         # 监控间隔（秒）
+  log_gpu: true         # 记录GPU使用
+  log_memory: true      # 记录内存使用
+  log_cpu: true         # 记录CPU使用
+  log_disk: false       # 记录磁盘使用
+  
+  # GPU监控配置
+  gpu_monitoring:
+    log_utilization: true    # GPU利用率
+    log_memory: true         # GPU内存
+    log_temperature: true    # GPU温度
+    log_power: false         # GPU功耗
+
+# TensorBoard配置
+tensorboard:
+  enabled: true         # 启用TensorBoard
+  log_dir: "tensorboard"  # TensorBoard日志目录
+  port: 6006            # 端口号
+  host: "localhost"     # 主机地址
+  
+  # 记录配置
+  log_scalars: true     # 记录标量
+  log_histograms: false # 记录直方图（较大，演示时关闭）
+  log_images: true      # 记录图像
+  log_graph: false      # 记录计算图（较大，演示时关闭）
+
+# 检查点配置
+checkpoints:
+  enabled: true         # 启用检查点
+  save_best: true       # 保存最佳模型
+  save_last: true       # 保存最后模型
+  save_interval: 5      # 保存间隔
+  max_keep: 3           # 最大保留数量
+
+# 验证配置
+validation:
+  enabled: true         # 启用验证
+  split_ratio: 0.2      # 验证集比例
+  metrics:              # 验证指标
+    - mse               # 均方误差
+    - mae               # 平均绝对误差
+    - r2_score          # R²分数
+
+# 测试配置
+testing:
+  enabled: true         # 启用测试
+  split_ratio: 0.1      # 测试集比例
+  save_predictions: true  # 保存预测结果
+  
+# 实验配置
+experiment:
+  name: "pressure_field_demo"  # 实验名称
+  description: "压力场重建演示训练"  # 实验描述
+  tags:                 # 实验标签
+    - demo
+    - pressure_field
+    - visualization
+  
+  # 随机种子
+  seed: 42              # 随机种子
+  deterministic: true   # 确定性训练
+
+# 数据增强配置（如果需要）
+data_augmentation:
+  enabled: false        # 演示时关闭数据增强
+  noise_level: 0.01     # 噪声水平
+  rotation_range: 0     # 旋转范围
+  scaling_range: 0      # 缩放范围
+
+# 早停配置
+early_stopping:
+  enabled: true         # 启用早停
+  patience: 10          # 耐心值
+  min_delta: 0.001      # 最小改善
+  monitor: "val_loss"   # 监控指标
+  mode: "min"           # 监控模式
+
+# 性能配置
+performance:
+  num_workers: 2        # 数据加载工作进程数（较少以避免内存问题）
+  pin_memory: true      # 固定内存
+  persistent_workers: false  # 持久化工作进程
+  prefetch_factor: 2    # 预取因子

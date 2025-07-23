@@ -161,7 +161,7 @@ def interactive_mode():
             
             elif choice == '5':
                 # 使用指定的配置文件运行1000轮训练
-                config_file = "x:\\2025\\Graduation_project\\report\\VIVTransformer-4sh2r1-codex\\modify_multi_attention\\configs\\loss_configs\\loss_config_36.yaml"
+                config_file = "../modify_multi_attention/configs/loss_configs/loss_config_36.yaml"
                 output_dir = "config_training_1000_epochs"
                 print(f"🎯 使用配置文件运行1000轮训练")
                 print(f"📁 配置文件: {config_file}")
@@ -219,7 +219,7 @@ def main():
         success = run_enhanced_training(5, 'quick_test_output')
     elif args.mode == 'config':
         # 使用指定配置文件运行1000轮训练
-        config_file = args.config or "x:\\2025\\Graduation_project\\report\\VIVTransformer-4sh2r1-codex\\modify_multi_attention\\configs\\loss_configs\\loss_config_36.yaml"
+        config_file = args.config or "../modify_multi_attention/configs/loss_configs/loss_config_36.yaml"
         success = run_enhanced_training(1000, 'config_training_1000_epochs', None, config_file)
     else:
         print("❌ 未知模式")

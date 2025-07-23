@@ -459,12 +459,14 @@ Prediction: [{np.min(prediction_2d):.3f}, {np.max(prediction_2d):.3f}]
         """
         num_epochs = len(prediction_history)
         
-        # 创建图形
-        fig = plt.figure(figsize=(20, 4 * num_epochs))
-        gs = gridspec.GridSpec(num_epochs, 4, figure=fig, hspace=0.3, wspace=0.3)
+        # 创建输出目录
+        progress_dir = self.output_dir / "time_series" / f"sample_{sample_idx}_progress"
+        progress_dir.mkdir(parents=True, exist_ok=True)
         
         mse_history = []
+        saved_files = []
         
+        # 分别保存每个epoch的预测结果
         for i, (epoch, pred_data) in enumerate(zip(epochs, prediction_history)):
             input_2d = self._reshape_to_2d(pred_data['input'])
             target_2d = self._reshape_to_2d(pred_data['target'])
@@ -474,67 +476,132 @@ Prediction: [{np.min(prediction_2d):.3f}, {np.max(prediction_2d):.3f}]
             mse = np.mean((target_2d - prediction_2d) ** 2)
             mse_history.append(mse)
             
+            # 为每个epoch创建单独的图
+            fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+            
+            # 输入数据
+            im1 = axes[0].imshow(input_2d, cmap='viridis')
+            input_title = self._get_label('输入数据', 'Input Data')
+            axes[0].set_title(f'{input_title} - Epoch {epoch}', fontweight='bold')
+            plt.colorbar(im1, ax=axes[0], fraction=0.046, pad=0.04)
+            
+            # 真实输出
+            im2 = axes[1].imshow(target_2d, cmap='plasma')
+            target_title = self._get_label('真实输出', 'Ground Truth')
+            axes[1].set_title(f'{target_title} - Epoch {epoch}', fontweight='bold')
+            plt.colorbar(im2, ax=axes[1], fraction=0.046, pad=0.04)
+            
+            # 模型预测
+            im3 = axes[2].imshow(prediction_2d, cmap='plasma')
+            pred_title = self._get_label('模型预测', 'Model Prediction')
+            axes[2].set_title(f'{pred_title} - Epoch {epoch}\nMSE: {mse:.6f}', fontweight='bold')
+            plt.colorbar(im3, ax=axes[2], fraction=0.046, pad=0.04)
+            
+            # 保存单个epoch的图
+            epoch_save_path = progress_dir / f"epoch_{epoch:04d}_prediction.png"
+            plt.tight_layout()
+            plt.savefig(epoch_save_path, dpi=150, bbox_inches='tight')
+            plt.close()
+            saved_files.append(str(epoch_save_path))
+        
+        # 单独创建MSE趋势图
+        fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+        ax.plot(epochs, mse_history, 'b-o', linewidth=2, markersize=6)
+        ax.set_xlabel('Epoch')
+        ax.set_ylabel('MSE')
+        trend_title = self._get_label('预测误差变化趋势', 'Prediction Error Trend')
+        ax.set_title(f'{trend_title} - Sample {sample_idx}', fontweight='bold')
+        ax.grid(True, alpha=0.3)
+        ax.set_yscale('log')
+        
+        # 保存MSE趋势图
+        mse_save_path = progress_dir / "mse_trend.png"
+        plt.tight_layout()
+        plt.savefig(mse_save_path, dpi=150, bbox_inches='tight')
+        plt.close()
+        saved_files.append(str(mse_save_path))
+        
+        # 创建汇总图（较小尺寸）
+        max_epochs_in_summary = min(10, num_epochs)  # 最多显示10个epoch
+        step = max(1, num_epochs // max_epochs_in_summary)
+        selected_indices = list(range(0, num_epochs, step))[:max_epochs_in_summary]
+        
+        fig = plt.figure(figsize=(16, 4 * len(selected_indices)))
+        gs = gridspec.GridSpec(len(selected_indices), 4, figure=fig, hspace=0.3, wspace=0.3)
+        
+        for plot_idx, i in enumerate(selected_indices):
+            epoch = epochs[i]
+            pred_data = prediction_history[i]
+            
+            input_2d = self._reshape_to_2d(pred_data['input'])
+            target_2d = self._reshape_to_2d(pred_data['target'])
+            prediction_2d = self._reshape_to_2d(pred_data['prediction'])
+            mse = mse_history[i]
+            
             # 输入（只在第一行显示）
-            if i == 0:
-                ax1 = fig.add_subplot(gs[i, 0])
+            if plot_idx == 0:
+                ax1 = fig.add_subplot(gs[plot_idx, 0])
                 im1 = ax1.imshow(input_2d, cmap='viridis')
                 input_title = self._get_label('输入数据', 'Input Data')
                 ax1.set_title(input_title, fontweight='bold')
                 ax1.set_ylabel(f'Epoch {epoch}', fontsize=12, fontweight='bold')
                 plt.colorbar(im1, ax=ax1, fraction=0.046, pad=0.04)
             else:
-                ax1 = fig.add_subplot(gs[i, 0])
+                ax1 = fig.add_subplot(gs[plot_idx, 0])
                 ax1.axis('off')
                 ax1.set_ylabel(f'Epoch {epoch}', fontsize=12, fontweight='bold')
             
             # 目标（只在第一行显示）
-            if i == 0:
-                ax2 = fig.add_subplot(gs[i, 1])
+            if plot_idx == 0:
+                ax2 = fig.add_subplot(gs[plot_idx, 1])
                 im2 = ax2.imshow(target_2d, cmap='plasma')
                 target_title = self._get_label('真实输出', 'Ground Truth')
                 ax2.set_title(target_title, fontweight='bold')
                 plt.colorbar(im2, ax=ax2, fraction=0.046, pad=0.04)
             else:
-                ax2 = fig.add_subplot(gs[i, 1])
+                ax2 = fig.add_subplot(gs[plot_idx, 1])
                 ax2.axis('off')
             
             # 预测
-            ax3 = fig.add_subplot(gs[i, 2])
+            ax3 = fig.add_subplot(gs[plot_idx, 2])
             im3 = ax3.imshow(prediction_2d, cmap='plasma')
-            if i == 0:
+            if plot_idx == 0:
                 pred_title = self._get_label('模型预测', 'Model Prediction')
                 ax3.set_title(pred_title, fontweight='bold')
             ax3.text(0.02, 0.98, f'MSE: {mse:.6f}', transform=ax3.transAxes,
                     bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
                     verticalalignment='top', fontsize=10)
             plt.colorbar(im3, ax=ax3, fraction=0.046, pad=0.04)
-            
-            # MSE趋势图（在最后一列）
-            ax4 = fig.add_subplot(gs[:, 3])
-            ax4.clear()
-            ax4.plot(epochs[:i+1], mse_history, 'b-o', linewidth=2, markersize=6)
-            ax4.set_xlabel('Epoch')
-            ax4.set_ylabel('MSE')
-            trend_title = self._get_label('预测误差变化趋势', 'Prediction Error Trend')
-            ax4.set_title(trend_title, fontweight='bold')
-            ax4.grid(True, alpha=0.3)
-            ax4.set_yscale('log')
+        
+        # MSE趋势图（在最后一列）
+        ax4 = fig.add_subplot(gs[:, 3])
+        ax4.plot(epochs, mse_history, 'b-o', linewidth=2, markersize=4)
+        ax4.set_xlabel('Epoch')
+        ax4.set_ylabel('MSE')
+        trend_title = self._get_label('预测误差变化趋势', 'Prediction Error Trend')
+        ax4.set_title(trend_title, fontweight='bold')
+        ax4.grid(True, alpha=0.3)
+        ax4.set_yscale('log')
         
         # 添加总标题
         progress_title = self._get_label(
-            f'训练过程预测结果变化 - 样本 {sample_idx}',
-            f'Training Progress Prediction Changes - Sample {sample_idx}'
+            f'训练过程预测结果变化 - 样本 {sample_idx} (精选)',
+            f'Training Progress Prediction Changes - Sample {sample_idx} (Selected)'
         )
         fig.suptitle(progress_title, fontsize=16, fontweight='bold')
         
-        # 保存图片
+        # 保存汇总图
         if save_path is None:
-            save_path = self.output_dir / "time_series" / f"training_progress_sample_{sample_idx}.png"
+            save_path = progress_dir / "training_progress_summary.png"
         
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
         plt.close()
+        saved_files.append(str(save_path))
         
-        log_msg = self._get_label(f"训练进度可视化已保存: {save_path}", f"Training progress visualization saved: {save_path}")
+        log_msg = self._get_label(
+            f"训练进度可视化已保存: {len(saved_files)} 个文件到 {progress_dir}", 
+            f"Training progress visualization saved: {len(saved_files)} files to {progress_dir}"
+        )
         logger.info(log_msg)
         return str(save_path)
     

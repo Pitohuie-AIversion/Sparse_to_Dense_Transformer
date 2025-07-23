@@ -116,7 +116,7 @@ class EnhancedTrainingLogger:
         开始硬件监控
         """
         try:
-            self.hardware_monitor.start_monitoring()
+            self.hardware_monitor.start_training()
             logger.info("硬件监控已启动")
         except Exception as e:
             logger.warning(f"硬件监控启动失败: {e}")
@@ -126,7 +126,7 @@ class EnhancedTrainingLogger:
         停止硬件监控
         """
         try:
-            self.hardware_monitor.stop_monitoring()
+            self.hardware_monitor.end_training()
             logger.info("硬件监控已停止")
         except Exception as e:
             logger.warning(f"硬件监控停止失败: {e}")
@@ -474,6 +474,9 @@ def enhanced_training_demo(num_epochs: int = 20, output_dir: str = "enhanced_tra
     try:
         # 训练循环
         for epoch in range(1, num_epochs + 1):
+            # 开始epoch硬件监控
+            training_logger.hardware_monitor.start_epoch(epoch)
+            
             epoch_start_time = time.time()
             
             # 生成训练数据
@@ -499,6 +502,13 @@ def enhanced_training_demo(num_epochs: int = 20, output_dir: str = "enhanced_tra
                 val_loss = criterion(val_outputs, val_targets)
             
             epoch_time = time.time() - epoch_start_time
+            
+            # 结束epoch硬件监控
+            training_logger.hardware_monitor.end_epoch(
+                epoch=epoch,
+                train_loss=train_loss.item(),
+                valid_loss=val_loss.item()
+            )
             
             # 记录训练数据
             training_logger.log_epoch(

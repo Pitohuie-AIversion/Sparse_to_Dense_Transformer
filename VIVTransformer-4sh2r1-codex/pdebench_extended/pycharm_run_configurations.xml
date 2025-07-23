@@ -1,0 +1,139 @@
+<!-- PyCharm 运行配置文件 -->
+<!-- 将此文件内容复制到 .idea/runConfigurations/ 目录下 -->
+
+<!-- 增强版可视化训练配置 -->
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="增强版可视化训练" type="PythonConfigurationType" factoryName="Python">
+    <module name="pdebench_extended" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="MPLBACKEND" value="Agg" />
+      <env name="KMP_DUPLICATE_LIB_OK" value="TRUE" />
+      <env name="OMP_NUM_THREADS" value="1" />
+      <env name="MKL_NUM_THREADS" value="1" />
+      <env name="TORCH_NUM_THREADS" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="true" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/enhanced_visual_training.py" />
+    <option name="PARAMETERS" value="--epochs 20 --output-dir enhanced_training_output" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <option name="MODULE_MODE" value="false" />
+    <option name="REDIRECT_INPUT" value="false" />
+    <option name="INPUT_FILE" value="" />
+    <method v="2" />
+  </configuration>
+</component>
+
+<!-- 预测可视化演示配置 -->
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="预测可视化演示" type="PythonConfigurationType" factoryName="Python">
+    <module name="pdebench_extended" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="MPLBACKEND" value="Agg" />
+      <env name="KMP_DUPLICATE_LIB_OK" value="TRUE" />
+      <env name="OMP_NUM_THREADS" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="true" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/create_prediction_visualization.py" />
+    <option name="PARAMETERS" value="" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <option name="MODULE_MODE" value="false" />
+    <option name="REDIRECT_INPUT" value="false" />
+    <option name="INPUT_FILE" value="" />
+    <method v="2" />
+  </configuration>
+</component>
+
+<!-- PyCharm快速启动配置 -->
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PyCharm快速启动" type="PythonConfigurationType" factoryName="Python">
+    <module name="pdebench_extended" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="MPLBACKEND" value="Agg" />
+      <env name="KMP_DUPLICATE_LIB_OK" value="TRUE" />
+      <env name="OMP_NUM_THREADS" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="true" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pycharm_quick_start.py" />
+    <option name="PARAMETERS" value="--interactive" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="true" />
+    <option name="MODULE_MODE" value="false" />
+    <option name="REDIRECT_INPUT" value="false" />
+    <option name="INPUT_FILE" value="" />
+    <method v="2" />
+  </configuration>
+</component>
+
+<!-- 快速测试配置 -->
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="快速测试(5轮)" type="PythonConfigurationType" factoryName="Python">
+    <module name="pdebench_extended" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="MPLBACKEND" value="Agg" />
+      <env name="KMP_DUPLICATE_LIB_OK" value="TRUE" />
+      <env name="OMP_NUM_THREADS" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="true" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/enhanced_visual_training.py" />
+    <option name="PARAMETERS" value="--epochs 5 --output-dir quick_test_output" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <option name="MODULE_MODE" value="false" />
+    <option name="REDIRECT_INPUT" value="false" />
+    <option name="INPUT_FILE" value="" />
+    <method v="2" />
+  </configuration>
+</component>
+
+<!-- 自定义训练配置 -->
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="自定义训练" type="PythonConfigurationType" factoryName="Python">
+    <module name="pdebench_extended" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="MPLBACKEND" value="Agg" />
+      <env name="KMP_DUPLICATE_LIB_OK" value="TRUE" />
+      <env name="OMP_NUM_THREADS" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="true" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/enhanced_visual_training.py" />
+    <option name="PARAMETERS" value="--epochs 50 --batch-size 8 --output-dir custom_output" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <option name="MODULE_MODE" value="false" />
+    <option name="REDIRECT_INPUT" value="false" />
+    <option name="INPUT_FILE" value="" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -26,10 +26,38 @@ import torch.nn as nn
 from datetime import datetime
 import seaborn as sns
 
-# 设置matplotlib中文字体
-plt.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans']
-plt.rcParams['axes.unicode_minus'] = False
+# 设置matplotlib字体 - 兼容Linux服务器
+try:
+    # 尝试设置中文字体
+    import matplotlib.font_manager as fm
+    # 检查可用的中文字体
+    chinese_fonts = ['SimHei', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', 'DejaVu Sans']
+    available_font = None
+    for font in chinese_fonts:
+        if any(font in f.name for f in fm.fontManager.ttflist):
+            available_font = font
+            break
+    
+    if available_font:
+        plt.rcParams['font.sans-serif'] = [available_font, 'DejaVu Sans']
+        plt.rcParams['axes.unicode_minus'] = False
+        logger.info(f"使用字体: {available_font}")
+    else:
+        # 如果没有中文字体，使用英文标签
+        plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial']
+        plt.rcParams['axes.unicode_minus'] = False
+        logger.warning("未找到中文字体，将使用英文标签")
+        # 设置全局标志，用于后续判断是否使用中文
+        globals()['USE_CHINESE'] = False
+except Exception as e:
+    logger.warning(f"字体设置失败: {e}，使用默认字体")
+    plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial']
+    globals()['USE_CHINESE'] = False
+
 sns.set_style("whitegrid")
+
+# 检查是否使用中文标签
+USE_CHINESE = globals().get('USE_CHINESE', True)
 
 # 设置日志
 logging.basicConfig(
@@ -62,7 +90,23 @@ class PredictionVisualizer:
         (self.output_dir / "error_analysis").mkdir(exist_ok=True)
         (self.output_dir / "time_series").mkdir(exist_ok=True)
         
+        # 设置标签语言
+        self.use_chinese = USE_CHINESE
+        
         logger.info(f"预测可视化器初始化完成，输出目录: {self.output_dir}")
+    
+    def _get_label(self, chinese_text: str, english_text: str) -> str:
+        """
+        根据字体支持情况返回适当的标签文本
+        
+        Args:
+            chinese_text: 中文文本
+            english_text: 英文文本
+        
+        Returns:
+            适当的标签文本
+        """
+        return chinese_text if self.use_chinese else english_text
     
     def visualize_single_prediction(
         self, 
@@ -101,7 +145,7 @@ class PredictionVisualizer:
         # 输入数据
         ax1 = fig.add_subplot(gs[:, 0:2])
         im1 = ax1.imshow(input_2d, cmap='viridis', interpolation='nearest')
-        ax1.set_title(f'输入数据\n形状: {input_2d.shape}', fontsize=12, fontweight='bold')
+        ax1.set_title(f'{self._get_label("输入数据", "Input Data")}\n{self._get_label("形状", "Shape")}: {input_2d.shape}', fontsize=12, fontweight='bold')
         ax1.set_xlabel('X')
         ax1.set_ylabel('Y')
         plt.colorbar(im1, ax=ax1, fraction=0.046, pad=0.04)
@@ -109,7 +153,7 @@ class PredictionVisualizer:
         # 目标数据
         ax2 = fig.add_subplot(gs[:, 2:4])
         im2 = ax2.imshow(target_2d, cmap='plasma', interpolation='nearest')
-        ax2.set_title(f'真实输出\n形状: {target_2d.shape}', fontsize=12, fontweight='bold')
+        ax2.set_title(f'{self._get_label("真实输出", "Ground Truth")}\n{self._get_label("形状", "Shape")}: {target_2d.shape}', fontsize=12, fontweight='bold')
         ax2.set_xlabel('X')
         ax2.set_ylabel('Y')
         plt.colorbar(im2, ax=ax2, fraction=0.046, pad=0.04)
@@ -117,17 +161,18 @@ class PredictionVisualizer:
         # 预测数据
         ax3 = fig.add_subplot(gs[:, 4:6])
         im3 = ax3.imshow(prediction_2d, cmap='plasma', interpolation='nearest')
-        ax3.set_title(f'模型预测\n形状: {prediction_2d.shape}', fontsize=12, fontweight='bold')
+        ax3.set_title(f'{self._get_label("模型预测", "Model Prediction")}\n{self._get_label("形状", "Shape")}: {prediction_2d.shape}', fontsize=12, fontweight='bold')
         ax3.set_xlabel('X')
         ax3.set_ylabel('Y')
         plt.colorbar(im3, ax=ax3, fraction=0.046, pad=0.04)
         
         # 添加总标题
         time_info = f", t={time_step:.3f}" if time_step is not None else ""
-        fig.suptitle(
-            f'第 {epoch} 轮预测结果对比 - 样本 {sample_idx}{time_info}', 
-            fontsize=16, fontweight='bold'
+        title_text = self._get_label(
+            f'第 {epoch} 轮预测结果对比 - 样本 {sample_idx}{time_info}',
+            f'Epoch {epoch} Prediction Comparison - Sample {sample_idx}{time_info}'
         )
+        fig.suptitle(title_text, fontsize=16, fontweight='bold')
         
         # 保存图片
         if save_path is None:
@@ -136,7 +181,8 @@ class PredictionVisualizer:
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        logger.info(f"单样本预测可视化已保存: {save_path}")
+        log_msg = self._get_label(f"单样本预测可视化已保存: {save_path}", f"Single sample prediction visualization saved: {save_path}")
+        logger.info(log_msg)
         return str(save_path)
     
     def visualize_prediction_with_error(
@@ -178,17 +224,17 @@ class PredictionVisualizer:
         # 第一行：输入、目标、预测
         ax1 = fig.add_subplot(gs[0, 0])
         im1 = ax1.imshow(input_2d, cmap='viridis')
-        ax1.set_title('输入数据', fontweight='bold')
+        ax1.set_title(self._get_label('输入数据', 'Input Data'), fontweight='bold')
         plt.colorbar(im1, ax=ax1, fraction=0.046, pad=0.04)
         
         ax2 = fig.add_subplot(gs[0, 1])
         im2 = ax2.imshow(target_2d, cmap='plasma')
-        ax2.set_title('真实输出', fontweight='bold')
+        ax2.set_title(self._get_label('真实输出', 'Ground Truth'), fontweight='bold')
         plt.colorbar(im2, ax=ax2, fraction=0.046, pad=0.04)
         
         ax3 = fig.add_subplot(gs[0, 2])
         im3 = ax3.imshow(prediction_2d, cmap='plasma')
-        ax3.set_title('模型预测', fontweight='bold')
+        ax3.set_title(self._get_label('模型预测', 'Model Prediction'), fontweight='bold')
         plt.colorbar(im3, ax=ax3, fraction=0.046, pad=0.04)
         
         # 第一行第四列：统计信息
@@ -201,7 +247,8 @@ class PredictionVisualizer:
         max_error = np.max(absolute_error)
         mean_rel_error = np.mean(relative_error)
         
-        stats_text = f"""
+        if self.use_chinese:
+            stats_text = f"""
 统计指标:
 
 MSE: {mse:.6f}
@@ -212,7 +259,20 @@ MAE: {mae:.6f}
 数据范围:
 目标值: [{np.min(target_2d):.3f}, {np.max(target_2d):.3f}]
 预测值: [{np.min(prediction_2d):.3f}, {np.max(prediction_2d):.3f}]
-        """
+            """
+        else:
+            stats_text = f"""
+Statistics:
+
+MSE: {mse:.6f}
+MAE: {mae:.6f}
+Max Abs Error: {max_error:.6f}
+Mean Rel Error: {mean_rel_error:.4f}
+
+Data Range:
+Target: [{np.min(target_2d):.3f}, {np.max(target_2d):.3f}]
+Prediction: [{np.min(prediction_2d):.3f}, {np.max(prediction_2d):.3f}]
+            """
         
         ax4.text(0.05, 0.95, stats_text, transform=ax4.transAxes, 
                 fontsize=11, verticalalignment='top', fontfamily='monospace',
@@ -221,20 +281,20 @@ MAE: {mae:.6f}
         # 第二行：误差分析
         ax5 = fig.add_subplot(gs[1, 0])
         im5 = ax5.imshow(absolute_error, cmap='hot')
-        ax5.set_title('绝对误差', fontweight='bold')
+        ax5.set_title(self._get_label('绝对误差', 'Absolute Error'), fontweight='bold')
         plt.colorbar(im5, ax=ax5, fraction=0.046, pad=0.04)
         
         ax6 = fig.add_subplot(gs[1, 1])
         im6 = ax6.imshow(relative_error, cmap='hot')
-        ax6.set_title('相对误差', fontweight='bold')
+        ax6.set_title(self._get_label('相对误差', 'Relative Error'), fontweight='bold')
         plt.colorbar(im6, ax=ax6, fraction=0.046, pad=0.04)
         
         # 误差分布直方图
         ax7 = fig.add_subplot(gs[1, 2])
         ax7.hist(absolute_error.flatten(), bins=50, alpha=0.7, color='red', edgecolor='black')
-        ax7.set_title('绝对误差分布', fontweight='bold')
-        ax7.set_xlabel('绝对误差')
-        ax7.set_ylabel('频次')
+        ax7.set_title(self._get_label('绝对误差分布', 'Absolute Error Distribution'), fontweight='bold')
+        ax7.set_xlabel(self._get_label('绝对误差', 'Absolute Error'))
+        ax7.set_ylabel(self._get_label('频次', 'Frequency'))
         ax7.grid(True, alpha=0.3)
         
         # 散点图：真实值 vs 预测值
@@ -243,9 +303,9 @@ MAE: {mae:.6f}
         min_val = min(np.min(target_2d), np.min(prediction_2d))
         max_val = max(np.max(target_2d), np.max(prediction_2d))
         ax8.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=2)
-        ax8.set_xlabel('真实值')
-        ax8.set_ylabel('预测值')
-        ax8.set_title('真实值 vs 预测值', fontweight='bold')
+        ax8.set_xlabel(self._get_label('真实值', 'Ground Truth'))
+        ax8.set_ylabel(self._get_label('预测值', 'Prediction'))
+        ax8.set_title(self._get_label('真实值 vs 预测值', 'Ground Truth vs Prediction'), fontweight='bold')
         ax8.grid(True, alpha=0.3)
         
         # 第三行：剖面线对比
@@ -259,20 +319,24 @@ MAE: {mae:.6f}
         y_profile = np.arange(target_2d.shape[0])
         
         # 水平剖面
-        ax9.plot(x_profile, target_2d[mid_row, :], 'b-', linewidth=2, label='真实值 (水平剖面)')
-        ax9.plot(x_profile, prediction_2d[mid_row, :], 'r--', linewidth=2, label='预测值 (水平剖面)')
+        gt_label = self._get_label('真实值 (水平剖面)', 'Ground Truth (Horizontal)')
+        pred_label = self._get_label('预测值 (水平剖面)', 'Prediction (Horizontal)')
+        ax9.plot(x_profile, target_2d[mid_row, :], 'b-', linewidth=2, label=gt_label)
+        ax9.plot(x_profile, prediction_2d[mid_row, :], 'r--', linewidth=2, label=pred_label)
         
-        ax9.set_xlabel('位置')
-        ax9.set_ylabel('数值')
-        ax9.set_title(f'中间行剖面对比 (行 {mid_row})', fontweight='bold')
+        ax9.set_xlabel(self._get_label('位置', 'Position'))
+        ax9.set_ylabel(self._get_label('数值', 'Value'))
+        profile_title = self._get_label(f'中间行剖面对比 (行 {mid_row})', f'Middle Row Profile Comparison (Row {mid_row})')
+        ax9.set_title(profile_title, fontweight='bold')
         ax9.legend()
         ax9.grid(True, alpha=0.3)
         
         # 添加总标题
-        fig.suptitle(
-            f'第 {epoch} 轮预测结果详细分析 - 样本 {sample_idx}', 
-            fontsize=16, fontweight='bold'
+        main_title = self._get_label(
+            f'第 {epoch} 轮预测结果详细分析 - 样本 {sample_idx}',
+            f'Epoch {epoch} Detailed Prediction Analysis - Sample {sample_idx}'
         )
+        fig.suptitle(main_title, fontsize=16, fontweight='bold')
         
         # 保存图片
         if save_path is None:
@@ -281,7 +345,8 @@ MAE: {mae:.6f}
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        logger.info(f"误差分析可视化已保存: {save_path}")
+        log_msg = self._get_label(f"误差分析可视化已保存: {save_path}", f"Error analysis visualization saved: {save_path}")
+        logger.info(log_msg)
         return str(save_path)
     
     def visualize_batch_predictions(
@@ -322,25 +387,31 @@ MAE: {mae:.6f}
             # 输入
             ax1 = fig.add_subplot(gs[i, 0])
             im1 = ax1.imshow(input_2d, cmap='viridis')
-            ax1.set_title(f'样本 {i+1} - 输入', fontweight='bold')
+            input_title = self._get_label(f'样本 {i+1} - 输入', f'Sample {i+1} - Input')
+            ax1.set_title(input_title, fontweight='bold')
             if i == 0:
-                ax1.set_ylabel('输入数据', fontsize=12, fontweight='bold')
+                input_ylabel = self._get_label('输入数据', 'Input Data')
+                ax1.set_ylabel(input_ylabel, fontsize=12, fontweight='bold')
             plt.colorbar(im1, ax=ax1, fraction=0.046, pad=0.04)
             
             # 目标
             ax2 = fig.add_subplot(gs[i, 1])
             im2 = ax2.imshow(target_2d, cmap='plasma')
-            ax2.set_title(f'样本 {i+1} - 真实输出', fontweight='bold')
+            target_title = self._get_label(f'样本 {i+1} - 真实输出', f'Sample {i+1} - Ground Truth')
+            ax2.set_title(target_title, fontweight='bold')
             if i == 0:
-                ax2.set_ylabel('真实输出', fontsize=12, fontweight='bold')
+                target_ylabel = self._get_label('真实输出', 'Ground Truth')
+                ax2.set_ylabel(target_ylabel, fontsize=12, fontweight='bold')
             plt.colorbar(im2, ax=ax2, fraction=0.046, pad=0.04)
             
             # 预测
             ax3 = fig.add_subplot(gs[i, 2])
             im3 = ax3.imshow(prediction_2d, cmap='plasma')
-            ax3.set_title(f'样本 {i+1} - 模型预测', fontweight='bold')
+            pred_title = self._get_label(f'样本 {i+1} - 模型预测', f'Sample {i+1} - Model Prediction')
+            ax3.set_title(pred_title, fontweight='bold')
             if i == 0:
-                ax3.set_ylabel('模型预测', fontsize=12, fontweight='bold')
+                pred_ylabel = self._get_label('模型预测', 'Model Prediction')
+                ax3.set_ylabel(pred_ylabel, fontsize=12, fontweight='bold')
             plt.colorbar(im3, ax=ax3, fraction=0.046, pad=0.04)
             
             # 计算并显示MSE
@@ -350,10 +421,11 @@ MAE: {mae:.6f}
                     verticalalignment='top', fontsize=10)
         
         # 添加总标题
-        fig.suptitle(
-            f'第 {epoch} 轮批次预测结果对比 ({batch_size} 个样本)', 
-            fontsize=16, fontweight='bold'
+        batch_title = self._get_label(
+            f'第 {epoch} 轮批次预测结果对比 ({batch_size} 个样本)',
+            f'Epoch {epoch} Batch Prediction Comparison ({batch_size} samples)'
         )
+        fig.suptitle(batch_title, fontsize=16, fontweight='bold')
         
         # 保存图片
         if save_path is None:
@@ -362,7 +434,8 @@ MAE: {mae:.6f}
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        logger.info(f"批次预测可视化已保存: {save_path}")
+        log_msg = self._get_label(f"批次预测可视化已保存: {save_path}", f"Batch prediction visualization saved: {save_path}")
+        logger.info(log_msg)
         return str(save_path)
     
     def visualize_training_progress(
@@ -405,7 +478,8 @@ MAE: {mae:.6f}
             if i == 0:
                 ax1 = fig.add_subplot(gs[i, 0])
                 im1 = ax1.imshow(input_2d, cmap='viridis')
-                ax1.set_title('输入数据', fontweight='bold')
+                input_title = self._get_label('输入数据', 'Input Data')
+                ax1.set_title(input_title, fontweight='bold')
                 ax1.set_ylabel(f'Epoch {epoch}', fontsize=12, fontweight='bold')
                 plt.colorbar(im1, ax=ax1, fraction=0.046, pad=0.04)
             else:
@@ -417,7 +491,8 @@ MAE: {mae:.6f}
             if i == 0:
                 ax2 = fig.add_subplot(gs[i, 1])
                 im2 = ax2.imshow(target_2d, cmap='plasma')
-                ax2.set_title('真实输出', fontweight='bold')
+                target_title = self._get_label('真实输出', 'Ground Truth')
+                ax2.set_title(target_title, fontweight='bold')
                 plt.colorbar(im2, ax=ax2, fraction=0.046, pad=0.04)
             else:
                 ax2 = fig.add_subplot(gs[i, 1])
@@ -427,7 +502,8 @@ MAE: {mae:.6f}
             ax3 = fig.add_subplot(gs[i, 2])
             im3 = ax3.imshow(prediction_2d, cmap='plasma')
             if i == 0:
-                ax3.set_title('模型预测', fontweight='bold')
+                pred_title = self._get_label('模型预测', 'Model Prediction')
+                ax3.set_title(pred_title, fontweight='bold')
             ax3.text(0.02, 0.98, f'MSE: {mse:.6f}', transform=ax3.transAxes,
                     bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
                     verticalalignment='top', fontsize=10)
@@ -439,15 +515,17 @@ MAE: {mae:.6f}
             ax4.plot(epochs[:i+1], mse_history, 'b-o', linewidth=2, markersize=6)
             ax4.set_xlabel('Epoch')
             ax4.set_ylabel('MSE')
-            ax4.set_title('预测误差变化趋势', fontweight='bold')
+            trend_title = self._get_label('预测误差变化趋势', 'Prediction Error Trend')
+            ax4.set_title(trend_title, fontweight='bold')
             ax4.grid(True, alpha=0.3)
             ax4.set_yscale('log')
         
         # 添加总标题
-        fig.suptitle(
-            f'训练过程预测结果变化 - 样本 {sample_idx}', 
-            fontsize=16, fontweight='bold'
+        progress_title = self._get_label(
+            f'训练过程预测结果变化 - 样本 {sample_idx}',
+            f'Training Progress Prediction Changes - Sample {sample_idx}'
         )
+        fig.suptitle(progress_title, fontsize=16, fontweight='bold')
         
         # 保存图片
         if save_path is None:
@@ -456,7 +534,8 @@ MAE: {mae:.6f}
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        logger.info(f"训练进度可视化已保存: {save_path}")
+        log_msg = self._get_label(f"训练进度可视化已保存: {save_path}", f"Training progress visualization saved: {save_path}")
+        logger.info(log_msg)
         return str(save_path)
     
     def _reshape_to_2d(self, data: np.ndarray) -> np.ndarray:
@@ -559,7 +638,8 @@ MAE: {mae:.6f}
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write(report_content)
         
-        logger.info(f"可视化报告已生成: {report_path}")
+        log_msg = self._get_label(f"可视化报告已生成: {report_path}", f"Visualization report generated: {report_path}")
+        logger.info(log_msg)
         return str(report_path)
 
 
@@ -567,7 +647,7 @@ def demo_visualization():
     """
     演示可视化功能
     """
-    logger.info("开始演示预测可视化功能...")
+    logger.info("Starting prediction visualization demo...")
     
     # 创建可视化器
     visualizer = PredictionVisualizer("demo_prediction_visualizations")
@@ -583,21 +663,21 @@ def demo_visualization():
     prediction_data = target_data + np.random.normal(0, 0.1, target_data.shape)
     
     # 演示单样本可视化
-    logger.info("生成单样本预测可视化...")
+    logger.info("Generating single sample prediction visualization...")
     visualizer.visualize_single_prediction(
         input_data, target_data, prediction_data, 
         epoch=10, sample_idx=0, time_step=0.5
     )
     
     # 演示误差分析
-    logger.info("生成误差分析可视化...")
+    logger.info("Generating error analysis visualization...")
     visualizer.visualize_prediction_with_error(
         input_data, target_data, prediction_data,
         epoch=10, sample_idx=0
     )
     
     # 演示批次可视化
-    logger.info("生成批次预测可视化...")
+    logger.info("Generating batch prediction visualization...")
     batch_size = 4
     inputs_batch = np.random.randn(batch_size, 20, 20)
     targets_batch = np.random.randn(batch_size, 200, 200)
@@ -609,7 +689,7 @@ def demo_visualization():
     )
     
     # 演示训练进度可视化
-    logger.info("生成训练进度可视化...")
+    logger.info("Generating training progress visualization...")
     prediction_history = []
     epochs = [1, 5, 10, 15, 20]
     
@@ -629,10 +709,10 @@ def demo_visualization():
     )
     
     # 生成摘要报告
-    logger.info("生成可视化摘要报告...")
+    logger.info("Generating visualization summary report...")
     visualizer.generate_summary_report(epoch=10, num_samples_visualized=4)
     
-    logger.info(f"演示完成！所有可视化结果已保存到: {visualizer.output_dir}")
+    logger.info(f"Demo completed! All visualization results saved to: {visualizer.output_dir}")
 
 
 def main():

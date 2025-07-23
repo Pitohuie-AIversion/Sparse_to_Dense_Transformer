@@ -264,21 +264,40 @@ class HardwareMonitor:
     
     def save_metrics(self):
         """保存监控指标到文件"""
-        metrics_data = {
-            "training_metrics": self.training_metrics,
-            "epoch_metrics": self.epoch_metrics,
-            "batch_metrics": self.batch_metrics,
-        }
-        
-        # 保存为JSON格式
-        metrics_path = self.log_dir / "hardware_metrics.json"
-        with open(metrics_path, 'w', encoding='utf-8') as f:
-            json.dump(metrics_data, f, indent=2, ensure_ascii=False)
-        
-        # 保存为CSV格式（便于分析）
-        self._save_metrics_csv()
-        
-        self.logger.info(f"硬件监控数据已保存到: {metrics_path}")
+        try:
+            # 确保目录存在
+            self.log_dir.mkdir(parents=True, exist_ok=True)
+            self.logger.info(f"硬件监控目录: {self.log_dir}")
+            
+            metrics_data = {
+                "training_metrics": self.training_metrics,
+                "epoch_metrics": self.epoch_metrics,
+                "batch_metrics": self.batch_metrics,
+            }
+            
+            self.logger.info(f"准备保存硬件监控数据，包含 {len(self.training_metrics)} 个训练指标，{len(self.epoch_metrics)} 个epoch指标")
+            
+            # 保存为JSON格式
+            metrics_path = self.log_dir / "hardware_metrics.json"
+            self.logger.info(f"保存路径: {metrics_path}")
+            
+            with open(metrics_path, 'w', encoding='utf-8') as f:
+                json.dump(metrics_data, f, indent=2, ensure_ascii=False)
+            
+            # 验证文件是否成功保存
+            if metrics_path.exists():
+                file_size = metrics_path.stat().st_size
+                self.logger.info(f"硬件监控数据已成功保存到: {metrics_path}，文件大小: {file_size} 字节")
+            else:
+                self.logger.error(f"文件保存失败，文件不存在: {metrics_path}")
+            
+            # 保存为CSV格式（便于分析）
+            self._save_metrics_csv()
+            
+        except Exception as e:
+            self.logger.error(f"保存硬件监控数据失败: {e}")
+            import traceback
+            self.logger.error(f"详细错误信息: {traceback.format_exc()}")
     
     def _save_metrics_csv(self):
         """保存指标为CSV格式"""

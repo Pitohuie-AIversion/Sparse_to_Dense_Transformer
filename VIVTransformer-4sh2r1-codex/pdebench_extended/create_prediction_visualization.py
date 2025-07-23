@@ -26,6 +26,13 @@ import torch.nn as nn
 from datetime import datetime
 import seaborn as sns
 
+# 设置日志 - 必须在使用logger之前定义
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
 # 设置matplotlib字体 - 兼容Linux服务器
 try:
     # 尝试设置中文字体
@@ -58,13 +65,6 @@ sns.set_style("whitegrid")
 
 # 检查是否使用中文标签
 USE_CHINESE = globals().get('USE_CHINESE', True)
-
-# 设置日志
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
 
 class PredictionVisualizer:
@@ -500,9 +500,13 @@ Prediction: [{np.min(prediction_2d):.3f}, {np.max(prediction_2d):.3f}]
             # 保存单个epoch的图
             epoch_save_path = progress_dir / f"epoch_{epoch:04d}_prediction.png"
             plt.tight_layout()
-            plt.savefig(epoch_save_path, dpi=150, bbox_inches='tight')
+            try:
+                plt.savefig(epoch_save_path, dpi=150, bbox_inches='tight')
+                logger.info(f"已保存epoch {epoch}图片: {epoch_save_path}")
+                saved_files.append(str(epoch_save_path))
+            except Exception as e:
+                logger.error(f"保存epoch {epoch}图片失败: {e}")
             plt.close()
-            saved_files.append(str(epoch_save_path))
         
         # 单独创建MSE趋势图
         fig, ax = plt.subplots(1, 1, figsize=(10, 6))
@@ -517,9 +521,13 @@ Prediction: [{np.min(prediction_2d):.3f}, {np.max(prediction_2d):.3f}]
         # 保存MSE趋势图
         mse_save_path = progress_dir / "mse_trend.png"
         plt.tight_layout()
-        plt.savefig(mse_save_path, dpi=150, bbox_inches='tight')
+        try:
+            plt.savefig(mse_save_path, dpi=150, bbox_inches='tight')
+            logger.info(f"已保存MSE趋势图: {mse_save_path}")
+            saved_files.append(str(mse_save_path))
+        except Exception as e:
+            logger.error(f"保存MSE趋势图失败: {e}")
         plt.close()
-        saved_files.append(str(mse_save_path))
         
         # 创建汇总图（较小尺寸）
         max_epochs_in_summary = min(10, num_epochs)  # 最多显示10个epoch
@@ -594,9 +602,13 @@ Prediction: [{np.min(prediction_2d):.3f}, {np.max(prediction_2d):.3f}]
         if save_path is None:
             save_path = progress_dir / "training_progress_summary.png"
         
-        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        try:
+            plt.savefig(save_path, dpi=150, bbox_inches='tight')
+            logger.info(f"已保存汇总图: {save_path}")
+            saved_files.append(str(save_path))
+        except Exception as e:
+            logger.error(f"保存汇总图失败: {e}")
         plt.close()
-        saved_files.append(str(save_path))
         
         log_msg = self._get_label(
             f"训练进度可视化已保存: {len(saved_files)} 个文件到 {progress_dir}", 

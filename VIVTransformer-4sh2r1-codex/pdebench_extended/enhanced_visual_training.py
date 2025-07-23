@@ -519,20 +519,19 @@ def enhanced_training_demo(num_epochs: int = 20, output_dir: str = "enhanced_tra
                 epoch_time=epoch_time
             )
             
-            # 记录预测结果（每2个epoch记录一次）
-            if epoch % 2 == 0:
-                # 转换为numpy数组用于可视化
-                input_np = val_inputs[0].cpu().numpy()
-                target_np = val_targets[0].cpu().numpy()
-                prediction_np = val_outputs[0].cpu().numpy()
-                
-                training_logger.log_prediction(
-                    epoch=epoch,
-                    input_data=input_np,
-                    target_data=target_np,
-                    prediction_data=prediction_np,
-                    sample_idx=0
-                )
+            # 记录预测结果（每个epoch都记录）
+            # 转换为numpy数组用于可视化
+            input_np = val_inputs[0].cpu().numpy()
+            target_np = val_targets[0].cpu().numpy()
+            prediction_np = val_outputs[0].cpu().numpy()
+            
+            training_logger.log_prediction(
+                epoch=epoch,
+                input_data=input_np,
+                target_data=target_np,
+                prediction_data=prediction_np,
+                sample_idx=0
+            )
             
             # 记录批次预测（每5个epoch记录一次）
             if epoch % 5 == 0:

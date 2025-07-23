@@ -6,6 +6,11 @@
 
 set -e  # 遇到错误立即退出
 
+# 切换到主项目目录
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")/VIVTransformer-4sh2r1-codex/pdebench_extended"
+cd "$PROJECT_DIR"
+
 # 颜色定义
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -17,7 +22,7 @@ NC='\033[0m' # No Color
 
 # 配置参数
 DATA_PATH="data/pressure_field_data.pt"
-CONFIG_FILE="../VIVTransformer-4sh2r1-codex/pdebench_extended/configs/pressure_field_training.yaml"
+CONFIG_FILE="configs/pressure_field_training.yaml"
 OUTPUT_DIR="outputs"
 EXPERIMENT_NAME="pressure_field_training_$(date +%Y%m%d_%H%M%S)"
 
@@ -120,7 +125,7 @@ else
     fi
     
     # 检查用户提供的数据集路径
-    USER_DATA_PATH="../VIVTransformer-4sh2r1-codex/pdebench_extended/data/PDEBench/pdebench/data_download/data/2D/DarcyFlow/2D_DarcyFlow_beta0.1_Train.hdf5"
+    USER_DATA_PATH="data/PDEBench/pdebench/data_download/data/2D/DarcyFlow/2D_DarcyFlow_beta0.1_Train.hdf5"
     if [ -f "$USER_DATA_PATH" ]; then
         DATA_PATH="$USER_DATA_PATH"
         DATA_SIZE=$(stat -f%z "$USER_DATA_PATH" 2>/dev/null || stat -c%s "$USER_DATA_PATH" 2>/dev/null)
@@ -233,9 +238,9 @@ read -p "请选择运行模式 [1-5]: " RUN_CHOICE
 case $RUN_CHOICE in
     1)
         echo -e "${GREEN}开始训练...${NC}"
-        echo "训练命令: $PYTHON_CMD ../VIVTransformer-4sh2r1-codex/pdebench_extended/train_pressure_field.py --config $CONFIG_FILE --data_path $DATA_PATH"
+        echo "训练命令: $PYTHON_CMD train_pressure_field.py --config $CONFIG_FILE --data_path $DATA_PATH"
         echo
-        $PYTHON_CMD ../VIVTransformer-4sh2r1-codex/pdebench_extended/train_pressure_field.py --config "$CONFIG_FILE" --data_path "$DATA_PATH"
+        $PYTHON_CMD train_pressure_field.py --config "$CONFIG_FILE" --data_path "$DATA_PATH"
         ;;
     2)
         echo -e "${BLUE}启动TensorBoard...${NC}"
@@ -250,7 +255,7 @@ case $RUN_CHOICE in
     3)
         echo -e "${YELLOW}测试模式...${NC}"
         echo "运行快速验证（1个epoch）"
-        $PYTHON_CMD ../VIVTransformer-4sh2r1-codex/pdebench_extended/train_pressure_field.py --config "$CONFIG_FILE" --data_path "$DATA_PATH" --epochs 1
+        $PYTHON_CMD train_pressure_field.py --config "$CONFIG_FILE" --data_path "$DATA_PATH" --epochs 1
         ;;
     4)
         echo -e "${CYAN}配置信息:${NC}"
@@ -267,7 +272,7 @@ case $RUN_CHOICE in
         ;;
     *)
         echo "无效选择，默认开始训练"
-        $PYTHON_CMD ../VIVTransformer-4sh2r1-codex/pdebench_extended/train_pressure_field.py --config "$CONFIG_FILE" --data_path "$DATA_PATH"
+        $PYTHON_CMD train_pressure_field.py --config "$CONFIG_FILE" --data_path "$DATA_PATH"
         ;;
 esac
 

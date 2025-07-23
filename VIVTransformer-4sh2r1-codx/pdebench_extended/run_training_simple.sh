@@ -8,7 +8,7 @@
 set -e
 
 # 服务器配置参数 (可根据需要修改)
-DATA_PATH="${DATA_PATH:-./data/pressure_data.pt}"  # 数据文件路径
+DATA_PATH="${DATA_PATH:-./data/PDEBench/pdebench/data_download/data/2D/DarcyFlow/2D_DarcyFlow_beta100.0_Train.hdf5}"  # 数据文件路径
 CONFIG_PATH="pdebench_extended/configs/pressure_field_training.yaml"  # 配置文件路径
 OUTPUT_BASE="./outputs"  # 输出基础目录
 EXPERIMENT_NAME="pressure_field_$(date +%Y%m%d_%H%M%S)"  # 实验名称
@@ -34,7 +34,7 @@ echo ""
 echo -e "${CYAN}=== 服务器环境检查 ===${NC}"
 
 # 创建必要目录
-mkdir -p "$LOG_DIR" "$OUTPUT_BASE" "$DATA_DIR"
+mkdir -p "$LOG_DIR" "$OUTPUT_BASE"
 
 # 日志文件设置
 SCRIPT_LOG="$LOG_DIR/training_script_$(date +%Y%m%d_%H%M%S).log"
@@ -222,8 +222,8 @@ if [[ ! -f "$DATA_PATH" ]]; then
     echo -e "${YELLOW}数据文件不存在: $DATA_PATH${NC}"
     echo "正在搜索现有数据文件..."
     
-    # 自动搜索.pt和.hdf5文件
-    DATA_FILES=($(find . -name "*.pt" -o -name "*.hdf5" -type f 2>/dev/null | head -10))
+    # 自动搜索.pt、.hdf5和.h5文件
+    DATA_FILES=($(find . -name "*.pt" -o -name "*.hdf5" -o -name "*.h5" -type f 2>/dev/null | head -10))
     
     if [[ ${#DATA_FILES[@]} -eq 0 ]]; then
         echo -e "${YELLOW}未找到现有数据文件，开始下载数据集...${NC}"
@@ -1177,3 +1177,4 @@ echo -e "${YELLOW}提示: 建议定期检查训练状态和系统资源使用情
 echo -e "${YELLOW}如遇问题，请查看日志文件或联系技术支持${NC}"
 
 log_info "服务器训练启动流程全部完成"
+fi

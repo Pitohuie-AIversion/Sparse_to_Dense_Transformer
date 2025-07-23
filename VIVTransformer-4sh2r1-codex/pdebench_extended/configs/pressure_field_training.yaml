@@ -15,7 +15,7 @@ global:
 # 数据配置
 data:
   # 数据路径（请根据实际情况修改）
-  path: "x:/2025/Graduation_project/report/VIVTransformer-4sh2r1-codex/modify_multi_attention/data/pressure_data.pt"
+  path: "x:/2025/Graduation_project/report/VIVTransformer-4sh2r1-codx/pdebench_extended/data/PDEBench/pdebench/data_download/data/2D/DarcyFlow/2D_DarcyFlow_beta0.1_Train.hdf5"
   
   # 数据类型
   data_type: "pressure_field"

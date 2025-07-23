@@ -237,6 +237,20 @@ data/external/
 *.pdf
 *.eps
 
+# Training visualization outputs
+enhanced_training_output/
+quick_test_output/
+demo_training_output/
+demo_prediction_visualizations/
+training_output/
+visualization_output/
+prediction_output/
+hardware_logs/
+training_logs/
+monitoring_logs/
+visualization_reports/
+prediction_visualizations/
+
 # Jupyter notebook outputs
 *.ipynb
 

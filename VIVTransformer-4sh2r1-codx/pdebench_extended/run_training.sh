@@ -7,9 +7,16 @@
 set -e  # 遇到错误立即退出
 
 # 切换到主项目目录
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$(dirname "$SCRIPT_DIR")/VIVTransformer-4sh2r1-codex/pdebench_extended"
-cd "$PROJECT_DIR"
+# 直接使用相对路径，更简单可靠
+PROJECT_DIR="../../VIVTransformer-4sh2r1-codex/pdebench_extended"
+if [ -d "$PROJECT_DIR" ]; then
+    cd "$PROJECT_DIR"
+else
+    echo "错误: 无法找到项目目录 $PROJECT_DIR"
+    echo "当前目录: $(pwd)"
+    echo "请确保脚本在正确的位置运行"
+    exit 1
+fi
 
 # 颜色定义
 RED='\033[0;31m'
@@ -51,14 +58,22 @@ else
 fi
 
 # 检查PyTorch
-if $PYTHON_CMD -c "import torch" &> /dev/null; then
-    TORCH_VERSION=$($PYTHON_CMD -c "import torch; print(torch.__version__)" 2>&1)
-    CUDA_AVAILABLE=$($PYTHON_CMD -c "import torch; print(torch.cuda.is_available())" 2>&1)
-    echo -e "${GREEN}✓${NC} PyTorch: $TORCH_VERSION (CUDA: $CUDA_AVAILABLE)"
-else
+PYTORCH_FOUND=0
+for cmd in python3 python; do
+    if command -v $cmd &> /dev/null && $cmd -c "import torch" &> /dev/null; then
+        TORCH_VERSION=$($cmd -c "import torch; print(torch.__version__)" 2>&1)
+        CUDA_AVAILABLE=$($cmd -c "import torch; print(torch.cuda.is_available())" 2>&1)
+        echo -e "${GREEN}✓${NC} PyTorch: $TORCH_VERSION (CUDA: $CUDA_AVAILABLE) [$cmd]"
+        PYTHON_CMD=$cmd
+        PYTORCH_FOUND=1
+        break
+    fi
+done
+
+if [ $PYTORCH_FOUND -eq 0 ]; then
     echo -e "${RED}❌ PyTorch未安装${NC}"
     echo "请安装PyTorch: pip install torch torchvision torchaudio"
-    exit 1
+    echo "继续运行可能会出现错误..."
 fi
 
 # 检查其他依赖
@@ -142,8 +157,10 @@ else
         echo "2. 手动下载数据"
         echo "3. 生成示例数据用于测试"
         echo "4. 退出"
+        echo "5. 跳过数据检查（测试模式）"
         echo
-        read -p "请选择 [1-4]: " DATA_CHOICE
+        echo "自动选择选项5: 跳过数据检查（测试模式）"
+        DATA_CHOICE=5
         
         case $DATA_CHOICE in
             1)
@@ -190,6 +207,11 @@ print('示例数据已生成: data/sample_pressure_data.pt')
                 echo "退出"
                 exit 0
                 ;;
+            5)
+                echo -e "${BLUE}跳过数据检查，进入测试模式...${NC}"
+                DATA_PATH="test_mode"
+                DATA_FOUND=1
+                ;;
             *)
                 echo "无效选择"
                 exit 1
@@ -233,14 +255,15 @@ echo "3. 测试模式（快速验证）"
 echo "4. 查看配置信息"
 echo "5. 退出"
 echo
-read -p "请选择运行模式 [1-5]: " RUN_CHOICE
+echo "自动选择选项3: 测试模式（快速验证）"
+RUN_CHOICE=3
 
 case $RUN_CHOICE in
     1)
         echo -e "${GREEN}开始训练...${NC}"
-        echo "训练命令: $PYTHON_CMD train_pressure_field.py --config $CONFIG_FILE --data_path $DATA_PATH"
+        echo "训练命令: $PYTHON_CMD $PROJECT_DIR/train_pressure_field.py --config $CONFIG_FILE --data_path $DATA_PATH"
         echo
-        $PYTHON_CMD train_pressure_field.py --config "$CONFIG_FILE" --data_path "$DATA_PATH"
+        $PYTHON_CMD "$PROJECT_DIR/train_pressure_field.py" --config "$CONFIG_FILE" --data_path "$DATA_PATH"
         ;;
     2)
         echo -e "${BLUE}启动TensorBoard...${NC}"
@@ -255,7 +278,7 @@ case $RUN_CHOICE in
     3)
         echo -e "${YELLOW}测试模式...${NC}"
         echo "运行快速验证（1个epoch）"
-        $PYTHON_CMD train_pressure_field.py --config "$CONFIG_FILE" --data_path "$DATA_PATH" --epochs 1
+        $PYTHON_CMD "$PROJECT_DIR/train_pressure_field.py" --config "$CONFIG_FILE" --data_path "$DATA_PATH" --epochs 1
         ;;
     4)
         echo -e "${CYAN}配置信息:${NC}"
@@ -272,7 +295,7 @@ case $RUN_CHOICE in
         ;;
     *)
         echo "无效选择，默认开始训练"
-        $PYTHON_CMD train_pressure_field.py --config "$CONFIG_FILE" --data_path "$DATA_PATH"
+        $PYTHON_CMD "$PROJECT_DIR/train_pressure_field.py" --config "$CONFIG_FILE" --data_path "$DATA_PATH"
         ;;
 esac
 

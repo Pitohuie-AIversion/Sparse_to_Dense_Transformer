@@ -602,6 +602,39 @@ def load_config(config_path: str) -> Dict[str, Any]:
     """加载配置文件"""
     with open(config_path, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
+    
+    # 修复数值类型的配置项
+    if 'training' in config:
+        # 确保学习率是浮点数
+        if 'learning_rate' in config['training']:
+            config['training']['learning_rate'] = float(config['training']['learning_rate'])
+        # 确保权重衰减是浮点数
+        if 'weight_decay' in config['training']:
+            config['training']['weight_decay'] = float(config['training']['weight_decay'])
+        # 确保梯度裁剪是浮点数
+        if 'gradient_clip_norm' in config['training']:
+            config['training']['gradient_clip_norm'] = float(config['training']['gradient_clip_norm'])
+        
+        # 修复优化器配置中的数值参数
+        if 'optimizer' in config['training']:
+            opt_config = config['training']['optimizer']
+            if 'eps' in opt_config:
+                opt_config['eps'] = float(opt_config['eps'])
+            if 'betas' in opt_config and isinstance(opt_config['betas'], list):
+                opt_config['betas'] = [float(x) for x in opt_config['betas']]
+        
+        # 修复调度器配置中的数值参数
+        if 'scheduler' in config['training']:
+            sched_config = config['training']['scheduler']
+            if 'eta_min' in sched_config:
+                sched_config['eta_min'] = float(sched_config['eta_min'])
+            if 'gamma' in sched_config:
+                sched_config['gamma'] = float(sched_config['gamma'])
+            if 'factor' in sched_config:
+                sched_config['factor'] = float(sched_config['factor'])
+            if 'threshold' in sched_config:
+                sched_config['threshold'] = float(sched_config['threshold'])
+    
     return config
 
 

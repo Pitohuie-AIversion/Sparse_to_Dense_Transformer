@@ -467,7 +467,22 @@ def analyze_pressure_field_data(data_path: str) -> Dict[str, Any]:
     
     # 计算统计量
     analysis_result = {
-        'dataset_info': dataset.get_data_info(),
+        'dataset_info': {
+            'data_type': 'pressure_field_reconstruction',
+            'input_dim': dataset.input_dim,
+            'output_dim': dataset.output_dim,
+            'input_shape': dataset.input_shape,
+            'output_shape': dataset.output_shape,
+            'total_samples': dataset.total_samples,
+            'split_samples': len(dataset.indices),
+            'split': dataset.split,
+            'normalize': dataset.normalize,
+            'normalize_method': dataset.normalize_method,
+            'augmentation': dataset.augmentation,
+            'upsampling_factor': 10,  # 20x20 -> 200x200
+            'task_type': 'spatial_super_resolution',
+            'physics_domain': 'fluid_dynamics'
+        },
         'input_statistics': {
             'mean': float(np.mean(input_values)),
             'std': float(np.std(input_values)),

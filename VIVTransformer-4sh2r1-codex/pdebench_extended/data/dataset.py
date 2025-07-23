@@ -25,15 +25,12 @@ class PressureDataset(Dataset):
             transform: Optional transform to be applied on a sample.
         """
         self.data = torch.load(merged_file_path)
-        self.in_pressures = self.data["in_pressure"]
-        self.pressures = self.data["pressure"]
-        self.time_steps = np.array(self.data["time_steps"])
+        self.in_pressures = self.data["in_pressure"]  # Shape: [N, 400]
+        self.pressures = self.data["pressure"]        # Shape: [N, 40000]
+        self.time_steps = self.data["time_steps"]     # Shape: [N]
         self.transform = transform
 
-        if len(self.time_steps.shape) == 1:
-            self.time_steps = np.array([self.time_steps] * len(self.in_pressures))
-
-        self.num_samples = len(self.in_pressures) * len(self.in_pressures[0])
+        self.num_samples = len(self.in_pressures)
 
     def __len__(self) -> int:
         return self.num_samples
@@ -50,21 +47,22 @@ class PressureDataset(Dataset):
             - The ground truth pressure tensor.
             - The corresponding time step.
         """
-        reynolds_idx = idx // len(self.in_pressures[0])
-        time_step_idx = idx % len(self.in_pressures[0])
+        # 直接从数据中获取样本
+        in_press = self.in_pressures[idx]  # Shape: [400]
+        pressure = self.pressures[idx]     # Shape: [40000]
+        time_step = self.time_steps[idx]   # Scalar
 
-        in_press = self.in_pressures[reynolds_idx, time_step_idx]
-        pressure = self.pressures[reynolds_idx, time_step_idx]
-        time_step = self.time_steps[reynolds_idx][time_step_idx]
+        # 应用变换（如果有）
+        if self.transform:
+            # 重塑为2D进行变换
+            in_press_2d = in_press.view(20, 20)
+            pressure_2d = pressure.view(200, 200)
+            
+            in_press_2d = self.transform(in_press_2d)
+            pressure_2d = self.transform(pressure_2d)
+            
+            # 重新展平
+            in_press = in_press_2d.reshape(-1)
+            pressure = pressure_2d.reshape(-1)
 
-        # Reshape to 2D before transform
-        in_press_2d = in_press.view(20, 20)
-        pressure_2d = pressure.view(200, 200)
-
-
-
-        # Flatten after transform
-        in_press_flat = in_press_2d.reshape(-1)
-        pressure_flat = pressure_2d.reshape(-1)
-
-        return in_press_flat, pressure_flat, time_step
+        return in_press, pressure, float(time_step)

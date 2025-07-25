@@ -1,0 +1,393 @@
+# 多尺度超分辨率重构配置文件
+# 支持从低分辨率输入重构到高分辨率输出
+# 基于VIVTransformer项目架构设计
+
+# 全局配置 - 与主项目保持一致
+global:
+  seed: 42
+  deterministic: true
+  device: "cuda:0"              # 强烈建议明确指定主卡
+  max_memory_fraction: 0.8      # 每进程最大显存占用比例
+  use_dataparallel: true        # 双卡/多卡训练控制
+
+# 项目配置
+project_name: "VIVTransformer_MultiScale"
+experiment_name: "darcy_flow_super_resolution"
+
+# 数据配置
+data:
+  use_multiscale: true  # 使用多尺度适配器
+  data_path: "data/pdebench/darcy_flow_beta_0.01.h5"  # 数据文件路径
+  pde_type: "darcy_flow"  # PDE类型
+  
+  # 多尺度参数
+  scale_factor: 2  # 缩放因子：2表示64x64->128x128, 4表示32x32->128x128
+  original_resolution: [128, 128]  # 原始高分辨率
+  downsampling_method: "center_crop"  # 下采样方法："center_crop", "average", "bilinear", "nearest"
+  
+  # 中心截取配置
+  enable_center_crop: true  # 是否启用输入输出的中心截取
+  center_crop_input_resolution: [64, 64]   # 输入数据中心截取分辨率
+  center_crop_output_resolution: [96, 96]  # 输出数据中心截取分辨率
+  
+  # 数据处理
+  sequence_length: 1
+  normalize: true
+  batch_size: 16  # 由于输出维度较大，使用较小的批次
+  num_workers: 4
+  pin_memory: true
+
+# 模型配置 - 与主项目架构保持一致
+model:
+  # 注意力机制类型 - 与主项目保持一致
+  attention_type: "relative"  # 默认使用相对位置注意力
+  
+  # 根据缩放因子自动计算维度
+  # scale_factor=2: input_dim=64*64*1=4096, output_dim=128*128*1=16384
+  # scale_factor=4: input_dim=32*32*1=1024, output_dim=128*128*1=16384
+  input_dim: 4096   # 低分辨率输入维度 (64x64x1)
+  output_dim: 16384 # 高分辨率输出维度 (128x128x1)
+  
+  # Transformer架构参数
+  d_model: 512
+  num_heads: 8      # 与主项目保持一致
+  num_layers: 6     # 与主项目保持一致
+  max_time_steps: 100
+  seq_len: 49       # 明确指定7x7空间尺寸，支持CNN注意力
+  
+  # 前馈网络
+  dim_feedforward: 2048
+  dropout: 0.1
+  activation: "relu"
+
+# 训练配置
+training:
+  epochs: 100
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  
+  # 学习率调度
+  scheduler:
+    type: "StepLR"  # "StepLR", "CosineAnnealingLR", "ReduceLROnPlateau"
+    step_size: 30
+    gamma: 0.5
+  
+  # 早停
+  early_stopping:
+    patience: 15
+    min_delta: 0.0001
+  
+  # 检查点
+  save_checkpoint: true
+  checkpoint_interval: 10
+  save_best_only: true
+
+# 损失函数配置 - 集成SVD损失函数
+loss:
+  # 使用项目中的TotalLossWithSVD损失函数
+  type: "TotalLossWithSVD"
+  
+  # SVD损失配置 - 多尺度任务优化配置
+  svd_config:
+    base_weight: 0.7  # 基础MSE损失权重
+    svd_weights: [0.1, 0.08, 0.06, 0.04, 0.02]  # 前5个SVD模态权重
+    topk: 5  # 使用前5个SVD模态
+  
+  # 额外损失函数（用于超分辨率任务）
+  additional:
+    - type: "L1Loss"  # L1损失有助于保持细节
+      weight: 0.05
+    - type: "SSIMLoss"  # 结构相似性损失（如果实现）
+      weight: 0.03
+
+# 注意力机制配置 - 与主项目保持一致
+attention_types:
+  - "relative"      # 相对位置注意力（默认）
+  - "sparse"        # 稀疏注意力
+  - "lsh"           # LSH注意力
+  - "se"            # SE注意力
+  - "sk"            # SK注意力
+  - "cbam"          # CBAM注意力
+  - "sge"           # SGE注意力
+  - "muse"          # MUSE注意力
+  - "mobilevit"     # MobileViT注意力
+  - "dat"           # DAT注意力
+  - "crossformer"   # CrossFormer注意力
+  - "moa"           # MOA注意力
+
+# 注意力测试配置
+attention_test:
+  types: 
+    - self
+    - simplified_self
+    - muse
+    - ufo
+    - relative
+    - sparse
+    - lsh
+    - emsa
+    - mobilevit
+    - mobilevitv2
+    - dat
+    - crossformer
+    - moa
+    - crisscross
+
+# 评估配置
+evaluation:
+  metrics:
+    - "mse"          # 均方误差
+    - "mae"          # 平均绝对误差
+    - "psnr"         # 峰值信噪比
+    - "ssim"         # 结构相似性指数
+    - "lpips"        # 感知损失（如果可用）
+  
+  # 评估频率
+  eval_frequency: 10  # 每10个epoch评估一次
+  save_best_model: true
+  
+# 可视化配置 - 与主项目保持一致
+visualization:
+  enabled: true  # 是否启用可视化
+  interval: 100   # 每隔多少个 epoch 画一次图
+  max_samples: 5 # 最多可视化多少个样本
+  save_predictions: true
+  save_path: "results/multiscale_predictions"
+  
+  # 可视化类型
+  plot_types:
+    - "input_output_comparison"  # 输入输出对比
+    - "error_maps"              # 误差图
+    - "attention_maps"          # 注意力图（如果启用）
+    - "loss_curves"             # 损失曲线
+    - "metric_trends"           # 指标趋势
+
+# 硬件监控配置 - 与主项目保持一致
+hardware_monitoring:
+  enable_gpu_monitoring: true
+  log_batch_metrics: true
+  batch_log_interval: 50
+  save_detailed_metrics: true
+  monitor_temperature: true
+  monitor_power_usage: true
+
+# 日志配置
+logging:
+  level: "INFO"
+  save_logs: true
+  log_dir: "logs/multiscale"
+  tensorboard: true
+  wandb:
+    enabled: false
+    project: "vivtransformer-multiscale"
+
+# 输出配置
+output:
+  save_dir: "results/multiscale"
+  save_model: true
+  save_predictions: true
+  save_plots: true
+
+# 多尺度实验配置
+multiscale_experiments:
+  # 不同缩放因子的实验
+  scale_factors: [2, 4, 8]  # 支持多种缩放比例
+  
+  # 每个缩放因子对应的配置
+  scale_configs:
+    2:  # 2倍缩放：64x64 -> 128x128
+      input_dim: 4096
+      output_dim: 16384
+      batch_size: 16
+      learning_rate: 0.0001
+      # SVD损失配置针对2倍缩放优化
+      svd_config:
+        base_weight: 0.75
+        svd_weights: [0.08, 0.06, 0.05, 0.04, 0.02]
+        topk: 5
+    
+    4:  # 4倍缩放：32x32 -> 128x128
+      input_dim: 1024
+      output_dim: 16384
+      batch_size: 32
+      learning_rate: 0.0002
+      # SVD损失配置针对4倍缩放优化
+      svd_config:
+        base_weight: 0.65
+        svd_weights: [0.12, 0.10, 0.08, 0.03, 0.02]
+        topk: 5
+    
+    8:  # 8倍缩放：16x16 -> 128x128
+      input_dim: 256
+      output_dim: 16384
+      batch_size: 64
+      learning_rate: 0.0005
+      # SVD损失配置针对8倍缩放优化
+      svd_config:
+        base_weight: 0.55
+        svd_weights: [0.15, 0.12, 0.10, 0.05, 0.03]
+        topk: 5
+
+# 数据增强配置（可选）
+augmentation:
+  enabled: false  # 对于超分辨率任务，通常不使用数据增强
+  
+  # 如果启用，可以使用以下增强
+  transforms:
+    - type: "GaussianNoise"
+      std: 0.01
+    - type: "RandomRotation"
+      degrees: 5
+
+# 验证配置
+validation:
+  # 验证频率
+  validate_every: 5  # 每5个epoch验证一次
+  
+  # 验证指标
+  primary_metric: "mse"  # 主要验证指标
+  
+  # 模型选择
+  model_selection: "best_val_loss"  # 基于验证损失选择最佳模型
+
+# 测试配置
+testing:
+  # 测试时的批次大小
+  batch_size: 8
+  
+  # 保存测试结果
+  save_results: true
+  
+  # 生成报告
+  generate_report: true
+  report_format: ["html", "pdf"]
+
+# 计算资源配置 - 与主项目保持一致
+compute:
+  # 内存优化
+  gradient_checkpointing: false  # 梯度检查点（节省内存但增加计算时间）
+  mixed_precision: false         # 混合精度训练
+  
+  # 并行化 - 与global配置保持一致
+  data_parallel: true
+  distributed: false
+  
+  # 内存管理
+  max_memory_usage: "80%"  # 最大内存使用率
+  clear_cache_every: 10    # 每10个batch清理缓存
+
+# PDEBench集成配置 - 支持多种PDE类型
+pdebench:
+  data_root: "./data/pdebench"
+  pde_configs:
+    darcy_flow:
+      data_file: "darcy_flow_beta_0.01.h5"
+      sequence_length: 1
+      spatial_resolution: [128, 128]
+      normalize: true
+    ns_incom:
+      data_file: "ns_incom_inhom_2d.h5"
+      sequence_length: 49
+      spatial_resolution: [128, 128]
+      normalize: true
+    ns_compressible:
+      data_file: "ns_compressible_2d.h5"
+      sequence_length: 49
+      spatial_resolution: [128, 128]
+      normalize: true
+
+# 调试配置
+debug:
+  enabled: false
+  
+  # 调试选项
+  options:
+    save_intermediate_results: false
+    verbose_logging: false
+    profile_memory: false
+    profile_compute: false
+    profile_time: false
+    save_attention_maps: false
+    check_gradients: false
+    
+# 实验管理配置 - 与主项目保持一致
+experiment_management:
+  # 实验版本控制
+  version_control:
+    enabled: true
+    save_code_snapshot: true
+    track_dependencies: true
+  
+  # 实验比较
+  comparison:
+    enabled: true
+    metrics_to_compare: ["mse", "mae", "psnr", "ssim"]
+    save_comparison_plots: true
+  
+  # 自动化实验
+  automation:
+    enabled: false
+    hyperparameter_search: false
+    early_termination: true
+
+# 超参数搜索配置（可选）
+hyperparameter_search:
+  enabled: false
+  
+  # 搜索空间
+  search_space:
+    learning_rate: [0.0001, 0.001]
+    d_model: [256, 512, 1024]
+    num_layers: [4, 6, 8]
+    dropout: [0.1, 0.2, 0.3]
+    # 多尺度特定参数
+    scale_factor: [2, 4, 8]
+    svd_topk: [3, 5, 10]
+  
+  # 搜索策略
+  strategy: "random"  # "random", "grid", "bayesian"
+  num_trials: 20
+  
+  # 优化目标
+  objective: "minimize"
+  metric: "val_loss"
+
+# 高级配置 - 与主项目保持一致
+advanced:
+  # 梯度裁剪
+  gradient_clipping:
+    enabled: true
+    max_norm: 1.0
+    norm_type: 2
+  
+  # 权重初始化
+  weight_initialization:
+    method: "xavier_uniform"  # "xavier_uniform", "kaiming_normal", "normal"
+    gain: 1.0
+  
+  # 正则化
+  regularization:
+    l1_weight: 0.0
+    l2_weight: 0.0001
+    dropout_schedule: false  # 是否使用dropout调度
+  
+  # 模型保存策略
+  model_saving:
+    save_every_n_epochs: 10
+    keep_last_n_checkpoints: 5
+    save_optimizer_state: true
+    compress_checkpoints: false
+
+# 兼容性配置
+compatibility:
+  # 向后兼容
+  legacy_mode: false
+  
+  # 版本信息
+  config_version: "2.0"
+  min_pytorch_version: "1.12.0"
+  
+  # 警告设置
+  warnings:
+    deprecated_features: true
+    performance_hints: true

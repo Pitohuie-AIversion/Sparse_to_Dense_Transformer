@@ -127,6 +127,19 @@ class CustomEncoderLayer(nn.Module):
         if isinstance(src2, tuple):
             src2 = src2[0]
 
+        # 确保src2与src的维度匹配
+        if src2.shape != src.shape:
+            # 如果维度不匹配，尝试调整src2的维度
+            if len(src2.shape) > len(src.shape):
+                # 如果src2维度更高，尝试压缩
+                src2 = src2.view(src.shape)
+            elif len(src2.shape) < len(src.shape):
+                # 如果src2维度更低，尝试扩展
+                src2 = src2.view(src.shape)
+            else:
+                # 维度数量相同但形状不同，尝试reshape
+                src2 = src2.view(src.shape)
+
         # 残差连接 + LayerNorm
         src = src + self.dropout1(src2)
         src = self.norm1(src)
@@ -208,6 +221,19 @@ class CustomDecoderLayer(nn.Module):
         if isinstance(tgt2, tuple):
             tgt2 = tgt2[0]
 
+        # 确保tgt2与tgt的维度匹配
+        if tgt2.shape != tgt.shape:
+            # 如果维度不匹配，尝试调整tgt2的维度
+            if len(tgt2.shape) > len(tgt.shape):
+                # 如果tgt2维度更高，尝试压缩
+                tgt2 = tgt2.view(tgt.shape)
+            elif len(tgt2.shape) < len(tgt.shape):
+                # 如果tgt2维度更低，尝试扩展
+                tgt2 = tgt2.view(tgt.shape)
+            else:
+                # 维度数量相同但形状不同，尝试reshape
+                tgt2 = tgt2.view(tgt.shape)
+
         tgt = tgt + self.dropout1(tgt2)
         tgt = self.norm1(tgt)
 
@@ -226,6 +252,19 @@ class CustomDecoderLayer(nn.Module):
 
         if isinstance(tgt2, tuple):
             tgt2 = tgt2[0]
+
+        # 确保tgt2与tgt的维度匹配（cross-attention）
+        if tgt2.shape != tgt.shape:
+            # 如果维度不匹配，尝试调整tgt2的维度
+            if len(tgt2.shape) > len(tgt.shape):
+                # 如果tgt2维度更高，尝试压缩
+                tgt2 = tgt2.view(tgt.shape)
+            elif len(tgt2.shape) < len(tgt.shape):
+                # 如果tgt2维度更低，尝试扩展
+                tgt2 = tgt2.view(tgt.shape)
+            else:
+                # 维度数量相同但形状不同，尝试reshape
+                tgt2 = tgt2.view(tgt.shape)
 
         tgt = tgt + self.dropout2(tgt2)
         tgt = self.norm2(tgt)

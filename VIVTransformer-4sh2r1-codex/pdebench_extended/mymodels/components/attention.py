@@ -20,6 +20,14 @@ class RelativePositionSelfAttention(nn.Module):
         )
 
     def forward(self, query, key, value):
+        # 处理可能的多维输入
+        if len(query.shape) > 3:
+            query = query.view(-1, query.shape[-2], query.shape[-1])
+        if len(key.shape) > 3:
+            key = key.view(-1, key.shape[-2], key.shape[-1])
+        if len(value.shape) > 3:
+            value = value.view(-1, value.shape[-2], value.shape[-1])
+            
         batch_size, query_len, _ = query.size()
         _, key_len, _ = key.size()
 
@@ -76,6 +84,14 @@ class SparseSelfAttention(nn.Module):
         self.value = nn.Linear(d_model, d_model)
 
     def forward(self, query, key, value):
+        # 处理可能的多维输入
+        if len(query.shape) > 3:
+            query = query.view(-1, query.shape[-2], query.shape[-1])
+        if len(key.shape) > 3:
+            key = key.view(-1, key.shape[-2], key.shape[-1])
+        if len(value.shape) > 3:
+            value = value.view(-1, value.shape[-2], value.shape[-1])
+            
         batch_size, query_len, _ = query.size()
         _, key_len, _ = key.size()
 
@@ -137,6 +153,14 @@ class LSHSelfAttention(nn.Module):
         return torch.randint(0, 2, (batch_size, num_heads, seq_len), device=x.device)
 
     def forward(self, query, key, value):
+        # 处理可能的多维输入
+        if len(query.shape) > 3:
+            query = query.view(-1, query.shape[-2], query.shape[-1])
+        if len(key.shape) > 3:
+            key = key.view(-1, key.shape[-2], key.shape[-1])
+        if len(value.shape) > 3:
+            value = value.view(-1, value.shape[-2], value.shape[-1])
+            
         batch_size, query_len, _ = query.size()
         _, key_len, _ = key.size()
 

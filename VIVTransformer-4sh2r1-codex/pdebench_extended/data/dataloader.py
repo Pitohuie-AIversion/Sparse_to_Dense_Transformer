@@ -9,6 +9,7 @@ from pathlib import Path
 from . import transforms
 from .dataset import PressureDataset
 from .pdebench_adapter import PDEBenchDataset, PDEBenchDataLoader
+from ..multiscale.data.multiscale_adapter import MultiScaleDataset, MultiScaleDataLoader, create_multiscale_loaders
 
 
 class CustomSubset(Subset):
@@ -201,6 +202,61 @@ def get_pdebench_loaders(
     return train_loader, valid_loader, test_loader
 
 
+def get_multiscale_loaders(
+    config: Dict,
+    **kwargs
+) -> Dict[str, Any]:
+    """创建多尺度数据加载器
+    
+    Args:
+        config: 配置字典，包含多尺度相关设置
+        **kwargs: 额外参数
+        
+    Returns:
+        包含训练、验证、测试数据加载器和信息的字典
+    """
+    data_config = config.get('data', {})
+    
+    # 获取多尺度参数
+    data_path = data_config.get('data_path')
+    scale_factor = data_config.get('scale_factor', 2)
+    pde_type = data_config.get('pde_type', 'darcy_flow')
+    batch_size = data_config.get('batch_size', 32)
+    sequence_length = data_config.get('sequence_length', 1)
+    original_resolution = data_config.get('original_resolution', [128, 128])
+    normalize = data_config.get('normalize', True)
+    downsampling_method = data_config.get('downsampling_method', 'average')
+    num_workers = data_config.get('num_workers', 4)
+    pin_memory = data_config.get('pin_memory', True)
+    
+    # 获取中心截取参数
+    enable_center_crop = data_config.get('enable_center_crop', False)
+    center_crop_input_resolution = data_config.get('center_crop_input_resolution', [64, 64])
+    center_crop_output_resolution = data_config.get('center_crop_output_resolution', [96, 96])
+    
+    if not data_path:
+        raise ValueError("多尺度模式下必须指定data_path")
+    
+    # 创建多尺度数据加载器
+    loaders_info = create_multiscale_loaders(
+        data_path=data_path,
+        scale_factor=scale_factor,
+        pde_type=pde_type,
+        batch_size=batch_size,
+        sequence_length=sequence_length,
+        original_resolution=original_resolution,
+        normalize=normalize,
+        downsampling_method=downsampling_method,
+        num_workers=num_workers,
+        pin_memory=pin_memory,
+        enable_center_crop=enable_center_crop,
+        center_crop_input_resolution=center_crop_input_resolution,
+        center_crop_output_resolution=center_crop_output_resolution
+    )
+    
+    return loaders_info
+
+
 def get_adaptive_loaders(
     config: Dict,
     **kwargs
@@ -214,10 +270,16 @@ def get_adaptive_loaders(
     Returns:
         训练、验证、测试数据加载器的元组
     """
+    # 检查是否使用多尺度数据集
+    if config.get('data', {}).get('use_multiscale', False):
+        loaders_info = get_multiscale_loaders(config, **kwargs)
+        return loaders_info['train'], loaders_info['val'], loaders_info['test']
+    
     # 检查是否使用PDEBench数据集
-    if config.get('data', {}).get('use_pdebench', False):
+    elif config.get('data', {}).get('use_pdebench', False):
         pde_type = config.get('current_pde', 'ns_incom')
         return get_pdebench_loaders(config, pde_type=pde_type, **kwargs)
+    
     else:
         # 使用原有的数据加载方式
         data_path = config.get('data', {}).get('path')

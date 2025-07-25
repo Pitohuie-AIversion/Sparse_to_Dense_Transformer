@@ -251,6 +251,14 @@ monitoring_logs/
 visualization_reports/
 prediction_visualizations/
 
+# Multiscale training results
+multiscale_training_results*/
+configurable_multiscale_results*/
+
+# Large TensorBoard event files
+*.tfevents.*
+events.out.tfevents.*
+
 # Jupyter notebook outputs
 *.ipynb
 

@@ -198,3 +198,60 @@ def plot_difference_figure(
     # 保存图片到对应文件夹
     save_path = result_dir / f"{mode}_epoch_{epoch}_sample_{idx}_difference.png"
     _save_and_close_plot(save_path)
+
+
+def plot_gradient_flow(
+    model: torch.nn.Module,
+    epoch: int,
+    parent_dir: str = "gradient_results",
+    max_layers: int = 10
+) -> None:
+    """Plots and saves gradient flow visualization.
+
+    Args:
+        model: The PyTorch model to analyze gradients.
+        epoch: The current epoch number.
+        parent_dir: The root directory for saving results.
+        max_layers: Maximum number of layers to visualize.
+    """
+    result_dir = Path(parent_dir) / "gradient_flow"
+    result_dir.mkdir(exist_ok=True, parents=True)
+
+    # 收集梯度信息
+    ave_grads = []
+    max_grads = []
+    layers = []
+    
+    for name, param in model.named_parameters():
+        if param.grad is not None and param.requires_grad:
+            layers.append(name)
+            ave_grads.append(param.grad.abs().mean().cpu().item())
+            max_grads.append(param.grad.abs().max().cpu().item())
+    
+    if not layers:
+        print("No gradients found for visualization")
+        return
+    
+    # 限制显示的层数
+    if len(layers) > max_layers:
+        step = len(layers) // max_layers
+        layers = layers[::step][:max_layers]
+        ave_grads = ave_grads[::step][:max_layers]
+        max_grads = max_grads[::step][:max_layers]
+    
+    plt.figure(figsize=(12, 8))
+    plt.bar(np.arange(len(ave_grads)), max_grads, alpha=0.3, lw=1, color="c", label="max gradient")
+    plt.bar(np.arange(len(ave_grads)), ave_grads, alpha=0.3, lw=1, color="b", label="mean gradient")
+    plt.hlines(0, 0, len(ave_grads)+1, lw=2, color="k")
+    plt.xticks(range(0, len(ave_grads), 1), layers, rotation=45, ha='right')
+    plt.xlim(left=0, right=len(ave_grads))
+    plt.ylim(bottom=-0.001, top=max(max_grads)*1.02)
+    plt.xlabel("Layers")
+    plt.ylabel("Average Gradient")
+    plt.title(f"Gradient Flow at Epoch {epoch}")
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    
+    save_path = result_dir / f"gradient_flow_epoch_{epoch}.png"
+    _save_and_close_plot(save_path)

@@ -26,6 +26,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import yaml
+from utils.loss import TotalLossWithSVD
+from utils.visualization import plot_attention_maps, plot_gradient_flow
 
 # 添加项目路径
 sys.path.append(str(Path(__file__).parent))
@@ -108,6 +110,17 @@ class ConfigurableMultiScaleTrainer:
         
         data_config = self.config['data']
         
+        # 检查数据增强配置
+        augmentation_config = self.config.get('data_augmentation', {})
+        use_augmentation = augmentation_config.get('enabled', False)
+        
+        if use_augmentation:
+            self.logger.info("数据增强已启用")
+            enable_random_crop = augmentation_config.get('enable_random_crop', True)
+            enable_flip = augmentation_config.get('enable_flip', True)
+            noise_level = augmentation_config.get('noise_level', 0.01)
+            self.logger.info(f"数据增强配置: random_crop={enable_random_crop}, flip={enable_flip}, noise_level={noise_level}")
+        
         # 创建多尺度数据加载器
         loaders_info = create_multiscale_loaders(
             data_path=data_config.get('path', data_config.get('data_path', 'PDEBench/pdebench/data_download/2D_DarcyFlow_beta0.1_Train.hdf5')),
@@ -122,7 +135,9 @@ class ConfigurableMultiScaleTrainer:
             pin_memory=data_config.get('pin_memory', True),
             enable_center_crop=data_config.get('enable_center_crop', False),
             center_crop_input_resolution=data_config.get('center_crop_input_resolution'),
-            center_crop_output_resolution=data_config.get('center_crop_output_resolution')
+            center_crop_output_resolution=data_config.get('center_crop_output_resolution'),
+            use_augmentation=use_augmentation,
+            augmentation_config=augmentation_config
         )
         
         self.train_loader = loaders_info['train']
@@ -145,6 +160,9 @@ class ConfigurableMultiScaleTrainer:
         """设置模型"""
         model_config = self.config['model']
         
+        # 从配置文件中获取注意力类型，默认为relative
+        attention_type = model_config.get('attention_type', 'relative')
+        
         self.model = TransformerFlowReconstructionModel(
             input_dim=self.input_dim,
             output_dim=self.output_dim,
@@ -152,12 +170,14 @@ class ConfigurableMultiScaleTrainer:
             num_layers=model_config['num_layers'],
             num_heads=model_config['num_heads'],
             max_time_steps=100,
-            attention_type='relative',
+            attention_type=attention_type,
             seq_len=49
         ).to(self.device)
         
-        # 损失函数
-        self.criterion = nn.MSELoss()
+        self.logger.info(f"使用注意力类型: {attention_type}")
+        
+        # 设置损失函数
+        self.criterion = self.setup_loss_function()
         
         # 计算模型参数数量
         total_params = sum(p.numel() for p in self.model.parameters())
@@ -166,6 +186,29 @@ class ConfigurableMultiScaleTrainer:
         self.logger.info(f"模型创建完成")
         self.logger.info(f"总参数数量: {total_params:,}")
         self.logger.info(f"可训练参数数量: {trainable_params:,}")
+    
+    def setup_loss_function(self):
+        """设置损失函数"""
+        loss_config = self.config.get('loss', {})
+        loss_type = loss_config.get('type', 'MSELoss')
+        
+        if loss_type == 'TotalLossWithSVD':
+            svd_config = loss_config.get('svd_config', {})
+            base_weight = svd_config.get('base_weight', 0.5)
+            svd_weights = svd_config.get('svd_weights', [0.15, 0.12, 0.08, 0.05, 0.03])
+            topk = len(svd_weights)
+            
+            criterion = TotalLossWithSVD(
+                base_weight=base_weight,
+                svd_weights=svd_weights,
+                topk=topk
+            )
+            self.logger.info(f"使用TotalLossWithSVD损失函数: base_weight={base_weight}, svd_weights={svd_weights}")
+        else:
+            criterion = nn.MSELoss()
+            self.logger.info("使用MSELoss损失函数")
+        
+        return criterion
     
     def setup_optimizer(self):
         """设置优化器和调度器"""
@@ -177,14 +220,52 @@ class ConfigurableMultiScaleTrainer:
             weight_decay=train_config.get('weight_decay', 1e-5)
         )
         
-        num_epochs = train_config.get('epochs', train_config.get('num_epochs', 10))
-        self.scheduler = optim.lr_scheduler.CosineAnnealingLR(
-            self.optimizer,
-            T_max=num_epochs,
-            eta_min=train_config.get('min_learning_rate', 1e-6)
-        )
+        # 设置学习率调度器
+        self.scheduler = self.setup_scheduler()
         
         self.logger.info(f"优化器和调度器设置完成")
+    
+    def setup_scheduler(self):
+        """设置学习率调度器"""
+        train_config = self.config['training']
+        scheduler_config = train_config.get('scheduler', {})
+        scheduler_type = scheduler_config.get('type', 'CosineAnnealingLR')
+        
+        if scheduler_type == 'CosineAnnealingWarmRestarts':
+            T_0 = scheduler_config.get('T_0', 50)
+            T_mult = scheduler_config.get('T_mult', 2)
+            eta_min = scheduler_config.get('eta_min', train_config.get('min_learning_rate', 1e-6))
+            
+            scheduler = optim.lr_scheduler.CosineAnnealingWarmRestarts(
+                self.optimizer,
+                T_0=T_0,
+                T_mult=T_mult,
+                eta_min=eta_min
+            )
+            self.logger.info(f"使用CosineAnnealingWarmRestarts调度器: T_0={T_0}, T_mult={T_mult}, eta_min={eta_min}")
+        
+        elif scheduler_type == 'CosineAnnealingLR':
+            num_epochs = train_config.get('epochs', train_config.get('num_epochs', 10))
+            eta_min = train_config.get('min_learning_rate', 1e-6)
+            
+            scheduler = optim.lr_scheduler.CosineAnnealingLR(
+                self.optimizer,
+                T_max=num_epochs,
+                eta_min=eta_min
+            )
+            self.logger.info(f"使用CosineAnnealingLR调度器: T_max={num_epochs}, eta_min={eta_min}")
+        
+        else:
+            # 默认使用CosineAnnealingLR
+            num_epochs = train_config.get('epochs', train_config.get('num_epochs', 10))
+            scheduler = optim.lr_scheduler.CosineAnnealingLR(
+                self.optimizer,
+                T_max=num_epochs,
+                eta_min=train_config.get('min_learning_rate', 1e-6)
+            )
+            self.logger.info(f"使用默认CosineAnnealingLR调度器")
+        
+        return scheduler
     
     def train_epoch(self, epoch: int) -> float:
         """训练一个epoch"""
@@ -362,7 +443,18 @@ class ConfigurableMultiScaleTrainer:
         
         best_val_loss = float('inf')
         
+        # 早停机制配置
+        early_stopping_config = self.config['training'].get('early_stopping', {})
+        early_stopping_enabled = early_stopping_config.get('enabled', False)
+        patience = early_stopping_config.get('patience', 50)
+        min_delta = early_stopping_config.get('min_delta', 0.001)
+        patience_counter = 0
+        
         num_epochs = self.config['training'].get('epochs', self.config['training'].get('num_epochs', 10))
+        
+        if early_stopping_enabled:
+            self.logger.info(f"早停机制已启用: patience={patience}, min_delta={min_delta}")
+        
         for epoch in range(num_epochs):
             start_time = time.time()
             
@@ -386,8 +478,30 @@ class ConfigurableMultiScaleTrainer:
             self.writer.add_scalar('Val/EpochLoss', val_loss, epoch)
             self.writer.add_scalar('Train/LearningRate', current_lr, epoch)
             
+            # 高级可视化
+            visualization_config = self.config.get('visualization', {})
+            if visualization_config.get('enabled', False):
+                vis_interval = visualization_config.get('interval', 50)
+                plot_types = visualization_config.get('plot_types', [])
+                
+                if (epoch + 1) % vis_interval == 0:
+                    if 'attention_maps' in plot_types:
+                        self.visualize_attention_maps(epoch)
+                    if 'gradient_flow' in plot_types:
+                        self.visualize_gradient_flow(epoch)
+            
             # 计算时间
             epoch_time = time.time() - start_time
+            
+            # 早停检查
+            improvement = best_val_loss - val_loss
+            if improvement > min_delta:
+                best_val_loss = val_loss
+                patience_counter = 0
+                is_best = True
+            else:
+                patience_counter += 1
+                is_best = False
             
             # 打印统计信息
             self.logger.info(
@@ -396,12 +510,16 @@ class ConfigurableMultiScaleTrainer:
                 f"LR: {current_lr:.2e}, Time: {epoch_time:.2f}s"
             )
             
-            # 保存检查点
-            is_best = val_loss < best_val_loss
-            if is_best:
-                best_val_loss = val_loss
+            if early_stopping_enabled:
+                self.logger.info(f"早停计数: {patience_counter}/{patience}")
             
+            # 保存检查点
             self.save_checkpoint(epoch, is_best)
+            
+            # 早停检查
+            if early_stopping_enabled and patience_counter >= patience:
+                self.logger.info(f"早停触发！在epoch {epoch+1}停止训练")
+                break
         
         self.logger.info("训练完成！")
         self.logger.info(f"最佳验证损失: {best_val_loss:.6f}")
@@ -439,6 +557,51 @@ class ConfigurableMultiScaleTrainer:
         
         with open(self.output_dir / 'training_stats.json', 'w') as f:
             json.dump(stats, f, indent=2)
+    
+    def visualize_attention_maps(self, epoch: int):
+        """可视化注意力图"""
+        try:
+            # 获取一个验证样本
+            self.model.eval()
+            with torch.no_grad():
+                inputs, targets, _ = next(iter(self.val_loader))
+                inputs = inputs[:1].to(self.device)  # 只取第一个样本
+                targets = targets[:1].to(self.device)
+                
+                # 创建时间步张量
+                time_steps = torch.zeros(1, 1, dtype=torch.long, device=self.device)
+                
+                # 获取注意力权重
+                outputs = self.model(inputs, time_steps)
+                
+                # 可视化注意力图
+                attention_maps = plot_attention_maps(
+                    self.model, inputs, time_steps, 
+                    save_path=self.output_dir / 'attention_maps' / f'epoch_{epoch+1}.png'
+                )
+                
+                # 记录到TensorBoard
+                if attention_maps is not None:
+                    self.writer.add_figure(f'Attention/Epoch_{epoch+1}', attention_maps, epoch)
+                    
+        except Exception as e:
+            self.logger.warning(f"注意力图可视化失败: {e}")
+    
+    def visualize_gradient_flow(self, epoch: int):
+        """可视化梯度流"""
+        try:
+            # 绘制梯度流图
+            gradient_flow_fig = plot_gradient_flow(
+                self.model,
+                save_path=self.output_dir / 'gradient_flow' / f'epoch_{epoch+1}.png'
+            )
+            
+            # 记录到TensorBoard
+            if gradient_flow_fig is not None:
+                self.writer.add_figure(f'GradientFlow/Epoch_{epoch+1}', gradient_flow_fig, epoch)
+                
+        except Exception as e:
+            self.logger.warning(f"梯度流可视化失败: {e}")
 
 
 def create_config(scale_factor: int = 4, 
@@ -480,7 +643,17 @@ def create_config(scale_factor: int = 4,
             'num_layers': 4,
             'num_heads': 8,
             'dropout': 0.1,
-            'activation': 'gelu'
+            'activation': 'gelu',
+            'attention_type': 'relative'
+        },
+        
+        # 损失函数配置
+        'loss': {
+            'type': 'MSELoss',
+            'svd_config': {
+                'base_weight': 0.5,
+                'svd_weights': [0.15, 0.12, 0.08, 0.05, 0.03]
+            }
         },
         
         # 训练配置
@@ -489,7 +662,37 @@ def create_config(scale_factor: int = 4,
             'learning_rate': 1e-4,
             'weight_decay': 1e-5,
             'min_learning_rate': 1e-6,
-            'grad_clip_norm': 1.0
+            'grad_clip_norm': 1.0,
+            
+            # 学习率调度器配置
+            'scheduler': {
+                'type': 'CosineAnnealingLR',
+                'T_0': 50,
+                'T_mult': 2,
+                'eta_min': 1e-6
+            },
+            
+            # 早停机制
+            'early_stopping': {
+                'enabled': True,
+                'patience': 50,
+                'min_delta': 0.001
+            }
+        },
+        
+        # 数据增强配置
+        'data_augmentation': {
+            'enabled': False,
+            'enable_random_crop': True,
+            'enable_flip': True,
+            'noise_level': 0.01
+        },
+        
+        # 可视化配置
+        'visualization': {
+            'enabled': True,
+            'interval': 50,
+            'plot_types': ['attention_maps', 'gradient_flow']
         },
         
         # 输出配置
@@ -508,6 +711,9 @@ def main():
     parser.add_argument('--num_epochs', type=int, default=10, help='训练轮数')
     parser.add_argument('--batch_size', type=int, default=8, help='批次大小')
     parser.add_argument('--config_file', type=str, help='配置文件路径（可选）')
+    parser.add_argument('--enable_early_stopping', action='store_true', help='启用早停机制')
+    parser.add_argument('--patience', type=int, default=50, help='早停耐心值')
+    parser.add_argument('--enable_visualization', action='store_true', help='启用高级可视化')
     
     args = parser.parse_args()
     

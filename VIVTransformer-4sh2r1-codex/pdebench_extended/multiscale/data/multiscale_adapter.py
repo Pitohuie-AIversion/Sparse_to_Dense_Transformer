@@ -563,7 +563,9 @@ def create_multiscale_loaders(
     pin_memory: bool = True,
     enable_center_crop: bool = False,
     center_crop_input_resolution: Optional[List[int]] = None,
-    center_crop_output_resolution: Optional[List[int]] = None
+    center_crop_output_resolution: Optional[List[int]] = None,
+    use_augmentation: bool = False,
+    augmentation_config: Optional[Dict] = None
 ) -> Dict[str, Union[MultiScaleDataLoader, Dict]]:
     """创建多尺度数据加载器
     
@@ -581,10 +583,37 @@ def create_multiscale_loaders(
         enable_center_crop: 是否启用输入输出的中心截取
         center_crop_input_resolution: 输入中心截取分辨率
         center_crop_output_resolution: 输出中心截取分辨率
+        use_augmentation: 是否使用数据增强
+        augmentation_config: 数据增强配置
     
     Returns:
         包含训练、验证、测试数据加载器和信息的字典
     """
+    # 准备数据增强变换
+    train_transform = None
+    if use_augmentation and augmentation_config:
+        import torchvision.transforms as transforms
+        transform_list = []
+        
+        # 添加随机翻转
+        if augmentation_config.get('enable_flip', False):
+            transform_list.append(transforms.RandomHorizontalFlip(p=0.5))
+            transform_list.append(transforms.RandomVerticalFlip(p=0.5))
+        
+        # 添加随机裁剪（如果启用）
+        if augmentation_config.get('enable_random_crop', False):
+            # 这里可以根据需要添加随机裁剪逻辑
+            pass
+        
+        # 添加高斯噪声（通过自定义变换）
+        noise_level = augmentation_config.get('noise_level', 0.01)
+        if noise_level > 0:
+            from ..transforms import AddGaussianNoise
+            transform_list.append(AddGaussianNoise(noise_level))
+        
+        if transform_list:
+            train_transform = transforms.Compose(transform_list)
+    
     # 创建数据集
     train_dataset, val_dataset, test_dataset = create_multiscale_datasets(
         data_path=data_path,
@@ -596,15 +625,18 @@ def create_multiscale_loaders(
         downsampling_method=downsampling_method,
         enable_center_crop=enable_center_crop,
         center_crop_input_resolution=center_crop_input_resolution,
-        center_crop_output_resolution=center_crop_output_resolution
+        center_crop_output_resolution=center_crop_output_resolution,
+        train_transform=train_transform
     )
     
-    # 创建数据加载器
+    # 创建数据加载器（Windows下使用num_workers=0避免多进程问题）
+    safe_num_workers = 0 if use_augmentation else num_workers
+    
     train_loader = MultiScaleDataLoader(
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
-        num_workers=num_workers,
+        num_workers=safe_num_workers,
         pin_memory=pin_memory
     )
     
@@ -612,7 +644,7 @@ def create_multiscale_loaders(
         val_dataset,
         batch_size=batch_size,
         shuffle=False,
-        num_workers=num_workers,
+        num_workers=safe_num_workers,
         pin_memory=pin_memory
     )
     
@@ -620,7 +652,7 @@ def create_multiscale_loaders(
         test_dataset,
         batch_size=batch_size,
         shuffle=False,
-        num_workers=num_workers,
+        num_workers=safe_num_workers,
         pin_memory=pin_memory
     )
     

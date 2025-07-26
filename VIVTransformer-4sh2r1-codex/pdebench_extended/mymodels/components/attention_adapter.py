@@ -64,7 +64,23 @@ class CNNStyleAttentionAdapter(AttentionAdapter):
     """Adapter for CNN-style attention mechanisms that expect a 4D tensor."""
 
     def forward(self, x, memory=None, return_attention=False):
-        batch_size, seq_len, d_model = x.shape
+        # Handle different input shapes
+        if len(x.shape) == 2:
+            # If input is 2D (batch_size, features), add sequence dimension
+            batch_size, features = x.shape
+            seq_len = 1
+            d_model = features
+            x = x.unsqueeze(1)  # Add sequence dimension
+        elif len(x.shape) == 3:
+            batch_size, seq_len, d_model = x.shape
+        elif len(x.shape) == 4:
+            # If input is 4D (batch_size, height, width, channels), reshape to 3D
+            batch_size, height, width, d_model = x.shape
+            seq_len = height * width
+            x = x.view(batch_size, seq_len, d_model)
+        else:
+            raise ValueError(f"Unexpected input shape: {x.shape}. Expected 2D, 3D, or 4D tensor.")
+        
         spatial_dim = int(seq_len**0.5)
         if spatial_dim * spatial_dim != seq_len:
             raise ValueError(

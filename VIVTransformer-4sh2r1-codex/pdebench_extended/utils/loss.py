@@ -12,10 +12,16 @@ def get_svd_modes(tensor, topk=3):
     modes = []
     for i in range(B):
         u, s, vh = torch.linalg.svd(tensor[i], full_matrices=False)
+        # 确保topk不超过实际的奇异值数量
+        actual_topk = min(topk, s.shape[0])
         single_modes = []
-        for k in range(topk):
+        for k in range(actual_topk):
             mode_k = s[k] * torch.outer(u[:, k], vh[k, :])
             single_modes.append(mode_k)
+        # 如果实际模态数少于topk，用零填充
+        while len(single_modes) < topk:
+            single_modes.append(torch.zeros_like(single_modes[0]) if single_modes else torch.zeros(H, W, device=tensor.device))
+        
         for k in range(topk):
             if len(modes) <= k:
                 modes.append([])

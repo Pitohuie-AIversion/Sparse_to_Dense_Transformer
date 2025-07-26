@@ -17,12 +17,12 @@ data:
   center_crop_input_resolution: [96, 96]
   center_crop_output_resolution: [112, 112]
   
-  # 数据增强（新增）
-  data_augmentation:
-    enable_random_crop: true
-    enable_rotation: false  # 对于物理场数据，旋转可能不合适
-    enable_flip: true
-    noise_level: 0.01  # 添加少量噪声提高鲁棒性
+# 数据增强配置
+data_augmentation:
+  enabled: true
+  enable_random_crop: true
+  enable_flip: true
+  noise_level: 0.01  # 添加少量噪声提高鲁棒性
 
 training:
   epochs: 500  # 增加训练轮数
@@ -31,12 +31,12 @@ training:
   min_learning_rate: 0.00001
   grad_clip_norm: 1.0
   
-  # 改进的学习率调度
-  scheduler:
-    type: "CosineAnnealingWarmRestarts"  # 使用带重启的余弦退火
-    T_0: 50  # 初始重启周期
-    T_mult: 2  # 重启周期倍数
-    eta_min: 0.00001
+# 学习率调度器配置
+scheduler:
+  type: "CosineAnnealingWarmRestarts"  # 使用带重启的余弦退火
+  T_0: 50  # 初始重启周期
+  T_mult: 2  # 重启周期倍数
+  eta_min: 0.00001
   
   # 早停机制
   early_stopping:

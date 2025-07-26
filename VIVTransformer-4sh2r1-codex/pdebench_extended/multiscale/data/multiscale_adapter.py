@@ -124,8 +124,22 @@ class MultiScaleDataset(Dataset):
         
         # 计算维度
         self.n_channels = self.data_info['n_channels']
-        self.input_dim = self.low_resolution[0] * self.low_resolution[1] * self.n_channels
-        self.output_dim = self.original_resolution[0] * self.original_resolution[1] * self.n_channels
+        
+        # 根据是否启用中心裁剪来计算输入维度
+        if self.enable_center_crop and self.center_crop_input_resolution:
+            actual_input_resolution = self.center_crop_input_resolution
+        else:
+            actual_input_resolution = self.low_resolution
+        
+        self.input_dim = actual_input_resolution[0] * actual_input_resolution[1] * self.n_channels
+        
+        # 根据是否启用中心裁剪来计算输出维度
+        if self.enable_center_crop and self.center_crop_output_resolution:
+            actual_output_resolution = self.center_crop_output_resolution
+        else:
+            actual_output_resolution = self.original_resolution
+        
+        self.output_dim = actual_output_resolution[0] * actual_output_resolution[1] * self.n_channels
         
         # 归一化统计量
         if self.normalize:
@@ -133,7 +147,7 @@ class MultiScaleDataset(Dataset):
         
         logging.info(
             f"多尺度数据集初始化完成: {self.pde_type}, 缩放因子: {scale_factor}x, "
-            f"输入分辨率: {self.low_resolution}, 输出分辨率: {self.original_resolution}, "
+            f"输入分辨率: {actual_input_resolution}, 输出分辨率: {actual_output_resolution}, "
             f"样本数: {len(self)}"
         )
     

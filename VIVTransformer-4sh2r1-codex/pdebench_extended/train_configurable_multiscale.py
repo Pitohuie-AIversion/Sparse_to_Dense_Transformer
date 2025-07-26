@@ -524,6 +524,23 @@ def main():
         # 确保有output_dir字段
         if 'output_dir' not in config:
             config['output_dir'] = f'./configurable_multiscale_results_sf{config["data"]["scale_factor"]}_{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+        
+        # 命令行参数覆盖配置文件设置
+        if hasattr(args, 'scale_factor') and args.scale_factor != 4:  # 4是默认值
+            config['data']['scale_factor'] = args.scale_factor
+        if hasattr(args, 'input_resolution') and args.input_resolution != [96, 96]:  # [96, 96]是默认值
+            config['data']['center_crop_input_resolution'] = args.input_resolution
+        if hasattr(args, 'output_resolution') and args.output_resolution != [112, 112]:  # [112, 112]是默认值
+            config['data']['center_crop_output_resolution'] = args.output_resolution
+        if hasattr(args, 'num_epochs') and args.num_epochs != 10:  # 10是默认值
+            if 'epochs' in config['training']:
+                config['training']['epochs'] = args.num_epochs
+            else:
+                config['training']['num_epochs'] = args.num_epochs
+        if hasattr(args, 'batch_size') and args.batch_size != 8:  # 8是默认值
+            config['data']['batch_size'] = args.batch_size
+            
+        print("命令行参数已覆盖配置文件中的相应设置")
     else:
         config = create_config(
             scale_factor=args.scale_factor,

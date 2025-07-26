@@ -29,8 +29,26 @@ from tqdm import tqdm
 # 添加项目路径
 sys.path.append(str(Path(__file__).parent))
 sys.path.append(str(Path(__file__).parent / 'multiscale'))
+sys.path.append(str(Path(__file__).parent / 'multiscale' / 'data'))
 
-from multiscale.data.multiscale_adapter import create_multiscale_loaders
+# 尝试多种导入方式来解决服务器端导入问题
+try:
+    from multiscale.data.multiscale_adapter import create_multiscale_loaders
+except ImportError:
+    try:
+        # 尝试直接导入
+        import multiscale_adapter
+        create_multiscale_loaders = multiscale_adapter.create_multiscale_loaders
+    except ImportError:
+        try:
+            # 尝试从当前目录导入
+            sys.path.insert(0, str(Path(__file__).parent / 'multiscale' / 'data'))
+            from multiscale_adapter import create_multiscale_loaders
+        except ImportError as e:
+            print(f"导入错误: {e}")
+            print("请确保multiscale_adapter.py文件存在于multiscale/data/目录下")
+            raise
+
 from mymodels.transformer import TransformerFlowReconstructionModel
 
 

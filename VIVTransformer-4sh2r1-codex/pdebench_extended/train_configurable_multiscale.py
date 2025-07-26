@@ -513,7 +513,6 @@ def main():
     
     # 创建配置
     if args.config_file and os.path.exists(args.config_file):
-        import yaml
         with open(args.config_file, 'r', encoding='utf-8') as f:
             if args.config_file.endswith('.yaml') or args.config_file.endswith('.yml'):
                 config = yaml.safe_load(f)

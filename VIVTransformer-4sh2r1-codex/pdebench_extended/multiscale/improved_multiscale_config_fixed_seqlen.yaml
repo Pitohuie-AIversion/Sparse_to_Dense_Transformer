@@ -1,0 +1,173 @@
+attention_experiments:
+  experiment_sequence:
+    1:
+      attention_type: sge
+      description: 空间组增强注意力，适合空间特征学习
+      expected_improvement: 更好的空间特征表示
+    2:
+      attention_type: muse
+      description: 多尺度注意力，直接适配多尺度任务
+      expected_improvement: 更好的多尺度特征融合
+    3:
+      attention_type: cbam
+      description: 通道和空间注意力模块
+      expected_improvement: 通道和空间特征的联合优化
+attention_types:
+- sge
+- muse
+- cbam
+- se
+- relative
+- mobilevit
+- dat
+- crossformer
+data:
+  batch_size: 4
+  center_crop_input_resolution:
+  - 96
+  - 96
+  center_crop_output_resolution:
+  - 112
+  - 112
+  downsampling_method: average
+  enable_center_crop: true
+  normalize: true
+  original_resolution:
+  - 128
+  - 128
+  path: PDEBench/pdebench/data_download/2D_DarcyFlow_beta0.1_Train.hdf5
+  pde_type: darcy_flow
+  scale_factor: 4
+  sequence_length: 1
+data_augmentation:
+  enable_flip: true
+  enable_random_crop: true
+  enabled: true
+  noise_level: 0.01
+deployment:
+  inference:
+    batch_size: 1
+    precision: fp16
+  model_export:
+    format: onnx
+    optimize: true
+deterministic: true
+device: cuda:0
+expected_improvements:
+  convergence_speed: 提升30-50%
+  feature_quality: 更清晰的重构细节
+  final_loss: 降低20-40%
+  generalization: 更好的验证集表现
+experiment:
+  baseline:
+    attention_type: relative
+    train_loss: 0.910416
+    val_loss: 0.997694
+  description: 使用SGE注意力和SVD损失的改进多尺度训练
+  name: improved_multiscale_sge_attention
+  tags:
+  - multiscale
+  - sge
+  - svd_loss
+  - improved
+  target_metrics:
+    convergence_epochs: < 200
+    train_loss: < 0.5
+    val_loss: < 0.6
+hyperparameter_search:
+  early_stopping_trials: 5
+  enabled: false
+  max_trials: 20
+  method: grid
+  search_space:
+    attention_type:
+    - sge
+    - muse
+    - cbam
+    hidden_dim:
+    - 256
+    - 384
+    - 512
+    learning_rate:
+    - 0.0001
+    - 0.0005
+    - 0.001
+    num_layers:
+    - 4
+    - 6
+    - 8
+loss:
+  additional:
+  - type: L1Loss
+    weight: 0.1
+  - type: GradientLoss
+    weight: 0.05
+  svd_config:
+    base_weight: 0.6
+    svd_weights:
+    - 0.15
+    - 0.12
+    - 0.08
+    - 0.05
+    - 0.03
+    topk: 5
+  type: TotalLossWithSVD
+max_memory_fraction: 0.9
+model:
+  activation: gelu
+  attention_type: sge
+  dropout: 0.15
+  hidden_dim: 384
+  input_dim: 9216
+  layer_norm: true
+  max_time_steps: 100
+  num_heads: 12
+  num_layers: 6
+  output_dim: 12544
+  positional_encoding:
+    max_len: 10000
+    type: learnable
+  seq_len: 9216
+  use_residual: true
+monitoring:
+  log_frequency: 10
+  monitor_gpu_memory: true
+  monitor_training_speed: true
+  save_checkpoint_frequency: 25
+  tensorboard: true
+  wandb:
+    enabled: false
+    project: vivtransformer-multiscale-improved
+scheduler:
+  T_0: 50
+  T_mult: 2
+  early_stopping:
+    min_delta: 0.001
+    monitor: val_loss
+    patience: 50
+  eta_min: 1.0e-05
+  type: CosineAnnealingWarmRestarts
+seed: 42
+training:
+  epochs: 500
+  grad_clip_norm: 1.0
+  learning_rate: 0.0005
+  min_learning_rate: 1.0e-05
+  weight_decay: 0.0001
+usage_instructions: "使用此配置的建议步骤：\n\n1. 首先尝试SGE注意力机制：\n   python train_configurable_multiscale.py\
+  \ --config_file improved_multiscale_config.yaml\n\n2. 如果SGE效果不佳，依次尝试其他注意力机制：\n \
+  \  - 修改 model.attention_type 为 \"muse\"\n   - 修改 model.attention_type 为 \"cbam\"\
+  \n\n3. 监控训练过程：\n   - 使用TensorBoard查看损失曲线\n   - 观察注意力图可视化\n   - 检查梯度流是否正常\n\n4. 根据结果调整：\n\
+  \   - 如果过拟合，增加dropout和weight_decay\n   - 如果欠拟合，增加模型容量或减少正则化\n   - 如果收敛慢，调整学习率调度策略\n"
+use_dataparallel: false
+visualization:
+  enabled: true
+  interval: 50
+  max_samples: 8
+  plot_types:
+  - input_output_comparison
+  - error_maps
+  - attention_maps
+  - loss_curves
+  - gradient_flow
+  save_predictions: true

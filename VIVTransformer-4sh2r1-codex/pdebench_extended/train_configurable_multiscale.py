@@ -25,6 +25,7 @@ from torch.utils.tensorboard import SummaryWriter
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+import yaml
 
 # 添加项目路径
 sys.path.append(str(Path(__file__).parent))
@@ -109,7 +110,7 @@ class ConfigurableMultiScaleTrainer:
         
         # 创建多尺度数据加载器
         loaders_info = create_multiscale_loaders(
-            data_path=data_config['data_path'],
+            data_path=data_config.get('path', data_config.get('data_path', 'PDEBench/pdebench/data_download/2D_DarcyFlow_beta0.1_Train.hdf5')),
             scale_factor=data_config['scale_factor'],
             pde_type=data_config.get('pde_type', 'darcy_flow'),
             batch_size=data_config['batch_size'],
@@ -176,9 +177,10 @@ class ConfigurableMultiScaleTrainer:
             weight_decay=train_config.get('weight_decay', 1e-5)
         )
         
+        num_epochs = train_config.get('epochs', train_config.get('num_epochs', 10))
         self.scheduler = optim.lr_scheduler.CosineAnnealingLR(
             self.optimizer,
-            T_max=train_config['num_epochs'],
+            T_max=num_epochs,
             eta_min=train_config.get('min_learning_rate', 1e-6)
         )
         
@@ -192,7 +194,7 @@ class ConfigurableMultiScaleTrainer:
         
         progress_bar = tqdm(
             self.train_loader,
-            desc=f"Epoch {epoch+1}/{self.config['training']['num_epochs']} [Train]",
+            desc=f"Epoch {epoch+1}/{self.config['training'].get('epochs', self.config['training'].get('num_epochs', 'N/A'))} [Train]",
             leave=False
         )
         
@@ -246,7 +248,7 @@ class ConfigurableMultiScaleTrainer:
         with torch.no_grad():
             progress_bar = tqdm(
                 self.val_loader,
-                desc=f"Epoch {epoch+1}/{self.config['training']['num_epochs']} [Val]",
+                desc=f"Epoch {epoch+1}/{self.config['training'].get('epochs', self.config['training'].get('num_epochs', 'N/A'))} [Val]",
                 leave=False
             )
             
@@ -360,7 +362,8 @@ class ConfigurableMultiScaleTrainer:
         
         best_val_loss = float('inf')
         
-        for epoch in range(self.config['training']['num_epochs']):
+        num_epochs = self.config['training'].get('epochs', self.config['training'].get('num_epochs', 10))
+        for epoch in range(num_epochs):
             start_time = time.time()
             
             # 训练
@@ -388,7 +391,7 @@ class ConfigurableMultiScaleTrainer:
             
             # 打印统计信息
             self.logger.info(
-                f"Epoch {epoch+1}/{self.config['training']['num_epochs']} - "
+                f"Epoch {epoch+1}/{num_epochs} - "
                 f"Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}, "
                 f"LR: {current_lr:.2e}, Time: {epoch_time:.2f}s"
             )
@@ -510,9 +513,17 @@ def main():
     
     # 创建配置
     if args.config_file and os.path.exists(args.config_file):
-        with open(args.config_file, 'r') as f:
-            config = json.load(f)
+        import yaml
+        with open(args.config_file, 'r', encoding='utf-8') as f:
+            if args.config_file.endswith('.yaml') or args.config_file.endswith('.yml'):
+                config = yaml.safe_load(f)
+            else:
+                config = json.load(f)
         print(f"从配置文件加载: {args.config_file}")
+        
+        # 确保有output_dir字段
+        if 'output_dir' not in config:
+            config['output_dir'] = f'./configurable_multiscale_results_sf{config["data"]["scale_factor"]}_{datetime.now().strftime("%Y%m%d_%H%M%S")}'
     else:
         config = create_config(
             scale_factor=args.scale_factor,
@@ -529,7 +540,7 @@ def main():
     print(f"原始数据分辨率: {config['data']['original_resolution'][0]}×{config['data']['original_resolution'][1]}")
     print(f"输入分辨率（中心裁剪）: {config['data']['center_crop_input_resolution'][0]}×{config['data']['center_crop_input_resolution'][1]}")
     print(f"输出分辨率（中心裁剪）: {config['data']['center_crop_output_resolution'][0]}×{config['data']['center_crop_output_resolution'][1]}")
-    print(f"训练轮数: {config['training']['num_epochs']}")
+    print(f"训练轮数: {config['training'].get('epochs', config['training'].get('num_epochs', 'N/A'))}")
     print(f"批次大小: {config['data']['batch_size']}")
     print(f"输出目录: {config['output_dir']}")
     print("=" * 80)

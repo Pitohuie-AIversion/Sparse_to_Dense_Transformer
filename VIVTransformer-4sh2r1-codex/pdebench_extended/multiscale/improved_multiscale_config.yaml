@@ -4,7 +4,7 @@
 
 data:
   path: "PDEBench/pdebench/data_download/2D_DarcyFlow_beta0.1_Train.hdf5"
-  batch_size: 16  # 增加批次大小以提高训练稳定性
+  batch_size: 4   # 降低批次大小避免GPU内存问题
   original_resolution: [128, 128]
   scale_factor: 4
   pde_type: "darcy_flow"
@@ -118,7 +118,7 @@ attention_experiments:
       expected_improvement: "通道和空间特征的联合优化"
 
 # 硬件配置
-device: "cuda:0"  # 明确指定GPU
+device: "cuda:0"     # 使用CPU进行测试
 use_dataparallel: false
 seed: 42
 deterministic: true

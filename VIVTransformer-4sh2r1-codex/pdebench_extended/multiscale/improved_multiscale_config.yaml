@@ -1,7 +1,7 @@
 # 改进的多尺度VIVTransformer训练配置
 # 基于您的训练结果分析，提供优化建议
 # 目标：改善Train Loss: 0.910416, Val Loss: 0.997694的结果
-
+# 刷新远端数据集
 data:
   path: "PDEBench/pdebench/data_download/2D_DarcyFlow_beta0.1_Train.hdf5"
   batch_size: 4   # 降低批次大小避免GPU内存问题

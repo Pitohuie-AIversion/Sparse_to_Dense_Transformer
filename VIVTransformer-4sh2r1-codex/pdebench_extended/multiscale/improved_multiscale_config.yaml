@@ -1,0 +1,226 @@
+# 改进的多尺度VIVTransformer训练配置
+# 基于您的训练结果分析，提供优化建议
+# 目标：改善Train Loss: 0.910416, Val Loss: 0.997694的结果
+
+data:
+  path: "PDEBench/pdebench/data_download/2D_DarcyFlow_beta0.1_Train.hdf5"
+  batch_size: 16  # 增加批次大小以提高训练稳定性
+  original_resolution: [128, 128]
+  scale_factor: 4
+  pde_type: "darcy_flow"
+  sequence_length: 1
+  normalize: true
+  downsampling_method: "average"
+  
+  # 优化的中心裁剪配置
+  enable_center_crop: true
+  center_crop_input_resolution: [96, 96]
+  center_crop_output_resolution: [112, 112]
+  
+  # 数据增强（新增）
+  data_augmentation:
+    enable_random_crop: true
+    enable_rotation: false  # 对于物理场数据，旋转可能不合适
+    enable_flip: true
+    noise_level: 0.01  # 添加少量噪声提高鲁棒性
+
+training:
+  epochs: 500  # 增加训练轮数
+  learning_rate: 0.0005  # 稍微提高初始学习率
+  weight_decay: 0.0001   # 增加正则化
+  min_learning_rate: 0.00001
+  grad_clip_norm: 1.0
+  
+  # 改进的学习率调度
+  scheduler:
+    type: "CosineAnnealingWarmRestarts"  # 使用带重启的余弦退火
+    T_0: 50  # 初始重启周期
+    T_mult: 2  # 重启周期倍数
+    eta_min: 0.00001
+  
+  # 早停机制
+  early_stopping:
+    patience: 50
+    min_delta: 0.001
+    monitor: "val_loss"
+
+# 改进的损失函数配置
+loss:
+  type: "TotalLossWithSVD"  # 使用SVD损失函数
+  
+  # SVD损失配置 - 针对多尺度任务优化
+  svd_config:
+    base_weight: 0.6  # 基础MSE损失权重
+    svd_weights: [0.15, 0.12, 0.08, 0.05, 0.03]  # 前5个SVD模态权重
+    topk: 5  # 使用前5个SVD模态
+  
+  # 额外损失函数
+  additional:
+    - type: "L1Loss"  # L1损失有助于保持细节
+      weight: 0.1
+    - type: "GradientLoss"  # 梯度损失保持边缘信息
+      weight: 0.05
+
+model:
+  # 改进的注意力机制配置
+  attention_type: "sge"  # 使用SGE注意力，适合空间特征增强
+  
+  # 优化的模型架构参数
+  hidden_dim: 384      # 增加模型容量
+  num_layers: 6        # 增加层数
+  num_heads: 12        # 增加注意力头数
+  max_time_steps: 100
+  seq_len: 49
+  
+  # 改进的正则化
+  dropout: 0.15        # 增加dropout
+  activation: "gelu"
+  
+  # 维度配置
+  input_dim: 9216   # 96*96*1
+  output_dim: 12544 # 112*112*1
+  
+  # 新增：残差连接和层归一化
+  use_residual: true
+  layer_norm: true
+  
+  # 新增：位置编码
+  positional_encoding:
+    type: "learnable"  # 可学习的位置编码
+    max_len: 10000
+
+# 推荐的注意力机制类型（按优先级排序）
+attention_types:
+  - "sge"          # 推荐1：Spatial Group-wise Enhance，适合空间特征
+  - "muse"         # 推荐2：Multi-Scale Attention，适合多尺度任务
+  - "cbam"         # 推荐3：通道和空间注意力结合
+  - "se"           # 推荐4：通道注意力
+  - "relative"     # 原始使用的类型
+  - "mobilevit"    # 推荐5：轻量级但有效
+  - "dat"          # 推荐6：可变形注意力
+  - "crossformer"  # 推荐7：交叉尺度注意力
+
+# 注意力机制实验配置
+attention_experiments:
+  # 建议的实验顺序
+  experiment_sequence:
+    1:
+      attention_type: "sge"
+      description: "空间组增强注意力，适合空间特征学习"
+      expected_improvement: "更好的空间特征表示"
+    2:
+      attention_type: "muse"
+      description: "多尺度注意力，直接适配多尺度任务"
+      expected_improvement: "更好的多尺度特征融合"
+    3:
+      attention_type: "cbam"
+      description: "通道和空间注意力模块"
+      expected_improvement: "通道和空间特征的联合优化"
+
+# 硬件配置
+device: "cuda:0"  # 明确指定GPU
+use_dataparallel: false
+seed: 42
+deterministic: true
+max_memory_fraction: 0.9  # 使用更多GPU内存
+
+# 增强的可视化配置
+visualization:
+  enabled: true
+  interval: 50  # 更频繁的可视化
+  max_samples: 8
+  save_predictions: true
+  
+  # 可视化类型
+  plot_types:
+    - "input_output_comparison"
+    - "error_maps"
+    - "attention_maps"  # 可视化注意力图
+    - "loss_curves"
+    - "gradient_flow"  # 梯度流可视化
+
+# 监控和日志
+monitoring:
+  tensorboard: true
+  wandb:
+    enabled: false  # 可选择启用W&B
+    project: "vivtransformer-multiscale-improved"
+  
+  # 详细监控
+  log_frequency: 10  # 每10个batch记录一次
+  save_checkpoint_frequency: 25  # 每25个epoch保存检查点
+  
+  # 性能监控
+  monitor_gpu_memory: true
+  monitor_training_speed: true
+
+# 实验管理
+experiment:
+  name: "improved_multiscale_sge_attention"
+  description: "使用SGE注意力和SVD损失的改进多尺度训练"
+  tags: ["multiscale", "sge", "svd_loss", "improved"]
+  
+  # 对比基线
+  baseline:
+    train_loss: 0.910416
+    val_loss: 0.997694
+    attention_type: "relative"
+  
+  # 期望改进
+  target_metrics:
+    train_loss: "< 0.5"
+    val_loss: "< 0.6"
+    convergence_epochs: "< 200"
+
+# 超参数搜索配置（可选）
+hyperparameter_search:
+  enabled: false
+  method: "grid"  # "grid", "random", "bayesian"
+  
+  search_space:
+    learning_rate: [0.0001, 0.0005, 0.001]
+    hidden_dim: [256, 384, 512]
+    num_layers: [4, 6, 8]
+    attention_type: ["sge", "muse", "cbam"]
+    
+  # 搜索策略
+  max_trials: 20
+  early_stopping_trials: 5
+
+# 部署配置
+deployment:
+  model_export:
+    format: "onnx"  # 导出ONNX格式便于部署
+    optimize: true
+  
+  inference:
+    batch_size: 1
+    precision: "fp16"  # 半精度推理
+
+# 使用说明
+usage_instructions: |
+  使用此配置的建议步骤：
+  
+  1. 首先尝试SGE注意力机制：
+     python train_configurable_multiscale.py --config_file improved_multiscale_config.yaml
+  
+  2. 如果SGE效果不佳，依次尝试其他注意力机制：
+     - 修改 model.attention_type 为 "muse"
+     - 修改 model.attention_type 为 "cbam"
+  
+  3. 监控训练过程：
+     - 使用TensorBoard查看损失曲线
+     - 观察注意力图可视化
+     - 检查梯度流是否正常
+  
+  4. 根据结果调整：
+     - 如果过拟合，增加dropout和weight_decay
+     - 如果欠拟合，增加模型容量或减少正则化
+     - 如果收敛慢，调整学习率调度策略
+
+# 预期改进效果
+expected_improvements:
+  convergence_speed: "提升30-50%"
+  final_loss: "降低20-40%"
+  generalization: "更好的验证集表现"
+  feature_quality: "更清晰的重构细节"

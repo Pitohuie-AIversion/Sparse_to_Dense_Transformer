@@ -1,0 +1,137 @@
+# 多尺度VIVTransformer训练配置
+# 基于train_configurable_multiscale.py的实际参数
+# 对应您的训练结果：Train Loss: 0.910416, Val Loss: 0.997694
+
+data:
+  path: "PDEBench/pdebench/data_download/2D_DarcyFlow_beta0.1_Train.hdf5"
+  batch_size: 8  # 您使用的批次大小
+  original_resolution: [128, 128]
+  scale_factor: 4  # 您使用的缩放因子
+  pde_type: "darcy_flow"
+  sequence_length: 1
+  normalize: true
+  downsampling_method: "average"
+  
+  # 中心裁剪配置（您的实际设置）
+  enable_center_crop: true
+  center_crop_input_resolution: [96, 96]   # 您的输入分辨率
+  center_crop_output_resolution: [112, 112] # 您的输出分辨率
+
+training:
+  epochs: 300  # 您实际训练的轮数
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  min_learning_rate: 0.000001
+  grad_clip_norm: 1.0
+  
+  # 学习率调度器
+  scheduler:
+    type: "CosineAnnealingLR"  # 您使用的调度器
+    T_max: 300  # 对应您的训练轮数
+    eta_min: 0.000001
+
+# 损失函数配置
+loss:
+  type: "MSELoss"  # 您使用的基础损失函数
+  # 注意：您的训练没有使用SVD损失，只使用了基础MSE损失
+
+model:
+  # 注意力机制配置 - 这是您实际使用的参数
+  attention_type: "relative"  # 固定使用相对位置注意力
+  
+  # 模型架构参数（基于您的训练脚本）
+  hidden_dim: 256      # d_model参数
+  num_layers: 4        # Transformer层数
+  num_heads: 8         # 注意力头数
+  max_time_steps: 100  # 最大时间步长
+  seq_len: 49          # 序列长度（7x7空间尺寸）
+  
+  # 其他模型参数
+  dropout: 0.1
+  activation: "gelu"
+  
+  # 根据您的中心裁剪设置计算的维度
+  input_dim: 9216   # 96*96*1 = 9216
+  output_dim: 12544 # 112*112*1 = 12544
+
+# 注意力机制类型（您的训练只使用了relative）
+attention_types:
+  - "relative"  # 您实际使用的注意力类型
+  # 以下是可选的其他注意力类型，但您的训练中没有使用
+  # - "sparse"
+  # - "lsh" 
+  # - "se"
+  # - "sk"
+  # - "cbam"
+  # - "sge"
+  # - "muse"
+  # - "mobilevit"
+  # - "dat"
+  # - "crossformer"
+  # - "moa"
+
+# 硬件配置
+device: "cuda"  # 您使用的设备
+use_dataparallel: false  # 单GPU训练
+seed: 42
+deterministic: true
+
+# 可视化配置
+visualization:
+  enabled: false  # 您的训练中没有启用可视化
+  interval: 100
+  max_samples: 5
+
+# 训练结果分析
+training_results:
+  final_train_loss: 0.910416
+  final_val_loss: 0.997694
+  final_learning_rate: 0.000001
+  total_epochs: 300
+  
+  # 性能分析
+  convergence_analysis:
+    loss_trend: "收敛较慢，验证损失较高"
+    overfitting_risk: "存在过拟合风险（验证损失 > 训练损失）"
+    suggestions:
+      - "考虑增加正则化（dropout, weight_decay）"
+      - "尝试不同的注意力机制（如sge, muse等）"
+      - "调整学习率调度策略"
+      - "增加数据增强"
+      - "使用SVD损失函数提升重构质量"
+
+# 改进建议配置
+suggested_improvements:
+  # 1. 尝试不同的注意力机制
+  attention_alternatives:
+    - "sge"      # Spatial Group-wise Enhance
+    - "muse"     # Multi-Scale Attention
+    - "cbam"     # Convolutional Block Attention Module
+    - "se"       # Squeeze-and-Excitation
+  
+  # 2. 使用SVD损失函数
+  enhanced_loss:
+    type: "TotalLossWithSVD"
+    base_weight: 0.7
+    svd_weights: [0.1, 0.08, 0.06, 0.04, 0.02]
+    topk: 5
+  
+  # 3. 调整训练参数
+  training_adjustments:
+    learning_rate: 0.0005  # 稍微提高学习率
+    weight_decay: 0.0001   # 增加正则化
+    dropout: 0.15          # 增加dropout
+    
+  # 4. 数据增强
+  data_augmentation:
+    enable_random_crop: true
+    enable_rotation: true
+    enable_flip: true
+
+# 实验记录
+experiment_info:
+  experiment_name: "multiscale_darcy_flow_4x"
+  date: "2025-07-26"
+  duration: "约87.40秒/epoch"
+  hardware: "CUDA GPU"
+  notes: "基础relative attention训练，收敛较慢，建议尝试其他注意力机制"

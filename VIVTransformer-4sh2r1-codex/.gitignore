@@ -197,6 +197,10 @@ data/raw/
 data/processed/
 data/external/
 
+# Important: Do NOT ignore multiscale/data directory
+!multiscale/data/
+!multiscale/data/**
+
 # Temporary files
 *.tmp
 *.temp

@@ -118,16 +118,16 @@ model:
   attention_type: sge
   dropout: 0.15
   hidden_dim: 384
-  input_dim: 9216
+  input_dim: 81
   layer_norm: true
   max_time_steps: 100
   num_heads: 12
   num_layers: 6
-  output_dim: 12544
+  output_dim: 16384
   positional_encoding:
     max_len: 10000
     type: learnable
-  seq_len: 9216
+  seq_len: 81
   use_residual: true
 monitoring:
   log_frequency: 10

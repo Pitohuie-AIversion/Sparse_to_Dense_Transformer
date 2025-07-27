@@ -84,7 +84,7 @@ class CNNStyleAttentionAdapter(AttentionAdapter):
         spatial_dim = int(seq_len**0.5)
         if spatial_dim * spatial_dim != seq_len:
             raise ValueError(
-                "Sequence length cannot form square spatial dimensions for CNN attention."
+                f"Sequence length {seq_len} cannot form square spatial dimensions for CNN attention. spatial_dim={spatial_dim}, spatial_dim^2={spatial_dim * spatial_dim}"
             )
 
         x_reshaped = (

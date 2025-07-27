@@ -171,7 +171,7 @@ class ConfigurableMultiScaleTrainer:
             num_heads=model_config['num_heads'],
             max_time_steps=100,
             attention_type=attention_type,
-            seq_len=49
+            seq_len=self.input_dim
         ).to(self.device)
         
         self.logger.info(f"使用注意力类型: {attention_type}")
@@ -283,6 +283,10 @@ class ConfigurableMultiScaleTrainer:
             inputs = inputs.to(self.device)
             targets = targets.to(self.device)
             
+            # 处理目标张量形状：从 [B, T, D] 重塑为 [B, D]
+            if len(targets.shape) == 3 and targets.shape[1] == 1:
+                targets = targets.squeeze(1)  # [B, 1, D] -> [B, D]
+            
             self.optimizer.zero_grad()
             # 创建时间步张量
             batch_size = inputs.shape[0]
@@ -337,6 +341,10 @@ class ConfigurableMultiScaleTrainer:
                 inputs = inputs.to(self.device)
                 targets = targets.to(self.device)
                 
+                # 处理目标张量形状：从 [B, T, D] 重塑为 [B, D]
+                if len(targets.shape) == 3 and targets.shape[1] == 1:
+                    targets = targets.squeeze(1)  # [B, 1, D] -> [B, D]
+                
                 # 创建时间步张量
                 batch_size = inputs.shape[0]
                 time_steps = torch.zeros(batch_size, 1, dtype=torch.long, device=self.device)
@@ -360,9 +368,22 @@ class ConfigurableMultiScaleTrainer:
             return
         
         # 取第一个样本进行可视化
-        input_sample = inputs[0, 0].cpu().numpy()
-        target_sample = targets[0, 0].cpu().numpy()
-        output_sample = outputs[0, 0].detach().cpu().numpy()
+        # 处理输入张量形状
+        if len(inputs.shape) == 3:  # [B, T, D]
+            input_sample = inputs[0, 0].cpu().numpy()
+        else:  # [B, D]
+            input_sample = inputs[0].cpu().numpy()
+        
+        # 处理目标和输出张量形状
+        if len(targets.shape) == 3:  # [B, T, D]
+            target_sample = targets[0, 0].cpu().numpy()
+        else:  # [B, D]
+            target_sample = targets[0].cpu().numpy()
+            
+        if len(outputs.shape) == 3:  # [B, T, D]
+            output_sample = outputs[0, 0].detach().cpu().numpy()
+        else:  # [B, D]
+            output_sample = outputs[0].detach().cpu().numpy()
         
         # 重塑为2D图像
         input_size = int(np.sqrt(len(input_sample)))

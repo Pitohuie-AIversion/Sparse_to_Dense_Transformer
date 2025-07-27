@@ -40,10 +40,10 @@ data:
   scale_factor: 4
   sequence_length: 1
 data_augmentation:
-  enable_flip: true
-  enable_random_crop: true
-  enabled: true
-  noise_level: 0.01
+  enable_flip: false
+  enable_random_crop: false
+  enabled: false
+  noise_level: 0.0
 deployment:
   inference:
     batch_size: 1
@@ -97,11 +97,6 @@ hyperparameter_search:
     - 6
     - 8
 loss:
-  additional:
-  - type: L1Loss
-    weight: 0.1
-  - type: GradientLoss
-    weight: 0.05
   svd_config:
     base_weight: 0.6
     svd_weights:
@@ -116,7 +111,7 @@ max_memory_fraction: 0.9
 model:
   activation: gelu
   attention_type: sge
-  dropout: 0.15
+  dropout: 0.0
   hidden_dim: 384
   input_dim: 81
   layer_norm: true
@@ -150,10 +145,10 @@ scheduler:
 seed: 42
 training:
   epochs: 500
-  grad_clip_norm: 1.0
+  grad_clip_norm: 5.0
   learning_rate: 0.0005
   min_learning_rate: 1.0e-05
-  weight_decay: 0.0001
+  weight_decay: 0.00001
 usage_instructions: "使用此配置的建议步骤：\n\n1. 首先尝试SGE注意力机制：\n   python train_configurable_multiscale.py\
   \ --config_file improved_multiscale_config.yaml\n\n2. 如果SGE效果不佳，依次尝试其他注意力机制：\n \
   \  - 修改 model.attention_type 为 \"muse\"\n   - 修改 model.attention_type 为 \"cbam\"\

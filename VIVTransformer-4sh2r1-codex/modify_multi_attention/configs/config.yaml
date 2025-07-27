@@ -10,8 +10,25 @@ global:
 data:
   path: X:/2025/Graduation_project/simulation_results/merged_all_pressures_separated_normalized.pt
   batch_size: 128
-  use_augmentation: true
+  use_augmentation: false  # 流体数据具有物理意义，禁用数据增强
   crop_size: [128, 128]
+  use_pdebench: true
+
+# PDEBench settings - 自适应裁剪配置
+pdebench:
+  data_root: X:/2025/Graduation_project/report/VIVTransformer-4sh2r1-codex/modify_multi_attention/PDEBench/pdebench/data_download/data/2D/DarcyFlow
+  current_pde: darcy_flow
+  pde_configs:
+    darcy_flow:
+      data_file: 2D_DarcyFlow_beta0.1_Train.hdf5
+      spatial_resolution: [128, 128]  # 原始数据分辨率
+      input_size: 64  # 自适应裁剪后的输入尺寸 64x64
+      sequence_length: 48  # 时间序列长度
+      input_dim: 8192  # 64*64*2 = 8192 (tensor + nu)
+      output_dim: 32768  # 128*128*2 = 32768 (tensor + nu)
+      crop_multiplier: 0.5  # 裁剪倍数，64/128 = 0.5
+      use_adaptive_crop: true  # 启用自适应裁剪
+      description: "Darcy flow with adaptive crop: 64x64 input -> 128x128 output"
 
 # Model settings
 model:
@@ -19,9 +36,9 @@ model:
   d_model: 256
   num_heads: 4
   num_layers: 6
-  input_dim: 400
-  output_dim: 40000
-  seq_len: 49
+  input_dim: 8192  # 64*64*2 = 8192 (自适应裁剪后)
+  output_dim: 32768  # 128*128*2 = 32768 (原始尺寸)
+  seq_len: 48  # 时间序列长度
   max_time_steps: 100
 
 # Training settings

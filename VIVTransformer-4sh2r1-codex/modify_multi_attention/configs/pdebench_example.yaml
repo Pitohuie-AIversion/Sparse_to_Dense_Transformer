@@ -3,7 +3,7 @@ attention_test:
   - MultiHeadAttention
   - ECAAttention
   - SEAttention
-current_pde: ns_incom
+current_pde: darcy_flow
 data:
   batch_size: 16
   normalize: true
@@ -23,10 +23,10 @@ model:
   num_layers: 4
   output_dim: 4096
 pdebench:
-  data_root: ./data/pdebench
+  data_root: ./PDEBench/pdebench/data_download/data/2D/DarcyFlow
   pde_configs:
     darcy_flow:
-      data_file: darcy_flow_2d.h5
+      data_file: 2D_DarcyFlow_beta0.1_Train.hdf5
       description: Darcy flow equation
       input_dim: 1024
       output_dim: 1024

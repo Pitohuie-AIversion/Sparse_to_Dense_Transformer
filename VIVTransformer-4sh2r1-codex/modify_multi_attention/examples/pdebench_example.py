@@ -61,9 +61,9 @@ def create_pdebench_config() -> Dict[str, Any]:
             'normalize': True,
             'use_augmentation': False
         },
-        'current_pde': 'ns_incom',  # 当前使用的PDE类型
+        'current_pde': 'darcy_flow',  # 当前使用的PDE类型
         'pdebench': {
-            'data_root': './data/pdebench',
+            'data_root': './PDEBench/pdebench/data_download/data/2D/DarcyFlow',
             'pde_configs': {
                 'ns_incom': {
                     'data_file': 'ns_incom_inhom_2d.h5',
@@ -74,7 +74,7 @@ def create_pdebench_config() -> Dict[str, Any]:
                     'description': 'Navier-Stokes incompressible flow'
                 },
                 'darcy_flow': {
-                    'data_file': 'darcy_flow_2d.h5',
+                    'data_file': '2D_DarcyFlow_beta0.1_Train.hdf5',
                     'spatial_resolution': [32, 32],
                     'sequence_length': 1,
                     'input_dim': 1024,  # 32*32
@@ -167,7 +167,11 @@ def demonstrate_model_creation(config: Dict[str, Any]):
         config['model']['output_dim'] = pde_config['output_dim']
         
         # 创建模型
-        model = create_model(config['model'])
+        model = create_model(
+            config['model'],
+            config['model']['attention_type'],
+            config['global']['device']
+        )
         
         print(f"模型创建成功!")
         print(f"模型类型: {type(model).__name__}")

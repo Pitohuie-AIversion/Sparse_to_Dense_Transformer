@@ -9,6 +9,7 @@ from pathlib import Path
 from . import transforms
 from .dataset import PressureDataset
 from .pdebench_adapter import PDEBenchDataset, PDEBenchDataLoader
+from .custom_dataset_adapter import CustomDataset, CustomDataLoader
 
 
 class CustomSubset(Subset):
@@ -143,8 +144,11 @@ def get_pdebench_loaders(
         split='train',
         sequence_length=pde_config.get('sequence_length', 49),
         spatial_resolution=pde_config.get('spatial_resolution'),
+        input_size=pde_config.get('input_size'),
         normalize=config.get('data', {}).get('normalize', True),
-        transform=train_transform
+        transform=train_transform,
+        use_adaptive_crop=pde_config.get('use_adaptive_crop', False),
+        crop_multiplier=pde_config.get('crop_multiplier', 0.5)
     )
     
     valid_dataset = PDEBenchDataset(
@@ -153,8 +157,11 @@ def get_pdebench_loaders(
         split='val',
         sequence_length=pde_config.get('sequence_length', 49),
         spatial_resolution=pde_config.get('spatial_resolution'),
+        input_size=pde_config.get('input_size'),
         normalize=config.get('data', {}).get('normalize', True),
-        transform=None
+        transform=None,
+        use_adaptive_crop=pde_config.get('use_adaptive_crop', False),
+        crop_multiplier=pde_config.get('crop_multiplier', 0.5)
     )
     
     test_dataset = PDEBenchDataset(
@@ -163,8 +170,11 @@ def get_pdebench_loaders(
         split='test',
         sequence_length=pde_config.get('sequence_length', 49),
         spatial_resolution=pde_config.get('spatial_resolution'),
+        input_size=pde_config.get('input_size'),
         normalize=config.get('data', {}).get('normalize', True),
-        transform=None
+        transform=None,
+        use_adaptive_crop=pde_config.get('use_adaptive_crop', False),
+        crop_multiplier=pde_config.get('crop_multiplier', 0.5)
     )
     
     # 创建数据加载器
@@ -201,6 +211,135 @@ def get_pdebench_loaders(
     return train_loader, valid_loader, test_loader
 
 
+def get_custom_loaders(
+    config: Dict,
+    dataset_type: str = None,
+    batch_size: Optional[int] = None,
+    use_augmentation: bool = False
+) -> Tuple[DataLoader, DataLoader, DataLoader]:
+    """创建自定义数据集加载器
+    
+    Args:
+        config: 配置字典，包含自定义数据集相关设置
+        dataset_type: 数据集类型，如果为None则从config中获取
+        batch_size: 批次大小，如果为None则从config中获取
+        use_augmentation: 是否使用数据增强
+        
+    Returns:
+        训练、验证、测试数据加载器的元组
+    """
+    # 获取自定义数据集配置
+    data_config = config.get('data', {})
+    custom_config = data_config.get('custom_dataset', {})
+    
+    # 获取数据集类型
+    if dataset_type is None:
+        dataset_type = custom_config.get('dataset_type', 'flow_field')
+    
+    # 获取批次大小
+    if batch_size is None:
+        batch_size = data_config.get('batch_size', 32)
+    
+    # 构建数据文件路径
+    if 'file_paths' in custom_config:
+        # 支持多个文件路径
+        file_paths = custom_config['file_paths']
+        if isinstance(file_paths, list):
+            data_files = []
+            for file_path in file_paths:
+                if Path(file_path).is_absolute():
+                    data_files.append(file_path)
+                else:
+                    data_files.append(str(Path(custom_config.get('data_root', '.')) / file_path))
+        else:
+            if Path(file_paths).is_absolute():
+                data_files = [file_paths]
+            else:
+                data_files = [str(Path(custom_config.get('data_root', '.')) / file_paths)]
+    else:
+        # 兼容旧配置格式
+        data_root = custom_config.get('data_root', '.')
+        data_file = data_config.get('data_file', 'data.pt')
+        # 如果data_root目录下有HDF5文件，优先使用
+        data_root_path = Path(data_root)
+        if data_root_path.exists():
+            hdf5_files = list(data_root_path.glob('*.hdf5')) + list(data_root_path.glob('*.h5'))
+            if hdf5_files:
+                data_files = [str(hdf5_files[0])]
+            else:
+                data_files = [str(data_root_path / data_file)]
+        else:
+            data_files = [str(data_root_path / data_file)]
+    
+    # 使用第一个数据文件（后续可扩展支持多文件）
+    data_path = data_files[0]
+    
+    # 准备CustomDataset的通用参数
+    common_params = {
+        'data_path': data_path,
+        'dataset_type': dataset_type,
+        'sequence_length': custom_config.get('sequence_length', 48),
+        'spatial_resolution': custom_config.get('spatial_resolution', [128, 128]),
+        'input_size': custom_config.get('input_size'),
+        'normalize': data_config.get('normalize', True),
+        'normalization_method': custom_config.get('normalization_method', 'standard'),
+        'data_key': custom_config.get('data_keys', {}).get('input'),
+        'target_key': custom_config.get('data_keys', {}).get('target'),
+        'custom_split_ratios': custom_config.get('data_split_ratios', [0.7, 0.15, 0.15]),
+        # Adaptive cropping parameters
+        'use_adaptive_crop': custom_config.get('use_adaptive_crop', False),
+        'crop_multiplier': custom_config.get('crop_multiplier', 0.1),
+        'crop_type': custom_config.get('crop_type', 'default'),
+        'crop_config': custom_config.get('crop_config')
+    }
+    
+    # 创建数据集
+    train_dataset = CustomDataset(
+        split='train',
+        **common_params
+    )
+    
+    valid_dataset = CustomDataset(
+        split='val',
+        **common_params
+    )
+    
+    test_dataset = CustomDataset(
+        split='test',
+        **common_params
+    )
+    
+    # 创建数据加载器
+    num_workers = data_config.get('num_workers', 4)
+    pin_memory = data_config.get('pin_memory', True)
+    
+    train_loader = CustomDataLoader(
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=num_workers,
+        pin_memory=pin_memory
+    )
+    
+    valid_loader = CustomDataLoader(
+        valid_dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=pin_memory
+    )
+    
+    test_loader = CustomDataLoader(
+        test_dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=pin_memory
+    )
+    
+    return train_loader, valid_loader, test_loader
+
+
 def get_adaptive_loaders(
     config: Dict,
     **kwargs
@@ -214,9 +353,13 @@ def get_adaptive_loaders(
     Returns:
         训练、验证、测试数据加载器的元组
     """
+    # 检查是否使用自定义数据集
+    if config.get('data', {}).get('use_custom_dataset', False):
+        dataset_type = config.get('custom_dataset', {}).get('dataset_type', 'flow_field')
+        return get_custom_loaders(config, dataset_type=dataset_type, **kwargs)
     # 检查是否使用PDEBench数据集
-    if config.get('data', {}).get('use_pdebench', False):
-        pde_type = config.get('current_pde', 'ns_incom')
+    elif config.get('data', {}).get('use_pdebench', False):
+        pde_type = config.get('pdebench', {}).get('current_pde', 'darcy_flow')
         return get_pdebench_loaders(config, pde_type=pde_type, **kwargs)
     else:
         # 使用原有的数据加载方式

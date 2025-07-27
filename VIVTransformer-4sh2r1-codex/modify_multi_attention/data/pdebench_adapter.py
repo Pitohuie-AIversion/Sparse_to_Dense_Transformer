@@ -32,9 +32,12 @@ class PDEBenchDataset(Dataset):
         split: str = "train",
         sequence_length: int = 49,
         spatial_resolution: Optional[List[int]] = None,
+        input_size: Optional[int] = None,
         normalize: bool = True,
         transform: Optional[Any] = None,
-        target_transform: Optional[Any] = None
+        target_transform: Optional[Any] = None,
+        use_adaptive_crop: bool = False,
+        crop_multiplier: float = 0.5
     ):
         """
         初始化PDEBench数据集
@@ -45,18 +48,24 @@ class PDEBenchDataset(Dataset):
             split: 数据分割类型 ('train', 'val', 'test')
             sequence_length: 序列长度
             spatial_resolution: 空间分辨率 [H, W]
+            input_size: 输入区域大小（中心裁剪），如果为None则使用全尺寸
             normalize: 是否归一化数据
             transform: 输入数据变换
             target_transform: 目标数据变换
+            use_adaptive_crop: 是否使用自适应裁剪（输入裁剪，目标保持原始尺寸）
+            crop_multiplier: 裁剪倍数，用于确定裁剪尺寸
         """
         self.data_path = Path(data_path)
         self.pde_type = pde_type
         self.split = split
         self.sequence_length = sequence_length
         self.spatial_resolution = spatial_resolution or [64, 64]
+        self.input_size = input_size  # 输入区域大小，用于中心裁剪
         self.normalize = normalize
         self.transform = transform
         self.target_transform = target_transform
+        self.use_adaptive_crop = use_adaptive_crop
+        self.crop_multiplier = crop_multiplier
         
         # 验证文件存在
         if not self.data_path.exists():
@@ -224,12 +233,48 @@ class PDEBenchDataset(Dataset):
         
         return inputs, targets
     
+    def _center_crop(self, data: np.ndarray, crop_size: int) -> np.ndarray:
+        """中心裁剪功能
+        
+        Args:
+            data: 输入数据 [T, H, W, C]
+            crop_size: 裁剪尺寸
+            
+        Returns:
+            裁剪后的数据 [T, crop_size, crop_size, C]
+        """
+        T, H, W, C = data.shape
+        
+        # 计算中心位置
+        center_h, center_w = H // 2, W // 2
+        half_crop = crop_size // 2
+        
+        # 确保裁剪区域在有效范围内
+        start_h = max(0, center_h - half_crop)
+        end_h = min(H, center_h + half_crop)
+        start_w = max(0, center_w - half_crop)
+        end_w = min(W, center_w + half_crop)
+        
+        # 如果裁剪区域不足，进行填充
+        cropped = data[:, start_h:end_h, start_w:end_w, :]
+        
+        # 如果裁剪后的尺寸不足，进行零填充
+        actual_h, actual_w = cropped.shape[1], cropped.shape[2]
+        if actual_h < crop_size or actual_w < crop_size:
+            padded = np.zeros((T, crop_size, crop_size, C), dtype=data.dtype)
+            pad_start_h = (crop_size - actual_h) // 2
+            pad_start_w = (crop_size - actual_w) // 2
+            padded[:, pad_start_h:pad_start_h + actual_h, pad_start_w:pad_start_w + actual_w, :] = cropped
+            return padded
+        
+        return cropped
+    
     def _reshape_spatial_data(self, data: np.ndarray) -> np.ndarray:
         """重塑空间数据"""
         # 输入形状: [T, H, W, C]
         # 输出形状: [T, H*W*C]
         T = data.shape[0]
-        spatial_dim = self.height * self.width * self.n_channels
+        spatial_dim = data.shape[1] * data.shape[2] * data.shape[3]
         return data.reshape(T, spatial_dim)
     
     def __len__(self) -> int:
@@ -248,9 +293,29 @@ class PDEBenchDataset(Dataset):
         inputs = self._normalize_data(inputs)
         targets = self._normalize_data(targets)
         
-        # 重塑空间维度
-        inputs = self._reshape_spatial_data(inputs)  # [T-1, H*W*C]
-        targets = self._reshape_spatial_data(targets)  # [T-1, H*W*C]
+        # 检查是否使用自适应裁剪
+        use_adaptive_crop = getattr(self, 'use_adaptive_crop', False)
+        crop_multiplier = getattr(self, 'crop_multiplier', 0.5)
+        
+        if use_adaptive_crop and self.input_size is not None:
+            # 自适应裁剪：输入使用裁剪数据，目标使用原始数据
+            inputs = self._center_crop(inputs, self.input_size)  # [T-1, input_size, input_size, C]
+            
+            # 重塑空间维度
+            inputs = self._reshape_spatial_data(inputs)  # [T-1, input_size*input_size*C]
+            targets = self._reshape_spatial_data(targets)  # [T-1, H*W*C]
+        elif self.input_size is not None:
+            # 传统中心裁剪：输入和目标都使用裁剪数据
+            inputs = self._center_crop(inputs, self.input_size)  # [T-1, input_size, input_size, C]
+            targets = self._center_crop(targets, self.input_size)  # [T-1, input_size, input_size, C]
+            
+            # 重塑空间维度
+            inputs = self._reshape_spatial_data(inputs)  # [T-1, input_size*input_size*C]
+            targets = self._reshape_spatial_data(targets)  # [T-1, input_size*input_size*C]
+        else:
+            # 不进行裁剪，直接重塑
+            inputs = self._reshape_spatial_data(inputs)  # [T-1, H*W*C]
+            targets = self._reshape_spatial_data(targets)  # [T-1, H*W*C]
         
         # 转换为张量
         inputs = torch.from_numpy(inputs).float()
@@ -258,7 +323,8 @@ class PDEBenchDataset(Dataset):
         
         # 应用变换
         if self.transform:
-            inputs = self.transform(inputs)
+            # transforms期望(inputs, targets)元组
+            inputs, targets = self.transform((inputs, targets))
         if self.target_transform:
             targets = self.target_transform(targets)
         
@@ -269,14 +335,24 @@ class PDEBenchDataset(Dataset):
     
     def get_data_info(self) -> Dict[str, Any]:
         """获取数据集信息"""
+        # 计算输入和输出维度
+        if self.input_size is not None:
+            input_dim = self.input_size * self.input_size * self.n_channels
+        else:
+            input_dim = self.height * self.width * self.n_channels
+        
+        output_dim = self.height * self.width * self.n_channels
+        
         return {
             'pde_type': self.pde_type,
             'split': self.split,
             'n_samples': len(self),
             'sequence_length': self.sequence_length,
             'spatial_resolution': self.spatial_resolution,
+            'input_size': self.input_size,
             'n_channels': self.n_channels,
-            'input_dim': self.height * self.width * self.n_channels,
+            'input_dim': input_dim,
+            'output_dim': output_dim,
             'normalize': self.normalize,
             'data_mean': getattr(self, 'data_mean', None),
             'data_std': getattr(self, 'data_std', None),
@@ -353,6 +429,7 @@ def create_pdebench_datasets(
     pde_type: str = "ns_incom",
     sequence_length: int = 49,
     spatial_resolution: Optional[List[int]] = None,
+    input_size: Optional[int] = None,
     normalize: bool = True,
     train_transform: Optional[Any] = None,
     val_transform: Optional[Any] = None,
@@ -379,6 +456,7 @@ def create_pdebench_datasets(
         split='train',
         sequence_length=sequence_length,
         spatial_resolution=spatial_resolution,
+        input_size=input_size,
         normalize=normalize,
         transform=train_transform
     )
@@ -389,6 +467,7 @@ def create_pdebench_datasets(
         split='val',
         sequence_length=sequence_length,
         spatial_resolution=spatial_resolution,
+        input_size=input_size,
         normalize=normalize,
         transform=val_transform
     )
@@ -399,6 +478,7 @@ def create_pdebench_datasets(
         split='test',
         sequence_length=sequence_length,
         spatial_resolution=spatial_resolution,
+        input_size=input_size,
         normalize=normalize,
         transform=test_transform
     )
@@ -412,6 +492,7 @@ def create_pdebench_loaders(
     batch_size: int = 32,
     sequence_length: int = 49,
     spatial_resolution: Optional[List[int]] = None,
+    input_size: Optional[int] = None,
     normalize: bool = True,
     num_workers: int = 4,
     pin_memory: bool = True,
@@ -443,6 +524,7 @@ def create_pdebench_loaders(
         pde_type=pde_type,
         sequence_length=sequence_length,
         spatial_resolution=spatial_resolution,
+        input_size=input_size,
         normalize=normalize,
         train_transform=train_transform,
         val_transform=val_transform,

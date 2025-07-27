@@ -51,20 +51,67 @@ class QKVAttentionAdapter(AttentionAdapter):
     def forward(self, x, memory=None, return_attention=False):
         if memory is None:
             memory = x
+            
+        # Handle 4D input tensors by reshaping to 3D
+        original_shape = x.shape
+        if len(x.shape) == 4:
+            batch_size, seq_len1, seq_len2, d_model = x.shape
+            x = x.view(batch_size, seq_len1 * seq_len2, d_model)
+            memory = memory.view(batch_size, seq_len1 * seq_len2, d_model)
+            
         try:
-            return self.attention(x, memory, memory, return_attention=return_attention)
-        except TypeError:
-            if return_attention:
-                return self.attention(x, memory, memory), None
+            output = self.attention(x, memory, memory, return_attention=return_attention)
+            if return_attention and isinstance(output, tuple):
+                attn_output, attn_weights = output
             else:
-                return self.attention(x, memory, memory)
+                attn_output = output
+                attn_weights = None
+                
+            # Reshape back to original shape if needed
+            if len(original_shape) == 4:
+                attn_output = attn_output.view(original_shape)
+                
+            if return_attention:
+                return attn_output, attn_weights
+            return attn_output
+            
+        except TypeError:
+            output = self.attention(x, memory, memory)
+            if len(original_shape) == 4:
+                output = output.view(original_shape)
+            if return_attention:
+                return output, None
+            else:
+                return output
 
 
 class CNNStyleAttentionAdapter(AttentionAdapter):
     """Adapter for CNN-style attention mechanisms that expect a 4D tensor."""
 
     def forward(self, x, memory=None, return_attention=False):
-        batch_size, seq_len, d_model = x.shape
+        # Handle different input shapes
+        if len(x.shape) == 4:
+            # Already in CNN format (B, C, H, W)
+            try:
+                output = self.attention(x)
+                if isinstance(output, tuple):
+                    output = output[0]
+                if output is None:
+                    output = torch.zeros_like(x)
+                if return_attention:
+                    return output, None
+                return output
+            except Exception as e:
+                print(f"ERROR: Exception in {self.attention.__class__.__name__}: {e}")
+                output = torch.zeros_like(x)
+                if return_attention:
+                    return output, None
+                return output
+        elif len(x.shape) == 3:
+            batch_size, seq_len, d_model = x.shape
+        else:
+            raise ValueError(f"Unexpected input shape: {x.shape}")
+            
         spatial_dim = int(seq_len**0.5)
         if spatial_dim * spatial_dim != seq_len:
             raise ValueError(

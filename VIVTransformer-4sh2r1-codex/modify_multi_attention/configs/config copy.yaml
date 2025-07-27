@@ -1,36 +1,50 @@
-# Global settings
-global:
-  seed: 42
-  deterministic: true
-  device: "cuda:0"              # 强烈建议明确指定主卡
-  max_memory_fraction: 0.8      # 新增，每进程最大显存占用比例
-  use_dataparallel: true        # 新增，双卡/多卡训练控制
-
-# Data settings
 data:
-  path: "/share/fandixiaLab/suguangsheng/PycharmProjects/VIVTransformer/merged_all_pressures_separated_normalized(1).pt"
-  batch_size: 616
-  use_augmentation: false  # 流体压力数据具有物理意义，禁用数据增强
-  crop_size: [128, 128]
+  # 传统数据路径（注释掉以使用PDE数据集）
+  # path: "/share/fandixiaLab/suguangsheng/PycharmProjects/VIVTransformer/merged_all_pressures_separated_normalized(1).pt"
+  
+  # 启用PDE数据集支持
+  use_pdebench: false  # 设置为true使用PDEBench数据集
+  use_custom_dataset: true  # 设置为true使用自定义数据集（如DarcyFlow）
+  
+  batch_size: 32  # 调整为更合适的batch size
+  
+  # 自定义数据集配置（DarcyFlow示例）
+  custom_dataset:
+    data_root: "PDEBench/pdebench/data_download/data/2D/DarcyFlow"
+    dataset_type: "darcy_flow"
+    file_paths:
+      - "2D_DarcyFlow_beta0.1_Train.hdf5"
+    
+    spatial_resolution: [128, 128]
+    sequence_length: 1
+    
+    data_keys:
+      input: "nu"
+      target: "tensor"
+    
+    normalization_method: "minmax"
+    data_split_ratios: [0.7, 0.2, 0.1]
+    normalize: true
+  
+  # PDEBench数据集配置（备选）
+  pdebench:
+    dataset_name: "2D_DarcyFlow_beta0.1_Train"
+    data_path: "PDEBench/pdebench/data_download/data/2D/DarcyFlow/2D_DarcyFlow_beta0.1_Train.hdf5"
+    input_keys: ["nu"]
+    target_keys: ["tensor"]
+    spatial_resolution: [128, 128]
+    sequence_length: 1
 
-# Model settings
-model:
-  attention_type: "relative"  # 这里的默认类型可以随时更改
-  d_model: 512
-  num_heads: 8
-  num_layers: 6
-  input_dim: 400
-  output_dim: 40000
-  seq_len: 49  # 明确指定7x7空间尺寸，支持CNN注意力
-  max_time_steps: 100
-
-# Training settings
 training:
   epochs: 5000
   learning_rate: 0.0001
   early_stop_patience: 500
 
-# Loss configurations
+#loss:
+#  base_weight: 0        # 主loss权重 (MSE全局损失)，支持0~1任意浮点
+#  svd_weights: [1, 5, 4]   # 分别为SVD主模态1、2、3的权重（可任意填0，全部加和后自动归一化）
+#  topk: 3                  # SVD主模态数量，建议3或根据需要调整
+
 loss_configs:
     # loss_config_0
     - base_weight: 1.0
@@ -233,7 +247,16 @@ loss_configs:
       svd_weights: [ 0.00504, 0.00802, 0.00269, 0.00173, 0.00516, 0.00361, 0.00726, 0.00067, 0.03035, 0.03548 ]
       topk: 10
 
-# Attention types configuration
+model:
+  input_dim: 400
+  output_dim: 40000
+  d_model: 512
+  num_heads: 8
+  num_layers: 6
+  max_time_steps: 100
+  attention_type: "relative"  # 这里的默认类型可以随时更改
+  seq_len: 49  # 明确指定7x7空间尺寸，支持CNN注意力
+
 attention_types:
 #  - "relative"
 #  - "sparse"
@@ -265,59 +288,19 @@ attention_types:
 #  - "mobilevit"
 #  - "mobilevitv2"
 
-# Visualization settings
+# 全局配置
+global:
+  device: "cuda:0"              # 强烈建议明确指定主卡
+  use_dataparallel: true        # 新增，双卡/多卡训练控制
+  seed: 42                      # 新增，训练可重复性
+  deterministic: true           # 新增，训练可重复性
+  max_memory_fraction: 0.8      # 新增，每进程最大显存占用比例
+
+# 注意力机制测试配置
+attention_test:
+  types: ["sge"]  # 从attention_types移动到这里
+
 visualization:
   enabled: true  # 是否启用可视化
   interval: 100   # 每隔多少个 epoch 画一次图
   max_samples: 5 # 最多可视化多少个样本
-
-# Hardware monitoring settings
-hardware_monitoring:
-  enable_gpu_monitoring: true
-  log_batch_metrics: true
-  batch_log_interval: 50
-  save_detailed_metrics: true
-  monitor_temperature: true
-  monitor_power_usage: true
-
-# Attention mechanisms to test
-attention_test:
-  types: 
-    - self
-    - simplified_self
-    - muse
-    - ufo
-    - relative
-    - sparse
-    - lsh
-    - emsa
-    - mobilevit
-    - mobilevitv2
-    - dat
-    - crossformer
-    - moa
-    - crisscross
-    - axial
-    - gfnet
-    - se
-    - sk
-    - cbam
-    - bam
-    - eca
-    - shuffle
-    - residual
-    - s2
-    - triplet
-    - coord
-    - psa
-    - danet
-    - cot
-    - polarized
-    - outlook
-    - vip
-    - coatnet
-    - halo
-    - a2
-    - parnet
-    - external
-    - aft

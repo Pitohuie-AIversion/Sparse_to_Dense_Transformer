@@ -1,0 +1,74 @@
+data:
+  # 传统数据路径（用于测试）
+  # path: "/share/fandixiaLab/suguangsheng/PycharmProjects/VIVTransformer/merged_all_pressures_separated_normalized(1).pt"
+  
+  # PDE数据集支持（当数据文件可用时启用）
+  use_pdebench: false  # 设置为true使用PDEBench数据集
+  use_custom_dataset: true  # 设置为true使用自定义数据集（如DarcyFlow）
+  
+  batch_size: 32
+  
+  # 自定义数据集配置（DarcyFlow示例 - 当数据可用时使用）
+  custom_dataset:
+    data_root: "PDEBench/pdebench/data_download/data/2D/DarcyFlow"
+    dataset_type: "darcy_flow"
+    file_paths:
+      - "2D_DarcyFlow_beta0.1_Train.hdf5"
+    
+    spatial_resolution: [128, 128]
+    sequence_length: 1
+    
+    data_keys:
+      input: "nu"
+      target: "tensor"
+    
+    normalization_method: "minmax"
+    data_split_ratios: [0.7, 0.2, 0.1]
+    normalize: true
+  
+  # PDEBench数据集配置（备选）
+  pdebench:
+    dataset_name: "2D_DarcyFlow_beta0.1_Train"
+    data_path: "PDEBench/pdebench/data_download/data/2D/DarcyFlow/2D_DarcyFlow_beta0.1_Train.hdf5"
+    input_keys: ["nu"]
+    target_keys: ["tensor"]
+    spatial_resolution: [128, 128]
+    sequence_length: 1
+
+training:
+  epochs: 5000
+  learning_rate: 0.0001
+  early_stop_patience: 500
+
+loss_configs:
+    # loss_config_0 - 仅测试一个配置
+    - base_weight: 1.0
+      svd_weights: [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+      topk: 10
+
+model:
+  input_dim: 16384  # 128x128 = 16384 for DarcyFlow dataset
+  output_dim: 16384  # 128x128 = 16384 for DarcyFlow dataset
+  d_model: 512
+  num_heads: 8
+  num_layers: 6
+  max_time_steps: 100
+  attention_type: "relative"
+  seq_len: 1  # DarcyFlow is static data, sequence length = 1
+
+# 全局配置
+global:
+  device: "cuda:0"
+  use_dataparallel: true
+  seed: 42
+  deterministic: true
+  max_memory_fraction: 0.8
+
+# 注意力机制测试配置
+attention_test:
+  types: ["sge"]
+
+visualization:
+  enabled: true
+  interval: 100
+  max_samples: 5

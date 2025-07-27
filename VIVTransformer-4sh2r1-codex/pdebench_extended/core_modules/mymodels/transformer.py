@@ -397,6 +397,7 @@ class TransformerFlowReconstructionModel(nn.Module):
         self.encoder = CustomEncoder(encoder_layer, num_layers)
         self.decoder = CustomDecoder(decoder_layer, num_layers)
         self.fc_out = nn.Linear(d_model, output_dim)
+        print(f"MODEL_INIT: TransformerFlowReconstructionModel initialized with FORCE_DEBUG version")
 
     def forward(
         self, x_in_pressures_flat: torch.Tensor, x_time_steps: torch.Tensor, return_attention: bool = False
@@ -429,10 +430,39 @@ class TransformerFlowReconstructionModel(nn.Module):
 
         print(f"DEBUG: decoder_output shape: {decoder_output.shape}")
 
-        decoder_output_mean = decoder_output.mean(dim=1)
+        # 处理多维输出，将其转换为二维 [batch, d_model]
+        # 强制将输出重塑为二维
+        batch_size = decoder_output.shape[0]
+        d_model = decoder_output.shape[-1]
+        
+        print(f"FORCE_DEBUG: batch_size={batch_size}, d_model={d_model}")
+        print(f"FORCE_DEBUG: decoder_output.shape={decoder_output.shape}")
+        
+        # 直接强制重塑为 [batch, d_model]
+        # 对于形状 [4, 4, 81, 384]，我们需要将其重塑为 [4, 324, 384]，然后取平均得到 [4, 384]
+        if len(decoder_output.shape) == 4:
+            # [batch, seq1, seq2, d_model] -> [batch, seq1*seq2, d_model]
+            decoder_output_reshaped = decoder_output.view(batch_size, -1, d_model)
+            print(f"FORCE_DEBUG: 4D case - decoder_output_reshaped.shape={decoder_output_reshaped.shape}")
+        elif len(decoder_output.shape) == 3:
+            # [batch, seq, d_model] -> 已经是正确形状
+            decoder_output_reshaped = decoder_output
+            print(f"FORCE_DEBUG: 3D case - decoder_output_reshaped.shape={decoder_output_reshaped.shape}")
+        else:
+            # 其他情况，强制重塑
+            total_elements = decoder_output.numel() // (batch_size * d_model)
+            decoder_output_reshaped = decoder_output.view(batch_size, total_elements, d_model)
+            print(f"FORCE_DEBUG: other case - decoder_output_reshaped.shape={decoder_output_reshaped.shape}")
+        
+        # 取平均得到 [batch, d_model]
+        decoder_output_mean = decoder_output_reshaped.mean(dim=1)
+        print(f"FORCE_DEBUG: after mean, decoder_output_mean.shape={decoder_output_mean.shape}")
+            
         print(f"DEBUG: decoder_output_mean shape: {decoder_output_mean.shape}")
-
-        out_pressure_flat_pred = self.fc_out(decoder_output_mean)
+        
+        # 通过输出层得到最终预测
+        out_pressure_flat_pred = self.fc_out(decoder_output_mean)  # [batch, output_dim]
+        print(f"DEBUG: out_pressure_flat_pred shape: {out_pressure_flat_pred.shape}")
 
         if return_attention:
             return out_pressure_flat_pred, attention_weights

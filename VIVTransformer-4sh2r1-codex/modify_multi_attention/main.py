@@ -122,6 +122,20 @@ def main(config_path=None):
         use_augmentation=cfg["data"].get("use_augmentation", False)
     )
     logger.info("Data loaders created successfully.")
+    
+    # 如果使用PDEBench数据集，动态更新模型配置
+    if cfg.get('data', {}).get('use_pdebench', False):
+        # 获取数据集信息
+        dataset_info = train_loader.dataset.get_data_info()
+        logger.info("PDEBench数据集信息: %s", dataset_info)
+        
+        # 更新模型配置
+        cfg['model']['input_dim'] = dataset_info['input_dim']
+        cfg['model']['output_dim'] = dataset_info['output_dim']
+        cfg['model']['seq_len'] = dataset_info['sequence_length']
+        
+        logger.info("模型配置已更新: input_dim=%d, output_dim=%d, seq_len=%d", 
+                   cfg['model']['input_dim'], cfg['model']['output_dim'], cfg['model']['seq_len'])
 
     for loss_cfg, loss_config_id in zip(loss_configs, loss_config_ids):
         logger.info(

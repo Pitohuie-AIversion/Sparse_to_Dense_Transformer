@@ -10,7 +10,7 @@ global:
 data:
   path: X:/2025/Graduation_project/simulation_results/merged_all_pressures_separated_normalized.pt
   batch_size: 128
-  use_augmentation: true
+  use_augmentation: false  # 流体压力数据具有物理意义，禁用数据增强
   crop_size: [128, 128]
 
 # Model settings

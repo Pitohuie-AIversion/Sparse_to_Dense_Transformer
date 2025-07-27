@@ -77,6 +77,7 @@ ATTENTION_MODULES = {
     "bam": BAMBlock,
     "eca": ECAAttention,
     "shuffle": ShuffleAttention,
+    "sge": SpatialGroupEnhance,
 
     "residual": ResidualAttention,
     "s2": S2Attention,
@@ -124,6 +125,7 @@ ADAPTER_MAPPING = {
     "bam": AdapterType.CNN,
     "eca": AdapterType.CNN,
     "shuffle": AdapterType.CNN,
+    "sge": AdapterType.CNN,
 
     "residual": AdapterType.CNN,
     "s2": AdapterType.CNN,

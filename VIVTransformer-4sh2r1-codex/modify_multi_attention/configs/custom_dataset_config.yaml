@@ -1,0 +1,156 @@
+# 自定义数据集配置示例
+# 这个配置文件展示了如何接入新的数据集
+
+# Global settings
+global:
+  seed: 42
+  deterministic: true
+  device: cuda:0
+  max_memory_fraction: 0.8
+  use_dataparallel: true
+
+# Data settings
+data:
+  batch_size: 64
+  use_augmentation: false  # 流体数据具有物理意义，禁用数据增强
+  crop_size: [128, 128]
+  normalize: true
+  num_workers: 4
+  pin_memory: true
+  use_custom_dataset: true  # 启用自定义数据集
+  use_pdebench: false       # 禁用PDEBench
+
+# 自定义数据集配置
+custom_dataset:
+  data_root: "X:/2025/Graduation_project/simulation_results"  # 数据根目录
+  current_dataset: "flow_field"  # 当前使用的数据集类型
+  
+  dataset_configs:
+    # 流场数据集配置
+    flow_field:
+      data_file: "merged_all_pressures_separated_normalized.pt"  # 数据文件名
+      spatial_resolution: [200, 200]  # 空间分辨率
+      input_size: 128  # 输入区域大小（中心裁剪）
+      sequence_length: 48  # 序列长度
+      normalization_method: "standard"  # 归一化方法: "standard", "minmax", "none"
+      data_key: "pressure"  # 数据文件中的数据键名
+      target_key: null  # 目标数据键名（如果为null则使用时间序列预测模式）
+      split_ratios: [0.7, 0.15, 0.15]  # 训练/验证/测试分割比例
+      input_dim: 16384  # 128*128*1 = 16384
+      output_dim: 40000  # 200*200*1 = 40000
+      description: "流场压力数据，输入中心裁剪到128x128"
+    
+    # 另一个数据集示例（可以添加更多数据集）
+    flow_field_full:
+      data_file: "merged_all_pressures_separated_normalized.pt"
+      spatial_resolution: [200, 200]
+      input_size: null  # 不进行裁剪，使用全尺寸
+      sequence_length: 48
+      normalization_method: "standard"
+      data_key: "pressure"
+      target_key: null
+      split_ratios: [0.7, 0.15, 0.15]
+      input_dim: 40000  # 200*200*1 = 40000
+      output_dim: 40000  # 200*200*1 = 40000
+      description: "流场压力数据，全尺寸输入"
+    
+    # HDF5格式数据集示例
+    hdf5_dataset:
+      data_file: "flow_data.h5"
+      spatial_resolution: [64, 64]
+      input_size: 32
+      sequence_length: 50
+      normalization_method: "minmax"
+      data_key: "velocity"  # HDF5文件中的数据键
+      target_key: "pressure"  # HDF5文件中的目标键
+      split_ratios: [0.8, 0.1, 0.1]
+      input_dim: 1024  # 32*32*1 = 1024
+      output_dim: 4096  # 64*64*1 = 4096
+      description: "HDF5格式的流场数据"
+    
+    # NumPy格式数据集示例
+    numpy_dataset:
+      data_file: "simulation_data.npz"
+      spatial_resolution: [100, 100]
+      input_size: 64
+      sequence_length: 30
+      normalization_method: "standard"
+      data_key: "data"  # NPZ文件中的数据键
+      target_key: null
+      split_ratios: [0.7, 0.2, 0.1]
+      input_dim: 4096  # 64*64*1 = 4096
+      output_dim: 10000  # 100*100*1 = 10000
+      description: "NumPy格式的仿真数据"
+
+# Model settings
+model:
+  attention_type: relative
+  d_model: 256
+  num_heads: 4
+  num_layers: 6
+  input_dim: 16384  # 将被自定义数据集配置动态更新
+  output_dim: 40000  # 将被自定义数据集配置动态更新
+  seq_len: 48  # 将被自定义数据集配置动态更新
+  max_time_steps: 100
+
+# Training settings
+training:
+  epochs: 20
+  learning_rate: 0.0001
+  early_stop_patience: 10
+  save_best_model: true
+  checkpoint_interval: 5
+
+# Visualization settings
+visualization:
+  enabled: true
+  interval: 100
+  max_samples: 5
+  save_plots: true
+  plot_format: "png"
+
+# Hardware monitoring settings
+hardware_monitoring:
+  enable_gpu_monitoring: true
+  log_batch_metrics: true
+  batch_log_interval: 50
+  save_detailed_metrics: true
+  monitor_temperature: true
+  monitor_power_usage: true
+
+# Attention mechanisms to test
+attention_test:
+  types: 
+    - self
+    - relative
+    - sparse
+    - muse
+    - ufo
+    - emsa
+    - mobilevit
+    - dat
+    - crossformer
+    - se
+    - cbam
+    - eca
+    - shuffle
+    - residual
+    - coord
+    - outlook
+    - halo
+    - external
+    - aft
+
+# 日志设置
+logging:
+  level: INFO
+  save_logs: true
+  log_file: "custom_dataset_training.log"
+  console_output: true
+
+# 实验设置
+experiment:
+  name: "custom_dataset_experiment"
+  description: "使用自定义数据集进行多注意力机制实验"
+  save_results: true
+  results_dir: "./results/custom_dataset"

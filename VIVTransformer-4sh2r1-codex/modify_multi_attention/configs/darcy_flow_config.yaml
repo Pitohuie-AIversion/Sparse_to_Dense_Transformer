@@ -1,0 +1,172 @@
+# DarcyFlow数据集配置文件
+# 基于PDEBench的2D DarcyFlow数据集
+
+# 全局设置
+global:
+  device: "cuda"  # 使用GPU加速
+  seed: 42
+  project_name: "VIVTransformer_DarcyFlow"
+  experiment_name: "darcy_flow_experiment"
+
+# 数据设置
+data:
+  use_custom_dataset: true
+  use_pdebench: false  # 禁用PDEBench原生加载器
+  use_augmentation: false  # 流体物理场数据禁用数据增强
+  batch_size: 16
+  num_workers: 4
+  pin_memory: true
+
+# 自定义数据集配置 - DarcyFlow
+custom_dataset:
+  # 数据路径
+  data_root: "PDEBench/pdebench/data_download/data/2D/DarcyFlow"
+  dataset_type: "darcy_flow"
+  file_paths:
+    - "2D_DarcyFlow_beta0.1_Train.hdf5"
+  
+  # 数据参数
+  spatial_resolution: [128, 128]  # 128x128网格
+  sequence_length: 2  # 输入->输出，设为2（输入1步，预测1步）
+  
+  # 数据键映射
+  data_keys:
+    input: "nu"      # 输入：渗透率场 (permeability field)
+    target: "tensor" # 目标：压力场 (pressure field)
+    # 坐标信息可选
+    # x_coord: "x-coordinate"
+    # y_coord: "y-coordinate"
+  
+  # 数据预处理
+  normalization_method: "minmax"  # 最小-最大归一化
+  center_crop_size: null  # 不进行中心裁剪
+  
+  # 数据分割比例 [训练, 验证, 测试]
+  data_split_ratios: [0.7, 0.2, 0.1]
+  
+  # 自动推断的维度（会被数据加载器覆盖）
+  input_dim: 16384   # 128*128 = 16384
+  output_dim: 16384  # 128*128 = 16384
+
+# 模型设置
+model:
+  attention_type: "standard"  # 可选: standard, linear, performer, flash
+  d_model: 512
+  num_heads: 8
+  num_layers: 6
+  
+  # 这些参数会被数据加载器自动更新
+  input_dim: 16384   # 128*128
+  output_dim: 16384  # 128*128
+  seq_len: 1         # 输入序列长度
+  max_time_steps: 10
+  
+  # 嵌入设置
+  embedding:
+    use_positional: true
+    use_temporal: true
+    dropout: 0.1
+
+# 训练设置
+training:
+  epochs: 100
+  learning_rate: 1e-4
+  weight_decay: 1e-5
+  
+  # 优化器设置
+  optimizer: "adam"
+  scheduler: "cosine"
+  warmup_epochs: 10
+  
+  # 损失函数
+  loss_function: "mse"  # 均方误差损失
+  
+  # 数据增强（可选）
+  data_augmentation:
+    enabled: false  # DarcyFlow是物理场，谨慎使用数据增强
+    rotation: false
+    flip: false
+    noise_level: 0.0
+  
+  # 梯度设置
+  gradient_clip_norm: 1.0
+  accumulation_steps: 1
+  
+  # 保存设置
+  save_every: 10
+  validate_every: 5
+  
+  # 早停设置
+  early_stopping:
+    enabled: true
+    patience: 20
+    min_delta: 1e-6
+
+# 可视化设置
+visualization:
+  enabled: true
+  save_plots: true
+  plot_frequency: 10
+  
+  # 特定于DarcyFlow的可视化
+  darcy_specific:
+    plot_fields: true      # 绘制渗透率和压力场
+    plot_comparison: true  # 绘制预测vs真实对比
+    colormap: "viridis"    # 颜色映射
+    save_animations: false # 不保存动画（静态数据）
+
+# 硬件监控
+hardware_monitoring:
+  enabled: true
+  log_interval: 100
+  
+# 日志设置
+logging:
+  level: "INFO"
+  save_logs: true
+  log_dir: "logs/darcy_flow"
+  
+# 实验设置
+experiment:
+  name: "darcy_flow_baseline"
+  description: "DarcyFlow数据集基线实验 - 渗透率场到压力场的映射"
+  tags: ["darcy_flow", "pde", "baseline"]
+  
+  # 指标设置
+  metrics:
+    - "mse"
+    - "mae"
+    - "relative_error"
+    - "correlation"
+  
+  # 检查点设置
+  checkpoint:
+    save_best: true
+    save_last: true
+    monitor: "val_loss"
+    mode: "min"
+
+# 测试注意力机制类型（可选）
+attention_types_to_test:
+  - "standard"
+  - "linear"
+  - "performer"
+
+# DarcyFlow特定设置
+darcy_flow:
+  # 物理参数
+  beta: 0.1  # 从数据集属性中获取
+  
+  # 边界条件（如果需要）
+  boundary_conditions:
+    type: "dirichlet"  # 狄利克雷边界条件
+    
+  # 求解器相关（如果需要验证）
+  solver:
+    method: "finite_difference"
+    grid_size: [128, 128]
+    
+  # 评估指标
+  evaluation:
+    physics_informed: true  # 是否使用物理约束评估
+    conservation_check: true # 检查守恒性

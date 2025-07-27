@@ -12,7 +12,7 @@ import yaml
 
 _REQUIRED_KEYS: dict[str, Any] = {
     "global": ["device"],
-    "data": ["path", "batch_size"],
+    "data": ["batch_size"],  # 移除强制要求path，支持自适应数据加载
     "training": ["epochs", "learning_rate", "early_stop_patience"],
     "model": dict,
     "attention_test": {"types": list},

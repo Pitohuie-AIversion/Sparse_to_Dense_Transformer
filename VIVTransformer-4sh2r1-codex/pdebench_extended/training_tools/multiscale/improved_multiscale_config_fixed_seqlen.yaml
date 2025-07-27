@@ -1,9 +1,9 @@
 attention_experiments:
   experiment_sequence:
     1:
-      attention_type: sge
-      description: 空间组增强注意力，适合空间特征学习
-      expected_improvement: 更好的空间特征表示
+      attention_type: se
+      description: 通道注意力机制，适合特征增强
+      expected_improvement: 更好的通道特征表示
     2:
       attention_type: muse
       description: 多尺度注意力，直接适配多尺度任务
@@ -35,7 +35,7 @@ data:
   original_resolution:
   - 128
   - 128
-  path: PDEBench/pdebench/data_download/2D_DarcyFlow_beta0.1_Train.hdf5
+  path: X:\2025\Graduation_project\report\VIVTransformer-4sh2r1-codex\modify_multi_attention\PDEBench\pdebench\data_download\data\2D\DarcyFlow\2D_DarcyFlow_beta0.1_Train.hdf5
   pde_type: darcy_flow
   scale_factor: 4
   sequence_length: 1
@@ -115,10 +115,10 @@ loss:
 max_memory_fraction: 0.9
 model:
   activation: gelu
-  attention_type: sge
+  attention_type: self
   dropout: 0.15
   hidden_dim: 384
-  input_dim: 81
+  input_dim: 9216
   layer_norm: true
   max_time_steps: 100
   num_heads: 12
@@ -127,7 +127,7 @@ model:
   positional_encoding:
     max_len: 10000
     type: learnable
-  seq_len: 81
+  seq_len: 196
   use_residual: true
 monitoring:
   log_frequency: 10

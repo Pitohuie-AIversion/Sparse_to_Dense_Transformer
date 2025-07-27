@@ -1,0 +1,97 @@
+# Training and visualization outputs
+enhanced_training_output/
+quick_test_output/
+demo_training_output/
+demo_prediction_visualizations/
+training_output/
+visualization_output/
+prediction_output/
+
+# Logs directory
+logs/
+!logs/.gitkeep
+!logs/*/.gitkeep
+
+# Hardware monitoring logs
+hardware_logs/
+training_logs/
+monitoring_logs/
+
+# Visualization reports
+visualization_reports/
+prediction_visualizations/
+
+# Model checkpoints and weights
+checkpoints/
+models/
+*.pth
+*.pt
+*.ckpt
+
+# Training logs
+*.log
+train.log
+validation.log
+test.log
+
+# Tensorboard logs
+runs/
+tensorboard_logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Experiment results
+results/*/
+!results/.gitkeep
+experiments/
+outputs/
+
+# Data directories
+data/raw/
+data/processed/
+data/temp/
+data/cache/
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/temp/.gitkeep
+!data/cache/.gitkeep
+
+# Data files (if large)
+*.csv
+*.json
+*.h5
+*.hdf5
+
+# Image outputs
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+*.eps
+
+# Configuration backups
+config_backup/
+*.bak
+*.backup

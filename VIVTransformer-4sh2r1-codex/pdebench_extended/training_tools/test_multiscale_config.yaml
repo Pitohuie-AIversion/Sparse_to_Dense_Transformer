@@ -1,0 +1,38 @@
+# 多尺度训练测试配置
+data:
+  scale_factor: 2
+  original_resolution: [64, 64]
+  batch_size: 4
+  pde_type: "darcy_flow"
+  path: "test_data.hdf5"  # 占位符，实际使用时需要真实数据路径
+  normalize: true
+  downsampling_method: "average"
+  num_workers: 2
+  pin_memory: true
+  sequence_length: 1
+
+model:
+  hidden_dim: 256
+  num_layers: 4
+  num_heads: 8
+  attention_type: "relative"
+
+training:
+  learning_rate: 0.001
+  epochs: 5
+  weight_decay: 1e-5
+  scheduler:
+    type: "CosineAnnealingLR"
+    eta_min: 1e-6
+
+loss:
+  type: "MSELoss"
+
+output_dir: "./test_multiscale_output"
+
+# 数据增强配置（可选）
+data_augmentation:
+  enabled: false
+  enable_random_crop: true
+  enable_flip: true
+  noise_level: 0.01

@@ -8,7 +8,7 @@
 import torch
 import numpy as np
 from multiscale.data.multiscale_adapter import MultiScaleDataset
-from data.pde_dataset import PDEBenchDataset
+from data.pdebench_adapter import PDEBenchDataset
 import matplotlib.pyplot as plt
 
 def test_normalization_consistency():

@@ -18,6 +18,14 @@ permalink: /
 - [安装指南](/pages/installation-guide/) - 环境配置和依赖安装
 - [第一个示例](/pages/examples/) - 运行您的第一个模型
 
+## 🌟 项目亮点
+
+### 🚀 核心特性展示
+- [项目展示](/pages/project-showcase/) - 38+注意力机制与50种损失函数
+- [技术深度解析](/pages/technical-deep-dive/) - 核心算法与创新设计
+- [实验结果展示](/pages/experimental-showcase/) - 性能对比与案例分析
+- [交互式演示](/pages/interactive-demo/) - 在线体验与可视化
+
 ## 📚 核心文档
 
 ### 模型架构
@@ -37,18 +45,28 @@ permalink: /
 ### 实现与配置
 - [实现细节](/pages/implementation-details/) - 核心实现说明
 - [配置系统](/pages/configuration-system/) - 配置文件管理
+- [高级配置](/pages/advanced-configuration/) - 高级配置指南
 - [数据管道](/pages/data-pipeline/) - 数据处理流程
+- [架构设计](/pages/architecture-design/) - 系统架构详解
 
 ### 评估与部署
 - [评估指标](/pages/evaluation-metrics/) - 模型评估方法
+- [评估基准](/pages/evaluation-benchmarks/) - 基准测试框架
 - [实验结果](/pages/experimental-results/) - 基准测试结果
 - [性能对比](/pages/performance-comparison/) - 与其他方法对比
+- [性能优化](/pages/performance-optimization/) - 性能优化指南
 - [部署指南](/pages/deployment-guide/) - 生产环境部署
 
 ### 开发与维护
 - [开发指南](/pages/development-guide/) - 开发环境配置
+- [最佳实践](/pages/best-practices/) - 开发最佳实践
+- [教程示例](/pages/tutorials-examples/) - 详细教程与示例
 - [故障排除](/pages/troubleshooting/) - 常见问题解决
 - [FAQ](/pages/faq/) - 常见问题答疑
+
+### 学术与社区
+- [研究论文](/pages/research-papers/) - 相关研究与文献
+- [社区贡献](/pages/community-guide/) - 贡献指南与社区规范
 
 ## 🎯 项目特色
 

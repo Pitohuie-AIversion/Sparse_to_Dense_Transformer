@@ -4,6 +4,9 @@
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/ablation-study/</loc>
 </url>
 <url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/advanced-configuration/</loc>
+</url>
+<url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/api-reference/</loc>
 </url>
 <url>
@@ -52,6 +55,9 @@
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/experimental-results/</loc>
 </url>
 <url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/experimental-showcase/</loc>
+</url>
+<url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/faq/</loc>
 </url>
 <url>
@@ -73,6 +79,9 @@
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/installation-guide/</loc>
 </url>
 <url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/interactive-demo/</loc>
+</url>
+<url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/loss-functions/</loc>
 </url>
 <url>
@@ -85,6 +94,12 @@
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/performance-comparison/</loc>
 </url>
 <url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/project-showcase/</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/quick-navigation/</loc>
+</url>
+<url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/</loc>
 </url>
 <url>
@@ -92,6 +107,9 @@
 </url>
 <url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/svd-loss-functions/</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/technical-deep-dive/</loc>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/training-guide/</loc>

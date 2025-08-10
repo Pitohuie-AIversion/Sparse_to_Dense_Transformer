@@ -1,12 +1,10 @@
 ---
-layout: default
+layout: doc
 title: API Reference
 nav_order: 15
 parent: Core Documentation
 permalink: /pages/api-reference/
 ---
-
-{% include language-switcher.html %}
 
 <div data-lang-zh>
 # API 参考

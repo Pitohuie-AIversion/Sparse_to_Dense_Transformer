@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Implementation Details
 description: 核心实现细节和技术说明
 permalink: /pages/implementation-details/

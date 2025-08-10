@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: 评估与结果
 nav_order: 5
 has_children: true

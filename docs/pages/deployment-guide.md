@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Deployment Guide
 description: 生产环境部署的完整指南
 permalink: /pages/deployment-guide/

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Multi-Loss Strategy
 description: 多损失函数策略和配置
 permalink: /pages/multi-loss-strategy/

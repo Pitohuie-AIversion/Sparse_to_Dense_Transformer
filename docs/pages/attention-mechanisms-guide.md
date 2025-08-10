@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Attention Mechanisms Guide
 description: 多头注意力机制的实现和使用指南
 permalink: /pages/attention-mechanisms-guide/

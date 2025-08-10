@@ -1,12 +1,10 @@
 ---
-layout: default
+layout: doc
 title: Getting Help
 nav_order: 7
 has_children: true
 permalink: /pages/getting-help/
 ---
-
-{% include language-switcher.html %}
 
 <div data-lang-zh style="display: none;">
 <h1 class="no_toc">获取帮助</h1>

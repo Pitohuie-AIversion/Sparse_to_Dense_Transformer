@@ -67,7 +67,6 @@ docs/
 Add the language switcher at the top of pages:
 
 ```liquid
-{% include language-switcher.html %}
 ```
 
 ### 3. 翻译文件格式 / Translation File Format
@@ -117,7 +116,6 @@ title: {% t navigation.page_title %}  # 使用翻译键
 description: {% t pages.page_description %}
 ---
 
-{% include language-switcher.html %}
 ```
 
 ### 步骤 2：添加条件内容 / Step 2: Add Conditional Content

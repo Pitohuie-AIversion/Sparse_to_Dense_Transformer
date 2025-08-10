@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: SVD Loss Functions
 parent: Training & Optimization
 nav_order: 3

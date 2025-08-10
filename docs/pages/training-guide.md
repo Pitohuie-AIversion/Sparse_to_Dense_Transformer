@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Training Guide
 parent: Training & Optimization
 nav_order: 1

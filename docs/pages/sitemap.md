@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Site Map
 permalink: /sitemap/
 ---

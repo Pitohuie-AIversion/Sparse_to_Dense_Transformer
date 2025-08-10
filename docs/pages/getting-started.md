@@ -1,12 +1,10 @@
 ---
-layout: default
+layout: doc
 title: Getting Started
 nav_order: 2
 has_children: true
 permalink: /getting-started/
 ---
-
-{% include language-switcher.html %}
 
 <div data-lang-zh style="display: none;">
 <h1>开始使用</h1>

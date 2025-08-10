@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Architecture Overview
 parent: Core Documentation
 nav_order: 1

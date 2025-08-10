@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Experimental Results
 parent: Evaluation & Results
 nav_order: 2

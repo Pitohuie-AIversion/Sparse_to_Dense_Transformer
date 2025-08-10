@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: 基准测试结果
 nav_order: 13
 parent: 评估与结果

@@ -1,11 +1,12 @@
 ---
-layout: default
+layout: doc
 title: 技术深度解析
 nav_order: 3
 permalink: /pages/technical-deep-dive/
 description: "VIVTransformer核心技术实现和算法深度解析"
 ---
 
+<div data-lang-zh>
 # 技术深度解析 🔬
 
 深入了解VIVTransformer的核心技术实现、算法原理和创新设计。
@@ -605,6 +606,271 @@ class DistributedTrainingManager:
                 
         return metrics
 ```
+
+</div>
+
+<div data-lang-en>
+# Technical Deep Dive 🔬
+
+Explore the core technical implementation, algorithmic principles, and innovative design of VIVTransformer.
+
+## 📋 Table of Contents
+
+- [Unified Attention Framework](#unified-attention-framework)
+- [SVD Loss Function Design](#svd-loss-function-design)
+- [Vortex-Induced Vibration Modeling](#vortex-induced-vibration-modeling)
+- [Adaptive Training Strategy](#adaptive-training-strategy)
+- [Performance Optimization Techniques](#performance-optimization-techniques)
+- [Experimental Design Methods](#experimental-design-methods)
+
+## 🔧 Unified Attention Framework
+
+### 🏗️ Adapter Pattern Design
+
+We designed a unified adapter framework that abstracts different types of attention mechanisms into three basic patterns:
+
+```python
+class AdapterType(Enum):
+    QKV = "qkv"           # Query-Key-Value style
+    CNN = "cnn"           # Convolutional Neural Network style  
+    SINGLE_INPUT = "single_input"  # Single input style
+
+class AttentionAdapter(nn.Module):
+    """Unified attention adapter"""
+    
+    def __init__(self, attention_module, adapter_type, d_model, num_heads):
+        super().__init__()
+        self.attention_module = attention_module
+        self.adapter_type = adapter_type
+        self.d_model = d_model
+        self.num_heads = num_heads
+        
+        # Initialize different projection layers based on adapter type
+        if adapter_type == AdapterType.QKV:
+            self.q_proj = nn.Linear(d_model, d_model)
+            self.k_proj = nn.Linear(d_model, d_model)
+            self.v_proj = nn.Linear(d_model, d_model)
+            self.out_proj = nn.Linear(d_model, d_model)
+        elif adapter_type == AdapterType.CNN:
+            # CNN adapter implementation
+            pass
+```
+
+### 🎯 Multi-Attention Integration
+
+Our framework supports seamless integration of multiple attention mechanisms:
+
+- **Self-Attention**: Captures intra-sequence dependencies
+- **Cross-Attention**: Models inter-sequence relationships
+- **Sparse Attention**: Reduces computational complexity
+- **Local Attention**: Focuses on local patterns
+
+## 🧮 SVD Loss Function Design
+
+### Mathematical Foundation
+
+The SVD loss function is designed to capture low-dimensional structures in the data:
+
+```
+L_SVD = ||X - UΣV^T||_F^2 + λ||Σ||_1
+```
+
+Where:
+- X: Input data matrix
+- U, Σ, V: SVD decomposition components
+- λ: Regularization parameter
+- ||·||_F: Frobenius norm
+- ||·||_1: L1 norm
+
+### Implementation Details
+
+```python
+class SVDLoss(nn.Module):
+    """SVD-based loss function"""
+    
+    def __init__(self, lambda_reg=0.01, rank_threshold=0.95):
+        super().__init__()
+        self.lambda_reg = lambda_reg
+        self.rank_threshold = rank_threshold
+    
+    def forward(self, pred, target):
+        # Compute reconstruction loss
+        reconstruction_loss = F.mse_loss(pred, target)
+        
+        # SVD regularization
+        U, S, V = torch.svd(pred)
+        
+        # Rank selection based on energy threshold
+        energy = torch.cumsum(S**2, dim=0) / torch.sum(S**2)
+        rank = torch.sum(energy < self.rank_threshold).item() + 1
+        
+        # Regularization term
+        svd_reg = self.lambda_reg * torch.sum(S[:rank])
+        
+        return reconstruction_loss + svd_reg
+```
+
+## 🌊 Vortex-Induced Vibration Modeling
+
+### Physical Principles
+
+VIV modeling incorporates fundamental fluid dynamics principles:
+
+1. **Navier-Stokes Equations**: Governing fluid motion
+2. **Strouhal Number**: Characterizing vortex shedding frequency
+3. **Reynolds Number**: Determining flow regime
+4. **Structural Dynamics**: Coupling with fluid forces
+
+### Mathematical Formulation
+
+The VIV system can be described by:
+
+```
+m*ÿ + c*ẏ + k*y = F_fluid(t)
+```
+
+Where:
+- m: Structural mass
+- c: Damping coefficient
+- k: Stiffness
+- y: Displacement
+- F_fluid: Fluid force
+
+## 🎯 Adaptive Training Strategy
+
+### Dynamic Learning Rate Scheduling
+
+```python
+class AdaptiveLRScheduler:
+    def __init__(self, optimizer, patience=10, factor=0.5):
+        self.optimizer = optimizer
+        self.patience = patience
+        self.factor = factor
+        self.best_loss = float('inf')
+        self.wait = 0
+    
+    def step(self, current_loss):
+        if current_loss < self.best_loss:
+            self.best_loss = current_loss
+            self.wait = 0
+        else:
+            self.wait += 1
+            if self.wait >= self.patience:
+                for param_group in self.optimizer.param_groups:
+                    param_group['lr'] *= self.factor
+                self.wait = 0
+```
+
+### Multi-Scale Training
+
+Our training strategy incorporates multiple temporal and spatial scales:
+
+- **Temporal Scales**: Short-term dynamics, long-term trends
+- **Spatial Scales**: Local features, global patterns
+- **Frequency Scales**: High-frequency oscillations, low-frequency drift
+
+## ⚡ Performance Optimization Techniques
+
+### Memory Optimization
+
+1. **Gradient Checkpointing**: Reduces memory usage during backpropagation
+2. **Mixed Precision Training**: Uses FP16 for faster computation
+3. **Dynamic Batching**: Optimizes batch sizes based on sequence length
+
+### Computational Optimization
+
+```python
+class OptimizedAttention(nn.Module):
+    def __init__(self, d_model, num_heads):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.head_dim = d_model // num_heads
+        
+        # Fused QKV projection for efficiency
+        self.qkv_proj = nn.Linear(d_model, 3 * d_model)
+        
+    def forward(self, x):
+        B, L, D = x.shape
+        
+        # Efficient QKV computation
+        qkv = self.qkv_proj(x).reshape(B, L, 3, self.num_heads, self.head_dim)
+        q, k, v = qkv.permute(2, 0, 3, 1, 4)
+        
+        # Flash attention for memory efficiency
+        out = F.scaled_dot_product_attention(q, k, v)
+        
+        return out.transpose(1, 2).reshape(B, L, D)
+```
+
+## 🔬 Experimental Design Methods
+
+### Ablation Studies
+
+Systematic evaluation of component contributions:
+
+1. **Attention Mechanism Ablation**: Individual vs. combined mechanisms
+2. **Loss Function Ablation**: SVD vs. traditional losses
+3. **Architecture Ablation**: Layer depth, width variations
+
+### Hyperparameter Optimization
+
+```python
+class HyperparameterOptimizer:
+    def __init__(self, search_space):
+        self.search_space = search_space
+        
+    def optimize(self, objective_function, n_trials=100):
+        best_params = None
+        best_score = float('-inf')
+        
+        for trial in range(n_trials):
+            params = self.sample_params()
+            score = objective_function(params)
+            
+            if score > best_score:
+                best_score = score
+                best_params = params
+                
+        return best_params, best_score
+```
+
+### Cross-Validation Strategy
+
+- **Time-Series Split**: Respects temporal dependencies
+- **Stratified Split**: Maintains class distribution
+- **Leave-One-Out**: For small datasets
+
+## 📊 Performance Metrics
+
+### Evaluation Metrics
+
+1. **Mean Squared Error (MSE)**: Basic prediction accuracy
+2. **Mean Absolute Error (MAE)**: Robust to outliers
+3. **Correlation Coefficient**: Linear relationship strength
+4. **Phase Accuracy**: Temporal alignment quality
+
+### Distributed Training Support
+
+```python
+class DistributedTrainer:
+    def __init__(self, model, rank, world_size):
+        self.model = model
+        self.rank = rank
+        self.world_size = world_size
+        
+    def all_reduce_metrics(self, metrics):
+        """Aggregate metrics across all processes"""
+        
+        for key, value in metrics.items():
+            if isinstance(value, torch.Tensor):
+                torch.distributed.all_reduce(value, op=torch.distributed.ReduceOp.SUM)
+                metrics[key] = value / self.world_size
+                
+        return metrics
+```
+
+</div>
 
 ---
 

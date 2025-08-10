@@ -4,8 +4,6 @@ title: Installation Guide
 permalink: /pages/installation-guide/
 ---
 
-{% include language-switcher.html %}
-
 <div data-lang-zh>
 # 安装指南
 

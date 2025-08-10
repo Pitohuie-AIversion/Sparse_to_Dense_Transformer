@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: 消融研究
 nav_order: 14
 parent: 评估与结果

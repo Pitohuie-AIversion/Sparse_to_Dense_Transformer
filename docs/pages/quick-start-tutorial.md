@@ -1,12 +1,10 @@
 ---
-layout: default
+layout: doc
 title: Quick Start Tutorial
 nav_order: 2
 parent: Getting Started
 permalink: /pages/quick-start-tutorial/
 ---
-
-{% include language-switcher.html %}
 
 <div data-lang-zh style="display: none;">
 <h1>快速开始教程</h1>

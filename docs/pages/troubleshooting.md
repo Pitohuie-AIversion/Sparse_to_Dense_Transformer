@@ -1,13 +1,11 @@
 ---
-layout: default
+layout: doc
 title: Troubleshooting
 description: Troubleshooting and problem solving
 nav_order: 18
 parent: Getting Help
 permalink: /pages/troubleshooting/
 ---
-
-{% include language-switcher.html %}
 
 <div data-lang-zh style="display: none;">
 <h1 id="故障排除指南">故障排除指南</h1>

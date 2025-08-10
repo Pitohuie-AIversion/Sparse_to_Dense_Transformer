@@ -1,12 +1,10 @@
 ---
-layout: default
+layout: doc
 title: Home
 nav_order: 1
 description: "Advanced Transformer Architecture with Vision Integration for Vortex-Induced Vibration Analysis"
 permalink: /
 ---
-
-{% include language-switcher.html %}
 
 {% if site.active_lang == 'zh' %}
 # VIVTransformer 文档

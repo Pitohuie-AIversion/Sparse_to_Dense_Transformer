@@ -1,438 +1,116 @@
-
-
 <!DOCTYPE html>
-
-<html lang="zh">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-
-  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
-
-  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
-
-  <style id="jtd-nav-activation">
-  
-
-    
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(12)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li a {
-      background-image: none;
-    }
-
-    .site-nav > ul.nav-list:not(:first-child) a,
-    .site-nav li.external a {
-      background-image: none;
-    }
-
-    .site-nav > ul.nav-list:first-child > li:nth-child(12) > a {
-      font-weight: 600;
-      text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(12) > button svg {
-      transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(12) > ul.nav-list {
-      display: block;
-    }
-  </style>
-
-  
-
-  
-    <script src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
-  
-
-  <script src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
-
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-
-
-
-  <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Advanced Configuration Guide | VIVTransformer Documentation</title>
-<meta name="generator" content="Jekyll v4.3.4" />
-<meta property="og:title" content="Advanced Configuration Guide" />
-<meta name="author" content="Pitohuie" />
-<meta property="og:locale" content="zh" />
-<meta name="description" content="VIVTransformer advanced configuration and customization guide" />
-<meta property="og:description" content="VIVTransformer advanced configuration and customization guide" />
-<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/advanced-configuration/" />
-<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/advanced-configuration/" />
-<meta property="og:site_name" content="VIVTransformer Documentation" />
-<meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Advanced Configuration Guide" />
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"VIVTransformer advanced configuration and customization guide","headline":"Advanced Configuration Guide","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pitoyounglogopink.png"},"name":"Pitohuie"},"url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/advanced-configuration/"}</script>
-<!-- End Jekyll SEO tag -->
-
-
-  
-
-</head>
-
-<body>
-  <a class="skip-to-main" href="#main-content">Skip to main content</a>
-  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-  <symbol id="svg-link" viewBox="0 0 24 24">
-  <title>Link</title>
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
-    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-  </svg>
-</symbol>
-
-  <symbol id="svg-menu" viewBox="0 0 24 24">
-  <title>Menu</title>
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
-    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
-  </svg>
-</symbol>
-
-  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
-  <title>Expand</title>
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-    <polyline points="9 18 15 12 9 6"></polyline>
-  </svg>
-</symbol>
-
-  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
-<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
-  <title id="svg-external-link-title">(external link)</title>
-  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
-</symbol>
-
-  
-    <symbol id="svg-doc" viewBox="0 0 24 24">
-  <title>Document</title>
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
-    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
-  </svg>
-</symbol>
-
-    <symbol id="svg-search" viewBox="0 0 24 24">
-  <title>Search</title>
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-  </svg>
-</symbol>
-
-  
-  
-    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
-<symbol id="svg-copy" viewBox="0 0 16 16">
-  <title>Copy</title>
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
-    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-  </svg>
-</symbol>
-<symbol id="svg-copied" viewBox="0 0 16 16">
-  <title>Copied</title>
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
-    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
-    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
-  </svg>
-</symbol>
-
-  
-</svg>
-
-  
-    <div class="side-bar">
-  <div class="site-header" role="banner">
-    <a href="/Sparse_to_Dense_Transformer/" class="site-title lh-tight">
-  <div class="site-logo" role="img" aria-label="VIVTransformer Documentation"></div>
-
-</a>
-    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
-      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
-    </button>
-  </div>
-
-  <nav aria-label="Main" id="site-nav" class="site-nav">
-  
-  
-    <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-navigation/" class="nav-list-link">快速导航</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/examples/" class="nav-list-link">Examples</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/technical-deep-dive/" class="nav-list-link">技术深度解析</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/api-reference/" class="nav-list-link">API Reference</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-showcase/" class="nav-list-link">实验结果展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/project-showcase/" class="nav-list-link">项目展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in 评估与结果 category" aria-pressed="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/pages/evaluation-results/" class="nav-list-link">评估与结果</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/benchmark-results/" class="nav-list-link">基准测试结果</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/ablation-study/" class="nav-list-link">消融研究</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/interactive-demo/" class="nav-list-link">交互式演示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Help category" aria-pressed="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/pages/getting-help/" class="nav-list-link">Getting Help</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/advanced-configuration/" class="nav-list-link">Advanced Configuration Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li></ul>
-  <ul class="nav-list"><li class="nav-list-item external">
-          <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
-            
-          >
-            GitHub Repository
-            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
-          </a>
-        </li></ul>
-</nav>
-
-
-
-
-  
-  
-    <footer class="site-footer">
-      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
-    </footer>
-  
-</div>
-
-  
-  <div class="main" id="top">
-    <div id="main-header" class="main-header">
-  
-    
-
-<div class="search" role="search">
-  <div class="search-input-wrap">
-    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search VIVTransformer Documentation" aria-label="Search VIVTransformer Documentation" autocomplete="off">
-    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
-  </div>
-  <div id="search-results" class="search-results"></div>
-</div>
-
-  
-  
-  
-    <nav aria-label="Auxiliary" class="aux-nav">
-  <ul class="aux-nav-list">
-    
-      <li class="aux-nav-list-item">
-        <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="site-button"
-          
-          target="_blank" rel="noopener noreferrer"
-          
-        >
-          View on GitHub
-        </a>
-      </li>
-    
-  </ul>
-</nav>
-
-  
-</div>
-
-    <div class="main-content-wrap">
-      
-      <div id="main-content" class="main-content">
-        <main>
-          
-            <!-- Language Switcher Component -->
-<div class="language-switcher">
-  <div class="language-switcher-label">
-    <span data-lang-en="Language:">Language:</span>
-    <span data-lang-zh="语言:" style="display: none;">语言:</span>
-  </div>
-  <div class="language-switcher-buttons">
-    <button class="language-switcher-button active" data-lang="en" onclick="switchLanguage('en')">
-      English
-    </button>
-    <button class="language-switcher-button" data-lang="zh" onclick="switchLanguage('zh')">
-      中文
-    </button>
-  </div>
-</div>
-
-<script>
-// Language switching functionality
-function switchLanguage(lang) {
-  // Update active button
-  document.querySelectorAll('.language-switcher-button').forEach(btn => {
-    btn.classList.remove('active');
-    if (btn.getAttribute('data-lang') === lang) {
-      btn.classList.add('active');
-    }
-  });
-  
-  // Show/hide language-specific content
-  document.querySelectorAll('[data-lang-en]').forEach(el => {
-    el.style.display = lang === 'en' ? 'block' : 'none';
-  });
-  
-  document.querySelectorAll('[data-lang-zh]').forEach(el => {
-    el.style.display = lang === 'zh' ? 'block' : 'none';
-  });
-  
-  // Update language switcher label
-  document.querySelectorAll('.language-switcher-label [data-lang-en]').forEach(el => {
-    el.style.display = lang === 'en' ? 'inline' : 'none';
-  });
-  
-  document.querySelectorAll('.language-switcher-label [data-lang-zh]').forEach(el => {
-    el.style.display = lang === 'zh' ? 'inline' : 'none';
-  });
-  
-  // Update navigation titles based on language
-  updateNavigationTitles(lang);
-  
-  // Store language preference
-  localStorage.setItem('preferred-language', lang);
-}
-
-// Update navigation titles based on selected language
-function updateNavigationTitles(lang) {
-  const titleMappings = {
-    'zh': {
-      'Quick Start Tutorial': '快速开始教程',
-      'Getting Started': '开始使用',
-      'Core Documentation': '核心文档',
-      'Training & Optimization': '训练与优化',
-      'Getting Help': '获取帮助',
-      'Advanced Configuration Guide': '高级配置指南',
-      'Attention Mechanisms Guide': '注意力机制指南',
-      'Basic Concepts': '基本概念',
-      'Configuration System': '配置系统',
-      'Convergence Analysis': '收敛性分析',
-      'Custom Attention': '自定义注意力',
-      'Data Pipeline': '数据管道',
-      'Deployment Guide': '部署指南',
-      'Hyperparameter Tuning': '超参数调优',
-      'Implementation Details': '实现细节',
-      'Installation Guide': '安装指南',
-      'Multi-Loss Strategy': '多损失策略',
-      'Performance Comparison': '性能对比',
-      'Site Map': '站点地图',
-      'Examples': '示例',
-      'FAQ': '常见问题',
-      'Training Guide': '训练指南',
-      'Loss Functions': '损失函数',
-      'SVD Loss Functions': 'SVD损失函数',
-      'API Reference': 'API参考',
-      'Architecture Overview': '架构概览',
-      'Model Design': '模型设计',
-      'Troubleshooting': '故障排除',
-      'Experimental Results': '实验结果',
-      'Development Guide': '开发指南',
-      'Evaluation Metrics': '评估指标'
-    },
-    'en': {
-      '快速导航': 'Quick Navigation',
-      '技术深度解析': 'Technical Deep Dive',
-      '实验结果展示': 'Experimental Showcase',
-      '项目展示': 'Project Showcase',
-      '评估与结果': 'Evaluation & Results',
-      '交互式演示': 'Interactive Demo',
-      '消融研究': 'Ablation Study',
-      '基准测试结果': 'Benchmark Results'
-    }
-  };
-  
-  // Update navigation links
-  document.querySelectorAll('.nav-list-link').forEach(link => {
-    const currentText = link.textContent.trim();
-    if (titleMappings[lang] && titleMappings[lang][currentText]) {
-      link.textContent = titleMappings[lang][currentText];
-    }
-  });
-}
-
-// Load saved language preference
-document.addEventListener('DOMContentLoaded', function() {
-  const savedLang = localStorage.getItem('preferred-language') || 'en';
-  switchLanguage(savedLang);
-});
-</script>
-
-<style>
-.language-switcher {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  background: var(--color-background-secondary, #f8f9fa);
-  border-radius: 0.375rem;
-  border: 1px solid var(--color-border, #e1e4e8);
-}
-
-.language-switcher-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-text-secondary, #6b7280);
-}
-
-.language-switcher-buttons {
-  display: flex;
-  gap: 0.25rem;
-}
-
-.language-switcher-button {
-  padding: 0.25rem 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  border-radius: 0.25rem;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-}
-
-.language-switcher-button:not(.active) {
-  color: var(--color-link, #0969da);
-  background: var(--color-background, #ffffff);
-  border-color: var(--color-border, #e1e4e8);
-}
-
-.language-switcher-button:not(.active):hover {
-  background: var(--color-background-hover, #f3f4f6);
-  border-color: var(--color-border-hover, #d1d5db);
-}
-
-.language-switcher-button.active {
-  color: var(--color-text-inverse, #ffffff);
-  background: var(--color-primary, #0969da);
-  border-color: var(--color-primary, #0969da);
-  cursor: default;
-}
-
-@media (max-width: 768px) {
+  <title>Advanced Configuration Guide</title>
+  <meta name="description" content="VIVTransformer advanced configuration and customization guide">
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
+  <script type="text/javascript" src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
+  <script type="text/javascript" src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
+  <style>
   .language-switcher {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #e1e4e8;
   }
-  
+  .language-switcher-label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #24292e;
+    font-size: 14px;
+  }
   .language-switcher-buttons {
-    width: 100%;
-    justify-content: space-between;
+    display: flex;
+    gap: 8px;
   }
-  
-  .language-switcher-button {
-    flex: 1;
-    text-align: center;
+  .lang-btn {
+    padding: 6px 12px;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    background: #f6f8fa;
+    color: #24292e;
+    text-decoration: none;
+    font-size: 12px;
+    transition: all 0.2s;
+    display: inline-block;
   }
-}
-</style>
+  .lang-btn.active {
+    border-color: #0969da;
+    background: #0969da;
+    color: white;
+    font-weight: 600;
+  }
+  .lang-btn:hover {
+    background: #e1e4e8 !important;
+    text-decoration: none !important;
+  }
+  .lang-btn:active {
+    transform: translateY(1px);
+  }
+  </style>
+</head>
+<body>
+  <!-- Language Switcher -->
+  <div class="language-switcher">
+    <div class="language-switcher-label">🌐 Language / 语言</div>
+    <div class="language-switcher-buttons">
+            <script>
+                // JavaScript to detect current language from URL and set up links
+                document.addEventListener('DOMContentLoaded', function() {
+                  var currentPath = window.location.pathname;
+                  var baseUrl = '/Sparse_to_Dense_Transformer/zh';
+                  var isZh = currentPath.includes('/zh/');
+                  var englishBtn = document.querySelector('.lang-btn-en');
+                  var chineseBtn = document.querySelector('.lang-btn-zh');
+                  
+                  if (isZh) {
+                    englishBtn.classList.remove('active');
+                    chineseBtn.classList.add('active');
+                    
+                    // Set up English link - remove /zh/ from current path
+                    var enPath = currentPath.replace(baseUrl + '/zh/', baseUrl + '/').replace(baseUrl + '/zh', baseUrl + '/');
+                    if (enPath === baseUrl + '/') enPath = baseUrl + '/';
+                    englishBtn.onclick = function() {
+                      window.location.href = enPath;
+                    };
+                    englishBtn.style.cursor = 'pointer';
+                  } else {
+                    // Set up Chinese link - add /zh/ to current path
+                    var zhPath = currentPath.replace(baseUrl + '/', baseUrl + '/zh/');
+                    chineseBtn.href = zhPath;
+                  }
+                });
+              </script>
+             <span class="lang-btn lang-btn-en active">English</span>
+             <a href="/Sparse_to_Dense_Transformer/zh/zh/pages/advanced-configuration/" class="lang-btn lang-btn-zh">中文</a>
+          </div>
+  </div>
 
-<div data-lang-zh="" style="display: none;">
-<h1>
+<div class="doc-content">
+  
+  <h1>Advanced Configuration Guide</h1>
   
   
-    高级配置指南 ⚙️
+  
+  <p class="description">VIVTransformer advanced configuration and customization guide</p>
   
   
-</h1>
-    
+  <div data-lang-zh="" style="display: none;">
+  <h1>高级配置指南 ⚙️</h1>
 
-<p>本指南提供VIVTransformer的高级配置选项和定制化方案，帮助您充分发挥系统的潜力。</p>
-<h2>
-  
-  
-    📋 目录
-  
-  
-</h2>
-    
+  <p>本指南提供VIVTransformer的高级配置选项和定制化方案，帮助您充分发挥系统的潜力。</p>
 
-<ul>
+  <h2>📋 目录</h2>
+
+  <ul>
 <li><a href="#配置系统架构">配置系统架构</a></li>
 <li><a href="#模型架构配置">模型架构配置</a></li>
 <li><a href="#注意力机制定制">注意力机制定制</a></li>
@@ -443,27 +121,17 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#分布式训练配置">分布式训练配置</a></li>
 <li><a href="#实验管理配置">实验管理配置</a></li>
 <li><a href="#部署配置">部署配置</a></li>
-</ul><hr />
-<h2 id="配置系统架构">
-  
-  
-    <a href="#配置系统架构" class="anchor-heading" aria-labelledby="配置系统架构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏗️ 配置系统架构
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#配置系统架构" class="anchor-heading" aria-labelledby="配置系统架构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 配置文件层次结构
-  
-  
-</h3>
-    
+</ul>
 
-<p>VIVTransformer采用分层配置系统，支持灵活的配置管理：</p>
+  <hr />
 
-<pre><code class="language-yaml"># config/base_config.yaml - 基础配置
+  <h2 id="配置系统架构">🏗️ 配置系统架构</h2>
+
+  <h3>配置文件层次结构</h3>
+
+  <p>VIVTransformer采用分层配置系统，支持灵活的配置管理：</p>
+
+  <pre><code class="language-yaml"># config/base_config.yaml - 基础配置
 model:
   name: "VIVTransformer"
   version: "1.0.0"
@@ -482,7 +150,7 @@ logging:
   save_dir: "./logs"
 </code></pre>
 
-<pre><code class="language-yaml"># config/attention_config.yaml - 注意力配置
+  <pre><code class="language-yaml"># config/attention_config.yaml - 注意力配置
 attention:
   type: "MultiHeadAttention"
   n_heads: 8
@@ -499,7 +167,7 @@ attention:
     max_length: 1000
 </code></pre>
 
-<pre><code class="language-yaml"># config/loss_config.yaml - 损失函数配置
+  <pre><code class="language-yaml"># config/loss_config.yaml - 损失函数配置
 loss:
   primary:
     type: "MSELoss"
@@ -513,16 +181,10 @@ loss:
       weight: 0.05
       constraints: ["continuity", "momentum"]
 </code></pre>
-<h3>
-  
-  
-    <a href="#配置系统架构" class="anchor-heading" aria-labelledby="配置系统架构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 配置加载和合并
-  
-  
-</h3>
-    
 
-<pre><code class="language-python"># config_manager.py
+  <h3>配置加载和合并</h3>
+
+  <pre><code class="language-python"># config_manager.py
 import yaml
 from pathlib import Path
 from typing import Dict, Any, List
@@ -623,24 +285,12 @@ class ConfigManager:
                 if not (1e-6 &lt;= lr &lt;= 1.0):
                     raise ValueError(f"学习率超出合理范围: {lr}")
 </code></pre>
-<h2 id="模型架构配置">
-  
-  
-    <a href="#模型架构配置" class="anchor-heading" aria-labelledby="模型架构配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏗️ 模型架构配置
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#模型架构配置" class="anchor-heading" aria-labelledby="模型架构配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 基础模型配置
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/model_config.yaml
+  <h2 id="模型架构配置">🏗️ 模型架构配置</h2>
+
+  <h3>基础模型配置</h3>
+
+  <pre><code class="language-yaml"># config/model_config.yaml
 model:
   # 基础架构
   architecture: "VIVTransformer"
@@ -667,16 +317,10 @@ model:
   init_method: "xavier_uniform"
   init_std: 0.02
 </code></pre>
-<h3>
-  
-  
-    <a href="#模型架构配置" class="anchor-heading" aria-labelledby="模型架构配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 自定义模型组件
-  
-  
-</h3>
-    
 
-<pre><code class="language-python"># custom_components.py
+  <h3>自定义模型组件</h3>
+
+  <pre><code class="language-python"># custom_components.py
 import torch
 import torch.nn as nn
 from typing import Optional, Tuple
@@ -727,24 +371,12 @@ class CustomVIVTransformer(nn.Module):
         else:
             raise ValueError(f"不支持的位置编码类型: {self.config.attention.positional_encoding.type}")
 </code></pre>
-<h2 id="注意力机制定制">
-  
-  
-    <a href="#注意力机制定制" class="anchor-heading" aria-labelledby="注意力机制定制"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 注意力机制定制
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#注意力机制定制" class="anchor-heading" aria-labelledby="注意力机制定制"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 多头注意力配置
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/attention_advanced.yaml
+  <h2 id="注意力机制定制">🎯 注意力机制定制</h2>
+
+  <h3>多头注意力配置</h3>
+
+  <pre><code class="language-yaml"># config/attention_advanced.yaml
 attention:
   # 基础配置
   type: "MultiHeadAttention"
@@ -775,16 +407,10 @@ attention:
     global_tokens: 64
     global_ratio: 0.1
 </code></pre>
-<h3>
-  
-  
-    <a href="#注意力机制定制" class="anchor-heading" aria-labelledby="注意力机制定制"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 自定义注意力实现
-  
-  
-</h3>
-    
 
-<pre><code class="language-python"># attention_variants.py
+  <h3>自定义注意力实现</h3>
+
+  <pre><code class="language-python"># attention_variants.py
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -871,24 +497,12 @@ class SparseAttention(nn.Module):
         
         return mask.unsqueeze(0).unsqueeze(0)  # 添加batch和head维度
 </code></pre>
-<h2 id="损失函数配置">
-  
-  
-    <a href="#损失函数配置" class="anchor-heading" aria-labelledby="损失函数配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 损失函数配置
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#损失函数配置" class="anchor-heading" aria-labelledby="损失函数配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 复合损失函数
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/loss_advanced.yaml
+  <h2 id="损失函数配置">📊 损失函数配置</h2>
+
+  <h3>复合损失函数</h3>
+
+  <pre><code class="language-yaml"># config/loss_advanced.yaml
 loss:
   # 主要损失
   primary:
@@ -923,16 +537,10 @@ loss:
     decay_factor: 0.95
     decay_epochs: 50
 </code></pre>
-<h3>
-  
-  
-    <a href="#损失函数配置" class="anchor-heading" aria-labelledby="损失函数配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 自定义损失函数
-  
-  
-</h3>
-    
 
-<pre><code class="language-python"># custom_losses.py
+  <h3>自定义损失函数</h3>
+
+  <pre><code class="language-python"># custom_losses.py
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -1066,24 +674,12 @@ class PhysicsLoss(nn.Module):
         momentum = torch.sum(predictions, dim=-1)
         return torch.var(momentum)
 </code></pre>
-<h2 id="训练策略配置">
-  
-  
-    <a href="#训练策略配置" class="anchor-heading" aria-labelledby="训练策略配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 训练策略配置
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#训练策略配置" class="anchor-heading" aria-labelledby="训练策略配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 学习率调度
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/training_config.yaml
+  <h2 id="训练策略配置">🎯 训练策略配置</h2>
+
+  <h3>学习率调度</h3>
+
+  <pre><code class="language-yaml"># config/training_config.yaml
 training:
   # 基础训练参数
   epochs: 100
@@ -1132,24 +728,12 @@ training:
     save_last: true
     max_keep: 5
 </code></pre>
-<h2 id="数据处理配置">
-  
-  
-    <a href="#数据处理配置" class="anchor-heading" aria-labelledby="数据处理配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 数据处理配置
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#数据处理配置" class="anchor-heading" aria-labelledby="数据处理配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 数据增强配置
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/data_config.yaml
+  <h2 id="数据处理配置">📊 数据处理配置</h2>
+
+  <h3>数据增强配置</h3>
+
+  <pre><code class="language-yaml"># config/data_config.yaml
 data:
   # 基础配置
   sequence_length: 100
@@ -1209,24 +793,12 @@ data:
     test_ratio: 0.1
     random_seed: 42
 </code></pre>
-<h2 id="性能优化配置">
-  
-  
-    <a href="#性能优化配置" class="anchor-heading" aria-labelledby="性能优化配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ⚡ 性能优化配置
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#性能优化配置" class="anchor-heading" aria-labelledby="性能优化配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 内存和计算优化
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/optimization_config.yaml
+  <h2 id="性能优化配置">⚡ 性能优化配置</h2>
+
+  <h3>内存和计算优化</h3>
+
+  <pre><code class="language-yaml"># config/optimization_config.yaml
 optimization:
   # 内存优化
   memory:
@@ -1266,24 +838,12 @@ optimization:
     temperature: 4.0
     alpha: 0.7
 </code></pre>
-<h2 id="分布式训练配置">
-  
-  
-    <a href="#分布式训练配置" class="anchor-heading" aria-labelledby="分布式训练配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🌐 分布式训练配置
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#分布式训练配置" class="anchor-heading" aria-labelledby="分布式训练配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 多GPU训练配置
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/distributed_config.yaml
+  <h2 id="分布式训练配置">🌐 分布式训练配置</h2>
+
+  <h3>多GPU训练配置</h3>
+
+  <pre><code class="language-yaml"># config/distributed_config.yaml
 distributed:
   # 基础配置
   enabled: true
@@ -1313,24 +873,12 @@ distributed:
     master_addr: "localhost"
     master_port: "12355"
 </code></pre>
-<h2 id="实验管理配置">
-  
-  
-    <a href="#实验管理配置" class="anchor-heading" aria-labelledby="实验管理配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🧪 实验管理配置
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#实验管理配置" class="anchor-heading" aria-labelledby="实验管理配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 实验跟踪配置
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/experiment_config.yaml
+  <h2 id="实验管理配置">🧪 实验管理配置</h2>
+
+  <h3>实验跟踪配置</h3>
+
+  <pre><code class="language-yaml"># config/experiment_config.yaml
 experiment:
   # 基础信息
   name: "vivtransformer_experiment"
@@ -1379,24 +927,12 @@ experiment:
     save_predictions: true
     compute_metrics: true
 </code></pre>
-<h2 id="部署配置">
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 部署配置
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 模型部署配置
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/deployment_config.yaml
+  <h2 id="部署配置">🚀 部署配置</h2>
+
+  <h3>模型部署配置</h3>
+
+  <pre><code class="language-yaml"># config/deployment_config.yaml
 deployment:
   # 部署环境
   environment: "production"  # development, staging, production
@@ -1434,16 +970,10 @@ deployment:
       enabled: true
       requests_per_minute: 100
 </code></pre>
-<h3>
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 使用示例
-  
-  
-</h3>
-    
 
-<pre><code class="language-python"># 完整配置使用示例
+  <h3>使用示例</h3>
+
+  <pre><code class="language-python"># 完整配置使用示例
 from config_manager import ConfigManager
 from vivtransformer import VIVTransformer
 from trainer import Trainer
@@ -1471,91 +1001,48 @@ trainer = Trainer(model, config)
 # 开始训练
 trainer.train()
 </code></pre>
-<h2>
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📝 配置最佳实践
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 配置文件组织
-  
-  
-</h3>
-    
-<ul>
+
+  <h2>📝 配置最佳实践</h2>
+
+  <h3>1. 配置文件组织</h3>
+  <ul>
 <li>按功能模块分离配置文件</li>
 <li>使用继承和覆盖机制</li>
 <li>保持配置文件的可读性</li>
 </ul>
-<h3>
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 参数调优策略
-  
-  
-</h3>
-    
-<ul>
+
+  <h3>2. 参数调优策略</h3>
+  <ul>
 <li>从基础配置开始，逐步调优</li>
 <li>使用网格搜索或贝叶斯优化</li>
 <li>记录所有实验配置和结果</li>
 </ul>
-<h3>
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 环境管理
-  
-  
-</h3>
-    
-<ul>
+
+  <h3>3. 环境管理</h3>
+  <ul>
 <li>为不同环境维护不同配置</li>
 <li>使用环境变量覆盖敏感配置</li>
 <li>确保配置的版本控制</li>
 </ul>
-<h3>
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. 性能监控
-  
-  
-</h3>
-    
-<ul>
+
+  <h3>4. 性能监控</h3>
+  <ul>
 <li>监控关键性能指标</li>
 <li>设置合理的告警阈值</li>
 <li>定期评估配置效果</li>
 </ul>
 
-<p>通过合理的配置管理，您可以充分发挥VIVTransformer的潜力，实现最佳的训练和推理性能。</p>
+  <p>通过合理的配置管理，您可以充分发挥VIVTransformer的潜力，实现最佳的训练和推理性能。</p>
 </div>
 
 <div data-lang-en="">
-<h1>
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Advanced Configuration Guide ⚙️
-  
-  
-</h1>
-    
+  <h1>Advanced Configuration Guide ⚙️</h1>
 
-<p>This guide provides advanced configuration options and customization solutions for VIVTransformer to help you fully unleash the system's potential.</p>
-<h2>
-  
-  
-    <a href="#部署配置" class="anchor-heading" aria-labelledby="部署配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 Table of Contents
-  
-  
-</h2>
-    
+  <p>This guide provides advanced configuration options and customization solutions for VIVTransformer to help you fully unleash the system’s potential.</p>
 
-<ul>
+  <h2>📋 Table of Contents</h2>
+
+  <ul>
 <li><a href="#configuration-system-architecture">Configuration System Architecture</a></li>
 <li><a href="#model-architecture-configuration">Model Architecture Configuration</a></li>
 <li><a href="#attention-mechanism-customization">Attention Mechanism Customization</a></li>
@@ -1566,27 +1053,17 @@ trainer.train()
 <li><a href="#distributed-training-configuration">Distributed Training Configuration</a></li>
 <li><a href="#experiment-management-configuration">Experiment Management Configuration</a></li>
 <li><a href="#deployment-configuration">Deployment Configuration</a></li>
-</ul><hr />
-<h2 id="configuration-system-architecture">
-  
-  
-    <a href="#configuration-system-architecture" class="anchor-heading" aria-labelledby="configuration-system-architecture"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏗️ Configuration System Architecture
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#configuration-system-architecture" class="anchor-heading" aria-labelledby="configuration-system-architecture"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Configuration File Hierarchy
-  
-  
-</h3>
-    
+</ul>
 
-<p>VIVTransformer adopts a layered configuration system that supports flexible configuration management:</p>
+  <hr />
 
-<pre><code class="language-yaml"># config/base_config.yaml - Base configuration
+  <h2 id="configuration-system-architecture">🏗️ Configuration System Architecture</h2>
+
+  <h3>Configuration File Hierarchy</h3>
+
+  <p>VIVTransformer adopts a layered configuration system that supports flexible configuration management:</p>
+
+  <pre><code class="language-yaml"># config/base_config.yaml - Base configuration
 model:
   name: "VIVTransformer"
   version: "1.0.0"
@@ -1605,7 +1082,7 @@ logging:
   save_dir: "./logs"
 </code></pre>
 
-<pre><code class="language-yaml"># config/attention_config.yaml - Attention configuration
+  <pre><code class="language-yaml"># config/attention_config.yaml - Attention configuration
 attention:
   type: "MultiHeadAttention"
   n_heads: 8
@@ -1622,7 +1099,7 @@ attention:
     max_length: 1000
 </code></pre>
 
-<pre><code class="language-yaml"># config/loss_config.yaml - Loss function configuration
+  <pre><code class="language-yaml"># config/loss_config.yaml - Loss function configuration
 loss:
   primary:
     type: "MSELoss"
@@ -1636,16 +1113,10 @@ loss:
       weight: 0.05
       constraints: ["continuity", "momentum"]
 </code></pre>
-<h3>
-  
-  
-    <a href="#configuration-system-architecture" class="anchor-heading" aria-labelledby="configuration-system-architecture"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Configuration Loading and Merging
-  
-  
-</h3>
-    
 
-<pre><code class="language-python"># config_manager.py
+  <h3>Configuration Loading and Merging</h3>
+
+  <pre><code class="language-python"># config_manager.py
 import yaml
 from pathlib import Path
 from typing import Dict, Any, List
@@ -1746,24 +1217,12 @@ class ConfigManager:
                 if not (1e-6 &lt;= lr &lt;= 1.0):
                     raise ValueError(f"Learning rate out of reasonable range: {lr}")
 </code></pre>
-<h2 id="model-architecture-configuration">
-  
-  
-    <a href="#model-architecture-configuration" class="anchor-heading" aria-labelledby="model-architecture-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏗️ Model Architecture Configuration
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#model-architecture-configuration" class="anchor-heading" aria-labelledby="model-architecture-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Basic Model Configuration
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/model_config.yaml
+  <h2 id="model-architecture-configuration">🏗️ Model Architecture Configuration</h2>
+
+  <h3>Basic Model Configuration</h3>
+
+  <pre><code class="language-yaml"># config/model_config.yaml
 model:
   # Basic architecture
   architecture: "VIVTransformer"
@@ -1790,16 +1249,10 @@ model:
   init_method: "xavier_uniform"
   init_std: 0.02
 </code></pre>
-<h3>
-  
-  
-    <a href="#model-architecture-configuration" class="anchor-heading" aria-labelledby="model-architecture-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Custom Model Components
-  
-  
-</h3>
-    
 
-<pre><code class="language-python"># custom_components.py
+  <h3>Custom Model Components</h3>
+
+  <pre><code class="language-python"># custom_components.py
 import torch
 import torch.nn as nn
 from typing import Optional, Tuple
@@ -1850,24 +1303,12 @@ class CustomVIVTransformer(nn.Module):
         else:
             raise ValueError(f"Unsupported positional encoding type: {self.config.attention.positional_encoding.type}")
 </code></pre>
-<h2 id="attention-mechanism-customization">
-  
-  
-    <a href="#attention-mechanism-customization" class="anchor-heading" aria-labelledby="attention-mechanism-customization"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 Attention Mechanism Customization
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#attention-mechanism-customization" class="anchor-heading" aria-labelledby="attention-mechanism-customization"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Multi-Head Attention Configuration
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/attention_advanced.yaml
+  <h2 id="attention-mechanism-customization">🎯 Attention Mechanism Customization</h2>
+
+  <h3>Multi-Head Attention Configuration</h3>
+
+  <pre><code class="language-yaml"># config/attention_advanced.yaml
 attention:
   # Basic configuration
   type: "MultiHeadAttention"
@@ -1898,16 +1339,10 @@ attention:
     global_tokens: 64
     global_ratio: 0.1
 </code></pre>
-<h3>
-  
-  
-    <a href="#attention-mechanism-customization" class="anchor-heading" aria-labelledby="attention-mechanism-customization"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Custom Attention Implementation
-  
-  
-</h3>
-    
 
-<pre><code class="language-python"># attention_variants.py
+  <h3>Custom Attention Implementation</h3>
+
+  <pre><code class="language-python"># attention_variants.py
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -1994,24 +1429,12 @@ class SparseAttention(nn.Module):
         
         return mask.unsqueeze(0).unsqueeze(0)  # Add batch and head dimensions
 </code></pre>
-<h2 id="loss-function-configuration">
-  
-  
-    <a href="#loss-function-configuration" class="anchor-heading" aria-labelledby="loss-function-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 Loss Function Configuration
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#loss-function-configuration" class="anchor-heading" aria-labelledby="loss-function-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Composite Loss Function
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/loss_advanced.yaml
+  <h2 id="loss-function-configuration">📊 Loss Function Configuration</h2>
+
+  <h3>Composite Loss Function</h3>
+
+  <pre><code class="language-yaml"># config/loss_advanced.yaml
 loss:
   # Primary loss
   primary:
@@ -2046,24 +1469,12 @@ loss:
     decay_factor: 0.95
     decay_epochs: 50
 </code></pre>
-<h2 id="training-strategy-configuration">
-  
-  
-    <a href="#training-strategy-configuration" class="anchor-heading" aria-labelledby="training-strategy-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 Training Strategy Configuration
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#training-strategy-configuration" class="anchor-heading" aria-labelledby="training-strategy-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Learning Rate Scheduling
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/training_config.yaml
+  <h2 id="training-strategy-configuration">🎯 Training Strategy Configuration</h2>
+
+  <h3>Learning Rate Scheduling</h3>
+
+  <pre><code class="language-yaml"># config/training_config.yaml
 training:
   # Basic training parameters
   epochs: 100
@@ -2112,24 +1523,12 @@ training:
     save_last: true
     max_keep: 5
 </code></pre>
-<h2 id="data-processing-configuration">
-  
-  
-    <a href="#data-processing-configuration" class="anchor-heading" aria-labelledby="data-processing-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 Data Processing Configuration
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#data-processing-configuration" class="anchor-heading" aria-labelledby="data-processing-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Data Augmentation Configuration
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/data_config.yaml
+  <h2 id="data-processing-configuration">📊 Data Processing Configuration</h2>
+
+  <h3>Data Augmentation Configuration</h3>
+
+  <pre><code class="language-yaml"># config/data_config.yaml
 data:
   # Basic configuration
   sequence_length: 100
@@ -2189,24 +1588,12 @@ data:
     test_ratio: 0.1
     random_seed: 42
 </code></pre>
-<h2 id="performance-optimization-configuration">
-  
-  
-    <a href="#performance-optimization-configuration" class="anchor-heading" aria-labelledby="performance-optimization-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ⚡ Performance Optimization Configuration
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#performance-optimization-configuration" class="anchor-heading" aria-labelledby="performance-optimization-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Memory and Compute Optimization
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/optimization_config.yaml
+  <h2 id="performance-optimization-configuration">⚡ Performance Optimization Configuration</h2>
+
+  <h3>Memory and Compute Optimization</h3>
+
+  <pre><code class="language-yaml"># config/optimization_config.yaml
 optimization:
   # Memory optimization
   memory:
@@ -2246,24 +1633,12 @@ optimization:
     temperature: 4.0
     alpha: 0.7
 </code></pre>
-<h2 id="distributed-training-configuration">
-  
-  
-    <a href="#distributed-training-configuration" class="anchor-heading" aria-labelledby="distributed-training-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🌐 Distributed Training Configuration
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#distributed-training-configuration" class="anchor-heading" aria-labelledby="distributed-training-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Multi-GPU Training Configuration
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/distributed_config.yaml
+  <h2 id="distributed-training-configuration">🌐 Distributed Training Configuration</h2>
+
+  <h3>Multi-GPU Training Configuration</h3>
+
+  <pre><code class="language-yaml"># config/distributed_config.yaml
 distributed:
   # Basic configuration
   enabled: true
@@ -2293,24 +1668,12 @@ distributed:
     master_addr: "localhost"
     master_port: "12355"
 </code></pre>
-<h2 id="experiment-management-configuration">
-  
-  
-    <a href="#experiment-management-configuration" class="anchor-heading" aria-labelledby="experiment-management-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🧪 Experiment Management Configuration
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#experiment-management-configuration" class="anchor-heading" aria-labelledby="experiment-management-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Experiment Tracking Configuration
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/experiment_config.yaml
+  <h2 id="experiment-management-configuration">🧪 Experiment Management Configuration</h2>
+
+  <h3>Experiment Tracking Configuration</h3>
+
+  <pre><code class="language-yaml"># config/experiment_config.yaml
 experiment:
   # Basic information
   name: "vivtransformer_experiment"
@@ -2359,24 +1722,12 @@ experiment:
     save_predictions: true
     compute_metrics: true
 </code></pre>
-<h2 id="deployment-configuration">
-  
-  
-    <a href="#deployment-configuration" class="anchor-heading" aria-labelledby="deployment-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 Deployment Configuration
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#deployment-configuration" class="anchor-heading" aria-labelledby="deployment-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Model Deployment Configuration
-  
-  
-</h3>
-    
 
-<pre><code class="language-yaml"># config/deployment_config.yaml
+  <h2 id="deployment-configuration">🚀 Deployment Configuration</h2>
+
+  <h3>Model Deployment Configuration</h3>
+
+  <pre><code class="language-yaml"># config/deployment_config.yaml
 deployment:
   # Deployment environment
   environment: "production"  # development, staging, production
@@ -2414,16 +1765,10 @@ deployment:
       enabled: true
       requests_per_minute: 100
 </code></pre>
-<h3>
-  
-  
-    <a href="#deployment-configuration" class="anchor-heading" aria-labelledby="deployment-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage Example
-  
-  
-</h3>
-    
 
-<pre><code class="language-python"># Complete configuration usage example
+  <h3>Usage Example</h3>
+
+  <pre><code class="language-python"># Complete configuration usage example
 from config_manager import ConfigManager
 from vivtransformer import VIVTransformer
 from trainer import Trainer
@@ -2451,101 +1796,43 @@ trainer = Trainer(model, config)
 # Start training
 trainer.train()
 </code></pre>
-<h2>
-  
-  
-    <a href="#deployment-configuration" class="anchor-heading" aria-labelledby="deployment-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📝 Configuration Best Practices
-  
-  
-</h2>
-    
-<h3>
-  
-  
-    <a href="#deployment-configuration" class="anchor-heading" aria-labelledby="deployment-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Configuration File Organization
-  
-  
-</h3>
-    
-<ul>
+
+  <h2>📝 Configuration Best Practices</h2>
+
+  <h3>1. Configuration File Organization</h3>
+  <ul>
 <li>Separate configuration files by functional modules</li>
 <li>Use inheritance and override mechanisms</li>
 <li>Maintain configuration file readability</li>
 </ul>
-<h3>
-  
-  
-    <a href="#deployment-configuration" class="anchor-heading" aria-labelledby="deployment-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Parameter Tuning Strategy
-  
-  
-</h3>
-    
-<ul>
+
+  <h3>2. Parameter Tuning Strategy</h3>
+  <ul>
 <li>Start with basic configuration and gradually tune</li>
 <li>Use grid search or Bayesian optimization</li>
 <li>Record all experiment configurations and results</li>
 </ul>
-<h3>
-  
-  
-    <a href="#deployment-configuration" class="anchor-heading" aria-labelledby="deployment-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Environment Management
-  
-  
-</h3>
-    
-<ul>
+
+  <h3>3. Environment Management</h3>
+  <ul>
 <li>Maintain different configurations for different environments</li>
 <li>Use environment variables to override sensitive configurations</li>
 <li>Ensure configuration version control</li>
 </ul>
-<h3>
-  
-  
-    <a href="#deployment-configuration" class="anchor-heading" aria-labelledby="deployment-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Performance Monitoring
-  
-  
-</h3>
-    
-<ul>
+
+  <h3>4. Performance Monitoring</h3>
+  <ul>
 <li>Monitor key performance indicators</li>
 <li>Set reasonable alert thresholds</li>
 <li>Regularly evaluate configuration effectiveness</li>
 </ul>
 
-<p>Through proper configuration management, you can fully unleash the potential of VIVTransformer and achieve optimal training and inference performance.</p>
+  <p>Through proper configuration management, you can fully unleash the potential of VIVTransformer and achieve optimal training and inference performance.</p>
 </div>
 
-          
-
-          
-            
-          
-        </main>
-        
-
-  <hr>
-  <footer>
-    
-      <p><a href="#top" id="back-to-top">Back to top</a></p>
-    
-
-    <p class="text-small text-grey-dk-100 mb-0">Copyright &copy; 2024 Pitohuie. Distributed by an <a href="https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt">MIT license.</a></p>
-
-    
-  </footer>
-
-
-      </div>
-    </div>
-    
-      
-
-<div class="search-overlay"></div>
-
-    
-  </div>
-
   
+  
+</div>
+
 </body>
 </html>
-

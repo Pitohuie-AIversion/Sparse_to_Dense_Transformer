@@ -4,8 +4,6 @@ title: Basic Concepts
 permalink: /pages/basic-concepts/
 ---
 
-{% include language-switcher.html %}
-
 <div data-lang-zh>
 # 基础概念
 

@@ -1,13 +1,11 @@
 ---
-layout: default
+layout: doc
 title: FAQ
 description: Frequently Asked Questions
 nav_order: 17
 parent: Getting Help
 permalink: /pages/faq/
 ---
-
-{% include language-switcher.html %}
 
 <div data-lang-zh style="display: none;">
 <h1 id="常见问题-faq">常见问题 (FAQ)</h1>

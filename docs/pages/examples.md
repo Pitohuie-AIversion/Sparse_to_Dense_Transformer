@@ -1,12 +1,10 @@
 ---
-layout: default
+layout: doc
 title: Examples
 nav_order: 5
 parent: Getting Started
 permalink: /pages/examples/
 ---
-
-{% include language-switcher.html %}
 
 <div data-lang-zh style="display: none;">
 <h1>示例代码</h1>

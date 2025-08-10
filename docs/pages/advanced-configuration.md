@@ -1,12 +1,10 @@
 ---
-layout: default
+layout: doc
 title: Advanced Configuration Guide
 nav_order: 14
 permalink: /pages/advanced-configuration/
 description: "VIVTransformer advanced configuration and customization guide"
 ---
-
-{% include language-switcher.html %}
 
 <div data-lang-zh style="display: none;">
 <h1>高级配置指南 ⚙️</h1>

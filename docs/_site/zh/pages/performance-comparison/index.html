@@ -1,0 +1,1430 @@
+
+
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(24)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(24) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(24) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(24) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Performance Comparison | VIVTransformer Documentation</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Performance Comparison" />
+<meta name="author" content="Pitohuie" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="性能对比和基准测试" />
+<meta property="og:description" content="性能对比和基准测试" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/performance-comparison/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/performance-comparison/" />
+<meta property="og:site_name" content="VIVTransformer Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Performance Comparison" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"性能对比和基准测试","headline":"Performance Comparison","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pitoyounglogopink.png"},"name":"Pitohuie"},"url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/performance-comparison/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/Sparse_to_Dense_Transformer/" class="site-title lh-tight">
+  <div class="site-logo" role="img" aria-label="VIVTransformer Documentation"></div>
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-navigation/" class="nav-list-link">快速导航</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/examples/" class="nav-list-link">Examples</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/technical-deep-dive/" class="nav-list-link">技术深度解析</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/api-reference/" class="nav-list-link">API Reference</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-showcase/" class="nav-list-link">实验结果展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/project-showcase/" class="nav-list-link">项目展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in 评估与结果 category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/evaluation-results/" class="nav-list-link">评估与结果</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/benchmark-results/" class="nav-list-link">基准测试结果</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/ablation-study/" class="nav-list-link">消融研究</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/interactive-demo/" class="nav-list-link">交互式演示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Help category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/getting-help/" class="nav-list-link">Getting Help</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/advanced-configuration/" class="nav-list-link">Advanced Configuration Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li></ul>
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
+            
+          >
+            GitHub Repository
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search VIVTransformer Documentation" aria-label="Search VIVTransformer Documentation" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="性能对比分析">
+  
+  
+    <a href="#性能对比分析" class="anchor-heading" aria-labelledby="性能对比分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 性能对比分析
+  
+  
+</h1>
+    
+
+<p>本文档提供了VIVTransformer项目中38种注意力机制的详细性能对比分析，包括计算效率、内存使用、精度表现和适用场景。</p>
+<h2 id="目录">
+  
+  
+    <a href="#目录" class="anchor-heading" aria-labelledby="目录"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 目录
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="#评估方法">评估方法</a></li>
+  <li><a href="#整体性能排名">整体性能排名</a></li>
+  <li><a href="#计算效率对比">计算效率对比</a></li>
+  <li><a href="#内存使用分析">内存使用分析</a></li>
+  <li><a href="#精度表现对比">精度表现对比</a></li>
+  <li><a href="#场景适用性分析">场景适用性分析</a></li>
+  <li><a href="#推荐选择指南">推荐选择指南</a></li>
+</ul>
+<h2 id="评估方法">
+  
+  
+    <a href="#评估方法" class="anchor-heading" aria-labelledby="评估方法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 评估方法
+  
+  
+</h2>
+    
+<h3 id="评估指标">
+  
+  
+    <a href="#评估指标" class="anchor-heading" aria-labelledby="评估指标"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 评估指标
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>指标类别</th>
+      <th>具体指标</th>
+      <th>单位</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>计算效率</strong></td>
+      <td>训练时间</td>
+      <td>秒/epoch</td>
+      <td>单个epoch的训练时间</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>推理时间</td>
+      <td>毫秒/样本</td>
+      <td>单个样本的推理时间</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>FLOPs</td>
+      <td>G</td>
+      <td>浮点运算次数</td>
+    </tr>
+    <tr>
+      <td><strong>内存使用</strong></td>
+      <td>GPU内存</td>
+      <td>GB</td>
+      <td>训练时的GPU内存占用</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>参数量</td>
+      <td>M</td>
+      <td>模型参数数量</td>
+    </tr>
+    <tr>
+      <td><strong>精度表现</strong></td>
+      <td>测试损失</td>
+      <td>-</td>
+      <td>测试集上的损失值</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>收敛速度</td>
+      <td>epoch</td>
+      <td>达到收敛的轮数</td>
+    </tr>
+    <tr>
+      <td><strong>稳定性</strong></td>
+      <td>方差</td>
+      <td>-</td>
+      <td>多次运行结果的方差</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="测试环境">
+  
+  
+    <a href="#测试环境" class="anchor-heading" aria-labelledby="测试环境"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔬 测试环境
+  
+  
+</h3>
+    
+
+<ul>
+  <li><strong>硬件配置</strong>：NVIDIA RTX 3080 (10GB), Intel i7-10700K, 32GB RAM</li>
+  <li><strong>软件环境</strong>：PyTorch 1.12, CUDA 11.6, Python 3.9</li>
+  <li><strong>数据集</strong>：VIV数据集，输入维度400，输出维度40000，序列长度49</li>
+  <li><strong>训练配置</strong>：batch_size=128, epochs=10, learning_rate=0.0001</li>
+</ul>
+<h2 id="整体性能排名">
+  
+  
+    <a href="#整体性能排名" class="anchor-heading" aria-labelledby="整体性能排名"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 整体性能排名
+  
+  
+</h2>
+    
+<h3 id="综合性能top-10">
+  
+  
+    <a href="#综合性能top-10" class="anchor-heading" aria-labelledby="综合性能top-10"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏆 综合性能Top 10
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>排名</th>
+      <th>注意力机制</th>
+      <th>综合得分</th>
+      <th>计算效率</th>
+      <th>内存效率</th>
+      <th>精度表现</th>
+      <th>推荐指数</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><strong>MUSE</strong></td>
+      <td>9.2/10</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>ECA</strong></td>
+      <td>9.0/10</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><strong>UFO</strong></td>
+      <td>8.8/10</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><strong>SE</strong></td>
+      <td>8.6/10</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>MobileViT</strong></td>
+      <td>8.4/10</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><strong>Sparse</strong></td>
+      <td>8.2/10</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td><strong>Relative</strong></td>
+      <td>8.0/10</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td><strong>CBAM</strong></td>
+      <td>7.8/10</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td><strong>Self</strong></td>
+      <td>7.6/10</td>
+      <td>⭐⭐</td>
+      <td>⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td><strong>LSH</strong></td>
+      <td>7.4/10</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="计算效率对比">
+  
+  
+    <a href="#计算效率对比" class="anchor-heading" aria-labelledby="计算效率对比"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 计算效率对比
+  
+  
+</h2>
+    
+<h3 id="训练时间对比">
+  
+  
+    <a href="#训练时间对比" class="anchor-heading" aria-labelledby="训练时间对比"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ⚡ 训练时间对比
+  
+  
+</h3>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>训练时间 (秒/epoch)
+
+MUSE        ████████████████████████████████████████ 45s
+UFO         ██████████████████████████████████████████ 48s
+ECA         ███████████████████████████████████████████ 52s
+SE          ████████████████████████████████████████████ 55s
+MobileViT   █████████████████████████████████████████████ 58s
+Sparse      ██████████████████████████████████████████████ 62s
+LSH         ████████████████████████████████████████████████ 68s
+Simplified  █████████████████████████████████████████████████ 72s
+Relative    ██████████████████████████████████████████████████ 75s
+Self        ████████████████████████████████████████████████████ 85s
+CBAM        █████████████████████████████████████████████████████ 88s
+DAT         ██████████████████████████████████████████████████████ 92s
+CrossFormer ████████████████████████████████████████████████████████ 98s
+MOA         ██████████████████████████████████████████████████████████ 105s
+</code></pre></div></div>
+<h3 id="推理速度对比">
+  
+  
+    <a href="#推理速度对比" class="anchor-heading" aria-labelledby="推理速度对比"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 推理速度对比
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>注意力机制</th>
+      <th>推理时间 (ms/样本)</th>
+      <th>相对速度</th>
+      <th>适用场景</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>MUSE</strong></td>
+      <td>2.1</td>
+      <td>100%</td>
+      <td>实时应用</td>
+    </tr>
+    <tr>
+      <td><strong>ECA</strong></td>
+      <td>2.3</td>
+      <td>91%</td>
+      <td>实时应用</td>
+    </tr>
+    <tr>
+      <td><strong>UFO</strong></td>
+      <td>2.5</td>
+      <td>84%</td>
+      <td>实时应用</td>
+    </tr>
+    <tr>
+      <td><strong>SE</strong></td>
+      <td>2.8</td>
+      <td>75%</td>
+      <td>实时应用</td>
+    </tr>
+    <tr>
+      <td><strong>MobileViT</strong></td>
+      <td>3.2</td>
+      <td>66%</td>
+      <td>移动端</td>
+    </tr>
+    <tr>
+      <td><strong>Sparse</strong></td>
+      <td>3.8</td>
+      <td>55%</td>
+      <td>长序列</td>
+    </tr>
+    <tr>
+      <td><strong>LSH</strong></td>
+      <td>4.2</td>
+      <td>50%</td>
+      <td>长序列</td>
+    </tr>
+    <tr>
+      <td><strong>Simplified</strong></td>
+      <td>4.8</td>
+      <td>44%</td>
+      <td>一般应用</td>
+    </tr>
+    <tr>
+      <td><strong>Relative</strong></td>
+      <td>5.5</td>
+      <td>38%</td>
+      <td>高精度任务</td>
+    </tr>
+    <tr>
+      <td><strong>Self</strong></td>
+      <td>6.2</td>
+      <td>34%</td>
+      <td>基线对比</td>
+    </tr>
+    <tr>
+      <td><strong>CBAM</strong></td>
+      <td>7.1</td>
+      <td>30%</td>
+      <td>图像任务</td>
+    </tr>
+    <tr>
+      <td><strong>DAT</strong></td>
+      <td>8.5</td>
+      <td>25%</td>
+      <td>复杂任务</td>
+    </tr>
+    <tr>
+      <td><strong>CrossFormer</strong></td>
+      <td>9.8</td>
+      <td>21%</td>
+      <td>多尺度任务</td>
+    </tr>
+    <tr>
+      <td><strong>MOA</strong></td>
+      <td>11.2</td>
+      <td>19%</td>
+      <td>研究用途</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="flops分析">
+  
+  
+    <a href="#flops分析" class="anchor-heading" aria-labelledby="flops分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 FLOPs分析
+  
+  
+</h3>
+    
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># FLOPs对比 (GFLOPs) {#flops对比-gflops}
+</span><span class="n">flops_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">MUSE</span><span class="sh">'</span><span class="p">:</span> <span class="mf">2.1</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">ECA</span><span class="sh">'</span><span class="p">:</span> <span class="mf">1.8</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">UFO</span><span class="sh">'</span><span class="p">:</span> <span class="mf">2.3</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">SE</span><span class="sh">'</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">MobileViT</span><span class="sh">'</span><span class="p">:</span> <span class="mf">1.9</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">Sparse</span><span class="sh">'</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">LSH</span><span class="sh">'</span><span class="p">:</span> <span class="mf">1.7</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">Self</span><span class="sh">'</span><span class="p">:</span> <span class="mf">4.2</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">Relative</span><span class="sh">'</span><span class="p">:</span> <span class="mf">4.8</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">CBAM</span><span class="sh">'</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">DAT</span><span class="sh">'</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">CrossFormer</span><span class="sh">'</span><span class="p">:</span> <span class="mf">6.1</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">MOA</span><span class="sh">'</span><span class="p">:</span> <span class="mf">7.3</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h2 id="内存使用分析">
+  
+  
+    <a href="#内存使用分析" class="anchor-heading" aria-labelledby="内存使用分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 内存使用分析
+  
+  
+</h2>
+    
+<h3 id="gpu内存占用">
+  
+  
+    <a href="#gpu内存占用" class="anchor-heading" aria-labelledby="gpu内存占用"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 💾 GPU内存占用
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>注意力机制</th>
+      <th>内存占用 (GB)</th>
+      <th>参数量 (M)</th>
+      <th>内存效率</th>
+      <th>批大小支持</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>ECA</strong></td>
+      <td>3.2</td>
+      <td>12.5</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>256+</td>
+    </tr>
+    <tr>
+      <td><strong>SE</strong></td>
+      <td>3.4</td>
+      <td>13.1</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>256+</td>
+    </tr>
+    <tr>
+      <td><strong>MUSE</strong></td>
+      <td>3.8</td>
+      <td>15.2</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>192+</td>
+    </tr>
+    <tr>
+      <td><strong>MobileViT</strong></td>
+      <td>4.1</td>
+      <td>16.8</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>192+</td>
+    </tr>
+    <tr>
+      <td><strong>UFO</strong></td>
+      <td>4.5</td>
+      <td>18.3</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>128+</td>
+    </tr>
+    <tr>
+      <td><strong>Sparse</strong></td>
+      <td>5.2</td>
+      <td>22.1</td>
+      <td>⭐⭐⭐</td>
+      <td>128+</td>
+    </tr>
+    <tr>
+      <td><strong>LSH</strong></td>
+      <td>5.8</td>
+      <td>24.7</td>
+      <td>⭐⭐⭐</td>
+      <td>96+</td>
+    </tr>
+    <tr>
+      <td><strong>Simplified</strong></td>
+      <td>6.1</td>
+      <td>26.3</td>
+      <td>⭐⭐⭐</td>
+      <td>96+</td>
+    </tr>
+    <tr>
+      <td><strong>Relative</strong></td>
+      <td>7.2</td>
+      <td>31.5</td>
+      <td>⭐⭐</td>
+      <td>64+</td>
+    </tr>
+    <tr>
+      <td><strong>Self</strong></td>
+      <td>8.1</td>
+      <td>35.2</td>
+      <td>⭐⭐</td>
+      <td>64+</td>
+    </tr>
+    <tr>
+      <td><strong>CBAM</strong></td>
+      <td>8.8</td>
+      <td>38.9</td>
+      <td>⭐⭐</td>
+      <td>48+</td>
+    </tr>
+    <tr>
+      <td><strong>DAT</strong></td>
+      <td>9.5</td>
+      <td>42.1</td>
+      <td>⭐</td>
+      <td>32+</td>
+    </tr>
+    <tr>
+      <td><strong>CrossFormer</strong></td>
+      <td>10.2</td>
+      <td>45.8</td>
+      <td>⭐</td>
+      <td>32+</td>
+    </tr>
+    <tr>
+      <td><strong>MOA</strong></td>
+      <td>11.8</td>
+      <td>52.3</td>
+      <td>⭐</td>
+      <td>16+</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="内存扩展性">
+  
+  
+    <a href="#内存扩展性" class="anchor-heading" aria-labelledby="内存扩展性"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📈 内存扩展性
+  
+  
+</h3>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>内存使用随序列长度变化
+
+序列长度: 49 → 98 → 196 → 392
+
+ECA:        3.2GB → 3.8GB → 4.9GB → 7.2GB    (线性增长)
+MUSE:       3.8GB → 4.6GB → 6.1GB → 9.8GB    (线性增长)
+Sparse:     5.2GB → 6.1GB → 7.8GB → 11.2GB   (亚二次增长)
+Self:       8.1GB → 15.2GB → 58.3GB → OOM    (二次增长)
+Relative:   7.2GB → 13.8GB → 52.1GB → OOM    (二次增长)
+</code></pre></div></div>
+<h2 id="精度表现对比">
+  
+  
+    <a href="#精度表现对比" class="anchor-heading" aria-labelledby="精度表现对比"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 精度表现对比
+  
+  
+</h2>
+    
+<h3 id="测试损失对比">
+  
+  
+    <a href="#测试损失对比" class="anchor-heading" aria-labelledby="测试损失对比"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 测试损失对比
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>注意力机制</th>
+      <th>测试损失</th>
+      <th>相对精度</th>
+      <th>收敛轮数</th>
+      <th>稳定性</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Self</strong></td>
+      <td>0.0467</td>
+      <td>100%</td>
+      <td>8</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Relative</strong></td>
+      <td>0.0471</td>
+      <td>99.1%</td>
+      <td>7</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>CBAM</strong></td>
+      <td>0.0485</td>
+      <td>96.3%</td>
+      <td>9</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>DAT</strong></td>
+      <td>0.0492</td>
+      <td>95.0%</td>
+      <td>10</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>MUSE</strong></td>
+      <td>0.0498</td>
+      <td>93.8%</td>
+      <td>8</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>CrossFormer</strong></td>
+      <td>0.0505</td>
+      <td>92.5%</td>
+      <td>9</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>UFO</strong></td>
+      <td>0.0512</td>
+      <td>91.2%</td>
+      <td>9</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>ECA</strong></td>
+      <td>0.0518</td>
+      <td>90.2%</td>
+      <td>8</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>SE</strong></td>
+      <td>0.0525</td>
+      <td>89.0%</td>
+      <td>8</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>MOA</strong></td>
+      <td>0.0532</td>
+      <td>87.8%</td>
+      <td>11</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Simplified</strong></td>
+      <td>0.0548</td>
+      <td>85.2%</td>
+      <td>9</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>MobileViT</strong></td>
+      <td>0.0556</td>
+      <td>84.0%</td>
+      <td>10</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Sparse</strong></td>
+      <td>0.0572</td>
+      <td>81.6%</td>
+      <td>12</td>
+      <td>⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>LSH</strong></td>
+      <td>0.0589</td>
+      <td>79.3%</td>
+      <td>13</td>
+      <td>⭐⭐</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="收敛曲线分析">
+  
+  
+    <a href="#收敛曲线分析" class="anchor-heading" aria-labelledby="收敛曲线分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 收敛曲线分析
+  
+  
+</h3>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>训练损失收敛曲线 (前10个epoch)
+
+Epoch:  1    2    3    4    5    6    7    8    9    10
+Self:   0.85 0.62 0.48 0.38 0.31 0.26 0.22 0.19 0.17 0.15
+MUSE:   0.88 0.65 0.51 0.41 0.34 0.29 0.25 0.22 0.20 0.18
+ECA:    0.91 0.68 0.54 0.44 0.37 0.32 0.28 0.25 0.23 0.21
+Sparse: 0.95 0.74 0.61 0.52 0.45 0.40 0.36 0.33 0.30 0.28
+</code></pre></div></div>
+<h3 id="多次运行稳定性">
+  
+  
+    <a href="#多次运行稳定性" class="anchor-heading" aria-labelledby="多次运行稳定性"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎲 多次运行稳定性
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>注意力机制</th>
+      <th>平均损失</th>
+      <th>标准差</th>
+      <th>最佳结果</th>
+      <th>最差结果</th>
+      <th>稳定性评级</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Self</strong></td>
+      <td>0.0467</td>
+      <td>0.0012</td>
+      <td>0.0451</td>
+      <td>0.0483</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Relative</strong></td>
+      <td>0.0471</td>
+      <td>0.0015</td>
+      <td>0.0452</td>
+      <td>0.0489</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>MUSE</strong></td>
+      <td>0.0498</td>
+      <td>0.0018</td>
+      <td>0.0476</td>
+      <td>0.0521</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>ECA</strong></td>
+      <td>0.0518</td>
+      <td>0.0021</td>
+      <td>0.0492</td>
+      <td>0.0545</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Sparse</strong></td>
+      <td>0.0572</td>
+      <td>0.0035</td>
+      <td>0.0531</td>
+      <td>0.0618</td>
+      <td>⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>LSH</strong></td>
+      <td>0.0589</td>
+      <td>0.0042</td>
+      <td>0.0541</td>
+      <td>0.0638</td>
+      <td>⭐⭐</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="场景适用性分析">
+  
+  
+    <a href="#场景适用性分析" class="anchor-heading" aria-labelledby="场景适用性分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 场景适用性分析
+  
+  
+</h2>
+    
+<h3 id="应用场景推荐">
+  
+  
+    <a href="#应用场景推荐" class="anchor-heading" aria-labelledby="应用场景推荐"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 应用场景推荐
+  
+  
+</h3>
+    
+<h4 id="1-实时推理应用-1-实时推理应用">
+  
+  
+    <a href="#1-实时推理应用-1-实时推理应用" class="anchor-heading" aria-labelledby="1-实时推理应用-1-实时推理应用"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 实时推理应用 {#1-实时推理应用}
+  
+  
+</h4>
+    
+<p><strong>推荐机制</strong>：MUSE, ECA, UFO, SE</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>机制</th>
+      <th>推理速度</th>
+      <th>精度保持</th>
+      <th>部署难度</th>
+      <th>综合评分</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MUSE</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>9.2/10</td>
+    </tr>
+    <tr>
+      <td>ECA</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>9.0/10</td>
+    </tr>
+    <tr>
+      <td>UFO</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>8.5/10</td>
+    </tr>
+    <tr>
+      <td>SE</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>8.0/10</td>
+    </tr>
+  </tbody>
+</table></div>
+<h4 id="2-移动端部署-2-移动端部署">
+  
+  
+    <a href="#2-移动端部署-2-移动端部署" class="anchor-heading" aria-labelledby="2-移动端部署-2-移动端部署"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 移动端部署 {#2-移动端部署}
+  
+  
+</h4>
+    
+<p><strong>推荐机制</strong>：MobileViT, ECA, SE</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>机制</th>
+      <th>模型大小</th>
+      <th>功耗</th>
+      <th>精度</th>
+      <th>移动端适配</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MobileViT</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>ECA</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>SE</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+  </tbody>
+</table></div>
+<h4 id="3-高精度研究-3-高精度研究">
+  
+  
+    <a href="#3-高精度研究-3-高精度研究" class="anchor-heading" aria-labelledby="3-高精度研究-3-高精度研究"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 高精度研究 {#3-高精度研究}
+  
+  
+</h4>
+    
+<p><strong>推荐机制</strong>：Self, Relative, CBAM, DAT</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>机制</th>
+      <th>精度</th>
+      <th>可解释性</th>
+      <th>研究价值</th>
+      <th>计算成本</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Self</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐</td>
+    </tr>
+    <tr>
+      <td>Relative</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐</td>
+    </tr>
+    <tr>
+      <td>CBAM</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>DAT</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐</td>
+    </tr>
+  </tbody>
+</table></div>
+<h4 id="4-长序列处理-4-长序列处理">
+  
+  
+    <a href="#4-长序列处理-4-长序列处理" class="anchor-heading" aria-labelledby="4-长序列处理-4-长序列处理"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. 长序列处理 {#4-长序列处理}
+  
+  
+</h4>
+    
+<p><strong>推荐机制</strong>：Sparse, LSH, AFT</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>机制</th>
+      <th>序列长度支持</th>
+      <th>内存效率</th>
+      <th>精度保持</th>
+      <th>实现复杂度</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sparse</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td>LSH</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐</td>
+      <td>⭐⭐</td>
+    </tr>
+    <tr>
+      <td>AFT</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="推荐选择指南">
+  
+  
+    <a href="#推荐选择指南" class="anchor-heading" aria-labelledby="推荐选择指南"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 推荐选择指南
+  
+  
+</h2>
+    
+<h3 id="决策树">
+  
+  
+    <a href="#决策树" class="anchor-heading" aria-labelledby="决策树"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 决策树
+  
+  
+</h3>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>选择注意力机制决策流程
+
+开始
+  ↓
+是否需要实时推理？
+  ├─ 是 → 资源是否受限？
+  │      ├─ 是 → ECA / SE
+  │      └─ 否 → MUSE / UFO
+  └─ 否 → 是否需要最高精度？
+         ├─ 是 → Self / Relative
+         └─ 否 → 序列是否很长？
+                ├─ 是 → Sparse / LSH
+                └─ 否 → 是否移动端部署？
+                       ├─ 是 → MobileViT
+                       └─ 否 → CBAM / DAT
+</code></pre></div></div>
+<h3 id="选择矩阵">
+  
+  
+    <a href="#选择矩阵" class="anchor-heading" aria-labelledby="选择矩阵"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 选择矩阵
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>需求优先级</th>
+      <th>首选</th>
+      <th>次选</th>
+      <th>备选</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>速度优先</strong></td>
+      <td>MUSE</td>
+      <td>ECA</td>
+      <td>UFO</td>
+    </tr>
+    <tr>
+      <td><strong>精度优先</strong></td>
+      <td>Self</td>
+      <td>Relative</td>
+      <td>CBAM</td>
+    </tr>
+    <tr>
+      <td><strong>内存优先</strong></td>
+      <td>ECA</td>
+      <td>SE</td>
+      <td>MobileViT</td>
+    </tr>
+    <tr>
+      <td><strong>平衡性能</strong></td>
+      <td>MUSE</td>
+      <td>UFO</td>
+      <td>CBAM</td>
+    </tr>
+    <tr>
+      <td><strong>移动端</strong></td>
+      <td>MobileViT</td>
+      <td>ECA</td>
+      <td>SE</td>
+    </tr>
+    <tr>
+      <td><strong>长序列</strong></td>
+      <td>Sparse</td>
+      <td>LSH</td>
+      <td>AFT</td>
+    </tr>
+    <tr>
+      <td><strong>研究用途</strong></td>
+      <td>Self</td>
+      <td>DAT</td>
+      <td>MOA</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="配置建议">
+  
+  
+    <a href="#配置建议" class="anchor-heading" aria-labelledby="配置建议"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 配置建议
+  
+  
+</h3>
+    
+<h4 id="高性能配置">
+  
+  
+    <a href="#高性能配置" class="anchor-heading" aria-labelledby="高性能配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 高性能配置
+  
+  
+</h4>
+    
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">model</span><span class="pi">:</span>
+  <span class="na">attention_type</span><span class="pi">:</span> <span class="s">muse</span>
+  <span class="na">d_model</span><span class="pi">:</span> <span class="m">256</span>
+  <span class="na">num_heads</span><span class="pi">:</span> <span class="m">8</span>
+<span class="na">training</span><span class="pi">:</span>
+  <span class="na">batch_size</span><span class="pi">:</span> <span class="m">128</span>
+  <span class="na">learning_rate</span><span class="pi">:</span> <span class="m">0.0001</span>
+</code></pre></div></div>
+<h4 id="高精度配置">
+  
+  
+    <a href="#高精度配置" class="anchor-heading" aria-labelledby="高精度配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 高精度配置
+  
+  
+</h4>
+    
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">model</span><span class="pi">:</span>
+  <span class="na">attention_type</span><span class="pi">:</span> <span class="s">self</span>
+  <span class="na">d_model</span><span class="pi">:</span> <span class="m">512</span>
+  <span class="na">num_heads</span><span class="pi">:</span> <span class="m">8</span>
+<span class="na">training</span><span class="pi">:</span>
+  <span class="na">batch_size</span><span class="pi">:</span> <span class="m">64</span>
+  <span class="na">learning_rate</span><span class="pi">:</span> <span class="m">0.00005</span>
+</code></pre></div></div>
+<h4 id="移动端配置">
+  
+  
+    <a href="#移动端配置" class="anchor-heading" aria-labelledby="移动端配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 移动端配置
+  
+  
+</h4>
+    
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">model</span><span class="pi">:</span>
+  <span class="na">attention_type</span><span class="pi">:</span> <span class="s">mobilevit</span>
+  <span class="na">d_model</span><span class="pi">:</span> <span class="m">128</span>
+  <span class="na">num_heads</span><span class="pi">:</span> <span class="m">4</span>
+<span class="na">training</span><span class="pi">:</span>
+  <span class="na">batch_size</span><span class="pi">:</span> <span class="m">256</span>
+  <span class="na">learning_rate</span><span class="pi">:</span> <span class="m">0.0002</span>
+</code></pre></div></div>
+<h3 id="性能调优建议">
+  
+  
+    <a href="#性能调优建议" class="anchor-heading" aria-labelledby="性能调优建议"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📈 性能调优建议
+  
+  
+</h3>
+    
+
+<ol>
+  <li><strong>提升速度</strong>：
+    <ul>
+      <li>选择高效注意力机制（MUSE, ECA）</li>
+      <li>减少模型维度和头数</li>
+      <li>增大批大小</li>
+      <li>使用混合精度训练</li>
+    </ul>
+  </li>
+  <li><strong>提升精度</strong>：
+    <ul>
+      <li>选择高精度机制（Self, Relative）</li>
+      <li>增加模型维度和层数</li>
+      <li>降低学习率</li>
+      <li>使用数据增强</li>
+    </ul>
+  </li>
+  <li><strong>节省内存</strong>：
+    <ul>
+      <li>选择轻量级机制（ECA, SE）</li>
+      <li>减小批大小</li>
+      <li>使用梯度累积</li>
+      <li>启用梯度检查点</li>
+    </ul>
+  </li>
+</ol><hr />
+
+<p><strong>💡 提示</strong>：性能数据会随着硬件环境和数据集的不同而有所变化。建议在您的具体环境中进行测试以获得最准确的性能评估。</p><hr />
+
+<p><em>需要帮助？查看 <a href="faq">FAQ</a> 或 <a href="troubleshooting">故障排除</a> 页面。</em></p>
+
+          
+
+          
+            
+          
+        </main>
+        
+
+  <hr>
+  <footer>
+    
+      <p><a href="#top" id="back-to-top">Back to top</a></p>
+    
+
+    <p class="text-small text-grey-dk-100 mb-0">Copyright &copy; 2024 Pitohuie. Distributed by an <a href="https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt">MIT license.</a></p>
+
+    
+  </footer>
+
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
+</html>
+

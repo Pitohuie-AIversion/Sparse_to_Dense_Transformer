@@ -1,37 +1,35 @@
 ---
 layout: default
-title: 示例代码
-nav_order: 16
-parent: 核心文档
+title: Examples
+nav_order: 5
+parent: Getting Started
 permalink: /pages/examples/
 ---
 
-# 示例代码
-{: .no_toc }
+{% include language-switcher.html %}
 
-本页面提供 VIVTransformer 项目的完整代码示例，涵盖从基础使用到高级应用的各种场景。
-{: .fs-6 .fw-300 }
+<div data-lang-zh style="display: none;">
+<h1>示例代码</h1>
+<p class="fs-6 fw-300">本页面提供了VIVTransformer项目的实用代码示例，帮助您快速上手和理解项目的使用方法。</p>
 
-## 目录
-{: .no_toc .text-delta }
+<h2>📋 目录</h2>
+<ul>
+<li><a href="#基础示例">基础示例</a></li>
+<li><a href="#数据处理示例">数据处理示例</a></li>
+<li><a href="#训练示例">训练示例</a></li>
+<li><a href="#推理示例">推理示例</a></li>
+<li><a href="#高级用法">高级用法</a></li>
+</ul>
 
-1. TOC
-{:toc}
+<hr>
 
----
+<h2 id="基础示例">🚀 基础示例</h2>
 
-## 基础示例
+<h3>1. 快速开始示例</h3>
+<p>最简单的使用示例，展示如何创建模型并进行前向传播。</p>
 
-### 1. 快速开始示例
-
-最简单的使用示例，展示如何快速上手 VIVTransformer。
-
-```python
-import torch
-import numpy as np
+<pre><code class="language-python">import torch
 from vivtransformer import VIVTransformer, VIVConfig
-from vivtransformer.data import VIVDataset
-from vivtransformer.utils import create_dataloader
 
 # 1. 创建配置
 config = VIVConfig(
@@ -42,7 +40,7 @@ config = VIVConfig(
     dropout=0.1,
     flow_input_dim=64,
     structure_input_dim=32,
-    output_dim=9  # 3D displacement + velocity + force
+    output_dim=9  # 3D位移 + 速度 + 力
 )
 
 # 2. 创建模型
@@ -62,14 +60,14 @@ with torch.no_grad():
 print("输出形状:")
 for key, value in outputs.items():
     print(f"  {key}: {value.shape}")
-```
+</code></pre>
 
-### 2. 数据加载示例
+<h2 id="数据处理示例">📊 数据处理示例</h2>
 
-展示如何加载和预处理 VIV 数据。
+<h3>2. 数据加载示例</h3>
+<p>展示如何加载和预处理VIV数据。</p>
 
-```python
-import os
+<pre><code class="language-python">import os
 import pandas as pd
 from torch.utils.data import DataLoader
 from vivtransformer.data import VIVDataset, DataProcessor
@@ -121,18 +119,14 @@ for batch in train_loader:
     print(f"  结构数据: {batch['structure_data'].shape}")
     print(f"  目标数据: {batch['target'].shape}")
     break
-```
+</code></pre>
 
----
+<h2 id="训练示例">🎯 训练示例</h2>
 
-## 训练示例
+<h3>3. 完整训练流程</h3>
+<p>展示完整的模型训练过程。</p>
 
-### 3. 完整训练流程
-
-展示完整的模型训练过程。
-
-```python
-import torch
+<pre><code class="language-python">import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.optim.lr_scheduler import CosineAnnealingLR
@@ -191,727 +185,633 @@ training_config = {
     'log_every': 100
 }
 
-# 7. 创建训练器
-trainer = Trainer(
-    model=model,
-    criterion=criterion,
-    optimizer=optimizer,
-    scheduler=scheduler,
-    train_dataloader=train_loader,
-    val_dataloader=val_loader,
-    device=device,
-    config=training_config
-)
-
-# 8. 开始训练
-history = trainer.train()
-
-# 9. 保存最终模型
-save_checkpoint({
-    'model_state_dict': model.state_dict(),
-    'optimizer_state_dict': optimizer.state_dict(),
-    'scheduler_state_dict': scheduler.state_dict(),
-    'config': config,
-    'history': history
-}, 'checkpoints/final_model.pth')
-
-print("训练完成！")
-```
-
-### 4. 自定义训练循环
-
-展示如何实现自定义的训练循环。
-
-```python
-import torch
-from tqdm import tqdm
-from vivtransformer.metrics import compute_metrics
-from vivtransformer.utils import AverageMeter
-
-def custom_training_loop(model, train_loader, val_loader, 
-                        criterion, optimizer, scheduler, 
-                        epochs=100, device='cuda'):
-    """
-    自定义训练循环
-    """
-    best_val_loss = float('inf')
-    history = {'train_loss': [], 'val_loss': [], 'metrics': []}
-    
-    for epoch in range(epochs):
-        # 训练阶段
-        model.train()
-        train_loss_meter = AverageMeter()
-        
-        train_pbar = tqdm(train_loader, desc=f'Epoch {epoch+1}/{epochs} [Train]')
-        for batch_idx, batch in enumerate(train_pbar):
-            # 数据移动到设备
-            flow_data = batch['flow_data'].to(device)
-            structure_data = batch['structure_data'].to(device)
-            targets = batch['target'].to(device)
-            
-            # 前向传播
-            optimizer.zero_grad()
-            outputs = model(flow_data, structure_data)
-            
-            # 计算损失
-            loss_dict = criterion(outputs, targets)
-            total_loss = loss_dict['total_loss']
-            
-            # 反向传播
-            total_loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-            optimizer.step()
-            
-            # 更新统计
-            train_loss_meter.update(total_loss.item())
-            train_pbar.set_postfix({
-                'loss': f'{train_loss_meter.avg:.4f}',
-                'lr': f'{optimizer.param_groups[0]["lr"]:.2e}'
-            })
-        
-        # 验证阶段
-        model.eval()
-        val_loss_meter = AverageMeter()
-        all_predictions = []
-        all_targets = []
-        
-        with torch.no_grad():
-            val_pbar = tqdm(val_loader, desc=f'Epoch {epoch+1}/{epochs} [Val]')
-            for batch in val_pbar:
-                flow_data = batch['flow_data'].to(device)
-                structure_data = batch['structure_data'].to(device)
-                targets = batch['target'].to(device)
-                
-                outputs = model(flow_data, structure_data)
-                loss_dict = criterion(outputs, targets)
-                
-                val_loss_meter.update(loss_dict['total_loss'].item())
-                
-                # 收集预测结果
-                all_predictions.append(outputs['displacement'].cpu())
-                all_targets.append(targets.cpu())
-                
-                val_pbar.set_postfix({'val_loss': f'{val_loss_meter.avg:.4f}'})
-        
-        # 计算评估指标
-        predictions = torch.cat(all_predictions, dim=0).numpy()
-        targets = torch.cat(all_targets, dim=0).numpy()
-        metrics = compute_metrics(predictions, targets)
-        
-        # 更新学习率
-        scheduler.step()
-        
-        # 记录历史
-        history['train_loss'].append(train_loss_meter.avg)
-        history['val_loss'].append(val_loss_meter.avg)
-        history['metrics'].append(metrics)
-        
-        # 保存最佳模型
-        if val_loss_meter.avg < best_val_loss:
-            best_val_loss = val_loss_meter.avg
-            torch.save({
-                'epoch': epoch,
-                'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                'val_loss': best_val_loss,
-                'metrics': metrics
-            }, 'checkpoints/best_model.pth')
-        
-        print(f"Epoch {epoch+1}: Train Loss: {train_loss_meter.avg:.4f}, "
-              f"Val Loss: {val_loss_meter.avg:.4f}, RMSE: {metrics['rmse']:.4f}")
-    
-    return history
-
-# 使用自定义训练循环
-history = custom_training_loop(
-    model, train_loader, val_loader,
-    criterion, optimizer, scheduler,
-    epochs=100, device=device
-)
-```
-
----
-
-## 推理示例
-
-### 5. 模型推理
-
-展示如何使用训练好的模型进行推理。
-
-```python
-import torch
-import numpy as np
-from vivtransformer import VIVTransformer
-from vivtransformer.utils import load_checkpoint
-
-def load_model_for_inference(checkpoint_path, device='cuda'):
-    """
-    加载模型用于推理
-    """
-    checkpoint = load_checkpoint(checkpoint_path)
-    config = checkpoint['config']
-    
-    model = VIVTransformer(config).to(device)
-    model.load_state_dict(checkpoint['model_state_dict'])
-    model.eval()
-    
-    return model, config
-
-def predict_viv_response(model, flow_data, structure_data, device='cuda'):
-    """
-    预测 VIV 响应
-    
-    Args:
-        model: 训练好的模型
-        flow_data: 流体数据 [seq_len, flow_dim]
-        structure_data: 结构数据 [seq_len, struct_dim]
-        
-    Returns:
-        预测结果字典
-    """
-    # 添加批次维度
-    flow_data = torch.tensor(flow_data, dtype=torch.float32).unsqueeze(0).to(device)
-    structure_data = torch.tensor(structure_data, dtype=torch.float32).unsqueeze(0).to(device)
-    
-    with torch.no_grad():
-        outputs = model(flow_data, structure_data)
-    
-    # 移除批次维度并转换为 numpy
-    results = {}
-    for key, value in outputs.items():
-        if isinstance(value, torch.Tensor):
-            results[key] = value.squeeze(0).cpu().numpy()
-    
-    return results
-
-# 示例使用
-model, config = load_model_for_inference('checkpoints/best_model.pth')
-
-# 准备测试数据
-seq_len = 200
-flow_data = np.random.randn(seq_len, config.flow_input_dim)
-structure_data = np.random.randn(seq_len, config.structure_input_dim)
-
-# 执行预测
-predictions = predict_viv_response(model, flow_data, structure_data)
-
-print("预测结果:")
-for key, value in predictions.items():
-    if key != 'attention_weights':
-        print(f"  {key}: {value.shape}")
-```
-
-### 6. 批量推理
-
-展示如何进行批量推理以提高效率。
-
-```python
-import torch
-from torch.utils.data import DataLoader
-from tqdm import tqdm
-
-def batch_inference(model, dataloader, device='cuda', save_results=True):
-    """
-    批量推理
-    
-    Args:
-        model: 训练好的模型
-        dataloader: 数据加载器
-        device: 计算设备
-        save_results: 是否保存结果
-        
-    Returns:
-        所有预测结果
-    """
-    model.eval()
-    all_predictions = []
-    all_targets = []
-    all_metadata = []
-    
-    with torch.no_grad():
-        for batch in tqdm(dataloader, desc='批量推理'):
-            flow_data = batch['flow_data'].to(device)
-            structure_data = batch['structure_data'].to(device)
-            
-            # 执行推理
-            outputs = model(flow_data, structure_data)
-            
-            # 收集结果
-            all_predictions.append({
-                'displacement': outputs['displacement'].cpu(),
-                'velocity': outputs['velocity'].cpu(),
-                'force': outputs['force'].cpu()
-            })
-            
-            if 'target' in batch:
-                all_targets.append(batch['target'])
-            
-            if 'metadata' in batch:
-                all_metadata.append(batch['metadata'])
-    
-    # 合并结果
-    predictions = {}
-    for key in all_predictions[0].keys():
-        predictions[key] = torch.cat([p[key] for p in all_predictions], dim=0)
-    
-    results = {'predictions': predictions}
-    
-    if all_targets:
-        results['targets'] = torch.cat(all_targets, dim=0)
-    
-    if all_metadata:
-        results['metadata'] = all_metadata
-    
-    # 保存结果
-    if save_results:
-        torch.save(results, 'results/batch_inference_results.pth')
-        print("结果已保存到 results/batch_inference_results.pth")
-    
-    return results
-
-# 创建测试数据加载器
-test_dataset = VIVDataset('data/test', split='test')
-test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)
-
-# 执行批量推理
-results = batch_inference(model, test_loader)
-
-print(f"推理完成，共处理 {results['predictions']['displacement'].shape[0]} 个样本")
-```
-
----
-
-## 高级示例
-
-### 7. 注意力可视化
-
-展示如何可视化模型的注意力权重。
-
-```python
-import matplotlib.pyplot as plt
-import seaborn as sns
-from vivtransformer.visualization import plot_attention_weights
-
-def visualize_attention(model, flow_data, structure_data, 
-                       layer_idx=0, head_idx=0, save_path=None):
-    """
-    可视化注意力权重
-    """
-    model.eval()
-    
-    # 添加钩子函数获取注意力权重
-    attention_weights = []
-    
-    def hook_fn(module, input, output):
-        if hasattr(output, 'attention_weights'):
-            attention_weights.append(output.attention_weights)
-    
-    # 注册钩子
-    hooks = []
-    for layer in model.transformer_layers:
-        hook = layer.self_attention.register_forward_hook(hook_fn)
-        hooks.append(hook)
-    
-    # 前向传播
-    with torch.no_grad():
-        outputs = model(flow_data.unsqueeze(0), structure_data.unsqueeze(0))
-    
-    # 移除钩子
-    for hook in hooks:
-        hook.remove()
-    
-    # 获取指定层和头的注意力权重
-    if attention_weights:
-        attn = attention_weights[layer_idx][0, head_idx].cpu().numpy()
-        
-        # 绘制注意力热图
-        plt.figure(figsize=(12, 10))
-        sns.heatmap(attn, cmap='Blues', cbar=True)
-        plt.title(f'Attention Weights - Layer {layer_idx}, Head {head_idx}')
-        plt.xlabel('Key Position')
-        plt.ylabel('Query Position')
-        
-        if save_path:
-            plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        plt.show()
-        
-        return attn
-    
-    return None
-
-# 示例使用
-seq_len = 100
-flow_data = torch.randn(seq_len, config.flow_input_dim)
-structure_data = torch.randn(seq_len, config.structure_input_dim)
-
-attn_weights = visualize_attention(
-    model, flow_data, structure_data,
-    layer_idx=0, head_idx=0,
-    save_path='visualizations/attention_layer0_head0.png'
-)
-```
-
-### 8. 模型解释性分析
-
-展示如何分析模型的预测行为。
-
-```python
-import torch
-import numpy as np
-from sklearn.decomposition import PCA
-from vivtransformer.analysis import FeatureImportanceAnalyzer
-
-def analyze_feature_importance(model, dataloader, device='cuda'):
-    """
-    分析特征重要性
-    """
-    analyzer = FeatureImportanceAnalyzer(model)
-    
-    # 收集特征表示
-    all_features = []
-    all_targets = []
-    
-    model.eval()
-    with torch.no_grad():
-        for batch in dataloader:
-            flow_data = batch['flow_data'].to(device)
-            structure_data = batch['structure_data'].to(device)
-            targets = batch['target']
-            
-            # 获取中间特征表示
-            features = analyzer.extract_features(flow_data, structure_data)
-            
-            all_features.append(features.cpu())
-            all_targets.append(targets)
-    
-    features = torch.cat(all_features, dim=0).numpy()
-    targets = torch.cat(all_targets, dim=0).numpy()
-    
-    # PCA 分析
-    pca = PCA(n_components=50)
-    features_pca = pca.fit_transform(features.reshape(features.shape[0], -1))
-    
-    # 计算特征重要性
-    importance_scores = analyzer.compute_importance(features_pca, targets)
-    
-    return {
-        'features': features,
-        'features_pca': features_pca,
-        'importance_scores': importance_scores,
-        'explained_variance': pca.explained_variance_ratio_
-    }
-
-# 执行分析
-analysis_results = analyze_feature_importance(model, val_loader)
-
-print("特征重要性分析完成")
-print(f"前10个主成分解释方差比: {analysis_results['explained_variance'][:10]}")
-```
-
-### 9. 超参数优化
-
-展示如何使用 Optuna 进行超参数优化。
-
-```python
-import optuna
-from optuna.integration import PyTorchLightningPruningCallback
-
-def objective(trial):
-    """
-    Optuna 优化目标函数
-    """
-    # 建议超参数
-    config = VIVConfig(
-        d_model=trial.suggest_categorical('d_model', [256, 512, 768]),
-        num_layers=trial.suggest_int('num_layers', 4, 8),
-        num_heads=trial.suggest_categorical('num_heads', [4, 8, 12]),
-        d_ff=trial.suggest_categorical('d_ff', [1024, 2048, 3072]),
-        dropout=trial.suggest_float('dropout', 0.05, 0.3),
-        learning_rate=trial.suggest_float('learning_rate', 1e-5, 1e-3, log=True),
-        flow_input_dim=64,
-        structure_input_dim=32
-    )
-    
-    # 创建模型
-    model = VIVTransformer(config).to(device)
-    
-    # 创建优化器
-    optimizer = optim.AdamW(
-        model.parameters(),
-        lr=config.learning_rate,
-        weight_decay=trial.suggest_float('weight_decay', 1e-6, 1e-4, log=True)
-    )
-    
-    # 训练模型（简化版）
+# 7. 开始训练
+for epoch in range(training_config['epochs']):
     model.train()
     total_loss = 0
-    num_batches = 0
     
-    for epoch in range(10):  # 快速训练几个 epoch
-        for batch in train_loader:
-            if num_batches >= 100:  # 限制批次数量
-                break
+    for batch_idx, batch in enumerate(train_loader):
+        # 数据移到设备
+        flow_data = batch['flow_data'].to(device)
+        structure_data = batch['structure_data'].to(device)
+        target = batch['target'].to(device)
+        
+        # 前向传播
+        optimizer.zero_grad()
+        outputs = model(flow_data, structure_data)
+        loss = criterion(outputs, target)
+        
+        # 反向传播
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), training_config['gradient_clip_norm'])
+        optimizer.step()
+        
+        total_loss += loss.item()
+        
+        if batch_idx % training_config['log_every'] == 0:
+            print(f'Epoch {epoch}, Batch {batch_idx}, Loss: {loss.item():.6f}')
+    
+    # 学习率调度
+    scheduler.step()
+    
+    # 验证
+    if epoch % training_config['eval_every'] == 0:
+        model.eval()
+        val_loss = 0
+        with torch.no_grad():
+            for batch in val_loader:
+                flow_data = batch['flow_data'].to(device)
+                structure_data = batch['structure_data'].to(device)
+                target = batch['target'].to(device)
                 
-            flow_data = batch['flow_data'].to(device)
-            structure_data = batch['structure_data'].to(device)
-            targets = batch['target'].to(device)
-            
-            optimizer.zero_grad()
-            outputs = model(flow_data, structure_data)
-            loss = criterion(outputs, targets)['total_loss']
-            loss.backward()
-            optimizer.step()
-            
-            total_loss += loss.item()
-            num_batches += 1
+                outputs = model(flow_data, structure_data)
+                loss = criterion(outputs, target)
+                val_loss += loss.item()
         
-        # 报告中间结果
-        trial.report(total_loss / num_batches, epoch)
-        
-        # 检查是否应该剪枝
-        if trial.should_prune():
-            raise optuna.exceptions.TrialPruned()
+        print(f'Epoch {epoch}, Train Loss: {total_loss/len(train_loader):.6f}, Val Loss: {val_loss/len(val_loader):.6f}')
     
-    return total_loss / num_batches
+    # 保存检查点
+    if epoch % training_config['save_every'] == 0:
+        save_checkpoint({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'scheduler_state_dict': scheduler.state_dict(),
+            'loss': total_loss/len(train_loader)
+        }, f'checkpoint_epoch_{epoch}.pth')
+</code></pre>
 
-# 创建研究对象
-study = optuna.create_study(
-    direction='minimize',
-    pruner=optuna.pruners.MedianPruner()
+<h2 id="推理示例">🔮 推理示例</h2>
+
+<h3>4. 模型推理</h3>
+<p>展示如何使用训练好的模型进行推理。</p>
+
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.utils import load_checkpoint
+
+# 1. 加载模型
+config = VIVConfig.from_json('config.json')
+model = VIVTransformer(config)
+checkpoint = load_checkpoint('best_model.pth')
+model.load_state_dict(checkpoint['model_state_dict'])
+model.eval()
+
+# 2. 准备测试数据
+test_flow_data = torch.randn(1, 200, config.flow_input_dim)
+test_structure_data = torch.randn(1, 200, config.structure_input_dim)
+
+# 3. 进行推理
+with torch.no_grad():
+    predictions = model(test_flow_data, test_structure_data)
+
+# 4. 处理结果
+displacement = predictions['displacement'].squeeze().numpy()
+velocity = predictions['velocity'].squeeze().numpy()
+force = predictions['force'].squeeze().numpy()
+
+# 5. 可视化结果
+fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+
+# 位移
+axes[0].plot(displacement)
+axes[0].set_title('结构位移预测')
+axes[0].set_ylabel('位移 (m)')
+axes[0].grid(True)
+
+# 速度
+axes[1].plot(velocity)
+axes[1].set_title('结构速度预测')
+axes[1].set_ylabel('速度 (m/s)')
+axes[1].grid(True)
+
+# 力
+axes[2].plot(force)
+axes[2].set_title('流体力预测')
+axes[2].set_xlabel('时间步')
+axes[2].set_ylabel('力 (N)')
+axes[2].grid(True)
+
+plt.tight_layout()
+plt.savefig('predictions.png', dpi=300, bbox_inches='tight')
+plt.show()
+</code></pre>
+
+<h2 id="高级用法">🔧 高级用法</h2>
+
+<h3>5. 自定义注意力机制</h3>
+<p>展示如何实现和使用自定义注意力机制。</p>
+
+<pre><code class="language-python">import torch
+import torch.nn as nn
+from vivtransformer.attention import BaseAttention
+
+class CustomAttention(BaseAttention):
+    """自定义注意力机制示例"""
+    
+    def __init__(self, d_model, num_heads, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+        
+        self.w_q = nn.Linear(d_model, d_model)
+        self.w_k = nn.Linear(d_model, d_model)
+        self.w_v = nn.Linear(d_model, d_model)
+        self.w_o = nn.Linear(d_model, d_model)
+        
+        self.dropout = nn.Dropout(dropout)
+        self.layer_norm = nn.LayerNorm(d_model)
+        
+    def forward(self, query, key, value, mask=None):
+        batch_size, seq_len, d_model = query.size()
+        
+        # 1. 线性变换
+        Q = self.w_q(query).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        K = self.w_k(key).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        V = self.w_v(value).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        
+        # 2. 计算注意力分数
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.d_k ** 0.5)
+        
+        # 3. 应用掩码
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        
+        # 4. 应用softmax
+        attention_weights = torch.softmax(scores, dim=-1)
+        attention_weights = self.dropout(attention_weights)
+        
+        # 5. 应用注意力权重
+        context = torch.matmul(attention_weights, V)
+        
+        # 6. 重塑和输出投影
+        context = context.transpose(1, 2).contiguous().view(
+            batch_size, seq_len, d_model
+        )
+        output = self.w_o(context)
+        
+        # 7. 残差连接和层归一化
+        output = self.layer_norm(output + query)
+        
+        return output, attention_weights
+
+# 使用自定义注意力机制
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    attention_class=CustomAttention  # 指定自定义注意力
 )
 
-# 执行优化
-study.optimize(objective, n_trials=50)
+model = VIVTransformer(config)
+</code></pre>
 
-print("最佳超参数:")
-for key, value in study.best_params.items():
-    print(f"  {key}: {value}")
+<h3>6. 模型分析和可视化</h3>
+<p>展示如何分析模型性能和可视化注意力权重。</p>
 
-print(f"最佳验证损失: {study.best_value:.4f}")
-```
-
----
-
-## 部署示例
-
-### 10. 模型导出和部署
-
-展示如何导出模型用于生产环境。
-
-```python
-import torch
-import torch.jit as jit
-from vivtransformer.deployment import ModelExporter
-
-def export_model_for_deployment(model, config, export_path):
-    """
-    导出模型用于部署
-    """
-    model.eval()
-    
-    # 创建示例输入
-    example_flow = torch.randn(1, 100, config.flow_input_dim)
-    example_structure = torch.randn(1, 100, config.structure_input_dim)
-    
-    # 导出为 TorchScript
-    traced_model = jit.trace(model, (example_flow, example_structure))
-    traced_model.save(f"{export_path}/model_traced.pt")
-    
-    # 导出为 ONNX
-    torch.onnx.export(
-        model,
-        (example_flow, example_structure),
-        f"{export_path}/model.onnx",
-        export_params=True,
-        opset_version=11,
-        do_constant_folding=True,
-        input_names=['flow_data', 'structure_data'],
-        output_names=['displacement', 'velocity', 'force'],
-        dynamic_axes={
-            'flow_data': {0: 'batch_size', 1: 'sequence_length'},
-            'structure_data': {0: 'batch_size', 1: 'sequence_length'},
-            'displacement': {0: 'batch_size', 1: 'sequence_length'},
-            'velocity': {0: 'batch_size', 1: 'sequence_length'},
-            'force': {0: 'batch_size', 1: 'sequence_length'}
-        }
-    )
-    
-    print(f"模型已导出到 {export_path}")
-
-# 导出模型
-export_model_for_deployment(model, config, 'deployment/models')
-```
-
-### 11. REST API 服务
-
-展示如何创建 REST API 服务。
-
-```python
-from flask import Flask, request, jsonify
-import torch
+<pre><code class="language-python">import torch
 import numpy as np
-from vivtransformer.deployment import ModelServer
-
-app = Flask(__name__)
-
-# 加载模型
-model_server = ModelServer('deployment/models/model_traced.pt')
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    """
-    VIV 预测 API 端点
-    """
-    try:
-        # 获取输入数据
-        data = request.json
-        flow_data = np.array(data['flow_data'])
-        structure_data = np.array(data['structure_data'])
-        
-        # 执行预测
-        predictions = model_server.predict(flow_data, structure_data)
-        
-        # 返回结果
-        return jsonify({
-            'status': 'success',
-            'predictions': {
-                'displacement': predictions['displacement'].tolist(),
-                'velocity': predictions['velocity'].tolist(),
-                'force': predictions['force'].tolist()
-            }
-        })
-    
-    except Exception as e:
-        return jsonify({
-            'status': 'error',
-            'message': str(e)
-        }), 400
-
-@app.route('/health', methods=['GET'])
-def health_check():
-    """健康检查端点"""
-    return jsonify({'status': 'healthy'})
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
-```
-
----
-
-## 工具和实用函数
-
-### 12. 数据可视化工具
-
-```python
 import matplotlib.pyplot as plt
 import seaborn as sns
-from mpl_toolkits.mplot3d import Axes3D
+from vivtransformer.analysis import AttentionVisualizer, ModelAnalyzer
 
-def plot_viv_trajectory(displacement, time_steps, save_path=None):
-    """
-    绘制 VIV 轨迹
+# 1. 创建分析器
+analyzer = ModelAnalyzer(model)
+visualizer = AttentionVisualizer()
+
+# 2. 分析模型复杂度
+flops, params = analyzer.compute_flops(input_shape=(1, 100, 64))
+print(f"模型参数数量: {params:,}")
+print(f"浮点运算数: {flops:,}")
+
+# 3. 获取注意力权重
+with torch.no_grad():
+    outputs, attention_weights = model(test_flow_data, test_structure_data, return_attention=True)
+
+# 4. 可视化注意力权重
+for layer_idx, layer_attention in enumerate(attention_weights):
+    # 选择第一个头的注意力权重
+    attention = layer_attention[0, 0].cpu().numpy()  # [seq_len, seq_len]
     
-    Args:
-        displacement: 位移数据 [seq_len, 3]
-        time_steps: 时间步 [seq_len]
-        save_path: 保存路径
-    """
-    fig = plt.figure(figsize=(15, 10))
-    
-    # 3D 轨迹图
-    ax1 = fig.add_subplot(221, projection='3d')
-    ax1.plot(displacement[:, 0], displacement[:, 1], displacement[:, 2])
-    ax1.set_xlabel('X Displacement')
-    ax1.set_ylabel('Y Displacement')
-    ax1.set_zlabel('Z Displacement')
-    ax1.set_title('3D VIV Trajectory')
-    
-    # X 方向时间序列
-    ax2 = fig.add_subplot(222)
-    ax2.plot(time_steps, displacement[:, 0])
-    ax2.set_xlabel('Time')
-    ax2.set_ylabel('X Displacement')
-    ax2.set_title('X-Direction Displacement')
-    ax2.grid(True)
-    
-    # Y 方向时间序列
-    ax3 = fig.add_subplot(223)
-    ax3.plot(time_steps, displacement[:, 1])
-    ax3.set_xlabel('Time')
-    ax3.set_ylabel('Y Displacement')
-    ax3.set_title('Y-Direction Displacement')
-    ax3.grid(True)
-    
-    # Z 方向时间序列
-    ax4 = fig.add_subplot(224)
-    ax4.plot(time_steps, displacement[:, 2])
-    ax4.set_xlabel('Time')
-    ax4.set_ylabel('Z Displacement')
-    ax4.set_title('Z-Direction Displacement')
-    ax4.grid(True)
-    
-    plt.tight_layout()
-    
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(attention, cmap='Blues', cbar=True)
+    plt.title(f'Layer {layer_idx + 1} - Attention Weights')
+    plt.xlabel('Key Position')
+    plt.ylabel('Query Position')
+    plt.savefig(f'attention_layer_{layer_idx + 1}.png', dpi=300, bbox_inches='tight')
     plt.show()
 
-def plot_comparison(predictions, targets, time_steps, save_path=None):
-    """
-    绘制预测与真实值对比
-    """
-    fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+# 5. 分析注意力模式
+attention_patterns = analyzer.analyze_attention_patterns(attention_weights)
+print("注意力模式分析:")
+for pattern_name, score in attention_patterns.items():
+    print(f"  {pattern_name}: {score:.4f}")
+</code></pre>
+</div>
+
+<div data-lang-en>
+<h1>Examples</h1>
+<p class="fs-6 fw-300">This page provides practical code examples for the VIVTransformer project to help you get started quickly and understand how to use the project.</p>
+
+<h2>📋 Table of Contents</h2>
+<ul>
+<li><a href="#basic-examples">Basic Examples</a></li>
+<li><a href="#data-processing-examples">Data Processing Examples</a></li>
+<li><a href="#training-examples">Training Examples</a></li>
+<li><a href="#inference-examples">Inference Examples</a></li>
+<li><a href="#advanced-usage">Advanced Usage</a></li>
+</ul>
+
+<hr>
+
+<h2 id="basic-examples">🚀 Basic Examples</h2>
+
+<h3>1. Quick Start Example</h3>
+<p>The simplest usage example showing how to create a model and perform forward propagation.</p>
+
+<pre><code class="language-python">import torch
+from vivtransformer import VIVTransformer, VIVConfig
+
+# 1. Create configuration
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    flow_input_dim=64,
+    structure_input_dim=32,
+    output_dim=9  # 3D displacement + velocity + force
+)
+
+# 2. Create model
+model = VIVTransformer(config)
+print(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
+
+# 3. Prepare sample data
+batch_size, seq_len = 4, 100
+flow_data = torch.randn(batch_size, seq_len, config.flow_input_dim)
+structure_data = torch.randn(batch_size, seq_len, config.structure_input_dim)
+
+# 4. Forward propagation
+model.eval()
+with torch.no_grad():
+    outputs = model(flow_data, structure_data)
     
-    directions = ['X', 'Y', 'Z']
-    colors = ['red', 'blue', 'green']
+print("Output shapes:")
+for key, value in outputs.items():
+    print(f"  {key}: {value.shape}")
+</code></pre>
+
+<h2 id="data-processing-examples">📊 Data Processing Examples</h2>
+
+<h3>2. Data Loading Example</h3>
+<p>Shows how to load and preprocess VIV data.</p>
+
+<pre><code class="language-python">import os
+import pandas as pd
+from torch.utils.data import DataLoader
+from vivtransformer.data import VIVDataset, DataProcessor
+
+# 1. Data preprocessing
+processor = DataProcessor({
+    'normalize': True,
+    'sequence_length': 100,
+    'overlap': 0.5,
+    'features': ['velocity', 'pressure', 'displacement']
+})
+
+# 2. Create datasets
+train_dataset = VIVDataset(
+    data_dir='data/train',
+    split='train',
+    sequence_length=100,
+    processor=processor
+)
+
+val_dataset = VIVDataset(
+    data_dir='data/val',
+    split='val',
+    sequence_length=100,
+    processor=processor
+)
+
+# 3. Create data loaders
+train_loader = DataLoader(
+    train_dataset,
+    batch_size=32,
+    shuffle=True,
+    num_workers=4,
+    pin_memory=True
+)
+
+val_loader = DataLoader(
+    val_dataset,
+    batch_size=32,
+    shuffle=False,
+    num_workers=4,
+    pin_memory=True
+)
+
+# 4. Check data
+for batch in train_loader:
+    print("Batch data shapes:")
+    print(f"  Flow data: {batch['flow_data'].shape}")
+    print(f"  Structure data: {batch['structure_data'].shape}")
+    print(f"  Target data: {batch['target'].shape}")
+    break
+</code></pre>
+
+<h2 id="training-examples">🎯 Training Examples</h2>
+
+<h3>3. Complete Training Process</h3>
+<p>Shows the complete model training process.</p>
+
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim.lr_scheduler import CosineAnnealingLR
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.training import Trainer, VIVLoss
+from vivtransformer.utils import set_seed, save_checkpoint
+
+# 1. Set random seed
+set_seed(42)
+
+# 2. Device configuration
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"Using device: {device}")
+
+# 3. Model configuration
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    max_seq_length=1000,
+    flow_input_dim=64,
+    structure_input_dim=32
+)
+
+# 4. Create model
+model = VIVTransformer(config).to(device)
+
+# 5. Loss function and optimizer
+criterion = VIVLoss(
+    mse_weight=1.0,
+    physics_weight=0.1,
+    consistency_weight=0.05
+)
+
+optimizer = optim.AdamW(
+    model.parameters(),
+    lr=1e-4,
+    weight_decay=1e-5
+)
+
+scheduler = CosineAnnealingLR(
+    optimizer,
+    T_max=100,
+    eta_min=1e-6
+)
+
+# 6. Training configuration
+training_config = {
+    'epochs': 100,
+    'save_every': 10,
+    'eval_every': 5,
+    'early_stopping_patience': 15,
+    'gradient_clip_norm': 1.0,
+    'log_every': 100
+}
+
+# 7. Start training
+for epoch in range(training_config['epochs']):
+    model.train()
+    total_loss = 0
     
-    for i, (direction, color) in enumerate(zip(directions, colors)):
-        axes[i].plot(time_steps, targets[:, i], 
-                    label='True', color='black', linewidth=2)
-        axes[i].plot(time_steps, predictions[:, i], 
-                    label='Predicted', color=color, linewidth=1.5, alpha=0.8)
-        axes[i].set_ylabel(f'{direction} Displacement')
-        axes[i].set_title(f'{direction}-Direction Comparison')
-        axes[i].legend()
-        axes[i].grid(True, alpha=0.3)
+    for batch_idx, batch in enumerate(train_loader):
+        # Move data to device
+        flow_data = batch['flow_data'].to(device)
+        structure_data = batch['structure_data'].to(device)
+        target = batch['target'].to(device)
+        
+        # Forward pass
+        optimizer.zero_grad()
+        outputs = model(flow_data, structure_data)
+        loss = criterion(outputs, target)
+        
+        # Backward pass
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), training_config['gradient_clip_norm'])
+        optimizer.step()
+        
+        total_loss += loss.item()
+        
+        if batch_idx % training_config['log_every'] == 0:
+            print(f'Epoch {epoch}, Batch {batch_idx}, Loss: {loss.item():.6f}')
     
-    axes[-1].set_xlabel('Time')
-    plt.tight_layout()
+    # Learning rate scheduling
+    scheduler.step()
     
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    # Validation
+    if epoch % training_config['eval_every'] == 0:
+        model.eval()
+        val_loss = 0
+        with torch.no_grad():
+            for batch in val_loader:
+                flow_data = batch['flow_data'].to(device)
+                structure_data = batch['structure_data'].to(device)
+                target = batch['target'].to(device)
+                
+                outputs = model(flow_data, structure_data)
+                loss = criterion(outputs, target)
+                val_loss += loss.item()
+        
+        print(f'Epoch {epoch}, Train Loss: {total_loss/len(train_loader):.6f}, Val Loss: {val_loss/len(val_loader):.6f}')
+    
+    # Save checkpoint
+    if epoch % training_config['save_every'] == 0:
+        save_checkpoint({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'scheduler_state_dict': scheduler.state_dict(),
+            'loss': total_loss/len(train_loader)
+        }, f'checkpoint_epoch_{epoch}.pth')
+</code></pre>
+
+<h2 id="inference-examples">🔮 Inference Examples</h2>
+
+<h3>4. Model Inference</h3>
+<p>Shows how to use a trained model for inference.</p>
+
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.utils import load_checkpoint
+
+# 1. Load model
+config = VIVConfig.from_json('config.json')
+model = VIVTransformer(config)
+checkpoint = load_checkpoint('best_model.pth')
+model.load_state_dict(checkpoint['model_state_dict'])
+model.eval()
+
+# 2. Prepare test data
+test_flow_data = torch.randn(1, 200, config.flow_input_dim)
+test_structure_data = torch.randn(1, 200, config.structure_input_dim)
+
+# 3. Perform inference
+with torch.no_grad():
+    predictions = model(test_flow_data, test_structure_data)
+
+# 4. Process results
+displacement = predictions['displacement'].squeeze().numpy()
+velocity = predictions['velocity'].squeeze().numpy()
+force = predictions['force'].squeeze().numpy()
+
+# 5. Visualize results
+fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+
+# Displacement
+axes[0].plot(displacement)
+axes[0].set_title('Structure Displacement Prediction')
+axes[0].set_ylabel('Displacement (m)')
+axes[0].grid(True)
+
+# Velocity
+axes[1].plot(velocity)
+axes[1].set_title('Structure Velocity Prediction')
+axes[1].set_ylabel('Velocity (m/s)')
+axes[1].grid(True)
+
+# Force
+axes[2].plot(force)
+axes[2].set_title('Fluid Force Prediction')
+axes[2].set_xlabel('Time Step')
+axes[2].set_ylabel('Force (N)')
+axes[2].grid(True)
+
+plt.tight_layout()
+plt.savefig('predictions.png', dpi=300, bbox_inches='tight')
+plt.show()
+</code></pre>
+
+<h2 id="advanced-usage">🔧 Advanced Usage</h2>
+
+<h3>5. Custom Attention Mechanism</h3>
+<p>Shows how to implement and use custom attention mechanisms.</p>
+
+<pre><code class="language-python">import torch
+import torch.nn as nn
+from vivtransformer.attention import BaseAttention
+
+class CustomAttention(BaseAttention):
+    """Custom attention mechanism example"""
+    
+    def __init__(self, d_model, num_heads, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+        
+        self.w_q = nn.Linear(d_model, d_model)
+        self.w_k = nn.Linear(d_model, d_model)
+        self.w_v = nn.Linear(d_model, d_model)
+        self.w_o = nn.Linear(d_model, d_model)
+        
+        self.dropout = nn.Dropout(dropout)
+        self.layer_norm = nn.LayerNorm(d_model)
+        
+    def forward(self, query, key, value, mask=None):
+        batch_size, seq_len, d_model = query.size()
+        
+        # 1. Linear transformations
+        Q = self.w_q(query).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        K = self.w_k(key).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        V = self.w_v(value).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        
+        # 2. Compute attention scores
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.d_k ** 0.5)
+        
+        # 3. Apply mask
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        
+        # 4. Apply softmax
+        attention_weights = torch.softmax(scores, dim=-1)
+        attention_weights = self.dropout(attention_weights)
+        
+        # 5. Apply attention weights
+        context = torch.matmul(attention_weights, V)
+        
+        # 6. Reshape and output projection
+        context = context.transpose(1, 2).contiguous().view(
+            batch_size, seq_len, d_model
+        )
+        output = self.w_o(context)
+        
+        # 7. Residual connection and layer normalization
+        output = self.layer_norm(output + query)
+        
+        return output, attention_weights
+
+# Use custom attention mechanism
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    attention_class=CustomAttention  # Specify custom attention
+)
+
+model = VIVTransformer(config)
+</code></pre>
+
+<h3>6. Model Analysis and Visualization</h3>
+<p>Shows how to analyze model performance and visualize attention weights.</p>
+
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from vivtransformer.analysis import AttentionVisualizer, ModelAnalyzer
+
+# 1. Create analyzer
+analyzer = ModelAnalyzer(model)
+visualizer = AttentionVisualizer()
+
+# 2. Analyze model complexity
+flops, params = analyzer.compute_flops(input_shape=(1, 100, 64))
+print(f"Model parameters: {params:,}")
+print(f"FLOPs: {flops:,}")
+
+# 3. Get attention weights
+with torch.no_grad():
+    outputs, attention_weights = model(test_flow_data, test_structure_data, return_attention=True)
+
+# 4. Visualize attention weights
+for layer_idx, layer_attention in enumerate(attention_weights):
+    # Select attention weights from the first head
+    attention = layer_attention[0, 0].cpu().numpy()  # [seq_len, seq_len]
+    
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(attention, cmap='Blues', cbar=True)
+    plt.title(f'Layer {layer_idx + 1} - Attention Weights')
+    plt.xlabel('Key Position')
+    plt.ylabel('Query Position')
+    plt.savefig(f'attention_layer_{layer_idx + 1}.png', dpi=300, bbox_inches='tight')
     plt.show()
 
-# 示例使用
-seq_len = 200
-time_steps = np.linspace(0, 10, seq_len)
-displacement = np.random.randn(seq_len, 3) * 0.1
-
-plot_viv_trajectory(displacement, time_steps, 'visualizations/viv_trajectory.png')
-```
-
----
-
-## 总结
-
-本页面提供了 VIVTransformer 项目的全面代码示例，涵盖：
-
-- **基础使用**: 快速开始和数据加载
-- **模型训练**: 完整训练流程和自定义训练循环
-- **模型推理**: 单样本和批量推理
-- **高级功能**: 注意力可视化、模型解释性分析、超参数优化
-- **生产部署**: 模型导出、REST API 服务
-- **工具函数**: 数据可视化和分析工具
-
-这些示例可以帮助您快速上手并深入理解 VIVTransformer 的各种功能和应用场景。
-
----
-
-## 相关链接
-
-- [API 参考](api-reference) - 详细的 API 文档
-- [训练指南](training-guide) - 深入的训练说明
-- [架构概览](architecture-overview) - 了解模型架构
-- [故障排除](troubleshooting) - 常见问题解决
-
-*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*
+# 5. Analyze attention patterns
+attention_patterns = analyzer.analyze_attention_patterns(attention_weights)
+print("Attention pattern analysis:")
+for pattern_name, score in attention_patterns.items():
+    print(f"  {pattern_name}: {score:.4f}")
+</code></pre>
+</div>

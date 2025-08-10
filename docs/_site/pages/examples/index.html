@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html lang="en-US">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -13,10 +13,29 @@
 
   <style id="jtd-nav-activation">
   
-    .site-nav ul li a {
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(2)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(2) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(2) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list {
+      display: block;
+    }
   </style>
 
   
@@ -34,11 +53,11 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>示例代码 | VIVTransformer Documentation</title>
+<title>Examples | VIVTransformer Documentation</title>
 <meta name="generator" content="Jekyll v4.3.4" />
-<meta property="og:title" content="示例代码" />
+<meta property="og:title" content="Examples" />
 <meta name="author" content="Pitohuie" />
-<meta property="og:locale" content="en_US" />
+<meta property="og:locale" content="en" />
 <meta name="description" content="Advanced Transformer Architecture with Vision Integration" />
 <meta property="og:description" content="Advanced Transformer Architecture with Vision Integration" />
 <link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/examples/" />
@@ -46,9 +65,9 @@
 <meta property="og:site_name" content="VIVTransformer Documentation" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="示例代码" />
+<meta property="twitter:title" content="Examples" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"Advanced Transformer Architecture with Vision Integration","headline":"示例代码","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pitoyounglogopink.png"},"name":"Pitohuie"},"url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/examples/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"Advanced Transformer Architecture with Vision Integration","headline":"Examples","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pitoyounglogopink.png"},"name":"Pitohuie"},"url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/examples/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -139,15 +158,15 @@
   
     <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-navigation/" class="nav-list-link">快速导航</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/technical-deep-dive/" class="nav-list-link">技术深度解析</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/examples/" class="nav-list-link">Examples</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/technical-deep-dive/" class="nav-list-link">技术深度解析</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-showcase/" class="nav-list-link">实验结果展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/api-reference/" class="nav-list-link">API Reference</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-showcase/" class="nav-list-link">实验结果展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
       </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/project-showcase/" class="nav-list-link">项目展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in 评估与结果 category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/pages/evaluation-results/" class="nav-list-link">评估与结果</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/benchmark-results/" class="nav-list-link">基准测试结果</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/ablation-study/" class="nav-list-link">消融研究</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/interactive-demo/" class="nav-list-link">交互式演示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in 获取帮助 category" aria-pressed="false">
+      </button><a href="/Sparse_to_Dense_Transformer/pages/evaluation-results/" class="nav-list-link">评估与结果</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/benchmark-results/" class="nav-list-link">基准测试结果</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/ablation-study/" class="nav-list-link">消融研究</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/interactive-demo/" class="nav-list-link">交互式演示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Help category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/pages/getting-help/" class="nav-list-link">获取帮助</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/advanced-configuration/" class="nav-list-link">高级配置指南</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li></ul>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/getting-help/" class="nav-list-link">Getting Help</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/advanced-configuration/" class="nav-list-link">Advanced Configuration Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li></ul>
   <ul class="nav-list"><li class="nav-list-item external">
           <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
             
@@ -208,7 +227,8 @@
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><span>示例代码</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/Sparse_to_Dense_Transformer/getting-started/">Getting Started</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Examples</span></li>
   </ol>
 </nav>
 
@@ -216,1053 +236,1093 @@
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="示例代码">
+            <!-- Language Switcher Component -->
+<div class="language-switcher">
+  <div class="language-switcher-label">
+    <span data-lang-en="Language:">Language:</span>
+    <span data-lang-zh="语言:" style="display: none;">语言:</span>
+  </div>
+  <div class="language-switcher-buttons">
+    <button class="language-switcher-button active" data-lang="en" onclick="switchLanguage('en')">
+      English
+    </button>
+    <button class="language-switcher-button" data-lang="zh" onclick="switchLanguage('zh')">
+      中文
+    </button>
+  </div>
+</div>
+
+<script>
+// Language switching functionality
+function switchLanguage(lang) {
+  // Update active button
+  document.querySelectorAll('.language-switcher-button').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('data-lang') === lang) {
+      btn.classList.add('active');
+    }
+  });
+  
+  // Show/hide language-specific content
+  document.querySelectorAll('[data-lang-en]').forEach(el => {
+    el.style.display = lang === 'en' ? 'block' : 'none';
+  });
+  
+  document.querySelectorAll('[data-lang-zh]').forEach(el => {
+    el.style.display = lang === 'zh' ? 'block' : 'none';
+  });
+  
+  // Update language switcher label
+  document.querySelectorAll('.language-switcher-label [data-lang-en]').forEach(el => {
+    el.style.display = lang === 'en' ? 'inline' : 'none';
+  });
+  
+  document.querySelectorAll('.language-switcher-label [data-lang-zh]').forEach(el => {
+    el.style.display = lang === 'zh' ? 'inline' : 'none';
+  });
+  
+  // Store language preference
+  localStorage.setItem('preferred-language', lang);
+}
+
+// Load saved language preference
+document.addEventListener('DOMContentLoaded', function() {
+  const savedLang = localStorage.getItem('preferred-language') || 'en';
+  switchLanguage(savedLang);
+});
+</script>
+
+<style>
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: var(--color-background-secondary, #f8f9fa);
+  border-radius: 0.375rem;
+  border: 1px solid var(--color-border, #e1e4e8);
+}
+
+.language-switcher-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.language-switcher-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.language-switcher-button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.language-switcher-button:not(.active) {
+  color: var(--color-link, #0969da);
+  background: var(--color-background, #ffffff);
+  border-color: var(--color-border, #e1e4e8);
+}
+
+.language-switcher-button:not(.active):hover {
+  background: var(--color-background-hover, #f3f4f6);
+  border-color: var(--color-border-hover, #d1d5db);
+}
+
+.language-switcher-button.active {
+  color: var(--color-text-inverse, #ffffff);
+  background: var(--color-primary, #0969da);
+  border-color: var(--color-primary, #0969da);
+  cursor: default;
+}
+
+@media (max-width: 768px) {
+  .language-switcher {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .language-switcher-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .language-switcher-button {
+    flex: 1;
+    text-align: center;
+  }
+}
+</style>
+
+<div data-lang-zh="" style="display: none;">
+<h1>
   
   
-    <a href="#示例代码" class="anchor-heading" aria-labelledby="示例代码"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 示例代码
+    示例代码
   
   
 </h1>
     
-
-<p class="fs-6 fw-300">本页面提供 VIVTransformer 项目的完整代码示例，涵盖从基础使用到高级应用的各种场景。</p>
-<h2 class="no_toc text-delta" id="目录">
+<p class="fs-6 fw-300">本页面提供了VIVTransformer项目的实用代码示例，帮助您快速上手和理解项目的使用方法。</p>
+<h2>
   
   
-    <a href="#目录" class="anchor-heading" aria-labelledby="目录"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 目录
+    📋 目录
   
   
 </h2>
     
-
-<ol id="markdown-toc">
-  <li><a href="#基础示例" id="markdown-toc-基础示例">基础示例</a>    <ol>
-      <li><a href="#1-快速开始示例" id="markdown-toc-1-快速开始示例">1. 快速开始示例</a></li>
-      <li><a href="#2-数据加载示例" id="markdown-toc-2-数据加载示例">2. 数据加载示例</a></li>
-    </ol>
-  </li>
-  <li><a href="#训练示例" id="markdown-toc-训练示例">训练示例</a>    <ol>
-      <li><a href="#3-完整训练流程" id="markdown-toc-3-完整训练流程">3. 完整训练流程</a></li>
-      <li><a href="#4-自定义训练循环" id="markdown-toc-4-自定义训练循环">4. 自定义训练循环</a></li>
-    </ol>
-  </li>
-  <li><a href="#推理示例" id="markdown-toc-推理示例">推理示例</a>    <ol>
-      <li><a href="#5-模型推理" id="markdown-toc-5-模型推理">5. 模型推理</a></li>
-      <li><a href="#6-批量推理" id="markdown-toc-6-批量推理">6. 批量推理</a></li>
-    </ol>
-  </li>
-  <li><a href="#高级示例" id="markdown-toc-高级示例">高级示例</a>    <ol>
-      <li><a href="#7-注意力可视化" id="markdown-toc-7-注意力可视化">7. 注意力可视化</a></li>
-      <li><a href="#8-模型解释性分析" id="markdown-toc-8-模型解释性分析">8. 模型解释性分析</a></li>
-      <li><a href="#9-超参数优化" id="markdown-toc-9-超参数优化">9. 超参数优化</a></li>
-    </ol>
-  </li>
-  <li><a href="#部署示例" id="markdown-toc-部署示例">部署示例</a>    <ol>
-      <li><a href="#10-模型导出和部署" id="markdown-toc-10-模型导出和部署">10. 模型导出和部署</a></li>
-      <li><a href="#11-rest-api-服务" id="markdown-toc-11-rest-api-服务">11. REST API 服务</a></li>
-    </ol>
-  </li>
-  <li><a href="#工具和实用函数" id="markdown-toc-工具和实用函数">工具和实用函数</a>    <ol>
-      <li><a href="#12-数据可视化工具" id="markdown-toc-12-数据可视化工具">12. 数据可视化工具</a></li>
-    </ol>
-  </li>
-  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
-  <li><a href="#相关链接" id="markdown-toc-相关链接">相关链接</a></li>
-</ol><hr />
+<ul>
+<li><a href="#基础示例">基础示例</a></li>
+<li><a href="#数据处理示例">数据处理示例</a></li>
+<li><a href="#训练示例">训练示例</a></li>
+<li><a href="#推理示例">推理示例</a></li>
+<li><a href="#高级用法">高级用法</a></li>
+</ul><hr />
 <h2 id="基础示例">
   
   
-    <a href="#基础示例" class="anchor-heading" aria-labelledby="基础示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 基础示例
+    <a href="#基础示例" class="anchor-heading" aria-labelledby="基础示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 基础示例
   
   
 </h2>
     
-<h3 id="1-快速开始示例">
+<h3>
   
   
-    <a href="#1-快速开始示例" class="anchor-heading" aria-labelledby="1-快速开始示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 快速开始示例
-  
-  
-</h3>
-    
-
-<p>最简单的使用示例，展示如何快速上手 VIVTransformer。</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
-<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">from</span> <span class="n">vivtransformer</span> <span class="kn">import</span> <span class="n">VIVTransformer</span><span class="p">,</span> <span class="n">VIVConfig</span>
-<span class="kn">from</span> <span class="n">vivtransformer.data</span> <span class="kn">import</span> <span class="n">VIVDataset</span>
-<span class="kn">from</span> <span class="n">vivtransformer.utils</span> <span class="kn">import</span> <span class="n">create_dataloader</span>
-
-<span class="c1"># 1. 创建配置
-</span><span class="n">config</span> <span class="o">=</span> <span class="nc">VIVConfig</span><span class="p">(</span>
-    <span class="n">d_model</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
-    <span class="n">num_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
-    <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">d_ff</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
-    <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-    <span class="n">flow_input_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-    <span class="n">structure_input_dim</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">output_dim</span><span class="o">=</span><span class="mi">9</span>  <span class="c1"># 3D displacement + velocity + force
-</span><span class="p">)</span>
-
-<span class="c1"># 2. 创建模型
-</span><span class="n">model</span> <span class="o">=</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">模型参数数量: </span><span class="si">{</span><span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-
-<span class="c1"># 3. 准备示例数据
-</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span>
-<span class="n">flow_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">config</span><span class="p">.</span><span class="n">flow_input_dim</span><span class="p">)</span>
-<span class="n">structure_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">config</span><span class="p">.</span><span class="n">structure_input_dim</span><span class="p">)</span>
-
-<span class="c1"># 4. 前向传播
-</span><span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
-<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">)</span>
-    
-<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">输出形状:</span><span class="sh">"</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">value</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</code></pre></div></div>
-<h3 id="2-数据加载示例">
-  
-  
-    <a href="#2-数据加载示例" class="anchor-heading" aria-labelledby="2-数据加载示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 数据加载示例
+    <a href="#基础示例" class="anchor-heading" aria-labelledby="基础示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 快速开始示例
   
   
 </h3>
     
+<p>最简单的使用示例，展示如何创建模型并进行前向传播。</p>
 
-<p>展示如何加载和预处理 VIV 数据。</p>
+<pre><code class="language-python">import torch
+from vivtransformer import VIVTransformer, VIVConfig
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span>
-<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
-<span class="kn">from</span> <span class="n">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="n">vivtransformer.data</span> <span class="kn">import</span> <span class="n">VIVDataset</span><span class="p">,</span> <span class="n">DataProcessor</span>
+# 1. 创建配置
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    flow_input_dim=64,
+    structure_input_dim=32,
+    output_dim=9  # 3D位移 + 速度 + 力
+)
 
-<span class="c1"># 1. 数据预处理
-</span><span class="n">processor</span> <span class="o">=</span> <span class="nc">DataProcessor</span><span class="p">({</span>
-    <span class="sh">'</span><span class="s">normalize</span><span class="sh">'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="sh">'</span><span class="s">sequence_length</span><span class="sh">'</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="sh">'</span><span class="s">overlap</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="sh">'</span><span class="s">features</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">velocity</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">pressure</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">displacement</span><span class="sh">'</span><span class="p">]</span>
-<span class="p">})</span>
+# 2. 创建模型
+model = VIVTransformer(config)
+print(f"模型参数数量: {sum(p.numel() for p in model.parameters()):,}")
 
-<span class="c1"># 2. 创建数据集
-</span><span class="n">train_dataset</span> <span class="o">=</span> <span class="nc">VIVDataset</span><span class="p">(</span>
-    <span class="n">data_dir</span><span class="o">=</span><span class="sh">'</span><span class="s">data/train</span><span class="sh">'</span><span class="p">,</span>
-    <span class="n">split</span><span class="o">=</span><span class="sh">'</span><span class="s">train</span><span class="sh">'</span><span class="p">,</span>
-    <span class="n">sequence_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">processor</span><span class="o">=</span><span class="n">processor</span>
-<span class="p">)</span>
+# 3. 准备示例数据
+batch_size, seq_len = 4, 100
+flow_data = torch.randn(batch_size, seq_len, config.flow_input_dim)
+structure_data = torch.randn(batch_size, seq_len, config.structure_input_dim)
 
-<span class="n">val_dataset</span> <span class="o">=</span> <span class="nc">VIVDataset</span><span class="p">(</span>
-    <span class="n">data_dir</span><span class="o">=</span><span class="sh">'</span><span class="s">data/val</span><span class="sh">'</span><span class="p">,</span>
-    <span class="n">split</span><span class="o">=</span><span class="sh">'</span><span class="s">val</span><span class="sh">'</span><span class="p">,</span>
-    <span class="n">sequence_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">processor</span><span class="o">=</span><span class="n">processor</span>
-<span class="p">)</span>
+# 4. 前向传播
+model.eval()
+with torch.no_grad():
+    outputs = model(flow_data, structure_data)
+    
+print("输出形状:")
+for key, value in outputs.items():
+    print(f"  {key}: {value.shape}")
+</code></pre>
+<h2 id="数据处理示例">
+  
+  
+    <a href="#数据处理示例" class="anchor-heading" aria-labelledby="数据处理示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 数据处理示例
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#数据处理示例" class="anchor-heading" aria-labelledby="数据处理示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 数据加载示例
+  
+  
+</h3>
+    
+<p>展示如何加载和预处理VIV数据。</p>
 
-<span class="c1"># 3. 创建数据加载器
-</span><span class="n">train_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span>
-    <span class="n">train_dataset</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-    <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-    <span class="n">pin_memory</span><span class="o">=</span><span class="bp">True</span>
-<span class="p">)</span>
+<pre><code class="language-python">import os
+import pandas as pd
+from torch.utils.data import DataLoader
+from vivtransformer.data import VIVDataset, DataProcessor
 
-<span class="n">val_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span>
-    <span class="n">val_dataset</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-    <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-    <span class="n">pin_memory</span><span class="o">=</span><span class="bp">True</span>
-<span class="p">)</span>
+# 1. 数据预处理
+processor = DataProcessor({
+    'normalize': True,
+    'sequence_length': 100,
+    'overlap': 0.5,
+    'features': ['velocity', 'pressure', 'displacement']
+})
 
-<span class="c1"># 4. 检查数据
-</span><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">批次数据形状:</span><span class="sh">"</span><span class="p">)</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  流体数据: </span><span class="si">{</span><span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">flow_data</span><span class="sh">'</span><span class="p">].</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  结构数据: </span><span class="si">{</span><span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">structure_data</span><span class="sh">'</span><span class="p">].</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  目标数据: </span><span class="si">{</span><span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-    <span class="k">break</span>
-</code></pre></div></div><hr />
+# 2. 创建数据集
+train_dataset = VIVDataset(
+    data_dir='data/train',
+    split='train',
+    sequence_length=100,
+    processor=processor
+)
+
+val_dataset = VIVDataset(
+    data_dir='data/val',
+    split='val',
+    sequence_length=100,
+    processor=processor
+)
+
+# 3. 创建数据加载器
+train_loader = DataLoader(
+    train_dataset,
+    batch_size=32,
+    shuffle=True,
+    num_workers=4,
+    pin_memory=True
+)
+
+val_loader = DataLoader(
+    val_dataset,
+    batch_size=32,
+    shuffle=False,
+    num_workers=4,
+    pin_memory=True
+)
+
+# 4. 检查数据
+for batch in train_loader:
+    print("批次数据形状:")
+    print(f"  流体数据: {batch['flow_data'].shape}")
+    print(f"  结构数据: {batch['structure_data'].shape}")
+    print(f"  目标数据: {batch['target'].shape}")
+    break
+</code></pre>
 <h2 id="训练示例">
   
   
-    <a href="#训练示例" class="anchor-heading" aria-labelledby="训练示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 训练示例
+    <a href="#训练示例" class="anchor-heading" aria-labelledby="训练示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 训练示例
   
   
 </h2>
     
-<h3 id="3-完整训练流程">
+<h3>
   
   
-    <a href="#3-完整训练流程" class="anchor-heading" aria-labelledby="3-完整训练流程"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 完整训练流程
+    <a href="#训练示例" class="anchor-heading" aria-labelledby="训练示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 完整训练流程
   
   
 </h3>
     
-
 <p>展示完整的模型训练过程。</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
-<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
-<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
-<span class="kn">from</span> <span class="n">torch.optim.lr_scheduler</span> <span class="kn">import</span> <span class="n">CosineAnnealingLR</span>
-<span class="kn">from</span> <span class="n">vivtransformer</span> <span class="kn">import</span> <span class="n">VIVTransformer</span><span class="p">,</span> <span class="n">VIVConfig</span>
-<span class="kn">from</span> <span class="n">vivtransformer.training</span> <span class="kn">import</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">VIVLoss</span>
-<span class="kn">from</span> <span class="n">vivtransformer.utils</span> <span class="kn">import</span> <span class="n">set_seed</span><span class="p">,</span> <span class="n">save_checkpoint</span>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim.lr_scheduler import CosineAnnealingLR
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.training import Trainer, VIVLoss
+from vivtransformer.utils import set_seed, save_checkpoint
 
-<span class="c1"># 1. 设置随机种子
-</span><span class="nf">set_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+# 1. 设置随机种子
+set_seed(42)
 
-<span class="c1"># 2. 设备配置
-</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">device</span><span class="p">(</span><span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">使用设备: </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+# 2. 设备配置
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"使用设备: {device}")
 
-<span class="c1"># 3. 模型配置
-</span><span class="n">config</span> <span class="o">=</span> <span class="nc">VIVConfig</span><span class="p">(</span>
-    <span class="n">d_model</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
-    <span class="n">num_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
-    <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">d_ff</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
-    <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-    <span class="n">max_seq_length</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="n">flow_input_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-    <span class="n">structure_input_dim</span><span class="o">=</span><span class="mi">32</span>
-<span class="p">)</span>
+# 3. 模型配置
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    max_seq_length=1000,
+    flow_input_dim=64,
+    structure_input_dim=32
+)
 
-<span class="c1"># 4. 创建模型
-</span><span class="n">model</span> <span class="o">=</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">config</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+# 4. 创建模型
+model = VIVTransformer(config).to(device)
 
-<span class="c1"># 5. 损失函数和优化器
-</span><span class="n">criterion</span> <span class="o">=</span> <span class="nc">VIVLoss</span><span class="p">(</span>
-    <span class="n">mse_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">physics_weight</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-    <span class="n">consistency_weight</span><span class="o">=</span><span class="mf">0.05</span>
-<span class="p">)</span>
+# 5. 损失函数和优化器
+criterion = VIVLoss(
+    mse_weight=1.0,
+    physics_weight=0.1,
+    consistency_weight=0.05
+)
 
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">AdamW</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span>
-    <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">1e-5</span>
-<span class="p">)</span>
+optimizer = optim.AdamW(
+    model.parameters(),
+    lr=1e-4,
+    weight_decay=1e-5
+)
 
-<span class="n">scheduler</span> <span class="o">=</span> <span class="nc">CosineAnnealingLR</span><span class="p">(</span>
-    <span class="n">optimizer</span><span class="p">,</span>
-    <span class="n">T_max</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">eta_min</span><span class="o">=</span><span class="mf">1e-6</span>
-<span class="p">)</span>
+scheduler = CosineAnnealingLR(
+    optimizer,
+    T_max=100,
+    eta_min=1e-6
+)
 
-<span class="c1"># 6. 训练配置
-</span><span class="n">training_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="sh">'</span><span class="s">epochs</span><span class="sh">'</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="sh">'</span><span class="s">save_every</span><span class="sh">'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="sh">'</span><span class="s">eval_every</span><span class="sh">'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="sh">'</span><span class="s">early_stopping_patience</span><span class="sh">'</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-    <span class="sh">'</span><span class="s">gradient_clip_norm</span><span class="sh">'</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
-    <span class="sh">'</span><span class="s">log_every</span><span class="sh">'</span><span class="p">:</span> <span class="mi">100</span>
-<span class="p">}</span>
+# 6. 训练配置
+training_config = {
+    'epochs': 100,
+    'save_every': 10,
+    'eval_every': 5,
+    'early_stopping_patience': 15,
+    'gradient_clip_norm': 1.0,
+    'log_every': 100
+}
 
-<span class="c1"># 7. 创建训练器
-</span><span class="n">trainer</span> <span class="o">=</span> <span class="nc">Trainer</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-    <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span>
-    <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
-    <span class="n">scheduler</span><span class="o">=</span><span class="n">scheduler</span><span class="p">,</span>
-    <span class="n">train_dataloader</span><span class="o">=</span><span class="n">train_loader</span><span class="p">,</span>
-    <span class="n">val_dataloader</span><span class="o">=</span><span class="n">val_loader</span><span class="p">,</span>
-    <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">training_config</span>
-<span class="p">)</span>
-
-<span class="c1"># 8. 开始训练
-</span><span class="n">history</span> <span class="o">=</span> <span class="n">trainer</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
-
-<span class="c1"># 9. 保存最终模型
-</span><span class="nf">save_checkpoint</span><span class="p">({</span>
-    <span class="sh">'</span><span class="s">model_state_dict</span><span class="sh">'</span><span class="p">:</span> <span class="n">model</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
-    <span class="sh">'</span><span class="s">optimizer_state_dict</span><span class="sh">'</span><span class="p">:</span> <span class="n">optimizer</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
-    <span class="sh">'</span><span class="s">scheduler_state_dict</span><span class="sh">'</span><span class="p">:</span> <span class="n">scheduler</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
-    <span class="sh">'</span><span class="s">config</span><span class="sh">'</span><span class="p">:</span> <span class="n">config</span><span class="p">,</span>
-    <span class="sh">'</span><span class="s">history</span><span class="sh">'</span><span class="p">:</span> <span class="n">history</span>
-<span class="p">},</span> <span class="sh">'</span><span class="s">checkpoints/final_model.pth</span><span class="sh">'</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">训练完成！</span><span class="sh">"</span><span class="p">)</span>
-</code></pre></div></div>
-<h3 id="4-自定义训练循环">
-  
-  
-    <a href="#4-自定义训练循环" class="anchor-heading" aria-labelledby="4-自定义训练循环"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. 自定义训练循环
-  
-  
-</h3>
+# 7. 开始训练
+for epoch in range(training_config['epochs']):
+    model.train()
+    total_loss = 0
     
-
-<p>展示如何实现自定义的训练循环。</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
-<span class="kn">from</span> <span class="n">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="n">vivtransformer.metrics</span> <span class="kn">import</span> <span class="n">compute_metrics</span>
-<span class="kn">from</span> <span class="n">vivtransformer.utils</span> <span class="kn">import</span> <span class="n">AverageMeter</span>
-
-<span class="k">def</span> <span class="nf">custom_training_loop</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> 
-                        <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">,</span> 
-                        <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    自定义训练循环
-    </span><span class="sh">"""</span>
-    <span class="n">best_val_loss</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">history</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">train_loss</span><span class="sh">'</span><span class="p">:</span> <span class="p">[],</span> <span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">:</span> <span class="p">[],</span> <span class="sh">'</span><span class="s">metrics</span><span class="sh">'</span><span class="p">:</span> <span class="p">[]}</span>
+    for batch_idx, batch in enumerate(train_loader):
+        # 数据移到设备
+        flow_data = batch['flow_data'].to(device)
+        structure_data = batch['structure_data'].to(device)
+        target = batch['target'].to(device)
+        
+        # 前向传播
+        optimizer.zero_grad()
+        outputs = model(flow_data, structure_data)
+        loss = criterion(outputs, target)
+        
+        # 反向传播
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), training_config['gradient_clip_norm'])
+        optimizer.step()
+        
+        total_loss += loss.item()
+        
+        if batch_idx % training_config['log_every'] == 0:
+            print(f'Epoch {epoch}, Batch {batch_idx}, Loss: {loss.item():.6f}')
     
-    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
-        <span class="c1"># 训练阶段
-</span>        <span class="n">model</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
-        <span class="n">train_loss_meter</span> <span class="o">=</span> <span class="nc">AverageMeter</span><span class="p">()</span>
-        
-        <span class="n">train_pbar</span> <span class="o">=</span> <span class="nf">tqdm</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="sh">'</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">epochs</span><span class="si">}</span><span class="s"> [Train]</span><span class="sh">'</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">train_pbar</span><span class="p">):</span>
-            <span class="c1"># 数据移动到设备
-</span>            <span class="n">flow_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">flow_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            <span class="n">structure_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">structure_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            <span class="n">targets</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            
-            <span class="c1"># 前向传播
-</span>            <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
-            <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">)</span>
-            
-            <span class="c1"># 计算损失
-</span>            <span class="n">loss_dict</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
-            <span class="n">total_loss</span> <span class="o">=</span> <span class="n">loss_dict</span><span class="p">[</span><span class="sh">'</span><span class="s">total_loss</span><span class="sh">'</span><span class="p">]</span>
-            
-            <span class="c1"># 反向传播
-</span>            <span class="n">total_loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
-            <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nf">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="mf">1.0</span><span class="p">)</span>
-            <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
-            
-            <span class="c1"># 更新统计
-</span>            <span class="n">train_loss_meter</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">total_loss</span><span class="p">.</span><span class="nf">item</span><span class="p">())</span>
-            <span class="n">train_pbar</span><span class="p">.</span><span class="nf">set_postfix</span><span class="p">({</span>
-                <span class="sh">'</span><span class="s">loss</span><span class="sh">'</span><span class="p">:</span> <span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">train_loss_meter</span><span class="p">.</span><span class="n">avg</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">,</span>
-                <span class="sh">'</span><span class="s">lr</span><span class="sh">'</span><span class="p">:</span> <span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">optimizer</span><span class="p">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="sh">"</span><span class="s">lr</span><span class="sh">"</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="sh">'</span>
-            <span class="p">})</span>
-        
-        <span class="c1"># 验证阶段
-</span>        <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
-        <span class="n">val_loss_meter</span> <span class="o">=</span> <span class="nc">AverageMeter</span><span class="p">()</span>
-        <span class="n">all_predictions</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">all_targets</span> <span class="o">=</span> <span class="p">[]</span>
-        
-        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
-            <span class="n">val_pbar</span> <span class="o">=</span> <span class="nf">tqdm</span><span class="p">(</span><span class="n">val_loader</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="sh">'</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">epochs</span><span class="si">}</span><span class="s"> [Val]</span><span class="sh">'</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">val_pbar</span><span class="p">:</span>
-                <span class="n">flow_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">flow_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-                <span class="n">structure_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">structure_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-                <span class="n">targets</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-                
-                <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">)</span>
-                <span class="n">loss_dict</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
-                
-                <span class="n">val_loss_meter</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">loss_dict</span><span class="p">[</span><span class="sh">'</span><span class="s">total_loss</span><span class="sh">'</span><span class="p">].</span><span class="nf">item</span><span class="p">())</span>
-                
-                <span class="c1"># 收集预测结果
-</span>                <span class="n">all_predictions</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="sh">'</span><span class="s">displacement</span><span class="sh">'</span><span class="p">].</span><span class="nf">cpu</span><span class="p">())</span>
-                <span class="n">all_targets</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">targets</span><span class="p">.</span><span class="nf">cpu</span><span class="p">())</span>
-                
-                <span class="n">val_pbar</span><span class="p">.</span><span class="nf">set_postfix</span><span class="p">({</span><span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">:</span> <span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">val_loss_meter</span><span class="p">.</span><span class="n">avg</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">})</span>
-        
-        <span class="c1"># 计算评估指标
-</span>        <span class="n">predictions</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">all_predictions</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="nf">numpy</span><span class="p">()</span>
-        <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">all_targets</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="nf">numpy</span><span class="p">()</span>
-        <span class="n">metrics</span> <span class="o">=</span> <span class="nf">compute_metrics</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
-        
-        <span class="c1"># 更新学习率
-</span>        <span class="n">scheduler</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
-        
-        <span class="c1"># 记录历史
-</span>        <span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">train_loss</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">train_loss_meter</span><span class="p">.</span><span class="n">avg</span><span class="p">)</span>
-        <span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">val_loss_meter</span><span class="p">.</span><span class="n">avg</span><span class="p">)</span>
-        <span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">metrics</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
-        
-        <span class="c1"># 保存最佳模型
-</span>        <span class="k">if</span> <span class="n">val_loss_meter</span><span class="p">.</span><span class="n">avg</span> <span class="o">&lt;</span> <span class="n">best_val_loss</span><span class="p">:</span>
-            <span class="n">best_val_loss</span> <span class="o">=</span> <span class="n">val_loss_meter</span><span class="p">.</span><span class="n">avg</span>
-            <span class="n">torch</span><span class="p">.</span><span class="nf">save</span><span class="p">({</span>
-                <span class="sh">'</span><span class="s">epoch</span><span class="sh">'</span><span class="p">:</span> <span class="n">epoch</span><span class="p">,</span>
-                <span class="sh">'</span><span class="s">model_state_dict</span><span class="sh">'</span><span class="p">:</span> <span class="n">model</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
-                <span class="sh">'</span><span class="s">optimizer_state_dict</span><span class="sh">'</span><span class="p">:</span> <span class="n">optimizer</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
-                <span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">:</span> <span class="n">best_val_loss</span><span class="p">,</span>
-                <span class="sh">'</span><span class="s">metrics</span><span class="sh">'</span><span class="p">:</span> <span class="n">metrics</span>
-            <span class="p">},</span> <span class="sh">'</span><span class="s">checkpoints/best_model.pth</span><span class="sh">'</span><span class="p">)</span>
-        
-        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">: Train Loss: </span><span class="si">{</span><span class="n">train_loss_meter</span><span class="p">.</span><span class="n">avg</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="sh">"</span>
-              <span class="sa">f</span><span class="sh">"</span><span class="s">Val Loss: </span><span class="si">{</span><span class="n">val_loss_meter</span><span class="p">.</span><span class="n">avg</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, RMSE: </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="sh">'</span><span class="s">rmse</span><span class="sh">'</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    # 学习率调度
+    scheduler.step()
     
-    <span class="k">return</span> <span class="n">history</span>
-
-<span class="c1"># 使用自定义训练循环
-</span><span class="n">history</span> <span class="o">=</span> <span class="nf">custom_training_loop</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span>
-    <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">,</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span>
-<span class="p">)</span>
-</code></pre></div></div><hr />
+    # 验证
+    if epoch % training_config['eval_every'] == 0:
+        model.eval()
+        val_loss = 0
+        with torch.no_grad():
+            for batch in val_loader:
+                flow_data = batch['flow_data'].to(device)
+                structure_data = batch['structure_data'].to(device)
+                target = batch['target'].to(device)
+                
+                outputs = model(flow_data, structure_data)
+                loss = criterion(outputs, target)
+                val_loss += loss.item()
+        
+        print(f'Epoch {epoch}, Train Loss: {total_loss/len(train_loader):.6f}, Val Loss: {val_loss/len(val_loader):.6f}')
+    
+    # 保存检查点
+    if epoch % training_config['save_every'] == 0:
+        save_checkpoint({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'scheduler_state_dict': scheduler.state_dict(),
+            'loss': total_loss/len(train_loader)
+        }, f'checkpoint_epoch_{epoch}.pth')
+</code></pre>
 <h2 id="推理示例">
   
   
-    <a href="#推理示例" class="anchor-heading" aria-labelledby="推理示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 推理示例
+    <a href="#推理示例" class="anchor-heading" aria-labelledby="推理示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔮 推理示例
   
   
 </h2>
     
-<h3 id="5-模型推理">
+<h3>
   
   
-    <a href="#5-模型推理" class="anchor-heading" aria-labelledby="5-模型推理"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. 模型推理
+    <a href="#推理示例" class="anchor-heading" aria-labelledby="推理示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. 模型推理
   
   
 </h3>
     
-
 <p>展示如何使用训练好的模型进行推理。</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
-<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">from</span> <span class="n">vivtransformer</span> <span class="kn">import</span> <span class="n">VIVTransformer</span>
-<span class="kn">from</span> <span class="n">vivtransformer.utils</span> <span class="kn">import</span> <span class="n">load_checkpoint</span>
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.utils import load_checkpoint
 
-<span class="k">def</span> <span class="nf">load_model_for_inference</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    加载模型用于推理
-    </span><span class="sh">"""</span>
-    <span class="n">checkpoint</span> <span class="o">=</span> <span class="nf">load_checkpoint</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="p">[</span><span class="sh">'</span><span class="s">config</span><span class="sh">'</span><span class="p">]</span>
-    
-    <span class="n">model</span> <span class="o">=</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">config</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="sh">'</span><span class="s">model_state_dict</span><span class="sh">'</span><span class="p">])</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
-    
-    <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">config</span>
+# 1. 加载模型
+config = VIVConfig.from_json('config.json')
+model = VIVTransformer(config)
+checkpoint = load_checkpoint('best_model.pth')
+model.load_state_dict(checkpoint['model_state_dict'])
+model.eval()
 
-<span class="k">def</span> <span class="nf">predict_viv_response</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    预测 VIV 响应
-    
-    Args:
-        model: 训练好的模型
-        flow_data: 流体数据 [seq_len, flow_dim]
-        structure_data: 结构数据 [seq_len, struct_dim]
-        
-    Returns:
-        预测结果字典
-    </span><span class="sh">"""</span>
-    <span class="c1"># 添加批次维度
-</span>    <span class="n">flow_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="n">flow_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">float32</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-    <span class="n">structure_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="n">structure_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">float32</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-    
-    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">)</span>
-    
-    <span class="c1"># 移除批次维度并转换为 numpy
-</span>    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">):</span>
-            <span class="n">results</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">.</span><span class="nf">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
-    
-    <span class="k">return</span> <span class="n">results</span>
+# 2. 准备测试数据
+test_flow_data = torch.randn(1, 200, config.flow_input_dim)
+test_structure_data = torch.randn(1, 200, config.structure_input_dim)
 
-<span class="c1"># 示例使用
-</span><span class="n">model</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="nf">load_model_for_inference</span><span class="p">(</span><span class="sh">'</span><span class="s">checkpoints/best_model.pth</span><span class="sh">'</span><span class="p">)</span>
+# 3. 进行推理
+with torch.no_grad():
+    predictions = model(test_flow_data, test_structure_data)
 
-<span class="c1"># 准备测试数据
-</span><span class="n">seq_len</span> <span class="o">=</span> <span class="mi">200</span>
-<span class="n">flow_data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">config</span><span class="p">.</span><span class="n">flow_input_dim</span><span class="p">)</span>
-<span class="n">structure_data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">config</span><span class="p">.</span><span class="n">structure_input_dim</span><span class="p">)</span>
+# 4. 处理结果
+displacement = predictions['displacement'].squeeze().numpy()
+velocity = predictions['velocity'].squeeze().numpy()
+force = predictions['force'].squeeze().numpy()
 
-<span class="c1"># 执行预测
-</span><span class="n">predictions</span> <span class="o">=</span> <span class="nf">predict_viv_response</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">)</span>
+# 5. 可视化结果
+fig, axes = plt.subplots(3, 1, figsize=(12, 10))
 
-<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">预测结果:</span><span class="sh">"</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="sh">'</span><span class="s">attention_weights</span><span class="sh">'</span><span class="p">:</span>
-        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">value</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</code></pre></div></div>
-<h3 id="6-批量推理">
+# 位移
+axes[0].plot(displacement)
+axes[0].set_title('结构位移预测')
+axes[0].set_ylabel('位移 (m)')
+axes[0].grid(True)
+
+# 速度
+axes[1].plot(velocity)
+axes[1].set_title('结构速度预测')
+axes[1].set_ylabel('速度 (m/s)')
+axes[1].grid(True)
+
+# 力
+axes[2].plot(force)
+axes[2].set_title('流体力预测')
+axes[2].set_xlabel('时间步')
+axes[2].set_ylabel('力 (N)')
+axes[2].grid(True)
+
+plt.tight_layout()
+plt.savefig('predictions.png', dpi=300, bbox_inches='tight')
+plt.show()
+</code></pre>
+<h2 id="高级用法">
   
   
-    <a href="#6-批量推理" class="anchor-heading" aria-labelledby="6-批量推理"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. 批量推理
-  
-  
-</h3>
-    
-
-<p>展示如何进行批量推理以提高效率。</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
-<span class="kn">from</span> <span class="n">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="n">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
-<span class="k">def</span> <span class="nf">batch_inference</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span><span class="p">,</span> <span class="n">save_results</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    批量推理
-    
-    Args:
-        model: 训练好的模型
-        dataloader: 数据加载器
-        device: 计算设备
-        save_results: 是否保存结果
-        
-    Returns:
-        所有预测结果
-    </span><span class="sh">"""</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
-    <span class="n">all_predictions</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">all_targets</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">all_metadata</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
-        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nf">tqdm</span><span class="p">(</span><span class="n">dataloader</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="sh">'</span><span class="s">批量推理</span><span class="sh">'</span><span class="p">):</span>
-            <span class="n">flow_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">flow_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            <span class="n">structure_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">structure_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            
-            <span class="c1"># 执行推理
-</span>            <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">)</span>
-            
-            <span class="c1"># 收集结果
-</span>            <span class="n">all_predictions</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span>
-                <span class="sh">'</span><span class="s">displacement</span><span class="sh">'</span><span class="p">:</span> <span class="n">outputs</span><span class="p">[</span><span class="sh">'</span><span class="s">displacement</span><span class="sh">'</span><span class="p">].</span><span class="nf">cpu</span><span class="p">(),</span>
-                <span class="sh">'</span><span class="s">velocity</span><span class="sh">'</span><span class="p">:</span> <span class="n">outputs</span><span class="p">[</span><span class="sh">'</span><span class="s">velocity</span><span class="sh">'</span><span class="p">].</span><span class="nf">cpu</span><span class="p">(),</span>
-                <span class="sh">'</span><span class="s">force</span><span class="sh">'</span><span class="p">:</span> <span class="n">outputs</span><span class="p">[</span><span class="sh">'</span><span class="s">force</span><span class="sh">'</span><span class="p">].</span><span class="nf">cpu</span><span class="p">()</span>
-            <span class="p">})</span>
-            
-            <span class="k">if</span> <span class="sh">'</span><span class="s">target</span><span class="sh">'</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">:</span>
-                <span class="n">all_targets</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">])</span>
-            
-            <span class="k">if</span> <span class="sh">'</span><span class="s">metadata</span><span class="sh">'</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">:</span>
-                <span class="n">all_metadata</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">metadata</span><span class="sh">'</span><span class="p">])</span>
-    
-    <span class="c1"># 合并结果
-</span>    <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">all_predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">keys</span><span class="p">():</span>
-        <span class="n">predictions</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">p</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">all_predictions</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    
-    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">predictions</span><span class="sh">'</span><span class="p">:</span> <span class="n">predictions</span><span class="p">}</span>
-    
-    <span class="k">if</span> <span class="n">all_targets</span><span class="p">:</span>
-        <span class="n">results</span><span class="p">[</span><span class="sh">'</span><span class="s">targets</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">all_targets</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">all_metadata</span><span class="p">:</span>
-        <span class="n">results</span><span class="p">[</span><span class="sh">'</span><span class="s">metadata</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">all_metadata</span>
-    
-    <span class="c1"># 保存结果
-</span>    <span class="k">if</span> <span class="n">save_results</span><span class="p">:</span>
-        <span class="n">torch</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="sh">'</span><span class="s">results/batch_inference_results.pth</span><span class="sh">'</span><span class="p">)</span>
-        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">结果已保存到 results/batch_inference_results.pth</span><span class="sh">"</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">results</span>
-
-<span class="c1"># 创建测试数据加载器
-</span><span class="n">test_dataset</span> <span class="o">=</span> <span class="nc">VIVDataset</span><span class="p">(</span><span class="sh">'</span><span class="s">data/test</span><span class="sh">'</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="sh">'</span><span class="s">test</span><span class="sh">'</span><span class="p">)</span>
-<span class="n">test_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-
-<span class="c1"># 执行批量推理
-</span><span class="n">results</span> <span class="o">=</span> <span class="nf">batch_inference</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">推理完成，共处理 </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="sh">'</span><span class="s">predictions</span><span class="sh">'</span><span class="p">][</span><span class="sh">'</span><span class="s">displacement</span><span class="sh">'</span><span class="p">].</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s"> 个样本</span><span class="sh">"</span><span class="p">)</span>
-</code></pre></div></div><hr />
-<h2 id="高级示例">
-  
-  
-    <a href="#高级示例" class="anchor-heading" aria-labelledby="高级示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 高级示例
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 高级用法
   
   
 </h2>
     
-<h3 id="7-注意力可视化">
+<h3>
   
   
-    <a href="#7-注意力可视化" class="anchor-heading" aria-labelledby="7-注意力可视化"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. 注意力可视化
-  
-  
-</h3>
-    
-
-<p>展示如何可视化模型的注意力权重。</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">import</span> <span class="n">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
-<span class="kn">from</span> <span class="n">vivtransformer.visualization</span> <span class="kn">import</span> <span class="n">plot_attention_weights</span>
-
-<span class="k">def</span> <span class="nf">visualize_attention</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">,</span> 
-                       <span class="n">layer_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">head_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    可视化注意力权重
-    </span><span class="sh">"""</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
-    
-    <span class="c1"># 添加钩子函数获取注意力权重
-</span>    <span class="n">attention_weights</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="k">def</span> <span class="nf">hook_fn</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nf">hasattr</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="sh">'</span><span class="s">attention_weights</span><span class="sh">'</span><span class="p">):</span>
-            <span class="n">attention_weights</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">output</span><span class="p">.</span><span class="n">attention_weights</span><span class="p">)</span>
-    
-    <span class="c1"># 注册钩子
-</span>    <span class="n">hooks</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="n">transformer_layers</span><span class="p">:</span>
-        <span class="n">hook</span> <span class="o">=</span> <span class="n">layer</span><span class="p">.</span><span class="n">self_attention</span><span class="p">.</span><span class="nf">register_forward_hook</span><span class="p">(</span><span class="n">hook_fn</span><span class="p">)</span>
-        <span class="n">hooks</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span>
-    
-    <span class="c1"># 前向传播
-</span>    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">flow_data</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">structure_data</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-    
-    <span class="c1"># 移除钩子
-</span>    <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="n">hooks</span><span class="p">:</span>
-        <span class="n">hook</span><span class="p">.</span><span class="nf">remove</span><span class="p">()</span>
-    
-    <span class="c1"># 获取指定层和头的注意力权重
-</span>    <span class="k">if</span> <span class="n">attention_weights</span><span class="p">:</span>
-        <span class="n">attn</span> <span class="o">=</span> <span class="n">attention_weights</span><span class="p">[</span><span class="n">layer_idx</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="n">head_idx</span><span class="p">].</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
-        
-        <span class="c1"># 绘制注意力热图
-</span>        <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-        <span class="n">sns</span><span class="p">.</span><span class="nf">heatmap</span><span class="p">(</span><span class="n">attn</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="sh">'</span><span class="s">Blues</span><span class="sh">'</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Attention Weights - Layer </span><span class="si">{</span><span class="n">layer_idx</span><span class="si">}</span><span class="s">, Head </span><span class="si">{</span><span class="n">head_idx</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
-        <span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Key Position</span><span class="sh">'</span><span class="p">)</span>
-        <span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Query Position</span><span class="sh">'</span><span class="p">)</span>
-        
-        <span class="k">if</span> <span class="n">save_path</span><span class="p">:</span>
-            <span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="sh">'</span><span class="s">tight</span><span class="sh">'</span><span class="p">)</span>
-        <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
-        
-        <span class="k">return</span> <span class="n">attn</span>
-    
-    <span class="k">return</span> <span class="bp">None</span>
-
-<span class="c1"># 示例使用
-</span><span class="n">seq_len</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">flow_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">config</span><span class="p">.</span><span class="n">flow_input_dim</span><span class="p">)</span>
-<span class="n">structure_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">config</span><span class="p">.</span><span class="n">structure_input_dim</span><span class="p">)</span>
-
-<span class="n">attn_weights</span> <span class="o">=</span> <span class="nf">visualize_attention</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">,</span>
-    <span class="n">layer_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">head_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">save_path</span><span class="o">=</span><span class="sh">'</span><span class="s">visualizations/attention_layer0_head0.png</span><span class="sh">'</span>
-<span class="p">)</span>
-</code></pre></div></div>
-<h3 id="8-模型解释性分析">
-  
-  
-    <a href="#8-模型解释性分析" class="anchor-heading" aria-labelledby="8-模型解释性分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. 模型解释性分析
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. 自定义注意力机制
   
   
 </h3>
     
+<p>展示如何实现和使用自定义注意力机制。</p>
 
-<p>展示如何分析模型的预测行为。</p>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+from vivtransformer.attention import BaseAttention
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
-<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">from</span> <span class="n">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
-<span class="kn">from</span> <span class="n">vivtransformer.analysis</span> <span class="kn">import</span> <span class="n">FeatureImportanceAnalyzer</span>
+class CustomAttention(BaseAttention):
+    """自定义注意力机制示例"""
+    
+    def __init__(self, d_model, num_heads, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+        
+        self.w_q = nn.Linear(d_model, d_model)
+        self.w_k = nn.Linear(d_model, d_model)
+        self.w_v = nn.Linear(d_model, d_model)
+        self.w_o = nn.Linear(d_model, d_model)
+        
+        self.dropout = nn.Dropout(dropout)
+        self.layer_norm = nn.LayerNorm(d_model)
+        
+    def forward(self, query, key, value, mask=None):
+        batch_size, seq_len, d_model = query.size()
+        
+        # 1. 线性变换
+        Q = self.w_q(query).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        K = self.w_k(key).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        V = self.w_v(value).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        
+        # 2. 计算注意力分数
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.d_k ** 0.5)
+        
+        # 3. 应用掩码
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        
+        # 4. 应用softmax
+        attention_weights = torch.softmax(scores, dim=-1)
+        attention_weights = self.dropout(attention_weights)
+        
+        # 5. 应用注意力权重
+        context = torch.matmul(attention_weights, V)
+        
+        # 6. 重塑和输出投影
+        context = context.transpose(1, 2).contiguous().view(
+            batch_size, seq_len, d_model
+        )
+        output = self.w_o(context)
+        
+        # 7. 残差连接和层归一化
+        output = self.layer_norm(output + query)
+        
+        return output, attention_weights
 
-<span class="k">def</span> <span class="nf">analyze_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    分析特征重要性
-    </span><span class="sh">"""</span>
-    <span class="n">analyzer</span> <span class="o">=</span> <span class="nc">FeatureImportanceAnalyzer</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-    
-    <span class="c1"># 收集特征表示
-</span>    <span class="n">all_features</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">all_targets</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
-    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
-        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
-            <span class="n">flow_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">flow_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            <span class="n">structure_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">structure_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            <span class="n">targets</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">]</span>
-            
-            <span class="c1"># 获取中间特征表示
-</span>            <span class="n">features</span> <span class="o">=</span> <span class="n">analyzer</span><span class="p">.</span><span class="nf">extract_features</span><span class="p">(</span><span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">)</span>
-            
-            <span class="n">all_features</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">features</span><span class="p">.</span><span class="nf">cpu</span><span class="p">())</span>
-            <span class="n">all_targets</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
-    
-    <span class="n">features</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">all_features</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="nf">numpy</span><span class="p">()</span>
-    <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">all_targets</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="nf">numpy</span><span class="p">()</span>
-    
-    <span class="c1"># PCA 分析
-</span>    <span class="n">pca</span> <span class="o">=</span> <span class="nc">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-    <span class="n">features_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="p">.</span><span class="nf">fit_transform</span><span class="p">(</span><span class="n">features</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">features</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-    
-    <span class="c1"># 计算特征重要性
-</span>    <span class="n">importance_scores</span> <span class="o">=</span> <span class="n">analyzer</span><span class="p">.</span><span class="nf">compute_importance</span><span class="p">(</span><span class="n">features_pca</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="sh">'</span><span class="s">features</span><span class="sh">'</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span>
-        <span class="sh">'</span><span class="s">features_pca</span><span class="sh">'</span><span class="p">:</span> <span class="n">features_pca</span><span class="p">,</span>
-        <span class="sh">'</span><span class="s">importance_scores</span><span class="sh">'</span><span class="p">:</span> <span class="n">importance_scores</span><span class="p">,</span>
-        <span class="sh">'</span><span class="s">explained_variance</span><span class="sh">'</span><span class="p">:</span> <span class="n">pca</span><span class="p">.</span><span class="n">explained_variance_ratio_</span>
-    <span class="p">}</span>
+# 使用自定义注意力机制
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    attention_class=CustomAttention  # 指定自定义注意力
+)
 
-<span class="c1"># 执行分析
-</span><span class="n">analysis_results</span> <span class="o">=</span> <span class="nf">analyze_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">特征重要性分析完成</span><span class="sh">"</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">前10个主成分解释方差比: </span><span class="si">{</span><span class="n">analysis_results</span><span class="p">[</span><span class="sh">'</span><span class="s">explained_variance</span><span class="sh">'</span><span class="p">][</span><span class="si">:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</code></pre></div></div>
-<h3 id="9-超参数优化">
+model = VIVTransformer(config)
+</code></pre>
+<h3>
   
   
-    <a href="#9-超参数优化" class="anchor-heading" aria-labelledby="9-超参数优化"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. 超参数优化
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. 模型分析和可视化
   
   
 </h3>
     
+<p>展示如何分析模型性能和可视化注意力权重。</p>
 
-<p>展示如何使用 Optuna 进行超参数优化。</p>
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from vivtransformer.analysis import AttentionVisualizer, ModelAnalyzer
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">optuna</span>
-<span class="kn">from</span> <span class="n">optuna.integration</span> <span class="kn">import</span> <span class="n">PyTorchLightningPruningCallback</span>
+# 1. 创建分析器
+analyzer = ModelAnalyzer(model)
+visualizer = AttentionVisualizer()
 
-<span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    Optuna 优化目标函数
-    </span><span class="sh">"""</span>
-    <span class="c1"># 建议超参数
-</span>    <span class="n">config</span> <span class="o">=</span> <span class="nc">VIVConfig</span><span class="p">(</span>
-        <span class="n">d_model</span><span class="o">=</span><span class="n">trial</span><span class="p">.</span><span class="nf">suggest_categorical</span><span class="p">(</span><span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">768</span><span class="p">]),</span>
-        <span class="n">num_layers</span><span class="o">=</span><span class="n">trial</span><span class="p">.</span><span class="nf">suggest_int</span><span class="p">(</span><span class="sh">'</span><span class="s">num_layers</span><span class="sh">'</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
-        <span class="n">num_heads</span><span class="o">=</span><span class="n">trial</span><span class="p">.</span><span class="nf">suggest_categorical</span><span class="p">(</span><span class="sh">'</span><span class="s">num_heads</span><span class="sh">'</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">]),</span>
-        <span class="n">d_ff</span><span class="o">=</span><span class="n">trial</span><span class="p">.</span><span class="nf">suggest_categorical</span><span class="p">(</span><span class="sh">'</span><span class="s">d_ff</span><span class="sh">'</span><span class="p">,</span> <span class="p">[</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">2048</span><span class="p">,</span> <span class="mi">3072</span><span class="p">]),</span>
-        <span class="n">dropout</span><span class="o">=</span><span class="n">trial</span><span class="p">.</span><span class="nf">suggest_float</span><span class="p">(</span><span class="sh">'</span><span class="s">dropout</span><span class="sh">'</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>
-        <span class="n">learning_rate</span><span class="o">=</span><span class="n">trial</span><span class="p">.</span><span class="nf">suggest_float</span><span class="p">(</span><span class="sh">'</span><span class="s">learning_rate</span><span class="sh">'</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-        <span class="n">flow_input_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-        <span class="n">structure_input_dim</span><span class="o">=</span><span class="mi">32</span>
-    <span class="p">)</span>
+# 2. 分析模型复杂度
+flops, params = analyzer.compute_flops(input_shape=(1, 100, 64))
+print(f"模型参数数量: {params:,}")
+print(f"浮点运算数: {flops:,}")
+
+# 3. 获取注意力权重
+with torch.no_grad():
+    outputs, attention_weights = model(test_flow_data, test_structure_data, return_attention=True)
+
+# 4. 可视化注意力权重
+for layer_idx, layer_attention in enumerate(attention_weights):
+    # 选择第一个头的注意力权重
+    attention = layer_attention[0, 0].cpu().numpy()  # [seq_len, seq_len]
     
-    <span class="c1"># 创建模型
-</span>    <span class="n">model</span> <span class="o">=</span> <span class="nc">VIVTransformer</span><span class="p">(</span><span class="n">config</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(attention, cmap='Blues', cbar=True)
+    plt.title(f'Layer {layer_idx + 1} - Attention Weights')
+    plt.xlabel('Key Position')
+    plt.ylabel('Query Position')
+    plt.savefig(f'attention_layer_{layer_idx + 1}.png', dpi=300, bbox_inches='tight')
+    plt.show()
+
+# 5. 分析注意力模式
+attention_patterns = analyzer.analyze_attention_patterns(attention_weights)
+print("注意力模式分析:")
+for pattern_name, score in attention_patterns.items():
+    print(f"  {pattern_name}: {score:.4f}")
+</code></pre>
+</div>
+
+<div data-lang-en="">
+<h1>
+  
+  
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Examples
+  
+  
+</h1>
     
-    <span class="c1"># 创建优化器
-</span>    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">AdamW</span><span class="p">(</span>
-        <span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span>
-        <span class="n">lr</span><span class="o">=</span><span class="n">config</span><span class="p">.</span><span class="n">learning_rate</span><span class="p">,</span>
-        <span class="n">weight_decay</span><span class="o">=</span><span class="n">trial</span><span class="p">.</span><span class="nf">suggest_float</span><span class="p">(</span><span class="sh">'</span><span class="s">weight_decay</span><span class="sh">'</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="p">)</span>
+<p class="fs-6 fw-300">This page provides practical code examples for the VIVTransformer project to help you get started quickly and understand how to use the project.</p>
+<h2>
+  
+  
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 Table of Contents
+  
+  
+</h2>
     
-    <span class="c1"># 训练模型（简化版）
-</span>    <span class="n">model</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
-    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">num_batches</span> <span class="o">=</span> <span class="mi">0</span>
+<ul>
+<li><a href="#basic-examples">Basic Examples</a></li>
+<li><a href="#data-processing-examples">Data Processing Examples</a></li>
+<li><a href="#training-examples">Training Examples</a></li>
+<li><a href="#inference-examples">Inference Examples</a></li>
+<li><a href="#advanced-usage">Advanced Usage</a></li>
+</ul><hr />
+<h2 id="basic-examples">
+  
+  
+    <a href="#basic-examples" class="anchor-heading" aria-labelledby="basic-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 Basic Examples
+  
+  
+</h2>
     
-    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>  <span class="c1"># 快速训练几个 epoch
-</span>        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">num_batches</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>  <span class="c1"># 限制批次数量
-</span>                <span class="k">break</span>
+<h3>
+  
+  
+    <a href="#basic-examples" class="anchor-heading" aria-labelledby="basic-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Quick Start Example
+  
+  
+</h3>
+    
+<p>The simplest usage example showing how to create a model and perform forward propagation.</p>
+
+<pre><code class="language-python">import torch
+from vivtransformer import VIVTransformer, VIVConfig
+
+# 1. Create configuration
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    flow_input_dim=64,
+    structure_input_dim=32,
+    output_dim=9  # 3D displacement + velocity + force
+)
+
+# 2. Create model
+model = VIVTransformer(config)
+print(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
+
+# 3. Prepare sample data
+batch_size, seq_len = 4, 100
+flow_data = torch.randn(batch_size, seq_len, config.flow_input_dim)
+structure_data = torch.randn(batch_size, seq_len, config.structure_input_dim)
+
+# 4. Forward propagation
+model.eval()
+with torch.no_grad():
+    outputs = model(flow_data, structure_data)
+    
+print("Output shapes:")
+for key, value in outputs.items():
+    print(f"  {key}: {value.shape}")
+</code></pre>
+<h2 id="data-processing-examples">
+  
+  
+    <a href="#data-processing-examples" class="anchor-heading" aria-labelledby="data-processing-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 Data Processing Examples
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#data-processing-examples" class="anchor-heading" aria-labelledby="data-processing-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Data Loading Example
+  
+  
+</h3>
+    
+<p>Shows how to load and preprocess VIV data.</p>
+
+<pre><code class="language-python">import os
+import pandas as pd
+from torch.utils.data import DataLoader
+from vivtransformer.data import VIVDataset, DataProcessor
+
+# 1. Data preprocessing
+processor = DataProcessor({
+    'normalize': True,
+    'sequence_length': 100,
+    'overlap': 0.5,
+    'features': ['velocity', 'pressure', 'displacement']
+})
+
+# 2. Create datasets
+train_dataset = VIVDataset(
+    data_dir='data/train',
+    split='train',
+    sequence_length=100,
+    processor=processor
+)
+
+val_dataset = VIVDataset(
+    data_dir='data/val',
+    split='val',
+    sequence_length=100,
+    processor=processor
+)
+
+# 3. Create data loaders
+train_loader = DataLoader(
+    train_dataset,
+    batch_size=32,
+    shuffle=True,
+    num_workers=4,
+    pin_memory=True
+)
+
+val_loader = DataLoader(
+    val_dataset,
+    batch_size=32,
+    shuffle=False,
+    num_workers=4,
+    pin_memory=True
+)
+
+# 4. Check data
+for batch in train_loader:
+    print("Batch data shapes:")
+    print(f"  Flow data: {batch['flow_data'].shape}")
+    print(f"  Structure data: {batch['structure_data'].shape}")
+    print(f"  Target data: {batch['target'].shape}")
+    break
+</code></pre>
+<h2 id="training-examples">
+  
+  
+    <a href="#training-examples" class="anchor-heading" aria-labelledby="training-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 Training Examples
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#training-examples" class="anchor-heading" aria-labelledby="training-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Complete Training Process
+  
+  
+</h3>
+    
+<p>Shows the complete model training process.</p>
+
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim.lr_scheduler import CosineAnnealingLR
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.training import Trainer, VIVLoss
+from vivtransformer.utils import set_seed, save_checkpoint
+
+# 1. Set random seed
+set_seed(42)
+
+# 2. Device configuration
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"Using device: {device}")
+
+# 3. Model configuration
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    max_seq_length=1000,
+    flow_input_dim=64,
+    structure_input_dim=32
+)
+
+# 4. Create model
+model = VIVTransformer(config).to(device)
+
+# 5. Loss function and optimizer
+criterion = VIVLoss(
+    mse_weight=1.0,
+    physics_weight=0.1,
+    consistency_weight=0.05
+)
+
+optimizer = optim.AdamW(
+    model.parameters(),
+    lr=1e-4,
+    weight_decay=1e-5
+)
+
+scheduler = CosineAnnealingLR(
+    optimizer,
+    T_max=100,
+    eta_min=1e-6
+)
+
+# 6. Training configuration
+training_config = {
+    'epochs': 100,
+    'save_every': 10,
+    'eval_every': 5,
+    'early_stopping_patience': 15,
+    'gradient_clip_norm': 1.0,
+    'log_every': 100
+}
+
+# 7. Start training
+for epoch in range(training_config['epochs']):
+    model.train()
+    total_loss = 0
+    
+    for batch_idx, batch in enumerate(train_loader):
+        # Move data to device
+        flow_data = batch['flow_data'].to(device)
+        structure_data = batch['structure_data'].to(device)
+        target = batch['target'].to(device)
+        
+        # Forward pass
+        optimizer.zero_grad()
+        outputs = model(flow_data, structure_data)
+        loss = criterion(outputs, target)
+        
+        # Backward pass
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), training_config['gradient_clip_norm'])
+        optimizer.step()
+        
+        total_loss += loss.item()
+        
+        if batch_idx % training_config['log_every'] == 0:
+            print(f'Epoch {epoch}, Batch {batch_idx}, Loss: {loss.item():.6f}')
+    
+    # Learning rate scheduling
+    scheduler.step()
+    
+    # Validation
+    if epoch % training_config['eval_every'] == 0:
+        model.eval()
+        val_loss = 0
+        with torch.no_grad():
+            for batch in val_loader:
+                flow_data = batch['flow_data'].to(device)
+                structure_data = batch['structure_data'].to(device)
+                target = batch['target'].to(device)
                 
-            <span class="n">flow_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">flow_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            <span class="n">structure_data</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">structure_data</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            <span class="n">targets</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="sh">'</span><span class="s">target</span><span class="sh">'</span><span class="p">].</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            
-            <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
-            <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">)</span>
-            <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)[</span><span class="sh">'</span><span class="s">total_loss</span><span class="sh">'</span><span class="p">]</span>
-            <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
-            <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
-            
-            <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
-            <span class="n">num_batches</span> <span class="o">+=</span> <span class="mi">1</span>
+                outputs = model(flow_data, structure_data)
+                loss = criterion(outputs, target)
+                val_loss += loss.item()
         
-        <span class="c1"># 报告中间结果
-</span>        <span class="n">trial</span><span class="p">.</span><span class="nf">report</span><span class="p">(</span><span class="n">total_loss</span> <span class="o">/</span> <span class="n">num_batches</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
-        
-        <span class="c1"># 检查是否应该剪枝
-</span>        <span class="k">if</span> <span class="n">trial</span><span class="p">.</span><span class="nf">should_prune</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="n">optuna</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="nc">TrialPruned</span><span class="p">()</span>
+        print(f'Epoch {epoch}, Train Loss: {total_loss/len(train_loader):.6f}, Val Loss: {val_loss/len(val_loader):.6f}')
     
-    <span class="k">return</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="n">num_batches</span>
-
-<span class="c1"># 创建研究对象
-</span><span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="p">.</span><span class="nf">create_study</span><span class="p">(</span>
-    <span class="n">direction</span><span class="o">=</span><span class="sh">'</span><span class="s">minimize</span><span class="sh">'</span><span class="p">,</span>
-    <span class="n">pruner</span><span class="o">=</span><span class="n">optuna</span><span class="p">.</span><span class="n">pruners</span><span class="p">.</span><span class="nc">MedianPruner</span><span class="p">()</span>
-<span class="p">)</span>
-
-<span class="c1"># 执行优化
-</span><span class="n">study</span><span class="p">.</span><span class="nf">optimize</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">最佳超参数:</span><span class="sh">"</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">study</span><span class="p">.</span><span class="n">best_params</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">最佳验证损失: </span><span class="si">{</span><span class="n">study</span><span class="p">.</span><span class="n">best_value</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</code></pre></div></div><hr />
-<h2 id="部署示例">
+    # Save checkpoint
+    if epoch % training_config['save_every'] == 0:
+        save_checkpoint({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'scheduler_state_dict': scheduler.state_dict(),
+            'loss': total_loss/len(train_loader)
+        }, f'checkpoint_epoch_{epoch}.pth')
+</code></pre>
+<h2 id="inference-examples">
   
   
-    <a href="#部署示例" class="anchor-heading" aria-labelledby="部署示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 部署示例
+    <a href="#inference-examples" class="anchor-heading" aria-labelledby="inference-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔮 Inference Examples
   
   
 </h2>
     
-<h3 id="10-模型导出和部署">
+<h3>
   
   
-    <a href="#10-模型导出和部署" class="anchor-heading" aria-labelledby="10-模型导出和部署"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. 模型导出和部署
+    <a href="#inference-examples" class="anchor-heading" aria-labelledby="inference-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Model Inference
   
   
 </h3>
     
+<p>Shows how to use a trained model for inference.</p>
 
-<p>展示如何导出模型用于生产环境。</p>
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.utils import load_checkpoint
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
-<span class="kn">import</span> <span class="n">torch.jit</span> <span class="k">as</span> <span class="n">jit</span>
-<span class="kn">from</span> <span class="n">vivtransformer.deployment</span> <span class="kn">import</span> <span class="n">ModelExporter</span>
+# 1. Load model
+config = VIVConfig.from_json('config.json')
+model = VIVTransformer(config)
+checkpoint = load_checkpoint('best_model.pth')
+model.load_state_dict(checkpoint['model_state_dict'])
+model.eval()
 
-<span class="k">def</span> <span class="nf">export_model_for_deployment</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">export_path</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    导出模型用于部署
-    </span><span class="sh">"""</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
-    
-    <span class="c1"># 创建示例输入
-</span>    <span class="n">example_flow</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">config</span><span class="p">.</span><span class="n">flow_input_dim</span><span class="p">)</span>
-    <span class="n">example_structure</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">config</span><span class="p">.</span><span class="n">structure_input_dim</span><span class="p">)</span>
-    
-    <span class="c1"># 导出为 TorchScript
-</span>    <span class="n">traced_model</span> <span class="o">=</span> <span class="n">jit</span><span class="p">.</span><span class="nf">trace</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">example_flow</span><span class="p">,</span> <span class="n">example_structure</span><span class="p">))</span>
-    <span class="n">traced_model</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">export_path</span><span class="si">}</span><span class="s">/model_traced.pt</span><span class="sh">"</span><span class="p">)</span>
-    
-    <span class="c1"># 导出为 ONNX
-</span>    <span class="n">torch</span><span class="p">.</span><span class="n">onnx</span><span class="p">.</span><span class="nf">export</span><span class="p">(</span>
-        <span class="n">model</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">example_flow</span><span class="p">,</span> <span class="n">example_structure</span><span class="p">),</span>
-        <span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">export_path</span><span class="si">}</span><span class="s">/model.onnx</span><span class="sh">"</span><span class="p">,</span>
-        <span class="n">export_params</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-        <span class="n">opset_version</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
-        <span class="n">do_constant_folding</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-        <span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">flow_data</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">structure_data</span><span class="sh">'</span><span class="p">],</span>
-        <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">displacement</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">velocity</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">force</span><span class="sh">'</span><span class="p">],</span>
-        <span class="n">dynamic_axes</span><span class="o">=</span><span class="p">{</span>
-            <span class="sh">'</span><span class="s">flow_data</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="sh">'</span><span class="s">sequence_length</span><span class="sh">'</span><span class="p">},</span>
-            <span class="sh">'</span><span class="s">structure_data</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="sh">'</span><span class="s">sequence_length</span><span class="sh">'</span><span class="p">},</span>
-            <span class="sh">'</span><span class="s">displacement</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="sh">'</span><span class="s">sequence_length</span><span class="sh">'</span><span class="p">},</span>
-            <span class="sh">'</span><span class="s">velocity</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="sh">'</span><span class="s">sequence_length</span><span class="sh">'</span><span class="p">},</span>
-            <span class="sh">'</span><span class="s">force</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="sh">'</span><span class="s">sequence_length</span><span class="sh">'</span><span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
-    
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">模型已导出到 </span><span class="si">{</span><span class="n">export_path</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+# 2. Prepare test data
+test_flow_data = torch.randn(1, 200, config.flow_input_dim)
+test_structure_data = torch.randn(1, 200, config.structure_input_dim)
 
-<span class="c1"># 导出模型
-</span><span class="nf">export_model_for_deployment</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="sh">'</span><span class="s">deployment/models</span><span class="sh">'</span><span class="p">)</span>
-</code></pre></div></div>
-<h3 id="11-rest-api-服务">
+# 3. Perform inference
+with torch.no_grad():
+    predictions = model(test_flow_data, test_structure_data)
+
+# 4. Process results
+displacement = predictions['displacement'].squeeze().numpy()
+velocity = predictions['velocity'].squeeze().numpy()
+force = predictions['force'].squeeze().numpy()
+
+# 5. Visualize results
+fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+
+# Displacement
+axes[0].plot(displacement)
+axes[0].set_title('Structure Displacement Prediction')
+axes[0].set_ylabel('Displacement (m)')
+axes[0].grid(True)
+
+# Velocity
+axes[1].plot(velocity)
+axes[1].set_title('Structure Velocity Prediction')
+axes[1].set_ylabel('Velocity (m/s)')
+axes[1].grid(True)
+
+# Force
+axes[2].plot(force)
+axes[2].set_title('Fluid Force Prediction')
+axes[2].set_xlabel('Time Step')
+axes[2].set_ylabel('Force (N)')
+axes[2].grid(True)
+
+plt.tight_layout()
+plt.savefig('predictions.png', dpi=300, bbox_inches='tight')
+plt.show()
+</code></pre>
+<h2 id="advanced-usage">
   
   
-    <a href="#11-rest-api-服务" class="anchor-heading" aria-labelledby="11-rest-api-服务"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 11. REST API 服务
+    <a href="#advanced-usage" class="anchor-heading" aria-labelledby="advanced-usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 Advanced Usage
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#advanced-usage" class="anchor-heading" aria-labelledby="advanced-usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Custom Attention Mechanism
   
   
 </h3>
     
+<p>Shows how to implement and use custom attention mechanisms.</p>
 
-<p>展示如何创建 REST API 服务。</p>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+from vivtransformer.attention import BaseAttention
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span>
-<span class="kn">import</span> <span class="n">torch</span>
-<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">from</span> <span class="n">vivtransformer.deployment</span> <span class="kn">import</span> <span class="n">ModelServer</span>
-
-<span class="n">app</span> <span class="o">=</span> <span class="nc">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-
-<span class="c1"># 加载模型
-</span><span class="n">model_server</span> <span class="o">=</span> <span class="nc">ModelServer</span><span class="p">(</span><span class="sh">'</span><span class="s">deployment/models/model_traced.pt</span><span class="sh">'</span><span class="p">)</span>
-
-<span class="nd">@app.route</span><span class="p">(</span><span class="sh">'</span><span class="s">/predict</span><span class="sh">'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">POST</span><span class="sh">'</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">predict</span><span class="p">():</span>
-    <span class="sh">"""</span><span class="s">
-    VIV 预测 API 端点
-    </span><span class="sh">"""</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="c1"># 获取输入数据
-</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">json</span>
-        <span class="n">flow_data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">flow_data</span><span class="sh">'</span><span class="p">])</span>
-        <span class="n">structure_data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">structure_data</span><span class="sh">'</span><span class="p">])</span>
-        
-        <span class="c1"># 执行预测
-</span>        <span class="n">predictions</span> <span class="o">=</span> <span class="n">model_server</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">flow_data</span><span class="p">,</span> <span class="n">structure_data</span><span class="p">)</span>
-        
-        <span class="c1"># 返回结果
-</span>        <span class="k">return</span> <span class="nf">jsonify</span><span class="p">({</span>
-            <span class="sh">'</span><span class="s">status</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">success</span><span class="sh">'</span><span class="p">,</span>
-            <span class="sh">'</span><span class="s">predictions</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="sh">'</span><span class="s">displacement</span><span class="sh">'</span><span class="p">:</span> <span class="n">predictions</span><span class="p">[</span><span class="sh">'</span><span class="s">displacement</span><span class="sh">'</span><span class="p">].</span><span class="nf">tolist</span><span class="p">(),</span>
-                <span class="sh">'</span><span class="s">velocity</span><span class="sh">'</span><span class="p">:</span> <span class="n">predictions</span><span class="p">[</span><span class="sh">'</span><span class="s">velocity</span><span class="sh">'</span><span class="p">].</span><span class="nf">tolist</span><span class="p">(),</span>
-                <span class="sh">'</span><span class="s">force</span><span class="sh">'</span><span class="p">:</span> <span class="n">predictions</span><span class="p">[</span><span class="sh">'</span><span class="s">force</span><span class="sh">'</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
-            <span class="p">}</span>
-        <span class="p">})</span>
+class CustomAttention(BaseAttention):
+    """Custom attention mechanism example"""
     
-    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nf">jsonify</span><span class="p">({</span>
-            <span class="sh">'</span><span class="s">status</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">error</span><span class="sh">'</span><span class="p">,</span>
-            <span class="sh">'</span><span class="s">message</span><span class="sh">'</span><span class="p">:</span> <span class="nf">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-        <span class="p">}),</span> <span class="mi">400</span>
+    def __init__(self, d_model, num_heads, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+        
+        self.w_q = nn.Linear(d_model, d_model)
+        self.w_k = nn.Linear(d_model, d_model)
+        self.w_v = nn.Linear(d_model, d_model)
+        self.w_o = nn.Linear(d_model, d_model)
+        
+        self.dropout = nn.Dropout(dropout)
+        self.layer_norm = nn.LayerNorm(d_model)
+        
+    def forward(self, query, key, value, mask=None):
+        batch_size, seq_len, d_model = query.size()
+        
+        # 1. Linear transformations
+        Q = self.w_q(query).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        K = self.w_k(key).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        V = self.w_v(value).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        
+        # 2. Compute attention scores
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.d_k ** 0.5)
+        
+        # 3. Apply mask
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        
+        # 4. Apply softmax
+        attention_weights = torch.softmax(scores, dim=-1)
+        attention_weights = self.dropout(attention_weights)
+        
+        # 5. Apply attention weights
+        context = torch.matmul(attention_weights, V)
+        
+        # 6. Reshape and output projection
+        context = context.transpose(1, 2).contiguous().view(
+            batch_size, seq_len, d_model
+        )
+        output = self.w_o(context)
+        
+        # 7. Residual connection and layer normalization
+        output = self.layer_norm(output + query)
+        
+        return output, attention_weights
 
-<span class="nd">@app.route</span><span class="p">(</span><span class="sh">'</span><span class="s">/health</span><span class="sh">'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">GET</span><span class="sh">'</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">health_check</span><span class="p">():</span>
-    <span class="sh">"""</span><span class="s">健康检查端点</span><span class="sh">"""</span>
-    <span class="k">return</span> <span class="nf">jsonify</span><span class="p">({</span><span class="sh">'</span><span class="s">status</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">healthy</span><span class="sh">'</span><span class="p">})</span>
+# Use custom attention mechanism
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    attention_class=CustomAttention  # Specify custom attention
+)
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">'</span><span class="s">__main__</span><span class="sh">'</span><span class="p">:</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="sh">'</span><span class="s">0.0.0.0</span><span class="sh">'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-</code></pre></div></div><hr />
-<h2 id="工具和实用函数">
+model = VIVTransformer(config)
+</code></pre>
+<h3>
   
   
-    <a href="#工具和实用函数" class="anchor-heading" aria-labelledby="工具和实用函数"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 工具和实用函数
-  
-  
-</h2>
-    
-<h3 id="12-数据可视化工具">
-  
-  
-    <a href="#12-数据可视化工具" class="anchor-heading" aria-labelledby="12-数据可视化工具"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12. 数据可视化工具
+    <a href="#advanced-usage" class="anchor-heading" aria-labelledby="advanced-usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Model Analysis and Visualization
   
   
 </h3>
     
+<p>Shows how to analyze model performance and visualize attention weights.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">import</span> <span class="n">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
-<span class="kn">from</span> <span class="n">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from vivtransformer.analysis import AttentionVisualizer, ModelAnalyzer
 
-<span class="k">def</span> <span class="nf">plot_viv_trajectory</span><span class="p">(</span><span class="n">displacement</span><span class="p">,</span> <span class="n">time_steps</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    绘制 VIV 轨迹
-    
-    Args:
-        displacement: 位移数据 [seq_len, 3]
-        time_steps: 时间步 [seq_len]
-        save_path: 保存路径
-    </span><span class="sh">"""</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-    
-    <span class="c1"># 3D 轨迹图
-</span>    <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="nf">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="sh">'</span><span class="s">3d</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">displacement</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">displacement</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">displacement</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">X Displacement</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Y Displacement</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="nf">set_zlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Z Displacement</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">3D VIV Trajectory</span><span class="sh">'</span><span class="p">)</span>
-    
-    <span class="c1"># X 方向时间序列
-</span>    <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="nf">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time_steps</span><span class="p">,</span> <span class="n">displacement</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Time</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">X Displacement</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">X-Direction Displacement</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-    
-    <span class="c1"># Y 方向时间序列
-</span>    <span class="n">ax3</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="nf">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time_steps</span><span class="p">,</span> <span class="n">displacement</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Time</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Y Displacement</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Y-Direction Displacement</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-    
-    <span class="c1"># Z 方向时间序列
-</span>    <span class="n">ax4</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="nf">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
-    <span class="n">ax4</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time_steps</span><span class="p">,</span> <span class="n">displacement</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
-    <span class="n">ax4</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Time</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax4</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Z Displacement</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax4</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Z-Direction Displacement</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">ax4</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-    
-    <span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
-    
-    <span class="k">if</span> <span class="n">save_path</span><span class="p">:</span>
-        <span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="sh">'</span><span class="s">tight</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+# 1. Create analyzer
+analyzer = ModelAnalyzer(model)
+visualizer = AttentionVisualizer()
 
-<span class="k">def</span> <span class="nf">plot_comparison</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">time_steps</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sh">"""</span><span class="s">
-    绘制预测与真实值对比
-    </span><span class="sh">"""</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+# 2. Analyze model complexity
+flops, params = analyzer.compute_flops(input_shape=(1, 100, 64))
+print(f"Model parameters: {params:,}")
+print(f"FLOPs: {flops:,}")
+
+# 3. Get attention weights
+with torch.no_grad():
+    outputs, attention_weights = model(test_flow_data, test_structure_data, return_attention=True)
+
+# 4. Visualize attention weights
+for layer_idx, layer_attention in enumerate(attention_weights):
+    # Select attention weights from the first head
+    attention = layer_attention[0, 0].cpu().numpy()  # [seq_len, seq_len]
     
-    <span class="n">directions</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">X</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Y</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Z</span><span class="sh">'</span><span class="p">]</span>
-    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">blue</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">green</span><span class="sh">'</span><span class="p">]</span>
-    
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="n">directions</span><span class="p">,</span> <span class="n">colors</span><span class="p">)):</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">plot</span><span class="p">(</span><span class="n">time_steps</span><span class="p">,</span> <span class="n">targets</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> 
-                    <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">True</span><span class="sh">'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">black</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">plot</span><span class="p">(</span><span class="n">time_steps</span><span class="p">,</span> <span class="n">predictions</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> 
-                    <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Predicted</span><span class="sh">'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s"> Displacement</span><span class="sh">'</span><span class="p">)</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">set_title</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s">-Direction Comparison</span><span class="sh">'</span><span class="p">)</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">legend</span><span class="p">()</span>
-        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-    
-    <span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Time</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
-    
-    <span class="k">if</span> <span class="n">save_path</span><span class="p">:</span>
-        <span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="sh">'</span><span class="s">tight</span><span class="sh">'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(attention, cmap='Blues', cbar=True)
+    plt.title(f'Layer {layer_idx + 1} - Attention Weights')
+    plt.xlabel('Key Position')
+    plt.ylabel('Query Position')
+    plt.savefig(f'attention_layer_{layer_idx + 1}.png', dpi=300, bbox_inches='tight')
+    plt.show()
 
-<span class="c1"># 示例使用
-</span><span class="n">seq_len</span> <span class="o">=</span> <span class="mi">200</span>
-<span class="n">time_steps</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">)</span>
-<span class="n">displacement</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>
-
-<span class="nf">plot_viv_trajectory</span><span class="p">(</span><span class="n">displacement</span><span class="p">,</span> <span class="n">time_steps</span><span class="p">,</span> <span class="sh">'</span><span class="s">visualizations/viv_trajectory.png</span><span class="sh">'</span><span class="p">)</span>
-</code></pre></div></div><hr />
-<h2 id="总结">
-  
-  
-    <a href="#总结" class="anchor-heading" aria-labelledby="总结"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 总结
-  
-  
-</h2>
-    
-
-<p>本页面提供了 VIVTransformer 项目的全面代码示例，涵盖：</p>
-
-<ul>
-  <li><strong>基础使用</strong>: 快速开始和数据加载</li>
-  <li><strong>模型训练</strong>: 完整训练流程和自定义训练循环</li>
-  <li><strong>模型推理</strong>: 单样本和批量推理</li>
-  <li><strong>高级功能</strong>: 注意力可视化、模型解释性分析、超参数优化</li>
-  <li><strong>生产部署</strong>: 模型导出、REST API 服务</li>
-  <li><strong>工具函数</strong>: 数据可视化和分析工具</li>
-</ul>
-
-<p>这些示例可以帮助您快速上手并深入理解 VIVTransformer 的各种功能和应用场景。</p><hr />
-<h2 id="相关链接">
-  
-  
-    <a href="#相关链接" class="anchor-heading" aria-labelledby="相关链接"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 相关链接
-  
-  
-</h2>
-    
-
-<ul>
-  <li><a href="api-reference">API 参考</a> - 详细的 API 文档</li>
-  <li><a href="training-guide">训练指南</a> - 深入的训练说明</li>
-  <li><a href="architecture-overview">架构概览</a> - 了解模型架构</li>
-  <li><a href="troubleshooting">故障排除</a> - 常见问题解决</li>
-</ul>
-
-<p><em>需要帮助？查看 <a href="faq">FAQ</a> 或 <a href="troubleshooting">故障排除</a> 页面。</em></p>
+# 5. Analyze attention patterns
+attention_patterns = analyzer.analyze_attention_patterns(attention_weights)
+print("Attention pattern analysis:")
+for pattern_name, score in attention_patterns.items():
+    print(f"  {pattern_name}: {score:.4f}")
+</code></pre>
+</div>
 
           
 

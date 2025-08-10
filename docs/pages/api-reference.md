@@ -1,11 +1,14 @@
 ---
 layout: default
-title: API 参考
+title: API Reference
 nav_order: 15
-parent: 核心文档
+parent: Core Documentation
 permalink: /pages/api-reference/
 ---
 
+{% include language-switcher.html %}
+
+<div data-lang-zh>
 # API 参考
 {: .no_toc }
 
@@ -574,3 +577,577 @@ with torch.no_grad():
 - [故障排除](troubleshooting) - 常见问题解决
 
 *需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*
+
+</div>
+
+<div data-lang-en>
+# API Reference
+{: .no_toc }
+
+This page provides complete API reference documentation for the VIVTransformer project, including detailed descriptions of all core classes, functions, and interfaces.
+{: .fs-6 .fw-300 }
+
+## Table of Contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## Core Model API
+
+### VIVTransformer Class
+
+Main Transformer model class for vortex-induced vibration prediction.
+
+```python
+class VIVTransformer(nn.Module):
+    """
+    Main VIV Transformer model class
+    
+    Args:
+        config (VIVConfig): Model configuration object
+        num_layers (int): Number of Transformer layers, default is 6
+        d_model (int): Model dimension, default is 512
+        num_heads (int): Number of attention heads, default is 8
+        d_ff (int): Feed-forward network dimension, default is 2048
+        dropout (float): Dropout probability, default is 0.1
+        max_seq_length (int): Maximum sequence length, default is 1000
+    """
+    
+    def __init__(self, config: VIVConfig, **kwargs):
+        pass
+    
+    def forward(self, 
+                flow_data: torch.Tensor,
+                structure_data: torch.Tensor,
+                mask: Optional[torch.Tensor] = None) -> Dict[str, torch.Tensor]:
+        """
+        Forward propagation
+        
+        Args:
+            flow_data: Flow data [batch_size, seq_len, flow_dim]
+            structure_data: Structure data [batch_size, seq_len, struct_dim]
+            mask: Attention mask [batch_size, seq_len]
+            
+        Returns:
+            Dict containing:
+                - 'displacement': Displacement prediction [batch_size, seq_len, 3]
+                - 'velocity': Velocity prediction [batch_size, seq_len, 3]
+                - 'force': Force prediction [batch_size, seq_len, 3]
+                - 'attention_weights': Attention weights
+        """
+        pass
+```
+
+### Configuration Class
+
+```python
+class VIVConfig:
+    """
+    VIV Transformer configuration class
+    
+    Attributes:
+        model_type (str): Model type
+        d_model (int): Model dimension
+        num_layers (int): Number of layers
+        num_heads (int): Number of attention heads
+        d_ff (int): Feed-forward network dimension
+        dropout (float): Dropout probability
+        activation (str): Activation function type
+        max_position_embeddings (int): Maximum position embedding length
+        flow_input_dim (int): Flow input dimension
+        structure_input_dim (int): Structure input dimension
+        output_dim (int): Output dimension
+    """
+    
+    def __init__(self, **kwargs):
+        pass
+    
+    @classmethod
+    def from_json_file(cls, json_file: str) -> 'VIVConfig':
+        """Load configuration from JSON file"""
+        pass
+    
+    def to_json_file(self, json_file: str):
+        """Save configuration to JSON file"""
+        pass
+```
+
+---
+
+## Attention Mechanism API
+
+### MultiHeadAttention Class
+
+```python
+class MultiHeadAttention(nn.Module):
+    """
+    Multi-head attention mechanism
+    
+    Args:
+        d_model (int): Model dimension
+        num_heads (int): Number of attention heads
+        dropout (float): Dropout probability
+        temperature (float): Attention temperature parameter
+    """
+    
+    def forward(self, 
+                query: torch.Tensor,
+                key: torch.Tensor,
+                value: torch.Tensor,
+                mask: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor]:
+        """
+        Args:
+            query: Query tensor [batch_size, seq_len, d_model]
+            key: Key tensor [batch_size, seq_len, d_model]
+            value: Value tensor [batch_size, seq_len, d_model]
+            mask: Attention mask
+            
+        Returns:
+            output: Attention output [batch_size, seq_len, d_model]
+            attention_weights: Attention weights [batch_size, num_heads, seq_len, seq_len]
+        """
+        pass
+```
+
+### CrossModalAttention Class
+
+```python
+class CrossModalAttention(nn.Module):
+    """
+    Cross-modal attention mechanism
+    
+    Attention mechanism for fusing flow and structure data
+    """
+    
+    def forward(self, 
+                flow_features: torch.Tensor,
+                structure_features: torch.Tensor) -> torch.Tensor:
+        """Cross-modal attention computation"""
+        pass
+```
+
+---
+
+## Data Processing API
+
+### VIVDataset Class
+
+```python
+class VIVDataset(Dataset):
+    """
+    VIV dataset class
+    
+    Args:
+        data_dir (str): Data directory path
+        split (str): Dataset split ('train', 'val', 'test')
+        sequence_length (int): Sequence length
+        transform: Data transformation function
+    """
+    
+    def __init__(self, data_dir: str, split: str = 'train', **kwargs):
+        pass
+    
+    def __len__(self) -> int:
+        """Return dataset size"""
+        pass
+    
+    def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
+        """
+        Get single data sample
+        
+        Returns:
+            Dict containing:
+                - 'flow_data': Flow data
+                - 'structure_data': Structure data
+                - 'target': Target values
+                - 'metadata': Metadata
+        """
+        pass
+```
+
+### DataProcessor Class
+
+```python
+class DataProcessor:
+    """
+    Data preprocessor
+    
+    Provides data standardization, normalization, feature extraction functions
+    """
+    
+    def __init__(self, config: Dict):
+        pass
+    
+    def normalize(self, data: np.ndarray) -> np.ndarray:
+        """Data normalization"""
+        pass
+    
+    def extract_features(self, raw_data: np.ndarray) -> np.ndarray:
+        """Feature extraction"""
+        pass
+    
+    def create_sequences(self, data: np.ndarray, seq_length: int) -> np.ndarray:
+        """Create sequence data"""
+        pass
+```
+
+---
+
+## Training API
+
+### Trainer Class
+
+```python
+class Trainer:
+    """
+    Model trainer
+    
+    Args:
+        model: Model to train
+        config: Training configuration
+        train_dataloader: Training data loader
+        val_dataloader: Validation data loader
+        optimizer: Optimizer
+        scheduler: Learning rate scheduler
+    """
+    
+    def __init__(self, model, config, **kwargs):
+        pass
+    
+    def train(self) -> Dict[str, List[float]]:
+        """
+        Execute training
+        
+        Returns:
+            Training history containing loss values and metrics
+        """
+        pass
+    
+    def evaluate(self, dataloader) -> Dict[str, float]:
+        """
+        Model evaluation
+        
+        Args:
+            dataloader: Evaluation data loader
+            
+        Returns:
+            Evaluation metrics dictionary
+        """
+        pass
+    
+    def save_checkpoint(self, filepath: str):
+        """Save checkpoint"""
+        pass
+    
+    def load_checkpoint(self, filepath: str):
+        """Load checkpoint"""
+        pass
+```
+
+### LossFunction Class
+
+```python
+class VIVLoss(nn.Module):
+    """
+    VIV-specific loss function
+    
+    Multi-task loss function with physics constraints
+    """
+    
+    def __init__(self, 
+                 mse_weight: float = 1.0,
+                 physics_weight: float = 0.1,
+                 consistency_weight: float = 0.05):
+        pass
+    
+    def forward(self, 
+                predictions: Dict[str, torch.Tensor],
+                targets: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
+        """
+        Compute loss
+        
+        Returns:
+            Dict containing:
+                - 'total_loss': Total loss
+                - 'mse_loss': MSE loss
+                - 'physics_loss': Physics constraint loss
+                - 'consistency_loss': Consistency loss
+        """
+        pass
+```
+
+---
+
+## Evaluation API
+
+### Evaluator Class
+
+```python
+class Evaluator:
+    """
+    Model evaluator
+    
+    Provides computation of various evaluation metrics
+    """
+    
+    def __init__(self, config: Dict):
+        pass
+    
+    def compute_metrics(self, 
+                       predictions: np.ndarray,
+                       targets: np.ndarray) -> Dict[str, float]:
+        """
+        Compute evaluation metrics
+        
+        Returns:
+            Dictionary containing various metrics:
+            - 'mse': Mean squared error
+            - 'mae': Mean absolute error
+            - 'rmse': Root mean squared error
+            - 'r2': R² score
+            - 'physics_consistency': Physics consistency
+        """
+        pass
+    
+    def plot_results(self, 
+                    predictions: np.ndarray,
+                    targets: np.ndarray,
+                    save_path: str):
+        """Plot result comparison charts"""
+        pass
+```
+
+---
+
+## Utility Functions API
+
+### Model Tools
+
+```python
+def load_model(model_path: str, config_path: str) -> VIVTransformer:
+    """
+    Load pre-trained model
+    
+    Args:
+        model_path: Model weights file path
+        config_path: Configuration file path
+        
+    Returns:
+        Loaded model instance
+    """
+    pass
+
+def save_model(model: VIVTransformer, save_path: str):
+    """
+    Save model
+    
+    Args:
+        model: Model to save
+        save_path: Save path
+    """
+    pass
+```
+
+### Data Tools
+
+```python
+def create_dataloader(dataset: VIVDataset, 
+                      batch_size: int = 32,
+                      shuffle: bool = True,
+                      num_workers: int = 4) -> DataLoader:
+    """
+    Create data loader
+    """
+    pass
+
+def split_dataset(dataset: VIVDataset, 
+                 train_ratio: float = 0.8,
+                 val_ratio: float = 0.1) -> Tuple[VIVDataset, VIVDataset, VIVDataset]:
+    """
+    Split dataset
+    
+    Returns:
+        (train_dataset, val_dataset, test_dataset)
+    """
+    pass
+```
+
+### Visualization Tools
+
+```python
+def plot_training_curves(history: Dict[str, List[float]], save_path: str):
+    """
+    Plot training curves
+    
+    Args:
+        history: Training history
+        save_path: Save path
+    """
+    pass
+
+def plot_attention_weights(attention_weights: torch.Tensor, 
+                          save_path: str,
+                          layer_idx: int = 0,
+                          head_idx: int = 0):
+    """
+    Visualize attention weights
+    
+    Args:
+        attention_weights: Attention weights tensor
+        save_path: Save path
+        layer_idx: Layer index
+        head_idx: Head index
+    """
+    pass
+
+def plot_viv_results(predictions: np.ndarray,
+                     targets: np.ndarray,
+                     time_steps: np.ndarray,
+                     save_path: str):
+    """
+    Plot VIV prediction results
+    
+    Args:
+        predictions: Prediction results
+        targets: Ground truth
+        time_steps: Time steps
+        save_path: Save path
+    """
+    pass
+```
+
+---
+
+## Configuration Management API
+
+### ConfigManager Class
+
+```python
+class ConfigManager:
+    """
+    Configuration manager
+    
+    Unified management of all configuration files
+    """
+    
+    def __init__(self, config_dir: str):
+        pass
+    
+    def load_config(self, config_name: str) -> Dict:
+        """Load specified configuration"""
+        pass
+    
+    def save_config(self, config: Dict, config_name: str):
+        """Save configuration"""
+        pass
+    
+    def merge_configs(self, *configs: Dict) -> Dict:
+        """Merge multiple configurations"""
+        pass
+    
+    def validate_config(self, config: Dict) -> bool:
+        """Validate configuration validity"""
+        pass
+```
+
+---
+
+## Exception Handling
+
+### Custom Exceptions
+
+```python
+class VIVTransformerError(Exception):
+    """VIV Transformer base exception class"""
+    pass
+
+class ConfigurationError(VIVTransformerError):
+    """Configuration error exception"""
+    pass
+
+class DataError(VIVTransformerError):
+    """Data error exception"""
+    pass
+
+class ModelError(VIVTransformerError):
+    """Model error exception"""
+    pass
+
+class TrainingError(VIVTransformerError):
+    """Training error exception"""
+    pass
+```
+
+---
+
+## Usage Examples
+
+### Basic Usage Flow
+
+```python
+# 1. Load configuration
+config = VIVConfig.from_json_file('config/model_config.json')
+
+# 2. Create model
+model = VIVTransformer(config)
+
+# 3. Prepare data
+dataset = VIVDataset('data/', split='train')
+dataloader = create_dataloader(dataset, batch_size=32)
+
+# 4. Train model
+trainer = Trainer(model, config, train_dataloader=dataloader)
+history = trainer.train()
+
+# 5. Evaluate model
+evaluator = Evaluator(config)
+metrics = evaluator.compute_metrics(predictions, targets)
+
+# 6. Save model
+save_model(model, 'models/viv_transformer.pth')
+```
+
+### Inference Example
+
+```python
+# Load pre-trained model
+model = load_model('models/viv_transformer.pth', 'config/model_config.json')
+model.eval()
+
+# Prepare input data
+flow_data = torch.randn(1, 100, 64)  # [batch, seq_len, flow_dim]
+structure_data = torch.randn(1, 100, 32)  # [batch, seq_len, struct_dim]
+
+# Execute inference
+with torch.no_grad():
+    outputs = model(flow_data, structure_data)
+    displacement = outputs['displacement']
+    velocity = outputs['velocity']
+    force = outputs['force']
+```
+
+---
+
+## Version Information
+
+- **Current Version**: 1.0.0
+- **Python Requirements**: >= 3.8
+- **PyTorch Requirements**: >= 1.9.0
+- **Last Updated**: December 2024
+
+---
+
+## Related Links
+
+- [Quick Start Tutorial](quick-start-tutorial) - Quick start guide
+- [Architecture Overview](architecture-overview) - Understanding the overall architecture
+- [Training Guide](training-guide) - Detailed training instructions
+- [Example Code](examples) - Practical usage examples
+- [Troubleshooting](troubleshooting) - Common problem solutions
+
+*Need help? Check [FAQ](faq) or [Troubleshooting](troubleshooting) pages.*
+
+</div>

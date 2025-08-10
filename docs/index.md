@@ -6,18 +6,43 @@ description: "Advanced Transformer Architecture with Vision Integration for Vort
 permalink: /
 ---
 
+{% include language-switcher.html %}
+
+{% if site.active_lang == 'zh' %}
+# VIVTransformer 文档
+{% else %}
 # VIVTransformer Documentation
+{% endif %}
 
+{% if site.active_lang == 'zh' %}
 欢迎来到 VIVTransformer 项目文档！这是一个先进的 Transformer 架构，专门用于涡激振动（Vortex-Induced Vibration）分析，集成了视觉处理能力。
+{% else %}
+Welcome to VIVTransformer Documentation! This is an advanced Transformer architecture specifically designed for Vortex-Induced Vibration analysis with integrated vision processing capabilities.
+{% endif %}
 
+{% if site.active_lang == 'zh' %}
+*最后更新: $(date)*
+{% else %}
 *Last updated: $(date)*
+{% endif %}
 
+{% if site.active_lang == 'zh' %}
 ## 🚀 快速开始
+{% else %}
+## 🚀 Getting Started
+{% endif %}
 
+{% if site.active_lang == 'zh' %}
 - [快速入门教程](/pages/quick-start-tutorial/) - 5分钟上手指南
 - [安装指南](/pages/installation-guide/) - 环境配置和依赖安装
 - [第一个示例](/pages/examples/) - 运行您的第一个模型
+{% else %}
+- [Quick Start Tutorial](/pages/quick-start-tutorial/) - 5-minute getting started guide
+- [Installation Guide](/pages/installation-guide/) - Environment setup and dependencies
+- [First Example](/pages/examples/) - Run your first model
+{% endif %}
 
+{% if site.active_lang == 'zh' %}
 ## 🌟 项目亮点
 
 ### 🚀 核心特性展示
@@ -25,7 +50,17 @@ permalink: /
 - [技术深度解析](/pages/technical-deep-dive/) - 核心算法与创新设计
 - [实验结果展示](/pages/experimental-showcase/) - 性能对比与案例分析
 - [交互式演示](/pages/interactive-demo/) - 在线体验与可视化
+{% else %}
+## 🌟 Project Highlights
 
+### 🚀 Core Features Showcase
+- [Project Showcase](/pages/project-showcase/) - 38+ Attention Mechanisms & 50 Loss Functions
+- [Technical Deep Dive](/pages/technical-deep-dive/) - Core Algorithms & Innovative Design
+- [Experimental Results](/pages/experimental-showcase/) - Performance Comparison & Case Studies
+- [Interactive Demo](/pages/interactive-demo/) - Online Experience & Visualization
+{% endif %}
+
+{% if site.active_lang == 'zh' %}
 ## 📚 核心文档
 
 ### 模型架构
@@ -67,7 +102,51 @@ permalink: /
 ### 学术与社区
 - [研究论文](/pages/research-papers/) - 相关研究与文献
 - [社区贡献](/pages/community-guide/) - 贡献指南与社区规范
+{% else %}
+## 📚 Core Documentation
 
+### Model Architecture
+- [Architecture Overview](/pages/architecture-overview/) - Overall architecture design
+- [Model Design](/pages/model-design/) - Detailed model structure
+- [Attention Mechanisms Guide](/pages/attention-mechanisms-guide/) - Multi-head attention implementation
+- [Custom Attention](/pages/custom-attention/) - Extended attention mechanisms
+
+### Training & Optimization
+- [Training Guide](/pages/training-guide/) - Complete training workflow
+- [Loss Functions](/pages/loss-functions/) - Loss function design
+- [SVD Loss Functions](/pages/svd-loss-functions/) - Specialized loss functions explained
+- [Multi-Loss Strategy](/pages/multi-loss-strategy/) - Multi-loss function configuration
+- [Hyperparameter Tuning](/pages/hyperparameter-tuning/) - Automated optimization
+- [Convergence Analysis](/pages/convergence-analysis/) - Training convergence monitoring
+
+### Implementation & Configuration
+- [Implementation Details](/pages/implementation-details/) - Core implementation explanation
+- [Configuration System](/pages/configuration-system/) - Configuration file management
+- [Advanced Configuration](/pages/advanced-configuration/) - Advanced configuration guide
+- [Data Pipeline](/pages/data-pipeline/) - Data processing workflow
+- [Architecture Design](/pages/architecture-design/) - System architecture details
+
+### Evaluation & Deployment
+- [Evaluation Metrics](/pages/evaluation-metrics/) - Model evaluation methods
+- [Evaluation Benchmarks](/pages/evaluation-benchmarks/) - Benchmark testing framework
+- [Experimental Results](/pages/experimental-results/) - Benchmark test results
+- [Performance Comparison](/pages/performance-comparison/) - Comparison with other methods
+- [Performance Optimization](/pages/performance-optimization/) - Performance optimization guide
+- [Deployment Guide](/pages/deployment-guide/) - Production environment deployment
+
+### Development & Maintenance
+- [Development Guide](/pages/development-guide/) - Development environment setup
+- [Best Practices](/pages/best-practices/) - Development best practices
+- [Tutorials & Examples](/pages/tutorials-examples/) - Detailed tutorials and examples
+- [Troubleshooting](/pages/troubleshooting/) - Common problem solving
+- [FAQ](/pages/faq/) - Frequently asked questions
+
+### Academic & Community
+- [Research Papers](/pages/research-papers/) - Related research and literature
+- [Community Contribution](/pages/community-guide/) - Contribution guide and community standards
+{% endif %}
+
+{% if site.active_lang == 'zh' %}
 ## 🎯 项目特色
 
 ### 🔬 先进架构
@@ -84,7 +163,26 @@ permalink: /
 - **容器化部署**：Docker 和 Kubernetes 支持
 - **边缘计算**：移动端和 IoT 设备优化
 - **云端集成**：AWS、Azure、GCP 部署方案
+{% else %}
+## 🎯 Project Features
 
+### 🔬 Advanced Architecture
+- **Multi-Head Attention Mechanisms**: Support for self-attention, cross-attention, and sparse attention
+- **Vision Integration**: Seamless integration of visual feature processing
+- **Modular Design**: Flexible component-based architecture
+
+### 📊 Powerful Features
+- **Multi-Loss Functions**: Support for combined losses and adaptive weights
+- **Auto-Tuning**: Integrated Optuna hyperparameter optimization
+- **Real-time Monitoring**: Complete training and inference monitoring
+
+### 🚀 Production Ready
+- **Containerized Deployment**: Docker and Kubernetes support
+- **Edge Computing**: Mobile and IoT device optimization
+- **Cloud Integration**: AWS, Azure, GCP deployment solutions
+{% endif %}
+
+{% if site.active_lang == 'zh' %}
 ## 📈 性能指标
 
 | 指标 | VIVTransformer | 基线模型 | 提升 |
@@ -100,7 +198,25 @@ permalink: /
 - **优化器**：AdamW、SGD、自适应学习率
 - **部署**：Docker、Kubernetes、ONNX
 - **监控**：TensorBoard、Weights & Biases
+{% else %}
+## 📈 Performance Metrics
 
+| Metric | VIVTransformer | Baseline Model | Improvement |
+|--------|----------------|----------------|-------------|
+| Prediction Accuracy | 94.2% | 87.5% | +6.7% |
+| Inference Speed | 15ms | 28ms | +46% |
+| Memory Usage | 2.1GB | 3.8GB | -45% |
+
+## 🛠️ Technology Stack
+
+- **Deep Learning Framework**: PyTorch 2.0+
+- **Attention Mechanisms**: Custom multi-head attention
+- **Optimizers**: AdamW, SGD, adaptive learning rate
+- **Deployment**: Docker, Kubernetes, ONNX
+- **Monitoring**: TensorBoard, Weights & Biases
+{% endif %}
+
+{% if site.active_lang == 'zh' %}
 ## 📞 获取帮助
 
 - 📖 [获取帮助](/pages/getting-help/) - 完整的帮助资源
@@ -116,7 +232,28 @@ permalink: /
 ## 📄 许可证
 
 本项目采用 [MIT 许可证](https://github.com/yourusername/VIVTransformer/blob/main/LICENSE)。
+{% else %}
+## 📞 Getting Help
+
+- 📖 [Getting Help](/pages/getting-help/) - Complete help resources
+- 🔧 [Troubleshooting](/pages/troubleshooting/) - Problem diagnosis and solutions
+- ❓ [FAQ](/pages/faq/) - Frequently asked questions and quick answers
+- 🐛 [Issue Reporting](https://github.com/yourusername/VIVTransformer/issues)
+- 💬 [Discussions](https://github.com/yourusername/VIVTransformer/discussions)
+
+## 🤝 Contributing
+
+We welcome community contributions! Please check the [Contributing Guide](https://github.com/yourusername/VIVTransformer/blob/main/CONTRIBUTING.md) to learn how to participate in project development.
+
+## 📄 License
+
+This project is licensed under the [MIT License](https://github.com/yourusername/VIVTransformer/blob/main/LICENSE).
+{% endif %}
 
 ---
 
+{% if site.active_lang == 'zh' %}
 *最后更新：{{ site.time | date: "%Y-%m-%d" }}*
+{% else %}
+*Last updated: {{ site.time | date: "%Y-%m-%d" }}*
+{% endif %}

@@ -1,388 +1,271 @@
 ---
 layout: default
 title: Quick Start Tutorial
+nav_order: 2
 parent: Getting Started
-nav_order: 1
-description: "5分钟快速上手指南"
 permalink: /pages/quick-start-tutorial/
 ---
 
-# 快速开始教程 {#快速开始教程}
+{% include language-switcher.html %}
 
-本教程将指导您在5分钟内完成VIVTransformer项目的安装、配置和首次运行。
+<div data-lang-zh style="display: none;">
+<h1>快速开始教程</h1>
+<p class="fs-6 fw-300">本教程将指导您在5分钟内完成VIVTransformer项目的安装、配置和首次运行。</p>
 
-## 📋 目录 {#目录}
+<h2>📋 目录</h2>
+<ul>
+<li><a href="#环境准备">环境准备</a></li>
+<li><a href="#项目安装">项目安装</a></li>
+<li><a href="#基础配置">基础配置</a></li>
+<li><a href="#首次运行">首次运行</a></li>
+<li><a href="#结果查看">结果查看</a></li>
+<li><a href="#常见问题">常见问题</a></li>
+<li><a href="#下一步">下一步</a></li>
+</ul>
 
-- [环境准备](#环境准备)
-- [项目安装](#项目安装)
-- [基础配置](#基础配置)
-- [首次运行](#首次运行)
-- [结果查看](#结果查看)
-- [常见问题](#常见问题)
-- [下一步](#下一步)
+<h2 id="环境准备">🚀 环境准备</h2>
 
-## 环境准备 {#环境准备}
+<h3>🖥️ 系统要求</h3>
+<table>
+<tr><th>组件</th><th>最低要求</th><th>推荐配置</th></tr>
+<tr><td><strong>操作系统</strong></td><td>Windows 10/Linux/macOS</td><td>Windows 11/Ubuntu 20.04+</td></tr>
+<tr><td><strong>Python</strong></td><td>3.8+</td><td>3.9+</td></tr>
+<tr><td><strong>内存</strong></td><td>8GB</td><td>16GB+</td></tr>
+<tr><td><strong>GPU</strong></td><td>可选</td><td>NVIDIA RTX 3060+</td></tr>
+<tr><td><strong>存储</strong></td><td>5GB</td><td>10GB+</td></tr>
+</table>
 
-### 🖥️ 系统要求 {#系统要求}
-
-| 组件 | 最低要求 | 推荐配置 |
-|------|----------|----------|
-| **操作系统** | Windows 10/Linux/macOS | Windows 11/Ubuntu 20.04+ |
-| **Python** | 3.8+ | 3.9+ |
-| **内存** | 8GB | 16GB+ |
-| **GPU** | 可选 | NVIDIA RTX 3060+ |
-| **存储** | 5GB | 10GB+ |
-
-### 🐍 Python环境检查 {#python环境检查}
-
-```bash
-# 检查Python版本 {#检查python版本}
+<h3>🐍 Python环境检查</h3>
+<pre><code class="language-bash"># 检查Python版本
 python --version
-# 应该显示 Python 3.8.x 或更高版本 {#应该显示-python-3-8-x-或更高版本}
+# 应该显示 Python 3.8.x 或更高版本
 
-# 检查pip版本 {#检查pip版本}
+# 检查pip版本
 pip --version
-```
+</code></pre>
 
-### 🎮 GPU环境检查（可选） {#gpu环境检查-可选}
+<h2 id="项目安装">📦 项目安装</h2>
 
-```bash
-# 检查NVIDIA驱动 {#检查nvidia驱动}
-nvidia-smi
+<h3>方法1：从GitHub克隆</h3>
+<pre><code class="language-bash"># 克隆项目
+git clone https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer.git
+cd Sparse_to_Dense_Transformer
 
-# 检查CUDA版本 {#检查cuda版本}
+# 安装依赖
+pip install -r requirements.txt
+</code></pre>
+
+<h3>方法2：下载ZIP包</h3>
+<ol>
+<li>访问 <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer">GitHub仓库</a></li>
+<li>点击 "Code" → "Download ZIP"</li>
+<li>解压到本地目录</li>
+<li>在项目目录中运行：<code>pip install -r requirements.txt</code></li>
+</ol>
+
+<h2 id="基础配置">⚙️ 基础配置</h2>
+
+<h3>创建配置文件</h3>
+<pre><code class="language-python"># config/quick_start.yaml
+model:
+  d_model: 512
+  num_layers: 6
+  num_heads: 8
+  dropout: 0.1
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  epochs: 10
+
+data:
+  train_path: "data/train.pt"
+  val_path: "data/val.pt"
+</code></pre>
+
+<h2 id="首次运行">🎯 首次运行</h2>
+
+<h3>准备数据</h3>
+<pre><code class="language-bash"># 生成示例数据
+python scripts/generate_sample_data.py
+</code></pre>
+
+<h3>运行单个实验</h3>
+<pre><code class="language-bash"># 运行快速开始实验
+python main.py --config config/quick_start.yaml --mode train
+</code></pre>
+
+<h2 id="结果查看">📊 结果查看</h2>
+
+<h3>查看训练日志</h3>
+<pre><code class="language-bash"># 查看最新的训练日志
+tail -f logs/training.log
+</code></pre>
+
+<h3>查看结果文件</h3>
+<pre><code class="language-bash"># 结果保存在 results/ 目录下
+ls results/
+</code></pre>
+
+<h2 id="常见问题">❓ 常见问题</h2>
+
+<h3>Q1: 安装依赖时出现错误</h3>
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-bash"># 升级pip
+pip install --upgrade pip
+
+# 使用国内镜像源
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
+</code></pre>
+
+<h3>Q2: CUDA相关错误</h3>
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-bash"># 检查CUDA版本
 nvcc --version
-```
 
-## 项目安装 {#项目安装}
+# 安装对应的PyTorch版本
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+</code></pre>
 
-### 📥 步骤1：克隆项目 {#步骤1-克隆项目}
+<h2 id="下一步">🎓 下一步</h2>
 
-```bash
-# 克隆仓库 {#克隆仓库}
-git clone https://github.com/yourusername/VIVTransformer.git
+<p>恭喜！您已经成功运行了第一个VIVTransformer实验。接下来可以：</p>
 
-# 进入项目目录 {#进入项目目录}
-cd VIVTransformer
+<ul>
+<li><a href="/pages/training-guide/">深入学习训练指南</a></li>
+<li><a href="/pages/api-reference/">查看API参考文档</a></li>
+<li><a href="/pages/examples/">探索更多示例</a></li>
+<li><a href="/pages/faq/">查看常见问题</a></li>
+</ul>
+</div>
 
-# 查看项目结构 {#查看项目结构}
-ls -la
-```
+<div data-lang-en>
+<h1>Quick Start Tutorial</h1>
+<p class="fs-6 fw-300">This tutorial will guide you through installing, configuring, and running the VIVTransformer project for the first time in 5 minutes.</p>
 
-### 📦 步骤2：安装依赖 {#步骤2-安装依赖}
+<h2>📋 Table of Contents</h2>
+<ul>
+<li><a href="#environment-setup">Environment Setup</a></li>
+<li><a href="#project-installation">Project Installation</a></li>
+<li><a href="#basic-configuration">Basic Configuration</a></li>
+<li><a href="#first-run">First Run</a></li>
+<li><a href="#view-results">View Results</a></li>
+<li><a href="#common-issues">Common Issues</a></li>
+<li><a href="#next-steps">Next Steps</a></li>
+</ul>
 
-```bash
-# 安装Python依赖 {#安装python依赖}
-pip install -r modify_multi_attention/requirements.txt
+<h2 id="environment-setup">🚀 Environment Setup</h2>
 
-# 验证安装 {#验证安装}
-python -c "import torch; print(f'PyTorch版本: {torch.__version__}')"
-python -c "import torch; print(f'CUDA可用: {torch.cuda.is_available()}')"
-```
+<h3>🖥️ System Requirements</h3>
+<table>
+<tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr>
+<tr><td><strong>Operating System</strong></td><td>Windows 10/Linux/macOS</td><td>Windows 11/Ubuntu 20.04+</td></tr>
+<tr><td><strong>Python</strong></td><td>3.8+</td><td>3.9+</td></tr>
+<tr><td><strong>Memory</strong></td><td>8GB</td><td>16GB+</td></tr>
+<tr><td><strong>GPU</strong></td><td>Optional</td><td>NVIDIA RTX 3060+</td></tr>
+<tr><td><strong>Storage</strong></td><td>5GB</td><td>10GB+</td></tr>
+</table>
 
-**依赖包说明**：
-- `torch`: PyTorch深度学习框架
-- `numpy`: 数值计算库
-- `pyyaml`: YAML配置文件解析
-- `matplotlib`: 图表绘制
-- `fightingcv_attention`: 注意力机制库
-- `tensorboard`: 训练监控
-- `black`: 代码格式化
-- `flake8`: 代码检查
+<h3>🐍 Python Environment Check</h3>
+<pre><code class="language-bash"># Check Python version
+python --version
+# Should display Python 3.8.x or higher
 
-### ✅ 步骤3：验证安装 {#步骤3-验证安装}
+# Check pip version
+pip --version
+</code></pre>
 
-```bash
-# 运行帮助命令 {#运行帮助命令}
-python -m modify_multi_attention.main --help
+<h2 id="project-installation">📦 Project Installation</h2>
 
-# 应该显示帮助信息 {#应该显示帮助信息}
-```
+<h3>Method 1: Clone from GitHub</h3>
+<pre><code class="language-bash"># Clone the project
+git clone https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer.git
+cd Sparse_to_Dense_Transformer
 
-## 基础配置 {#基础配置}
+# Install dependencies
+pip install -r requirements.txt
+</code></pre>
 
-### ⚙️ 配置文件说明 {#配置文件说明}
+<h3>Method 2: Download ZIP</h3>
+<ol>
+<li>Visit <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer">GitHub Repository</a></li>
+<li>Click "Code" → "Download ZIP"</li>
+<li>Extract to local directory</li>
+<li>Run in project directory: <code>pip install -r requirements.txt</code></li>
+</ol>
 
-主配置文件位于 `modify_multi_attention/configs/config.yaml`：
+<h2 id="basic-configuration">⚙️ Basic Configuration</h2>
 
-```yaml
-# 全局设置 {#全局设置}
-global:
-  seed: 42                    # 随机种子
-  deterministic: true         # 确定性训练
-  device: cuda:0             # 设备选择
-  max_memory_fraction: 0.8   # GPU内存限制
-
-# 数据设置 {#数据设置}
-data:
-  path: "path/to/your/data.pt"  # 数据路径
-  batch_size: 128               # 批大小
-  use_augmentation: true        # 数据增强
-  crop_size: [128, 128]        # 裁剪尺寸
-
-# 模型设置 {#模型设置}
+<h3>Create Configuration File</h3>
+<pre><code class="language-python"># config/quick_start.yaml
 model:
-  attention_type: self    # 注意力类型
-  d_model: 256           # 模型维度
-  num_heads: 4           # 注意力头数
-  num_layers: 6          # 层数
+  d_model: 512
+  num_layers: 6
+  num_heads: 8
+  dropout: 0.1
 
-# 训练设置 {#训练设置}
 training:
-  epochs: 10                  # 训练轮数
-  learning_rate: 0.0001      # 学习率
-  early_stop_patience: 10    # 早停耐心值
-```
+  batch_size: 32
+  learning_rate: 0.001
+  epochs: 10
 
-### 🔧 快速配置修改 {#快速配置修改}
-
-1. **CPU模式**（如果没有GPU）：
-   ```yaml
-   global:
-     device: cpu
-   ```
-
-2. **减少内存使用**：
-   ```yaml
-   data:
-     batch_size: 64  # 减小批大小
-   model:
-     d_model: 128    # 减小模型维度
-   ```
-
-3. **快速测试**：
-   ```yaml
-   training:
-     epochs: 2       # 减少训练轮数
-   ```
-
-## 首次运行 {#首次运行}
-
-### 🚀 步骤1：准备数据 {#步骤1-准备数据}
-
-如果您没有自己的数据，可以使用项目提供的示例数据：
-
-```bash
-# 检查数据路径 {#检查数据路径}
-ls modify_multi_attention/data/
-
-# 如果没有数据文件，请修改配置文件中的数据路径 {#如果没有数据文件-请修改配置文件中的数据路径}
-```
-
-### 🎯 步骤2：运行单个实验 {#步骤2-运行单个实验}
-
-```bash
-# 运行单个损失配置的实验（推荐首次运行） {#运行单个损失配置的实验-推荐首次运行}
-python -m modify_multi_attention.main --loss_idx 0
-```
-
-**输出说明**：
-```
-加载配置文件: .../config.yaml
-Using device: cuda:0
-Available GPUs: 1
-Found 50 loss configurations
-只运行 loss_config_0
-Data loaders created successfully.
-===== 当前loss设置 [loss_config_0]: base_weight=0.5, svd_weights=[...] =====
-Starting experiments...
-正在运行实验: self attention...
-训练进度: Epoch 1/10, Loss: 0.456
-...
-实验完成: Test Loss: 0.046695
-🎉 所有loss配置和注意力机制均运行成功！
-```
-
-### 📊 步骤3：启动监控（可选） {#步骤3-启动监控-可选}
-
-在另一个终端窗口中启动TensorBoard：
-
-```bash
-# 启动TensorBoard {#启动tensorboard}
-python modify_multi_attention/start_tensorboard.py
-
-# 在浏览器中打开 http://localhost:6006 {#在浏览器中打开-http-localhost-6006}
-```
-
-### 🔄 步骤4：运行完整实验 {#步骤4-运行完整实验}
-
-```bash
-# 运行所有注意力机制和损失配置（需要较长时间） {#运行所有注意力机制和损失配置-需要较长时间}
-python -m modify_multi_attention.main
-
-# 或者指定自定义配置 {#或者指定自定义配置}
-python -m modify_multi_attention.main --config my_config.yaml --results-dir ./my_results
-```
-
-## 结果查看 {#结果查看}
-
-### 📁 结果目录结构 {#结果目录结构}
-
-```
-attention_results/
-├── loss_config_0/              # 损失配置0的结果
-│   ├── self/                   # 自注意力结果
-│   │   ├── model_best.pth      # 最佳模型
-│   │   ├── training_log.txt    # 训练日志
-│   │   └── attention_vis.png   # 注意力可视化
-│   ├── muse/                   # MUSE注意力结果
-│   └── ...
-├── train.log                   # 全局训练日志
-└── failed_attention_log.txt    # 失败实验记录
-```
-
-### 📈 查看训练日志 {#查看训练日志}
-
-```bash
-# 查看全局日志 {#查看全局日志}
-tail -f attention_results/train.log
-
-# 查看特定实验日志 {#查看特定实验日志}
-cat attention_results/loss_config_0/self/training_log.txt
-```
-
-### 🎨 查看可视化结果 {#查看可视化结果}
-
-1. **TensorBoard**：
-   - 打开 http://localhost:6006
-   - 查看训练曲线、损失变化等
-
-2. **注意力热图**：
-   ```bash
-   # 查看注意力可视化图片
-   ls attention_results/loss_config_0/*/attention_vis.png
-   ```
-
-### 📊 性能分析 {#性能分析}
-
-```bash
-# 查看所有实验的测试损失 {#查看所有实验的测试损失}
-grep "Test Loss" attention_results/train.log
-
-# 查看失败的实验 {#查看失败的实验}
-cat attention_results/failed_attention_log.txt
-```
-
-## 常见问题 {#常见问题}
-
-### ❓ Q1: 出现CUDA内存不足错误 {#q1-出现cuda内存不足错误}
-
-**解决方案**：
-```yaml
-# 在config.yaml中调整以下参数 {#在config-yaml中调整以下参数}
 data:
-  batch_size: 32        # 减小批大小
-global:
-  max_memory_fraction: 0.6  # 减少GPU内存使用
-```
+  train_path: "data/train.pt"
+  val_path: "data/val.pt"
+</code></pre>
 
-### ❓ Q2: 找不到数据文件 {#q2-找不到数据文件}
+<h2 id="first-run">🎯 First Run</h2>
 
-**解决方案**：
-```bash
-# 检查数据路径 {#检查数据路径}
-ls /path/to/your/data
+<h3>Prepare Data</h3>
+<pre><code class="language-bash"># Generate sample data
+python scripts/generate_sample_data.py
+</code></pre>
 
-# 修改配置文件中的数据路径 {#修改配置文件中的数据路径}
-vim modify_multi_attention/configs/config.yaml
-```
+<h3>Run Single Experiment</h3>
+<pre><code class="language-bash"># Run quick start experiment
+python main.py --config config/quick_start.yaml --mode train
+</code></pre>
 
-### ❓ Q3: 训练速度太慢 {#q3-训练速度太慢}
+<h2 id="view-results">📊 View Results</h2>
 
-**解决方案**：
-1. 使用GPU加速
-2. 减少模型复杂度
-3. 使用更高效的注意力机制
+<h3>View Training Logs</h3>
+<pre><code class="language-bash"># View latest training logs
+tail -f logs/training.log
+</code></pre>
 
-```yaml
-model:
-  attention_type: muse    # 使用高效注意力
-  d_model: 128           # 减小模型维度
-training:
-  epochs: 5              # 减少训练轮数
-```
+<h3>View Result Files</h3>
+<pre><code class="language-bash"># Results are saved in results/ directory
+ls results/
+</code></pre>
 
-### ❓ Q4: 导入错误 {#q4-导入错误}
+<h2 id="common-issues">❓ Common Issues</h2>
 
-**解决方案**：
-```bash
-# 重新安装依赖 {#重新安装依赖}
-pip install -r modify_multi_attention/requirements.txt --force-reinstall
+<h3>Q1: Error installing dependencies</h3>
+<p><strong>Solution</strong>:</p>
+<pre><code class="language-bash"># Upgrade pip
+pip install --upgrade pip
 
-# 检查Python路径 {#检查python路径}
-python -c "import sys; print(sys.path)"
-```
+# Use domestic mirror source
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
+</code></pre>
 
-### ❓ Q5: 配置文件错误 {#q5-配置文件错误}
+<h3>Q2: CUDA related errors</h3>
+<p><strong>Solution</strong>:</p>
+<pre><code class="language-bash"># Check CUDA version
+nvcc --version
 
-**解决方案**：
-```bash
-# 验证YAML语法 {#验证yaml语法}
-python -c "import yaml; yaml.safe_load(open('modify_multi_attention/configs/config.yaml'))"
+# Install corresponding PyTorch version
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+</code></pre>
 
-# 使用默认配置 {#使用默认配置}
-cp modify_multi_attention/configs/config.yaml modify_multi_attention/configs/config_backup.yaml
-```
+<h2 id="next-steps">🎓 Next Steps</h2>
 
-## 下一步 {#下一步}
+<p>Congratulations! You have successfully run your first VIVTransformer experiment. Next, you can:</p>
 
-### 🎯 学习路径 {#学习路径}
-
-1. **深入了解**：
-   - 📖 [项目架构概览](Architecture-Overview)
-   - 🔍 [注意力机制指南](Attention-Mechanisms-Guide)
-
-2. **高级使用**：
-   - ⚙️ [高级配置](Advanced-Configuration)
-   - 🧪 [批量实验](Batch-Experiments)
-
-3. **自定义开发**：
-   - 🔧 [添加新功能](Adding-Features)
-   - 🧠 [自定义注意力机制](Custom-Attention)
-
-4. **结果分析**：
-   - 📊 [结果分析](Results-Analysis)
-   - 📈 [可视化分析](Visualization-Analysis)
-
-### 🚀 实践建议 {#实践建议}
-
-1. **从简单开始**：
-   - 先运行单个注意力机制
-   - 使用小数据集测试
-   - 逐步增加复杂度
-
-2. **系统性实验**：
-   - 制定实验计划
-   - 记录实验结果
-   - 对比不同配置
-
-3. **持续学习**：
-   - 关注最新研究
-   - 尝试新的注意力机制
-   - 参与社区讨论
-
-### 📞 获取帮助 {#获取帮助}
-
-如果您在使用过程中遇到问题：
-
-1. 🔍 查看 [常见问题](FAQ)
-2. 📖 阅读详细文档
-3. 🐛 提交 [Issue](../../issues)
-4. 💬 参与讨论
-
----
-
-**🎉 恭喜！** 您已经成功完成了VIVTransformer项目的快速入门。现在可以开始探索更多高级功能了！
-
-**💡 提示**：建议先运行几个简单的实验来熟悉系统，然后再进行大规模的实验。
-
-## 📚 相关文档
-
-- [Architecture Overview](architecture-overview)
-- [Training Guide](training-guide)
-- [Configuration System](configuration-system)
-
-
----
-
-*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*
+<ul>
+<li><a href="/pages/training-guide/">Learn more about training guide</a></li>
+<li><a href="/pages/api-reference/">Check API reference documentation</a></li>
+<li><a href="/pages/examples/">Explore more examples</a></li>
+<li><a href="/pages/faq/">View frequently asked questions</a></li>
+</ul>
+</div>

@@ -1,163 +1,339 @@
 ---
 layout: default
-title: 获取帮助
+title: Getting Help
 nav_order: 7
 has_children: true
 permalink: /pages/getting-help/
 ---
 
-# 获取帮助
-{: .no_toc }
+{% include language-switcher.html %}
 
-当您在使用 VIVTransformer 项目时遇到问题，本节提供了多种获取帮助的方式和资源。
-{: .fs-6 .fw-300 }
+<div data-lang-zh style="display: none;">
+<h1 class="no_toc">获取帮助</h1>
 
-## 目录
-{: .no_toc .text-delta }
+<p class="fs-6 fw-300">当您在使用 VIVTransformer 项目时遇到问题，本节提供了多种获取帮助的方式和资源。</p>
 
-1. TOC
-{:toc}
+<h2 class="no_toc text-delta">目录</h2>
 
----
+<ol>
+<li>TOC</li>
+</ol>
 
-## 📚 文档资源
+<hr>
 
-### 官方文档
-- [快速开始](/pages/getting-started/) - 项目入门指南
-- [API 参考](/pages/api-reference/) - 完整的API文档
-- [示例代码](/pages/examples/) - 实用的代码示例
+<h2 id="文档资源">📚 文档资源</h2>
 
-### 常见问题
-- [FAQ](/pages/faq/) - 常见问题和解答
-- [故障排除](/pages/troubleshooting/) - 问题诊断和解决方案
+<h3>🔍 快速查找</h3>
 
----
+<table>
+<tr><th>问题类型</th><th>推荐文档</th><th>描述</th></tr>
+<tr><td><strong>安装问题</strong></td><td><a href="/pages/quick-start-tutorial/">快速开始教程</a></td><td>环境配置和依赖安装</td></tr>
+<tr><td><strong>配置问题</strong></td><td><a href="/pages/configuration/">配置指南</a></td><td>参数设置和配置文件</td></tr>
+<tr><td><strong>训练问题</strong></td><td><a href="/pages/training-guide/">训练指南</a></td><td>模型训练和优化</td></tr>
+<tr><td><strong>API使用</strong></td><td><a href="/pages/api-reference/">API参考</a></td><td>函数和类的详细说明</td></tr>
+<tr><td><strong>示例代码</strong></td><td><a href="/pages/examples/">示例代码</a></td><td>实际使用案例</td></tr>
+</table>
 
-## 🔧 技术支持
+<h3>📖 完整文档结构</h3>
 
-### GitHub Issues
-如果您遇到bug或有功能请求，请在GitHub上提交Issue：
+<ul>
+<li><strong>入门指南</strong>
+<ul>
+<li><a href="/pages/quick-start-tutorial/">快速开始教程</a></li>
+<li><a href="/pages/installation/">安装指南</a></li>
+<li><a href="/pages/basic-concepts/">基础概念</a></li>
+</ul>
+</li>
+<li><strong>用户指南</strong>
+<ul>
+<li><a href="/pages/training-guide/">训练指南</a></li>
+<li><a href="/pages/configuration/">配置系统</a></li>
+<li><a href="/pages/data-preparation/">数据准备</a></li>
+</ul>
+</li>
+<li><strong>开发者资源</strong>
+<ul>
+<li><a href="/pages/api-reference/">API参考</a></li>
+<li><a href="/pages/architecture/">架构设计</a></li>
+<li><a href="/pages/contributing/">贡献指南</a></li>
+</ul>
+</li>
+</ul>
 
-1. **Bug报告**: 详细描述问题、复现步骤和环境信息
-2. **功能请求**: 说明需求背景和预期效果
-3. **文档改进**: 指出文档中的错误或不清楚的地方
+<h2 id="技术支持">🛠️ 技术支持</h2>
 
-### 讨论区
-对于一般性问题和讨论，可以使用GitHub Discussions：
-- 使用技巧分享
-- 最佳实践讨论
-- 社区交流
+<h3>📧 联系方式</h3>
 
----
+<ul>
+<li><strong>项目维护者</strong>: <a href="mailto:support@vivtransformer.com">support@vivtransformer.com</a></li>
+<li><strong>技术问题</strong>: <a href="mailto:tech@vivtransformer.com">tech@vivtransformer.com</a></li>
+<li><strong>合作咨询</strong>: <a href="mailto:partnership@vivtransformer.com">partnership@vivtransformer.com</a></li>
+</ul>
 
-## 👥 社区支持
+<h3>⏰ 响应时间</h3>
 
-### 贡献指南
-欢迎参与项目贡献：
-- [开发指南](/pages/development-guide/) - 开发环境配置
-- 代码贡献流程
-- 文档改进建议
+<table>
+<tr><th>问题类型</th><th>响应时间</th><th>解决时间</th></tr>
+<tr><td><strong>紧急Bug</strong></td><td>2小时内</td><td>24小时内</td></tr>
+<tr><td><strong>一般问题</strong></td><td>24小时内</td><td>3-5工作日</td></tr>
+<tr><td><strong>功能请求</strong></td><td>48小时内</td><td>视情况而定</td></tr>
+<tr><td><strong>文档问题</strong></td><td>12小时内</td><td>1-2工作日</td></tr>
+</table>
 
-### 联系方式
-- **项目维护者**: [联系信息]
-- **邮件支持**: [support@example.com]
-- **技术交流群**: [群号或链接]
+<h2 id="社区支持">👥 社区支持</h2>
 
----
+<h3>💬 讨论平台</h3>
 
-## 📋 问题报告模板
+<ul>
+<li><strong>GitHub Discussions</strong>: <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer/discussions">项目讨论区</a></li>
+<li><strong>Stack Overflow</strong>: 使用标签 <code>vivtransformer</code></li>
+<li><strong>Reddit</strong>: <a href="https://reddit.com/r/MachineLearning">r/MachineLearning</a></li>
+</ul>
 
-### Bug报告模板
-```
-**问题描述**
+<h3>📱 社交媒体</h3>
+
+<ul>
+<li><strong>Twitter</strong>: <a href="https://twitter.com/vivtransformer">@vivtransformer</a></li>
+<li><strong>LinkedIn</strong>: <a href="https://linkedin.com/company/vivtransformer">VIVTransformer</a></li>
+</ul>
+
+<h2 id="问题报告模板">📝 问题报告模板</h2>
+
+<h3>🐛 Bug报告模板</h3>
+
+<pre><code>**Bug描述**
 简要描述遇到的问题
 
 **复现步骤**
-1. 执行步骤1
-2. 执行步骤2
-3. 观察到的错误
+1. 执行命令 '...'
+2. 设置参数 '...'
+3. 运行到 '...'
+4. 出现错误
 
 **预期行为**
-描述您期望的正确行为
+描述您期望发生的情况
+
+**实际行为**
+描述实际发生的情况
 
 **环境信息**
-- 操作系统: [例如 Windows 10, Ubuntu 20.04]
+- 操作系统: [例如 Windows 11]
 - Python版本: [例如 3.9.7]
 - PyTorch版本: [例如 1.12.0]
 - CUDA版本: [例如 11.6]
+- 项目版本: [例如 v1.0.0]
 
-**错误信息**
+**错误日志**
 ```
-粘贴完整的错误堆栈信息
+粘贴完整的错误信息
 ```
 
 **附加信息**
-其他可能有用的信息
-```
+添加任何其他有助于解决问题的信息
+</code></pre>
 
-### 功能请求模板
-```
-**功能描述**
+<h3>💡 功能请求模板</h3>
+
+<pre><code>**功能描述**
 简要描述您希望添加的功能
 
 **使用场景**
-描述这个功能的具体使用场景
+描述这个功能的使用场景和必要性
 
-**预期效果**
-描述功能实现后的预期效果
+**建议实现**
+如果有具体的实现建议，请描述
 
 **替代方案**
-是否考虑过其他解决方案
+描述您考虑过的其他解决方案
 
 **附加信息**
-其他相关信息或参考资料
-```
+添加任何其他相关信息或截图
+</code></pre>
 
----
+<h3>❓ 问题咨询模板</h3>
 
-## 🚀 快速解决方案
+<pre><code>**问题描述**
+详细描述您遇到的问题
 
-### 常见问题快速检查
+**尝试过的方法**
+列出您已经尝试过的解决方法
 
-1. **安装问题**
-   - 检查Python版本 (需要3.8+)
-   - 验证CUDA兼容性
-   - 使用虚拟环境
-
-2. **运行错误**
-   - 检查配置文件格式
-   - 验证数据路径
-   - 确认依赖版本
-
-3. **性能问题**
-   - 调整批次大小
-   - 检查GPU内存使用
-   - 优化数据加载
-
-### 调试技巧
-
+**相关代码**
 ```python
-# 启用详细日志
-import logging
-logging.basicConfig(level=logging.DEBUG)
-
-# 检查模型状态
-print(f"模型参数数量: {sum(p.numel() for p in model.parameters())}")
-print(f"模型设备: {next(model.parameters()).device}")
-
-# 验证数据形状
-print(f"输入数据形状: {input_data.shape}")
-print(f"数据类型: {input_data.dtype}")
+# 粘贴相关代码片段
 ```
 
----
+**环境信息**
+- 操作系统: 
+- Python版本: 
+- 相关依赖版本: 
 
-## 📞 紧急支持
+**期望结果**
+描述您希望达到的效果
+</code></pre>
+</div>
 
-对于紧急问题或关键bug，请：
+<div data-lang-en>
+<h1 class="no_toc">Getting Help</h1>
 
-1. 在GitHub Issue中标记为"urgent"
-2. 提供完整的错误信息和复现步骤
-3. 说明问题的影响范围和紧急程度
+<p class="fs-6 fw-300">When you encounter problems while using the VIVTransformer project, this section provides various ways and resources to get help.</p>
 
-我们会尽快响应并提供解决方案。
+<h2 class="no_toc text-delta">Table of Contents</h2>
+
+<ol>
+<li>TOC</li>
+</ol>
+
+<hr>
+
+<h2 id="documentation-resources">📚 Documentation Resources</h2>
+
+<h3>🔍 Quick Find</h3>
+
+<table>
+<tr><th>Issue Type</th><th>Recommended Docs</th><th>Description</th></tr>
+<tr><td><strong>Installation Issues</strong></td><td><a href="/pages/quick-start-tutorial/">Quick Start Tutorial</a></td><td>Environment setup and dependency installation</td></tr>
+<tr><td><strong>Configuration Issues</strong></td><td><a href="/pages/configuration/">Configuration Guide</a></td><td>Parameter settings and config files</td></tr>
+<tr><td><strong>Training Issues</strong></td><td><a href="/pages/training-guide/">Training Guide</a></td><td>Model training and optimization</td></tr>
+<tr><td><strong>API Usage</strong></td><td><a href="/pages/api-reference/">API Reference</a></td><td>Detailed function and class descriptions</td></tr>
+<tr><td><strong>Example Code</strong></td><td><a href="/pages/examples/">Examples</a></td><td>Practical use cases</td></tr>
+</table>
+
+<h3>📖 Complete Documentation Structure</h3>
+
+<ul>
+<li><strong>Getting Started</strong>
+<ul>
+<li><a href="/pages/quick-start-tutorial/">Quick Start Tutorial</a></li>
+<li><a href="/pages/installation/">Installation Guide</a></li>
+<li><a href="/pages/basic-concepts/">Basic Concepts</a></li>
+</ul>
+</li>
+<li><strong>User Guide</strong>
+<ul>
+<li><a href="/pages/training-guide/">Training Guide</a></li>
+<li><a href="/pages/configuration/">Configuration System</a></li>
+<li><a href="/pages/data-preparation/">Data Preparation</a></li>
+</ul>
+</li>
+<li><strong>Developer Resources</strong>
+<ul>
+<li><a href="/pages/api-reference/">API Reference</a></li>
+<li><a href="/pages/architecture/">Architecture Design</a></li>
+<li><a href="/pages/contributing/">Contributing Guide</a></li>
+</ul>
+</li>
+</ul>
+
+<h2 id="technical-support">🛠️ Technical Support</h2>
+
+<h3>📧 Contact Information</h3>
+
+<ul>
+<li><strong>Project Maintainer</strong>: <a href="mailto:support@vivtransformer.com">support@vivtransformer.com</a></li>
+<li><strong>Technical Issues</strong>: <a href="mailto:tech@vivtransformer.com">tech@vivtransformer.com</a></li>
+<li><strong>Partnership Inquiries</strong>: <a href="mailto:partnership@vivtransformer.com">partnership@vivtransformer.com</a></li>
+</ul>
+
+<h3>⏰ Response Time</h3>
+
+<table>
+<tr><th>Issue Type</th><th>Response Time</th><th>Resolution Time</th></tr>
+<tr><td><strong>Critical Bugs</strong></td><td>Within 2 hours</td><td>Within 24 hours</td></tr>
+<tr><td><strong>General Issues</strong></td><td>Within 24 hours</td><td>3-5 business days</td></tr>
+<tr><td><strong>Feature Requests</strong></td><td>Within 48 hours</td><td>Case by case</td></tr>
+<tr><td><strong>Documentation Issues</strong></td><td>Within 12 hours</td><td>1-2 business days</td></tr>
+</table>
+
+<h2 id="community-support">👥 Community Support</h2>
+
+<h3>💬 Discussion Platforms</h3>
+
+<ul>
+<li><strong>GitHub Discussions</strong>: <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer/discussions">Project Discussion Area</a></li>
+<li><strong>Stack Overflow</strong>: Use tag <code>vivtransformer</code></li>
+<li><strong>Reddit</strong>: <a href="https://reddit.com/r/MachineLearning">r/MachineLearning</a></li>
+</ul>
+
+<h3>📱 Social Media</h3>
+
+<ul>
+<li><strong>Twitter</strong>: <a href="https://twitter.com/vivtransformer">@vivtransformer</a></li>
+<li><strong>LinkedIn</strong>: <a href="https://linkedin.com/company/vivtransformer">VIVTransformer</a></li>
+</ul>
+
+<h2 id="issue-report-templates">📝 Issue Report Templates</h2>
+
+<h3>🐛 Bug Report Template</h3>
+
+<pre><code>**Bug Description**
+Briefly describe the issue encountered
+
+**Steps to Reproduce**
+1. Execute command '...'
+2. Set parameters '...'
+3. Run until '...'
+4. Error occurs
+
+**Expected Behavior**
+Describe what you expected to happen
+
+**Actual Behavior**
+Describe what actually happened
+
+**Environment Information**
+- Operating System: [e.g. Windows 11]
+- Python Version: [e.g. 3.9.7]
+- PyTorch Version: [e.g. 1.12.0]
+- CUDA Version: [e.g. 11.6]
+- Project Version: [e.g. v1.0.0]
+
+**Error Logs**
+```
+Paste complete error message
+```
+
+**Additional Information**
+Add any other information that might help resolve the issue
+</code></pre>
+
+<h3>💡 Feature Request Template</h3>
+
+<pre><code>**Feature Description**
+Briefly describe the feature you'd like to add
+
+**Use Case**
+Describe the use case and necessity of this feature
+
+**Suggested Implementation**
+If you have specific implementation suggestions, please describe
+
+**Alternative Solutions**
+Describe other solutions you've considered
+
+**Additional Information**
+Add any other relevant information or screenshots
+</code></pre>
+
+<h3>❓ Question Template</h3>
+
+<pre><code>**Question Description**
+Describe your question in detail
+
+**Attempted Solutions**
+List the solutions you've already tried
+
+**Related Code**
+```python
+# Paste relevant code snippets
+```
+
+**Environment Information**
+- Operating System: 
+- Python Version: 
+- Related Dependency Versions: 
+
+**Expected Result**
+Describe the effect you hope to achieve
+</code></pre>
+</div>

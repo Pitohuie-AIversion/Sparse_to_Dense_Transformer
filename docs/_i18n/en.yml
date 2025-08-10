@@ -1,0 +1,64 @@
+# English translations
+site:
+  title: "VIVTransformer Documentation"
+  description: "Advanced Transformer Architecture with Vision Integration"
+  language: "English"
+  lang_code: "en"
+
+navigation:
+  home: "Home"
+  getting_started: "Getting Started"
+  core_documentation: "Core Documentation"
+  training_optimization: "Training & Optimization"
+  implementation_configuration: "Implementation & Configuration"
+  evaluation_deployment: "Evaluation & Deployment"
+  development_maintenance: "Development & Maintenance"
+  academic_community: "Academic & Community"
+  quick_start: "Quick Start"
+  installation: "Installation Guide"
+  api_reference: "API Reference"
+  faq: "FAQ"
+  deployment: "Deployment Guide"
+  advanced_config: "Advanced Configuration"
+  architecture_design: "Architecture Design"
+  evaluation_benchmarks: "Evaluation Benchmarks"
+  performance_optimization: "Performance Optimization"
+  best_practices: "Best Practices"
+  tutorials_examples: "Tutorials & Examples"
+  research_papers: "Research Papers"
+  community_guide: "Community Contribution"
+
+common:
+  read_more: "Read More"
+  back_to_top: "Back to Top"
+  edit_page: "Edit this page"
+  last_updated: "Last updated"
+  table_of_contents: "Table of Contents"
+  search_placeholder: "Search documentation..."
+  language_switch: "Switch Language"
+  chinese: "中文"
+  english: "English"
+
+features:
+  multi_attention: "Multi-Scale Attention Mechanisms"
+  svd_loss: "SVD-Enhanced Loss Functions"
+  modular_design: "Modular Architecture Design"
+  performance_optimization: "Performance Optimization"
+  comprehensive_docs: "Comprehensive Documentation"
+  community_support: "Community Support"
+
+buttons:
+  get_started: "Get Started"
+  view_docs: "View Documentation"
+  download: "Download"
+  github: "View on GitHub"
+  contribute: "Contribute"
+
+footer:
+  copyright: "Copyright © 2024 Pitohuie. All rights reserved."
+  license: "Distributed under MIT License"
+  links:
+    github: "GitHub Repository"
+    documentation: "Documentation"
+    issues: "Report Issues"
+    discussions: "Discussions"

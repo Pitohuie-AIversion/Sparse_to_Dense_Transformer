@@ -1,0 +1,1197 @@
+
+
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(15)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(15) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Configuration System | VIVTransformer Documentation</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Configuration System" />
+<meta name="author" content="Pitohuie" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="配置文件系统的使用和管理" />
+<meta property="og:description" content="配置文件系统的使用和管理" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/configuration-system/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/configuration-system/" />
+<meta property="og:site_name" content="VIVTransformer Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Configuration System" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"配置文件系统的使用和管理","headline":"Configuration System","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pitoyounglogopink.png"},"name":"Pitohuie"},"url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/configuration-system/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/Sparse_to_Dense_Transformer/" class="site-title lh-tight">
+  <div class="site-logo" role="img" aria-label="VIVTransformer Documentation"></div>
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-navigation/" class="nav-list-link">快速导航</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/examples/" class="nav-list-link">Examples</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/technical-deep-dive/" class="nav-list-link">技术深度解析</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/api-reference/" class="nav-list-link">API Reference</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-showcase/" class="nav-list-link">实验结果展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/project-showcase/" class="nav-list-link">项目展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in 评估与结果 category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/evaluation-results/" class="nav-list-link">评估与结果</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/benchmark-results/" class="nav-list-link">基准测试结果</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/ablation-study/" class="nav-list-link">消融研究</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/interactive-demo/" class="nav-list-link">交互式演示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Help category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/getting-help/" class="nav-list-link">Getting Help</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/advanced-configuration/" class="nav-list-link">Advanced Configuration Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li></ul>
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
+            
+          >
+            GitHub Repository
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search VIVTransformer Documentation" aria-label="Search VIVTransformer Documentation" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="配置系统">
+  
+  
+    <a href="#配置系统" class="anchor-heading" aria-labelledby="配置系统"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 配置系统
+  
+  
+</h1>
+    
+
+<p>本文档详细介绍VIVTransformer项目的配置系统设计，包括配置文件结构、参数管理和动态配置功能。</p>
+<h2 id="目录">
+  
+  
+    <a href="#目录" class="anchor-heading" aria-labelledby="目录"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 目录
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="#配置系统概览">配置系统概览</a></li>
+  <li><a href="#主配置文件">主配置文件</a></li>
+  <li><a href="#损失配置管理">损失配置管理</a></li>
+  <li><a href="#动态配置">动态配置</a></li>
+  <li><a href="#配置验证">配置验证</a></li>
+  <li><a href="#环境配置">环境配置</a></li>
+  <li><a href="#最佳实践">最佳实践</a></li>
+</ul>
+<h2 id="配置系统概览">
+  
+  
+    <a href="#配置系统概览" class="anchor-heading" aria-labelledby="配置系统概览"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 配置系统概览
+  
+  
+</h2>
+    
+<h3 id="配置架构">
+  
+  
+    <a href="#配置架构" class="anchor-heading" aria-labelledby="配置架构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏗️ 配置架构
+  
+  
+</h3>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>配置系统
+├── 📁 configs/
+│   ├── config.yaml              # 主配置文件
+│   ├── 📁 loss_configs/         # 损失函数配置
+│   │   ├── loss_config_0.yaml
+│   │   ├── loss_config_1.yaml
+│   │   └── ...
+│   ├── 📁 model_configs/        # 模型配置
+│   ├── 📁 data_configs/         # 数据配置
+│   └── 📁 experiment_configs/   # 实验配置
+├── utils/config.py              # 配置管理工具
+└── generate_loss_configs.py     # 配置生成脚本
+</code></pre></div></div>
+<h3 id="设计原则">
+  
+  
+    <a href="#设计原则" class="anchor-heading" aria-labelledby="设计原则"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 设计原则
+  
+  
+</h3>
+    
+
+<ol>
+  <li><strong>层次化结构</strong>: 配置按功能模块分层组织</li>
+  <li><strong>可扩展性</strong>: 支持新配置项的动态添加</li>
+  <li><strong>类型安全</strong>: 严格的类型检查和验证</li>
+  <li><strong>环境适配</strong>: 支持不同环境的配置覆盖</li>
+  <li><strong>版本控制</strong>: 配置变更的版本管理</li>
+</ol>
+<h2 id="主配置文件">
+  
+  
+    <a href="#主配置文件" class="anchor-heading" aria-labelledby="主配置文件"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 主配置文件
+  
+  
+</h2>
+    
+<h3 id="config-yaml-结构">
+  
+  
+    <a href="#config-yaml-结构" class="anchor-heading" aria-labelledby="config-yaml-结构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📝 config.yaml 结构
+  
+  
+</h3>
+    
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ==================== 全局配置 ==================== {#全局配置}</span>
+<span class="na">global</span><span class="pi">:</span>
+  <span class="c1"># 基础设置</span>
+  <span class="na">seed</span><span class="pi">:</span> <span class="m">42</span>                        <span class="c1"># 随机种子</span>
+  <span class="na">deterministic</span><span class="pi">:</span> <span class="kc">true</span>             <span class="c1"># 确定性训练</span>
+  <span class="na">device</span><span class="pi">:</span> <span class="s2">"</span><span class="s">cuda:0"</span>                <span class="c1"># 计算设备</span>
+  <span class="na">mixed_precision</span><span class="pi">:</span> <span class="kc">false</span>          <span class="c1"># 混合精度训练</span>
+  
+  <span class="c1"># 内存管理</span>
+  <span class="na">max_memory_fraction</span><span class="pi">:</span> <span class="m">0.8</span>        <span class="c1"># GPU内存使用限制</span>
+  <span class="na">memory_growth</span><span class="pi">:</span> <span class="kc">true</span>             <span class="c1"># 动态内存增长</span>
+  
+  <span class="c1"># 调试设置</span>
+  <span class="na">debug</span><span class="pi">:</span> <span class="kc">false</span>                    <span class="c1"># 调试模式</span>
+  <span class="na">verbose</span><span class="pi">:</span> <span class="kc">true</span>                   <span class="c1"># 详细输出</span>
+  <span class="na">log_level</span><span class="pi">:</span> <span class="s2">"</span><span class="s">INFO"</span>               <span class="c1"># 日志级别</span>
+
+<span class="c1"># ==================== 数据配置 ==================== {#数据配置}</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="c1"># 数据路径</span>
+  <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">data/viv_dataset.pt"</span>     <span class="c1"># 数据文件路径</span>
+  <span class="na">cache_dir</span><span class="pi">:</span> <span class="s2">"</span><span class="s">cache/"</span>             <span class="c1"># 缓存目录</span>
+  
+  <span class="c1"># 数据加载</span>
+  <span class="na">batch_size</span><span class="pi">:</span> <span class="m">128</span>                 <span class="c1"># 批大小</span>
+  <span class="na">num_workers</span><span class="pi">:</span> <span class="m">4</span>                  <span class="c1"># 数据加载进程数</span>
+  <span class="na">pin_memory</span><span class="pi">:</span> <span class="kc">true</span>                <span class="c1"># 内存锁定</span>
+  <span class="na">prefetch_factor</span><span class="pi">:</span> <span class="m">2</span>              <span class="c1"># 预取因子</span>
+  
+  <span class="c1"># 数据预处理</span>
+  <span class="na">normalize</span><span class="pi">:</span> <span class="kc">true</span>                 <span class="c1"># 数据标准化</span>
+  <span class="na">crop_size</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">400</span><span class="pi">]</span>                <span class="c1"># 裁剪尺寸</span>
+  <span class="na">use_augmentation</span><span class="pi">:</span> <span class="kc">true</span>          <span class="c1"># 数据增强</span>
+  
+  <span class="c1"># 数据分割</span>
+  <span class="na">train_ratio</span><span class="pi">:</span> <span class="m">0.7</span>                <span class="c1"># 训练集比例</span>
+  <span class="na">valid_ratio</span><span class="pi">:</span> <span class="m">0.15</span>               <span class="c1"># 验证集比例</span>
+  <span class="na">test_ratio</span><span class="pi">:</span> <span class="m">0.15</span>                <span class="c1"># 测试集比例</span>
+
+<span class="c1"># ==================== 模型配置 ==================== {#模型配置}</span>
+<span class="na">model</span><span class="pi">:</span>
+  <span class="c1"># 基础架构</span>
+  <span class="na">attention_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">self"</span>          <span class="c1"># 注意力机制类型</span>
+  <span class="na">d_model</span><span class="pi">:</span> <span class="m">256</span>                    <span class="c1"># 模型维度</span>
+  <span class="na">num_heads</span><span class="pi">:</span> <span class="m">4</span>                    <span class="c1"># 注意力头数</span>
+  <span class="na">num_layers</span><span class="pi">:</span> <span class="m">6</span>                   <span class="c1"># 层数</span>
+  
+  <span class="c1"># 输入输出</span>
+  <span class="na">input_dim</span><span class="pi">:</span> <span class="m">400</span>                  <span class="c1"># 输入维度</span>
+  <span class="na">output_dim</span><span class="pi">:</span> <span class="m">40000</span>               <span class="c1"># 输出维度</span>
+  <span class="na">seq_len</span><span class="pi">:</span> <span class="m">49</span>                     <span class="c1"># 序列长度</span>
+  
+  <span class="c1"># 正则化</span>
+  <span class="na">dropout</span><span class="pi">:</span> <span class="m">0.1</span>                    <span class="c1"># Dropout率</span>
+  <span class="na">layer_norm_eps</span><span class="pi">:</span> <span class="s">1e-6</span>            <span class="c1"># 层归一化epsilon</span>
+  
+  <span class="c1"># 初始化</span>
+  <span class="na">init_method</span><span class="pi">:</span> <span class="s2">"</span><span class="s">xavier_uniform"</span>   <span class="c1"># 权重初始化方法</span>
+  <span class="na">bias_init</span><span class="pi">:</span> <span class="m">0.0</span>                  <span class="c1"># 偏置初始化值</span>
+
+<span class="c1"># ==================== 训练配置 ==================== {#训练配置}</span>
+<span class="na">training</span><span class="pi">:</span>
+  <span class="c1"># 基础设置</span>
+  <span class="na">epochs</span><span class="pi">:</span> <span class="m">10</span>                      <span class="c1"># 训练轮数</span>
+  <span class="na">learning_rate</span><span class="pi">:</span> <span class="m">0.0001</span>           <span class="c1"># 学习率</span>
+  <span class="na">weight_decay</span><span class="pi">:</span> <span class="m">0.01</span>              <span class="c1"># 权重衰减</span>
+  
+  <span class="c1"># 优化器</span>
+  <span class="na">optimizer</span><span class="pi">:</span> <span class="s2">"</span><span class="s">adamw"</span>              <span class="c1"># 优化器类型</span>
+  <span class="na">beta1</span><span class="pi">:</span> <span class="m">0.9</span>                      <span class="c1"># Adam beta1</span>
+  <span class="na">beta2</span><span class="pi">:</span> <span class="m">0.999</span>                    <span class="c1"># Adam beta2</span>
+  <span class="na">eps</span><span class="pi">:</span> <span class="s">1e-8</span>                       <span class="c1"># Adam epsilon</span>
+  
+  <span class="c1"># 学习率调度</span>
+  <span class="na">lr_scheduler</span><span class="pi">:</span> <span class="s2">"</span><span class="s">cosine"</span>          <span class="c1"># 学习率调度器</span>
+  <span class="na">warmup_epochs</span><span class="pi">:</span> <span class="m">2</span>                <span class="c1"># 预热轮数</span>
+  <span class="na">min_lr</span><span class="pi">:</span> <span class="s">1e-6</span>                    <span class="c1"># 最小学习率</span>
+  
+  <span class="c1"># 早停</span>
+  <span class="na">early_stop</span><span class="pi">:</span> <span class="kc">true</span>                <span class="c1"># 启用早停</span>
+  <span class="na">early_stop_patience</span><span class="pi">:</span> <span class="m">10</span>         <span class="c1"># 早停耐心值</span>
+  <span class="na">early_stop_delta</span><span class="pi">:</span> <span class="s">1e-4</span>          <span class="c1"># 早停阈值</span>
+  
+  <span class="c1"># 梯度处理</span>
+  <span class="na">gradient_clip_norm</span><span class="pi">:</span> <span class="m">1.0</span>         <span class="c1"># 梯度裁剪</span>
+  <span class="na">gradient_accumulation_steps</span><span class="pi">:</span> <span class="m">1</span>  <span class="c1"># 梯度累积步数</span>
+
+<span class="c1"># ==================== 损失配置 ==================== {#损失配置}</span>
+<span class="na">loss</span><span class="pi">:</span>
+  <span class="c1"># 基础损失</span>
+  <span class="na">base_loss</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mse"</span>                <span class="c1"># 基础损失函数</span>
+  <span class="na">base_weight</span><span class="pi">:</span> <span class="m">0.5</span>                <span class="c1"># 基础损失权重</span>
+  
+  <span class="c1"># SVD正则化</span>
+  <span class="na">use_svd_regularization</span><span class="pi">:</span> <span class="kc">true</span>    <span class="c1"># 启用SVD正则化</span>
+  <span class="na">svd_weights</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">]</span>
+  
+  <span class="c1"># 其他损失</span>
+  <span class="na">auxiliary_losses</span><span class="pi">:</span> <span class="pi">[]</span>            <span class="c1"># 辅助损失函数</span>
+
+<span class="c1"># ==================== 评估配置 ==================== {#评估配置}</span>
+<span class="na">evaluation</span><span class="pi">:</span>
+  <span class="c1"># 评估频率</span>
+  <span class="na">eval_frequency</span><span class="pi">:</span> <span class="m">1</span>               <span class="c1"># 评估频率（每N个epoch）</span>
+  <span class="na">save_frequency</span><span class="pi">:</span> <span class="m">5</span>               <span class="c1"># 模型保存频率</span>
+  
+  <span class="c1"># 评估指标</span>
+  <span class="na">metrics</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">mse"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">mae"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">r2"</span><span class="pi">]</span>   <span class="c1"># 评估指标</span>
+  
+  <span class="c1"># 可视化</span>
+  <span class="na">visualize_attention</span><span class="pi">:</span> <span class="kc">true</span>       <span class="c1"># 可视化注意力</span>
+  <span class="na">save_predictions</span><span class="pi">:</span> <span class="kc">false</span>         <span class="c1"># 保存预测结果</span>
+
+<span class="c1"># ==================== 日志配置 ==================== {#日志配置}</span>
+<span class="na">logging</span><span class="pi">:</span>
+  <span class="c1"># 基础设置</span>
+  <span class="na">log_dir</span><span class="pi">:</span> <span class="s2">"</span><span class="s">logs/"</span>                <span class="c1"># 日志目录</span>
+  <span class="na">experiment_name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">vivtransformer"</span> <span class="c1"># 实验名称</span>
+  
+  <span class="c1"># TensorBoard</span>
+  <span class="na">use_tensorboard</span><span class="pi">:</span> <span class="kc">true</span>           <span class="c1"># 启用TensorBoard</span>
+  <span class="na">tensorboard_port</span><span class="pi">:</span> <span class="m">6006</span>          <span class="c1"># TensorBoard端口</span>
+  
+  <span class="c1"># 日志内容</span>
+  <span class="na">log_model_summary</span><span class="pi">:</span> <span class="kc">true</span>         <span class="c1"># 记录模型摘要</span>
+  <span class="na">log_gradients</span><span class="pi">:</span> <span class="kc">false</span>            <span class="c1"># 记录梯度</span>
+  <span class="na">log_weights</span><span class="pi">:</span> <span class="kc">false</span>              <span class="c1"># 记录权重</span>
+  
+  <span class="c1"># 保存设置</span>
+  <span class="na">save_config</span><span class="pi">:</span> <span class="kc">true</span>               <span class="c1"># 保存配置文件</span>
+  <span class="na">save_code</span><span class="pi">:</span> <span class="kc">true</span>                 <span class="c1"># 保存代码快照</span>
+
+<span class="c1"># ==================== 注意力测试配置 ==================== {#注意力测试配置}</span>
+<span class="na">attention_test</span><span class="pi">:</span>
+  <span class="c1"># 测试设置</span>
+  <span class="na">enabled</span><span class="pi">:</span> <span class="kc">true</span>                   <span class="c1"># 启用注意力测试</span>
+  <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">self"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">muse"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">ufo"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">eca"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">se"</span><span class="pi">]</span>  <span class="c1"># 测试的注意力类型</span>
+  
+  <span class="c1"># 并行设置</span>
+  <span class="na">parallel</span><span class="pi">:</span> <span class="kc">false</span>                 <span class="c1"># 并行测试</span>
+  <span class="na">max_workers</span><span class="pi">:</span> <span class="m">4</span>                  <span class="c1"># 最大工作进程数</span>
+  
+  <span class="c1"># 结果保存</span>
+  <span class="na">save_results</span><span class="pi">:</span> <span class="kc">true</span>              <span class="c1"># 保存测试结果</span>
+  <span class="na">results_dir</span><span class="pi">:</span> <span class="s2">"</span><span class="s">attention_results/"</span> <span class="c1"># 结果保存目录</span>
+</code></pre></div></div>
+<h3 id="配置加载器">
+  
+  
+    <a href="#配置加载器" class="anchor-heading" aria-labelledby="配置加载器"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 配置加载器
+  
+  
+</h3>
+    
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">yaml</span>
+<span class="kn">import</span> <span class="n">os</span>
+<span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="n">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="k">class</span> <span class="nc">ConfigLoader</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">配置加载器</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">config_path</span> <span class="o">=</span> <span class="nc">Path</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">None</span>
+        
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">加载配置文件</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">self</span><span class="p">.</span><span class="n">config_path</span><span class="p">.</span><span class="nf">exists</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="nc">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">配置文件不存在: </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">config_path</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">config_path</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="p">.</span><span class="nf">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        
+        <span class="c1"># 应用环境变量覆盖
+</span>        <span class="n">self</span><span class="p">.</span><span class="nf">_apply_env_overrides</span><span class="p">()</span>
+        
+        <span class="c1"># 验证配置
+</span>        <span class="n">self</span><span class="p">.</span><span class="nf">_validate_config</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">config</span>
+    
+    <span class="k">def</span> <span class="nf">_apply_env_overrides</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">应用环境变量覆盖</span><span class="sh">"""</span>
+        <span class="n">env_prefix</span> <span class="o">=</span> <span class="sh">"</span><span class="s">VIV_</span><span class="sh">"</span>
+        
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span><span class="p">.</span><span class="nf">startswith</span><span class="p">(</span><span class="n">env_prefix</span><span class="p">):</span>
+                <span class="n">config_key</span> <span class="o">=</span> <span class="n">key</span><span class="p">[</span><span class="nf">len</span><span class="p">(</span><span class="n">env_prefix</span><span class="p">):].</span><span class="nf">lower</span><span class="p">().</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">_</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">)</span>
+                <span class="n">self</span><span class="p">.</span><span class="nf">_set_nested_value</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">config</span><span class="p">,</span> <span class="n">config_key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_set_nested_value</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">key_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">设置嵌套配置值</span><span class="sh">"""</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">key_path</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">config</span>
+        
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        
+        <span class="c1"># 类型转换
+</span>        <span class="n">final_key</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">final_key</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+            <span class="n">original_type</span> <span class="o">=</span> <span class="nf">type</span><span class="p">(</span><span class="n">current</span><span class="p">[</span><span class="n">final_key</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">original_type</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">final_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">.</span><span class="nf">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="sh">'</span><span class="s">true</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">yes</span><span class="sh">'</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">original_type</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">final_key</span><span class="p">]</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">original_type</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">final_key</span><span class="p">]</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">final_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div></div>
+<h2 id="损失配置管理">
+  
+  
+    <a href="#损失配置管理" class="anchor-heading" aria-labelledby="损失配置管理"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 损失配置管理
+  
+  
+</h2>
+    
+<h3 id="损失配置生成">
+  
+  
+    <a href="#损失配置生成" class="anchor-heading" aria-labelledby="损失配置生成"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 损失配置生成
+  
+  
+</h3>
+    
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">yaml</span>
+<span class="kn">from</span> <span class="n">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="k">class</span> <span class="nc">LossConfigGenerator</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">损失配置生成器</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sh">"</span><span class="s">configs/loss_configs</span><span class="sh">"</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="nc">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">output_dir</span><span class="p">.</span><span class="nf">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">generate_configs</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">num_configs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">生成多个损失配置</span><span class="sh">"""</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_configs</span><span class="p">):</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_generate_single_config</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">configs</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            
+            <span class="c1"># 保存单个配置文件
+</span>            <span class="n">config_path</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="sh">"</span><span class="s">loss_config_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">.yaml</span><span class="sh">"</span>
+            <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">yaml</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">allow_unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">✅ 生成了 </span><span class="si">{</span><span class="n">num_configs</span><span class="si">}</span><span class="s"> 个损失配置文件</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">configs</span>
+    
+    <span class="k">def</span> <span class="nf">_generate_single_config</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">生成单个损失配置</span><span class="sh">"""</span>
+        
+        <span class="c1"># 基础权重范围
+</span>        <span class="n">base_weight</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        
+        <span class="c1"># SVD权重生成策略
+</span>        <span class="n">svd_strategies</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_uniform_weights</span><span class="p">,</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_decreasing_weights</span><span class="p">,</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_increasing_weights</span><span class="p">,</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_random_weights</span><span class="p">,</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_sparse_weights</span>
+        <span class="p">]</span>
+        
+        <span class="n">strategy</span> <span class="o">=</span> <span class="n">svd_strategies</span><span class="p">[</span><span class="n">config_id</span> <span class="o">%</span> <span class="nf">len</span><span class="p">(</span><span class="n">svd_strategies</span><span class="p">)]</span>
+        <span class="n">svd_weights</span> <span class="o">=</span> <span class="nf">strategy</span><span class="p">()</span>
+        
+        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">config_id</span><span class="sh">'</span><span class="p">:</span> <span class="n">config_id</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">base_weight</span><span class="sh">'</span><span class="p">:</span> <span class="nf">round</span><span class="p">(</span><span class="n">base_weight</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="sh">'</span><span class="s">svd_weights</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="nf">round</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">svd_weights</span><span class="p">],</span>
+            <span class="sh">'</span><span class="s">description</span><span class="sh">'</span><span class="p">:</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Loss configuration </span><span class="si">{</span><span class="n">config_id</span><span class="si">}</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">strategy</span><span class="sh">'</span><span class="p">:</span> <span class="n">strategy</span><span class="p">.</span><span class="n">__name__</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">config</span>
+    
+    <span class="k">def</span> <span class="nf">_uniform_weights</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">均匀权重策略</span><span class="sh">"""</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">weight</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
+    
+    <span class="k">def</span> <span class="nf">_decreasing_weights</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">递减权重策略</span><span class="sh">"""</span>
+        <span class="n">start_weight</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">decay_factor</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_weight</span> <span class="o">*</span> <span class="p">(</span><span class="n">decay_factor</span> <span class="o">**</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">weights</span>
+    
+    <span class="k">def</span> <span class="nf">_increasing_weights</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">递增权重策略</span><span class="sh">"""</span>
+        <span class="n">start_weight</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+        <span class="n">growth_factor</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">)</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_weight</span> <span class="o">*</span> <span class="p">(</span><span class="n">growth_factor</span> <span class="o">**</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">weights</span>
+    
+    <span class="k">def</span> <span class="nf">_random_weights</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">随机权重策略</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">10</span><span class="p">).</span><span class="nf">tolist</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">_sparse_weights</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">稀疏权重策略</span><span class="sh">"""</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">num_nonzero</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">num_nonzero</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">weights</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">uniform</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">num_nonzero</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">weights</span><span class="p">.</span><span class="nf">tolist</span><span class="p">()</span>
+</code></pre></div></div>
+<h3 id="损失配置模板">
+  
+  
+    <a href="#损失配置模板" class="anchor-heading" aria-labelledby="损失配置模板"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 损失配置模板
+  
+  
+</h3>
+    
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># loss_config_template.yaml {#loss-config-template-yaml}</span>
+<span class="na">config_id</span><span class="pi">:</span> <span class="m">0</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">基础损失配置模板"</span>
+
+<span class="c1"># 基础损失设置 {#基础损失设置}</span>
+<span class="na">base_weight</span><span class="pi">:</span> <span class="m">0.5</span>
+<span class="na">base_loss_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mse"</span>
+
+<span class="c1"># SVD正则化设置 {#svd正则化设置}</span>
+<span class="na">use_svd_regularization</span><span class="pi">:</span> <span class="kc">true</span>
+<span class="na">svd_weights</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">]</span>
+<span class="na">svd_components</span><span class="pi">:</span> <span class="m">10</span>
+
+<span class="c1"># 高级设置 {#高级设置}</span>
+<span class="na">weight_decay</span><span class="pi">:</span> <span class="m">0.01</span>
+<span class="na">label_smoothing</span><span class="pi">:</span> <span class="m">0.0</span>
+<span class="na">focal_loss_gamma</span><span class="pi">:</span> <span class="m">2.0</span>
+
+<span class="c1"># 动态权重 {#动态权重}</span>
+<span class="na">dynamic_weighting</span><span class="pi">:</span> <span class="kc">false</span>
+<span class="na">weight_schedule</span><span class="pi">:</span> <span class="s2">"</span><span class="s">constant"</span>  <span class="c1"># constant, linear, cosine</span>
+
+<span class="c1"># 损失组合 {#损失组合}</span>
+<span class="na">loss_combination</span><span class="pi">:</span> <span class="s2">"</span><span class="s">weighted_sum"</span>  <span class="c1"># weighted_sum, adaptive, uncertainty</span>
+
+<span class="c1"># 元数据 {#元数据}</span>
+<span class="na">created_by</span><span class="pi">:</span> <span class="s2">"</span><span class="s">auto_generator"</span>
+<span class="na">creation_time</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2024-01-01T00:00:00"</span>
+<span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0"</span>
+</code></pre></div></div>
+<h2 id="动态配置">
+  
+  
+    <a href="#动态配置" class="anchor-heading" aria-labelledby="动态配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 动态配置
+  
+  
+</h2>
+    
+<h3 id="运行时配置修改">
+  
+  
+    <a href="#运行时配置修改" class="anchor-heading" aria-labelledby="运行时配置修改"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔄 运行时配置修改
+  
+  
+</h3>
+    
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DynamicConfig</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">动态配置管理器</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">base_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">base_config</span> <span class="o">=</span> <span class="n">base_config</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">current_config</span> <span class="o">=</span> <span class="n">base_config</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">config_history</span> <span class="o">=</span> <span class="p">[</span><span class="n">base_config</span><span class="p">.</span><span class="nf">copy</span><span class="p">()]</span>
+    
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">updates</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="sh">"""</span><span class="s">更新配置</span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="nf">_deep_update</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">current_config</span><span class="p">,</span> <span class="n">updates</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">config_history</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">current_config</span><span class="p">.</span><span class="nf">copy</span><span class="p">())</span>
+    
+    <span class="k">def</span> <span class="nf">rollback</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">回滚配置</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">config_history</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">steps</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">current_config</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">config_history</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)].</span><span class="nf">copy</span><span class="p">()</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">config_history</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">config_history</span><span class="p">[:</span><span class="o">-</span><span class="p">(</span><span class="n">steps</span><span class="p">)]</span>
+    
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">重置到基础配置</span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">current_config</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">base_config</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">config_history</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">base_config</span><span class="p">.</span><span class="nf">copy</span><span class="p">()]</span>
+    
+    <span class="k">def</span> <span class="nf">_deep_update</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">base_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">update_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">深度更新字典</span><span class="sh">"""</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">update_dict</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">base_dict</span> <span class="ow">and</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">base_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">self</span><span class="p">.</span><span class="nf">_deep_update</span><span class="p">(</span><span class="n">base_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">base_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="c1"># 使用示例 {#使用示例}
+</span><span class="n">config_manager</span> <span class="o">=</span> <span class="nc">DynamicConfig</span><span class="p">(</span><span class="n">base_config</span><span class="p">)</span>
+
+<span class="c1"># 动态调整学习率 {#动态调整学习率}
+</span><span class="n">config_manager</span><span class="p">.</span><span class="nf">update</span><span class="p">({</span>
+    <span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">learning_rate</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.0005</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1"># 动态调整批大小 {#动态调整批大小}
+</span><span class="n">config_manager</span><span class="p">.</span><span class="nf">update</span><span class="p">({</span>
+    <span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">:</span> <span class="mi">64</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+<h3 id="自适应配置">
+  
+  
+    <a href="#自适应配置" class="anchor-heading" aria-labelledby="自适应配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎛️ 自适应配置
+  
+  
+</h3>
+    
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AdaptiveConfig</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">自适应配置管理器</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">performance_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">adaptation_rules</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_setup_adaptation_rules</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">adapt_based_on_performance</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]):</span>
+        <span class="sh">"""</span><span class="s">基于性能指标自适应调整配置</span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">performance_history</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+        
+        <span class="c1"># 应用适应规则
+</span>        <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">adaptation_rules</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rule</span><span class="p">.</span><span class="nf">should_apply</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">performance_history</span><span class="p">):</span>
+                <span class="n">updates</span> <span class="o">=</span> <span class="n">rule</span><span class="p">.</span><span class="nf">get_updates</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">config</span><span class="p">)</span>
+                <span class="n">self</span><span class="p">.</span><span class="nf">_apply_updates</span><span class="p">(</span><span class="n">updates</span><span class="p">)</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">🔄 应用适应规则: </span><span class="si">{</span><span class="n">rule</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_setup_adaptation_rules</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">设置适应规则</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="nc">LearningRateAdaptationRule</span><span class="p">(),</span>
+            <span class="nc">BatchSizeAdaptationRule</span><span class="p">(),</span>
+            <span class="nc">DropoutAdaptationRule</span><span class="p">(),</span>
+            <span class="nc">EarlyStopAdaptationRule</span><span class="p">()</span>
+        <span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">AdaptationRule</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">适应规则基类</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    
+    <span class="k">def</span> <span class="nf">should_apply</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">current_metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> 
+                    <span class="n">history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">NotImplementedError</span>
+    
+    <span class="k">def</span> <span class="nf">get_updates</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> 
+                   <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="nb">NotImplementedError</span>
+
+<span class="k">class</span> <span class="nc">LearningRateAdaptationRule</span><span class="p">(</span><span class="n">AdaptationRule</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">学习率自适应规则</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">(</span><span class="sh">"</span><span class="s">学习率自适应</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">patience</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">factor</span> <span class="o">=</span> <span class="mf">0.5</span>
+    
+    <span class="k">def</span> <span class="nf">should_apply</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">current_metrics</span><span class="p">,</span> <span class="n">history</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">history</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">self</span><span class="p">.</span><span class="n">patience</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        
+        <span class="c1"># 检查最近几次的损失是否没有改善
+</span>        <span class="n">recent_losses</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">loss</span><span class="sh">'</span><span class="p">,</span> <span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">))</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">history</span><span class="p">[</span><span class="o">-</span><span class="n">self</span><span class="p">.</span><span class="n">patience</span><span class="p">:]]</span>
+        <span class="k">return</span> <span class="nf">all</span><span class="p">(</span><span class="n">recent_losses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">recent_losses</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">recent_losses</span><span class="p">)))</span>
+    
+    <span class="k">def</span> <span class="nf">get_updates</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="n">current_lr</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">][</span><span class="sh">'</span><span class="s">learning_rate</span><span class="sh">'</span><span class="p">]</span>
+        <span class="n">new_lr</span> <span class="o">=</span> <span class="n">current_lr</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">factor</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="sh">'</span><span class="s">learning_rate</span><span class="sh">'</span><span class="p">:</span> <span class="nf">max</span><span class="p">(</span><span class="n">new_lr</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+</code></pre></div></div>
+<h2 id="配置验证">
+  
+  
+    <a href="#配置验证" class="anchor-heading" aria-labelledby="配置验证"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 配置验证
+  
+  
+</h2>
+    
+<h3 id="配置验证器">
+  
+  
+    <a href="#配置验证器" class="anchor-heading" aria-labelledby="配置验证器"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ✅ 配置验证器
+  
+  
+</h3>
+    
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="n">jsonschema</span>
+
+<span class="k">class</span> <span class="nc">ConfigValidator</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">配置验证器</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">schema</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_load_schema</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">custom_validators</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_setup_custom_validators</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="sh">"""</span><span class="s">验证配置</span><span class="sh">"""</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># JSON Schema验证
+</span>        <span class="k">try</span><span class="p">:</span>
+            <span class="n">jsonschema</span><span class="p">.</span><span class="nf">validate</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">schema</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">jsonschema</span><span class="p">.</span><span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Schema验证错误: </span><span class="si">{</span><span class="n">e</span><span class="p">.</span><span class="n">message</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="c1"># 自定义验证
+</span>        <span class="k">for</span> <span class="n">validator</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">custom_validators</span><span class="p">:</span>
+            <span class="n">validator_errors</span> <span class="o">=</span> <span class="n">validator</span><span class="p">.</span><span class="nf">validate</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">errors</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="n">validator_errors</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="nf">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">errors</span>
+    
+    <span class="k">def</span> <span class="nf">_load_schema</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">加载配置Schema</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">object</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"</span><span class="s">properties</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="sh">"</span><span class="s">global</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">object</span><span class="sh">"</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">properties</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="sh">"</span><span class="s">seed</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">integer</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">minimum</span><span class="sh">"</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                        <span class="sh">"</span><span class="s">device</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">string</span><span class="sh">"</span><span class="p">},</span>
+                        <span class="sh">"</span><span class="s">deterministic</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">boolean</span><span class="sh">"</span><span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="sh">"</span><span class="s">required</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="sh">"</span><span class="s">seed</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">device</span><span class="sh">"</span><span class="p">]</span>
+                <span class="p">},</span>
+                <span class="sh">"</span><span class="s">data</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">object</span><span class="sh">"</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">properties</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="sh">"</span><span class="s">batch_size</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">integer</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">minimum</span><span class="sh">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                        <span class="sh">"</span><span class="s">num_workers</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">integer</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">minimum</span><span class="sh">"</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="sh">"</span><span class="s">required</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="sh">"</span><span class="s">batch_size</span><span class="sh">"</span><span class="p">]</span>
+                <span class="p">},</span>
+                <span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">object</span><span class="sh">"</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">properties</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="sh">"</span><span class="s">d_model</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">integer</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">minimum</span><span class="sh">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                        <span class="sh">"</span><span class="s">num_heads</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">integer</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">minimum</span><span class="sh">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                        <span class="sh">"</span><span class="s">num_layers</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">integer</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">minimum</span><span class="sh">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="sh">"</span><span class="s">required</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="sh">"</span><span class="s">d_model</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">num_heads</span><span class="sh">"</span><span class="p">]</span>
+                <span class="p">},</span>
+                <span class="sh">"</span><span class="s">training</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">object</span><span class="sh">"</span><span class="p">,</span>
+                    <span class="sh">"</span><span class="s">properties</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="sh">"</span><span class="s">epochs</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">integer</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">minimum</span><span class="sh">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                        <span class="sh">"</span><span class="s">learning_rate</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">number</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">minimum</span><span class="sh">"</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="sh">"</span><span class="s">required</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="sh">"</span><span class="s">epochs</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">learning_rate</span><span class="sh">"</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="sh">"</span><span class="s">required</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="sh">"</span><span class="s">global</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">data</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">training</span><span class="sh">"</span><span class="p">]</span>
+        <span class="p">}</span>
+    
+    <span class="k">def</span> <span class="nf">_setup_custom_validators</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="sh">'</span><span class="s">CustomValidator</span><span class="sh">'</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">设置自定义验证器</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="nc">DeviceValidator</span><span class="p">(),</span>
+            <span class="nc">AttentionTypeValidator</span><span class="p">(),</span>
+            <span class="nc">DimensionValidator</span><span class="p">(),</span>
+            <span class="nc">PathValidator</span><span class="p">()</span>
+        <span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">CustomValidator</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">自定义验证器基类</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="nb">NotImplementedError</span>
+
+<span class="k">class</span> <span class="nc">DeviceValidator</span><span class="p">(</span><span class="n">CustomValidator</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">设备验证器</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">global</span><span class="sh">'</span><span class="p">,</span> <span class="p">{}).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">device</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">device</span><span class="p">.</span><span class="nf">startswith</span><span class="p">(</span><span class="sh">'</span><span class="s">cuda:</span><span class="sh">'</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">gpu_id</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="sh">'</span><span class="s">:</span><span class="sh">'</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+                    <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sh">"</span><span class="s">CUDA不可用，但配置了CUDA设备</span><span class="sh">"</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">gpu_id</span> <span class="o">&gt;=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">device_count</span><span class="p">():</span>
+                    <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">GPU </span><span class="si">{</span><span class="n">gpu_id</span><span class="si">}</span><span class="s"> 不存在</span><span class="sh">"</span><span class="p">)</span>
+            <span class="nf">except </span><span class="p">(</span><span class="nb">ValueError</span><span class="p">,</span> <span class="nb">IndexError</span><span class="p">):</span>
+                <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">无效的设备格式: </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">device</span> <span class="o">!=</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span><span class="p">:</span>
+            <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">不支持的设备类型: </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">errors</span>
+
+<span class="k">class</span> <span class="nc">AttentionTypeValidator</span><span class="p">(</span><span class="n">CustomValidator</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">注意力类型验证器</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">attention_type</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">model</span><span class="sh">'</span><span class="p">,</span> <span class="p">{}).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">attention_type</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">)</span>
+        
+        <span class="n">valid_types</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sh">'</span><span class="s">self</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">simplified_self</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">muse</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ufo</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">sparse</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">lsh</span><span class="sh">'</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">relative</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">axial</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">mobilevit</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">mobilevitv2</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">emsa</span><span class="sh">'</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">dat</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">crossformer</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">moa</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">crisscross</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">se</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">sk</span><span class="sh">'</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">cbam</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">bam</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">eca</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">psa</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">danet</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cot</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">polarized</span><span class="sh">'</span>
+        <span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">attention_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_types</span><span class="p">:</span>
+            <span class="n">errors</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">不支持的注意力类型: </span><span class="si">{</span><span class="n">attention_type</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">errors</span>
+</code></pre></div></div>
+<h2 id="环境配置">
+  
+  
+    <a href="#环境配置" class="anchor-heading" aria-labelledby="环境配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 环境配置
+  
+  
+</h2>
+    
+<h3 id="环境变量支持">
+  
+  
+    <a href="#环境变量支持" class="anchor-heading" aria-labelledby="环境变量支持"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🌍 环境变量支持
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 环境变量配置示例 {#环境变量配置示例}</span>
+<span class="nb">export </span><span class="nv">VIV_GLOBAL_DEVICE</span><span class="o">=</span><span class="s2">"cuda:1"</span>
+<span class="nb">export </span><span class="nv">VIV_DATA_BATCH_SIZE</span><span class="o">=</span><span class="s2">"64"</span>
+<span class="nb">export </span><span class="nv">VIV_TRAINING_LEARNING_RATE</span><span class="o">=</span><span class="s2">"0.0005"</span>
+<span class="nb">export </span><span class="nv">VIV_GLOBAL_DEBUG</span><span class="o">=</span><span class="s2">"true"</span>
+</code></pre></div></div>
+<h3 id="环境特定配置">
+  
+  
+    <a href="#环境特定配置" class="anchor-heading" aria-labelledby="环境特定配置"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 环境特定配置
+  
+  
+</h3>
+    
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">EnvironmentConfig</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">环境特定配置管理</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">base_config_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">base_config_path</span> <span class="o">=</span> <span class="n">base_config_path</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">environment</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_detect_environment</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">加载环境特定配置</span><span class="sh">"""</span>
+        <span class="c1"># 加载基础配置
+</span>        <span class="n">base_config</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_load_base_config</span><span class="p">()</span>
+        
+        <span class="c1"># 加载环境特定覆盖
+</span>        <span class="n">env_overrides</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_load_environment_overrides</span><span class="p">()</span>
+        
+        <span class="c1"># 合并配置
+</span>        <span class="n">final_config</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_merge_configs</span><span class="p">(</span><span class="n">base_config</span><span class="p">,</span> <span class="n">env_overrides</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">final_config</span>
+    
+    <span class="k">def</span> <span class="nf">_detect_environment</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sh">"""</span><span class="s">检测运行环境</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="nf">getenv</span><span class="p">(</span><span class="sh">'</span><span class="s">VIV_ENV</span><span class="sh">'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">os</span><span class="p">.</span><span class="nf">getenv</span><span class="p">(</span><span class="sh">'</span><span class="s">VIV_ENV</span><span class="sh">'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="p">.</span><span class="nf">getenv</span><span class="p">(</span><span class="sh">'</span><span class="s">CUDA_VISIBLE_DEVICES</span><span class="sh">'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sh">'</span><span class="s">gpu</span><span class="sh">'</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span>
+    
+    <span class="k">def</span> <span class="nf">_load_environment_overrides</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">加载环境特定覆盖配置</span><span class="sh">"""</span>
+        <span class="n">env_configs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">development</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="sh">'</span><span class="s">global</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">debug</span><span class="sh">'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="sh">'</span><span class="s">verbose</span><span class="sh">'</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+                <span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">epochs</span><span class="sh">'</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+                <span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">:</span> <span class="mi">32</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="sh">'</span><span class="s">production</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="sh">'</span><span class="s">global</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">debug</span><span class="sh">'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="sh">'</span><span class="s">verbose</span><span class="sh">'</span><span class="p">:</span> <span class="bp">False</span><span class="p">},</span>
+                <span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">epochs</span><span class="sh">'</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span>
+                <span class="sh">'</span><span class="s">logging</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">log_level</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">WARNING</span><span class="sh">'</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="sh">'</span><span class="s">testing</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="sh">'</span><span class="s">global</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">deterministic</span><span class="sh">'</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+                <span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">epochs</span><span class="sh">'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                <span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">:</span> <span class="mi">16</span><span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">env_configs</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">environment</span><span class="p">,</span> <span class="p">{})</span>
+</code></pre></div></div>
+<h2 id="最佳实践">
+  
+  
+    <a href="#最佳实践" class="anchor-heading" aria-labelledby="最佳实践"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 最佳实践
+  
+  
+</h2>
+    
+<h3 id="配置管理最佳实践">
+  
+  
+    <a href="#配置管理最佳实践" class="anchor-heading" aria-labelledby="配置管理最佳实践"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📚 配置管理最佳实践
+  
+  
+</h3>
+    
+
+<ol>
+  <li><strong>版本控制</strong>
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 在配置文件中包含版本信息</span>
+<span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.2.0"</span>
+<span class="na">config_format_version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2.0"</span>
+<span class="na">last_modified</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2024-01-01T12:00:00Z"</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>文档化</strong>
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 为每个配置项添加注释</span>
+<span class="na">training</span><span class="pi">:</span>
+  <span class="na">learning_rate</span><span class="pi">:</span> <span class="m">0.0001</span>  <span class="c1"># 初始学习率，建议范围: [1e-5, 1e-2]</span>
+  <span class="na">epochs</span><span class="pi">:</span> <span class="m">10</span>             <span class="c1"># 训练轮数，根据数据集大小调整</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>默认值</strong>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_config_value</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">key_path</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">安全获取配置值，支持默认值</span><span class="sh">"""</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">key_path</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">config</span>
+       
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">default</span>
+       
+    <span class="k">return</span> <span class="n">current</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>配置模板</strong>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ConfigTemplate</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">配置模板生成器</span><span class="sh">"""</span>
+       
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">generate_quick_start</span><span class="p">():</span>
+        <span class="sh">"""</span><span class="s">生成快速开始配置</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">global</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">device</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">seed</span><span class="sh">'</span><span class="p">:</span> <span class="mi">42</span><span class="p">},</span>
+            <span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">:</span> <span class="mi">32</span><span class="p">},</span>
+            <span class="sh">'</span><span class="s">model</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">attention_type</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">self</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">:</span> <span class="mi">128</span><span class="p">},</span>
+            <span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">epochs</span><span class="sh">'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="sh">'</span><span class="s">learning_rate</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">}</span>
+        <span class="p">}</span>
+       
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">generate_high_performance</span><span class="p">():</span>
+        <span class="sh">"""</span><span class="s">生成高性能配置</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">global</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">device</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">cuda:0</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">mixed_precision</span><span class="sh">'</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+            <span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span> <span class="sh">'</span><span class="s">num_workers</span><span class="sh">'</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+            <span class="sh">'</span><span class="s">model</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">attention_type</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">muse</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">:</span> <span class="mi">512</span><span class="p">},</span>
+            <span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">:</span> <span class="p">{</span><span class="sh">'</span><span class="s">epochs</span><span class="sh">'</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="sh">'</span><span class="s">learning_rate</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">}</span>
+        <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+<h3 id="配置调试">
+  
+  
+    <a href="#配置调试" class="anchor-heading" aria-labelledby="配置调试"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔍 配置调试
+  
+  
+</h3>
+    
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ConfigDebugger</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">配置调试工具</span><span class="sh">"""</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">print_config_summary</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="sh">"""</span><span class="s">打印配置摘要</span><span class="sh">"""</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">📋 配置摘要:</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   设备: </span><span class="si">{</span><span class="n">config</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sh">'</span><span class="s">global</span><span class="sh">'</span><span class="p">,</span> <span class="si">{}</span><span class="p">).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">device</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">unknown</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   批大小: </span><span class="si">{</span><span class="n">config</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">,</span> <span class="si">{}</span><span class="p">).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">unknown</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   注意力类型: </span><span class="si">{</span><span class="n">config</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sh">'</span><span class="s">model</span><span class="sh">'</span><span class="p">,</span> <span class="si">{}</span><span class="p">).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">attention_type</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">unknown</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">   训练轮数: </span><span class="si">{</span><span class="n">config</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sh">'</span><span class="s">training</span><span class="sh">'</span><span class="p">,</span> <span class="si">{}</span><span class="p">).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">epochs</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">unknown</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">validate_config_compatibility</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="sh">"""</span><span class="s">验证配置兼容性</span><span class="sh">"""</span>
+        <span class="n">warnings</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># 检查设备和批大小兼容性
+</span>        <span class="n">device</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">global</span><span class="sh">'</span><span class="p">,</span> <span class="p">{}).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">device</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">data</span><span class="sh">'</span><span class="p">,</span> <span class="p">{}).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">batch_size</span><span class="sh">'</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">device</span> <span class="o">==</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span> <span class="ow">and</span> <span class="n">batch_size</span> <span class="o">&gt;</span> <span class="mi">128</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sh">"</span><span class="s">CPU模式下建议使用较小的批大小</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="c1"># 检查注意力类型和模型维度
+</span>        <span class="n">attention_type</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">model</span><span class="sh">'</span><span class="p">,</span> <span class="p">{}).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">attention_type</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">self</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">d_model</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">model</span><span class="sh">'</span><span class="p">,</span> <span class="p">{}).</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">d_model</span><span class="sh">'</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">attention_type</span> <span class="ow">in</span> <span class="p">[</span><span class="sh">'</span><span class="s">muse</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ufo</span><span class="sh">'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">d_model</span> <span class="o">&lt;</span> <span class="mi">128</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sh">"</span><span class="s">高效注意力机制建议使用较大的模型维度</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">warnings</span>
+</code></pre></div></div><hr />
+
+<p><strong>💡 提示</strong>: 良好的配置系统是项目成功的关键，它不仅提高了实验的可重现性，还大大简化了参数调优和实验管理的复杂度。</p><hr />
+
+<p><em>需要帮助？查看 <a href="faq">FAQ</a> 或 <a href="troubleshooting">故障排除</a> 页面。</em></p>
+
+          
+
+          
+            
+          
+        </main>
+        
+
+  <hr>
+  <footer>
+    
+      <p><a href="#top" id="back-to-top">Back to top</a></p>
+    
+
+    <p class="text-small text-grey-dk-100 mb-0">Copyright &copy; 2024 Pitohuie. Distributed by an <a href="https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt">MIT license.</a></p>
+
+    
+  </footer>
+
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
+</html>
+

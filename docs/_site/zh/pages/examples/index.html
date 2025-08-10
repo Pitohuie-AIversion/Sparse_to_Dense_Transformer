@@ -1,0 +1,1360 @@
+
+
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(2)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(2) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(2) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Examples | VIVTransformer Documentation</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Examples" />
+<meta name="author" content="Pitohuie" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="Advanced Transformer Architecture with Vision Integration" />
+<meta property="og:description" content="Advanced Transformer Architecture with Vision Integration" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/examples/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/examples/" />
+<meta property="og:site_name" content="VIVTransformer Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Examples" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"Advanced Transformer Architecture with Vision Integration","headline":"Examples","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pitoyounglogopink.png"},"name":"Pitohuie"},"url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/examples/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/Sparse_to_Dense_Transformer/" class="site-title lh-tight">
+  <div class="site-logo" role="img" aria-label="VIVTransformer Documentation"></div>
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-navigation/" class="nav-list-link">快速导航</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/examples/" class="nav-list-link">Examples</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/technical-deep-dive/" class="nav-list-link">技术深度解析</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/api-reference/" class="nav-list-link">API Reference</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-showcase/" class="nav-list-link">实验结果展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/project-showcase/" class="nav-list-link">项目展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in 评估与结果 category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/evaluation-results/" class="nav-list-link">评估与结果</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/benchmark-results/" class="nav-list-link">基准测试结果</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/ablation-study/" class="nav-list-link">消融研究</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/interactive-demo/" class="nav-list-link">交互式演示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Help category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/getting-help/" class="nav-list-link">Getting Help</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/advanced-configuration/" class="nav-list-link">Advanced Configuration Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li></ul>
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
+            
+          >
+            GitHub Repository
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search VIVTransformer Documentation" aria-label="Search VIVTransformer Documentation" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/Sparse_to_Dense_Transformer/getting-started/">Getting Started</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Examples</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <!-- Language Switcher Component -->
+<div class="language-switcher">
+  <div class="language-switcher-label">
+    <span data-lang-en="Language:">Language:</span>
+    <span data-lang-zh="语言:" style="display: none;">语言:</span>
+  </div>
+  <div class="language-switcher-buttons">
+    <button class="language-switcher-button active" data-lang="en" onclick="switchLanguage('en')">
+      English
+    </button>
+    <button class="language-switcher-button" data-lang="zh" onclick="switchLanguage('zh')">
+      中文
+    </button>
+  </div>
+</div>
+
+<script>
+// Language switching functionality
+function switchLanguage(lang) {
+  // Update active button
+  document.querySelectorAll('.language-switcher-button').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('data-lang') === lang) {
+      btn.classList.add('active');
+    }
+  });
+  
+  // Show/hide language-specific content
+  document.querySelectorAll('[data-lang-en]').forEach(el => {
+    el.style.display = lang === 'en' ? 'block' : 'none';
+  });
+  
+  document.querySelectorAll('[data-lang-zh]').forEach(el => {
+    el.style.display = lang === 'zh' ? 'block' : 'none';
+  });
+  
+  // Update language switcher label
+  document.querySelectorAll('.language-switcher-label [data-lang-en]').forEach(el => {
+    el.style.display = lang === 'en' ? 'inline' : 'none';
+  });
+  
+  document.querySelectorAll('.language-switcher-label [data-lang-zh]').forEach(el => {
+    el.style.display = lang === 'zh' ? 'inline' : 'none';
+  });
+  
+  // Store language preference
+  localStorage.setItem('preferred-language', lang);
+}
+
+// Load saved language preference
+document.addEventListener('DOMContentLoaded', function() {
+  const savedLang = localStorage.getItem('preferred-language') || 'en';
+  switchLanguage(savedLang);
+});
+</script>
+
+<style>
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: var(--color-background-secondary, #f8f9fa);
+  border-radius: 0.375rem;
+  border: 1px solid var(--color-border, #e1e4e8);
+}
+
+.language-switcher-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.language-switcher-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.language-switcher-button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.language-switcher-button:not(.active) {
+  color: var(--color-link, #0969da);
+  background: var(--color-background, #ffffff);
+  border-color: var(--color-border, #e1e4e8);
+}
+
+.language-switcher-button:not(.active):hover {
+  background: var(--color-background-hover, #f3f4f6);
+  border-color: var(--color-border-hover, #d1d5db);
+}
+
+.language-switcher-button.active {
+  color: var(--color-text-inverse, #ffffff);
+  background: var(--color-primary, #0969da);
+  border-color: var(--color-primary, #0969da);
+  cursor: default;
+}
+
+@media (max-width: 768px) {
+  .language-switcher {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .language-switcher-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .language-switcher-button {
+    flex: 1;
+    text-align: center;
+  }
+}
+</style>
+
+<div data-lang-zh="" style="display: none;">
+<h1>
+  
+  
+    示例代码
+  
+  
+</h1>
+    
+<p class="fs-6 fw-300">本页面提供了VIVTransformer项目的实用代码示例，帮助您快速上手和理解项目的使用方法。</p>
+<h2>
+  
+  
+    📋 目录
+  
+  
+</h2>
+    
+<ul>
+<li><a href="#基础示例">基础示例</a></li>
+<li><a href="#数据处理示例">数据处理示例</a></li>
+<li><a href="#训练示例">训练示例</a></li>
+<li><a href="#推理示例">推理示例</a></li>
+<li><a href="#高级用法">高级用法</a></li>
+</ul><hr />
+<h2 id="基础示例">
+  
+  
+    <a href="#基础示例" class="anchor-heading" aria-labelledby="基础示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 基础示例
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#基础示例" class="anchor-heading" aria-labelledby="基础示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 快速开始示例
+  
+  
+</h3>
+    
+<p>最简单的使用示例，展示如何创建模型并进行前向传播。</p>
+
+<pre><code class="language-python">import torch
+from vivtransformer import VIVTransformer, VIVConfig
+
+# 1. 创建配置
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    flow_input_dim=64,
+    structure_input_dim=32,
+    output_dim=9  # 3D位移 + 速度 + 力
+)
+
+# 2. 创建模型
+model = VIVTransformer(config)
+print(f"模型参数数量: {sum(p.numel() for p in model.parameters()):,}")
+
+# 3. 准备示例数据
+batch_size, seq_len = 4, 100
+flow_data = torch.randn(batch_size, seq_len, config.flow_input_dim)
+structure_data = torch.randn(batch_size, seq_len, config.structure_input_dim)
+
+# 4. 前向传播
+model.eval()
+with torch.no_grad():
+    outputs = model(flow_data, structure_data)
+    
+print("输出形状:")
+for key, value in outputs.items():
+    print(f"  {key}: {value.shape}")
+</code></pre>
+<h2 id="数据处理示例">
+  
+  
+    <a href="#数据处理示例" class="anchor-heading" aria-labelledby="数据处理示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 数据处理示例
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#数据处理示例" class="anchor-heading" aria-labelledby="数据处理示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 数据加载示例
+  
+  
+</h3>
+    
+<p>展示如何加载和预处理VIV数据。</p>
+
+<pre><code class="language-python">import os
+import pandas as pd
+from torch.utils.data import DataLoader
+from vivtransformer.data import VIVDataset, DataProcessor
+
+# 1. 数据预处理
+processor = DataProcessor({
+    'normalize': True,
+    'sequence_length': 100,
+    'overlap': 0.5,
+    'features': ['velocity', 'pressure', 'displacement']
+})
+
+# 2. 创建数据集
+train_dataset = VIVDataset(
+    data_dir='data/train',
+    split='train',
+    sequence_length=100,
+    processor=processor
+)
+
+val_dataset = VIVDataset(
+    data_dir='data/val',
+    split='val',
+    sequence_length=100,
+    processor=processor
+)
+
+# 3. 创建数据加载器
+train_loader = DataLoader(
+    train_dataset,
+    batch_size=32,
+    shuffle=True,
+    num_workers=4,
+    pin_memory=True
+)
+
+val_loader = DataLoader(
+    val_dataset,
+    batch_size=32,
+    shuffle=False,
+    num_workers=4,
+    pin_memory=True
+)
+
+# 4. 检查数据
+for batch in train_loader:
+    print("批次数据形状:")
+    print(f"  流体数据: {batch['flow_data'].shape}")
+    print(f"  结构数据: {batch['structure_data'].shape}")
+    print(f"  目标数据: {batch['target'].shape}")
+    break
+</code></pre>
+<h2 id="训练示例">
+  
+  
+    <a href="#训练示例" class="anchor-heading" aria-labelledby="训练示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 训练示例
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#训练示例" class="anchor-heading" aria-labelledby="训练示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 完整训练流程
+  
+  
+</h3>
+    
+<p>展示完整的模型训练过程。</p>
+
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim.lr_scheduler import CosineAnnealingLR
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.training import Trainer, VIVLoss
+from vivtransformer.utils import set_seed, save_checkpoint
+
+# 1. 设置随机种子
+set_seed(42)
+
+# 2. 设备配置
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"使用设备: {device}")
+
+# 3. 模型配置
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    max_seq_length=1000,
+    flow_input_dim=64,
+    structure_input_dim=32
+)
+
+# 4. 创建模型
+model = VIVTransformer(config).to(device)
+
+# 5. 损失函数和优化器
+criterion = VIVLoss(
+    mse_weight=1.0,
+    physics_weight=0.1,
+    consistency_weight=0.05
+)
+
+optimizer = optim.AdamW(
+    model.parameters(),
+    lr=1e-4,
+    weight_decay=1e-5
+)
+
+scheduler = CosineAnnealingLR(
+    optimizer,
+    T_max=100,
+    eta_min=1e-6
+)
+
+# 6. 训练配置
+training_config = {
+    'epochs': 100,
+    'save_every': 10,
+    'eval_every': 5,
+    'early_stopping_patience': 15,
+    'gradient_clip_norm': 1.0,
+    'log_every': 100
+}
+
+# 7. 开始训练
+for epoch in range(training_config['epochs']):
+    model.train()
+    total_loss = 0
+    
+    for batch_idx, batch in enumerate(train_loader):
+        # 数据移到设备
+        flow_data = batch['flow_data'].to(device)
+        structure_data = batch['structure_data'].to(device)
+        target = batch['target'].to(device)
+        
+        # 前向传播
+        optimizer.zero_grad()
+        outputs = model(flow_data, structure_data)
+        loss = criterion(outputs, target)
+        
+        # 反向传播
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), training_config['gradient_clip_norm'])
+        optimizer.step()
+        
+        total_loss += loss.item()
+        
+        if batch_idx % training_config['log_every'] == 0:
+            print(f'Epoch {epoch}, Batch {batch_idx}, Loss: {loss.item():.6f}')
+    
+    # 学习率调度
+    scheduler.step()
+    
+    # 验证
+    if epoch % training_config['eval_every'] == 0:
+        model.eval()
+        val_loss = 0
+        with torch.no_grad():
+            for batch in val_loader:
+                flow_data = batch['flow_data'].to(device)
+                structure_data = batch['structure_data'].to(device)
+                target = batch['target'].to(device)
+                
+                outputs = model(flow_data, structure_data)
+                loss = criterion(outputs, target)
+                val_loss += loss.item()
+        
+        print(f'Epoch {epoch}, Train Loss: {total_loss/len(train_loader):.6f}, Val Loss: {val_loss/len(val_loader):.6f}')
+    
+    # 保存检查点
+    if epoch % training_config['save_every'] == 0:
+        save_checkpoint({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'scheduler_state_dict': scheduler.state_dict(),
+            'loss': total_loss/len(train_loader)
+        }, f'checkpoint_epoch_{epoch}.pth')
+</code></pre>
+<h2 id="推理示例">
+  
+  
+    <a href="#推理示例" class="anchor-heading" aria-labelledby="推理示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔮 推理示例
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#推理示例" class="anchor-heading" aria-labelledby="推理示例"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. 模型推理
+  
+  
+</h3>
+    
+<p>展示如何使用训练好的模型进行推理。</p>
+
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.utils import load_checkpoint
+
+# 1. 加载模型
+config = VIVConfig.from_json('config.json')
+model = VIVTransformer(config)
+checkpoint = load_checkpoint('best_model.pth')
+model.load_state_dict(checkpoint['model_state_dict'])
+model.eval()
+
+# 2. 准备测试数据
+test_flow_data = torch.randn(1, 200, config.flow_input_dim)
+test_structure_data = torch.randn(1, 200, config.structure_input_dim)
+
+# 3. 进行推理
+with torch.no_grad():
+    predictions = model(test_flow_data, test_structure_data)
+
+# 4. 处理结果
+displacement = predictions['displacement'].squeeze().numpy()
+velocity = predictions['velocity'].squeeze().numpy()
+force = predictions['force'].squeeze().numpy()
+
+# 5. 可视化结果
+fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+
+# 位移
+axes[0].plot(displacement)
+axes[0].set_title('结构位移预测')
+axes[0].set_ylabel('位移 (m)')
+axes[0].grid(True)
+
+# 速度
+axes[1].plot(velocity)
+axes[1].set_title('结构速度预测')
+axes[1].set_ylabel('速度 (m/s)')
+axes[1].grid(True)
+
+# 力
+axes[2].plot(force)
+axes[2].set_title('流体力预测')
+axes[2].set_xlabel('时间步')
+axes[2].set_ylabel('力 (N)')
+axes[2].grid(True)
+
+plt.tight_layout()
+plt.savefig('predictions.png', dpi=300, bbox_inches='tight')
+plt.show()
+</code></pre>
+<h2 id="高级用法">
+  
+  
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 高级用法
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. 自定义注意力机制
+  
+  
+</h3>
+    
+<p>展示如何实现和使用自定义注意力机制。</p>
+
+<pre><code class="language-python">import torch
+import torch.nn as nn
+from vivtransformer.attention import BaseAttention
+
+class CustomAttention(BaseAttention):
+    """自定义注意力机制示例"""
+    
+    def __init__(self, d_model, num_heads, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+        
+        self.w_q = nn.Linear(d_model, d_model)
+        self.w_k = nn.Linear(d_model, d_model)
+        self.w_v = nn.Linear(d_model, d_model)
+        self.w_o = nn.Linear(d_model, d_model)
+        
+        self.dropout = nn.Dropout(dropout)
+        self.layer_norm = nn.LayerNorm(d_model)
+        
+    def forward(self, query, key, value, mask=None):
+        batch_size, seq_len, d_model = query.size()
+        
+        # 1. 线性变换
+        Q = self.w_q(query).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        K = self.w_k(key).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        V = self.w_v(value).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        
+        # 2. 计算注意力分数
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.d_k ** 0.5)
+        
+        # 3. 应用掩码
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        
+        # 4. 应用softmax
+        attention_weights = torch.softmax(scores, dim=-1)
+        attention_weights = self.dropout(attention_weights)
+        
+        # 5. 应用注意力权重
+        context = torch.matmul(attention_weights, V)
+        
+        # 6. 重塑和输出投影
+        context = context.transpose(1, 2).contiguous().view(
+            batch_size, seq_len, d_model
+        )
+        output = self.w_o(context)
+        
+        # 7. 残差连接和层归一化
+        output = self.layer_norm(output + query)
+        
+        return output, attention_weights
+
+# 使用自定义注意力机制
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    attention_class=CustomAttention  # 指定自定义注意力
+)
+
+model = VIVTransformer(config)
+</code></pre>
+<h3>
+  
+  
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. 模型分析和可视化
+  
+  
+</h3>
+    
+<p>展示如何分析模型性能和可视化注意力权重。</p>
+
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from vivtransformer.analysis import AttentionVisualizer, ModelAnalyzer
+
+# 1. 创建分析器
+analyzer = ModelAnalyzer(model)
+visualizer = AttentionVisualizer()
+
+# 2. 分析模型复杂度
+flops, params = analyzer.compute_flops(input_shape=(1, 100, 64))
+print(f"模型参数数量: {params:,}")
+print(f"浮点运算数: {flops:,}")
+
+# 3. 获取注意力权重
+with torch.no_grad():
+    outputs, attention_weights = model(test_flow_data, test_structure_data, return_attention=True)
+
+# 4. 可视化注意力权重
+for layer_idx, layer_attention in enumerate(attention_weights):
+    # 选择第一个头的注意力权重
+    attention = layer_attention[0, 0].cpu().numpy()  # [seq_len, seq_len]
+    
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(attention, cmap='Blues', cbar=True)
+    plt.title(f'Layer {layer_idx + 1} - Attention Weights')
+    plt.xlabel('Key Position')
+    plt.ylabel('Query Position')
+    plt.savefig(f'attention_layer_{layer_idx + 1}.png', dpi=300, bbox_inches='tight')
+    plt.show()
+
+# 5. 分析注意力模式
+attention_patterns = analyzer.analyze_attention_patterns(attention_weights)
+print("注意力模式分析:")
+for pattern_name, score in attention_patterns.items():
+    print(f"  {pattern_name}: {score:.4f}")
+</code></pre>
+</div>
+
+<div data-lang-en="">
+<h1>
+  
+  
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Examples
+  
+  
+</h1>
+    
+<p class="fs-6 fw-300">This page provides practical code examples for the VIVTransformer project to help you get started quickly and understand how to use the project.</p>
+<h2>
+  
+  
+    <a href="#高级用法" class="anchor-heading" aria-labelledby="高级用法"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 Table of Contents
+  
+  
+</h2>
+    
+<ul>
+<li><a href="#basic-examples">Basic Examples</a></li>
+<li><a href="#data-processing-examples">Data Processing Examples</a></li>
+<li><a href="#training-examples">Training Examples</a></li>
+<li><a href="#inference-examples">Inference Examples</a></li>
+<li><a href="#advanced-usage">Advanced Usage</a></li>
+</ul><hr />
+<h2 id="basic-examples">
+  
+  
+    <a href="#basic-examples" class="anchor-heading" aria-labelledby="basic-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 Basic Examples
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#basic-examples" class="anchor-heading" aria-labelledby="basic-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Quick Start Example
+  
+  
+</h3>
+    
+<p>The simplest usage example showing how to create a model and perform forward propagation.</p>
+
+<pre><code class="language-python">import torch
+from vivtransformer import VIVTransformer, VIVConfig
+
+# 1. Create configuration
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    flow_input_dim=64,
+    structure_input_dim=32,
+    output_dim=9  # 3D displacement + velocity + force
+)
+
+# 2. Create model
+model = VIVTransformer(config)
+print(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
+
+# 3. Prepare sample data
+batch_size, seq_len = 4, 100
+flow_data = torch.randn(batch_size, seq_len, config.flow_input_dim)
+structure_data = torch.randn(batch_size, seq_len, config.structure_input_dim)
+
+# 4. Forward propagation
+model.eval()
+with torch.no_grad():
+    outputs = model(flow_data, structure_data)
+    
+print("Output shapes:")
+for key, value in outputs.items():
+    print(f"  {key}: {value.shape}")
+</code></pre>
+<h2 id="data-processing-examples">
+  
+  
+    <a href="#data-processing-examples" class="anchor-heading" aria-labelledby="data-processing-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 Data Processing Examples
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#data-processing-examples" class="anchor-heading" aria-labelledby="data-processing-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Data Loading Example
+  
+  
+</h3>
+    
+<p>Shows how to load and preprocess VIV data.</p>
+
+<pre><code class="language-python">import os
+import pandas as pd
+from torch.utils.data import DataLoader
+from vivtransformer.data import VIVDataset, DataProcessor
+
+# 1. Data preprocessing
+processor = DataProcessor({
+    'normalize': True,
+    'sequence_length': 100,
+    'overlap': 0.5,
+    'features': ['velocity', 'pressure', 'displacement']
+})
+
+# 2. Create datasets
+train_dataset = VIVDataset(
+    data_dir='data/train',
+    split='train',
+    sequence_length=100,
+    processor=processor
+)
+
+val_dataset = VIVDataset(
+    data_dir='data/val',
+    split='val',
+    sequence_length=100,
+    processor=processor
+)
+
+# 3. Create data loaders
+train_loader = DataLoader(
+    train_dataset,
+    batch_size=32,
+    shuffle=True,
+    num_workers=4,
+    pin_memory=True
+)
+
+val_loader = DataLoader(
+    val_dataset,
+    batch_size=32,
+    shuffle=False,
+    num_workers=4,
+    pin_memory=True
+)
+
+# 4. Check data
+for batch in train_loader:
+    print("Batch data shapes:")
+    print(f"  Flow data: {batch['flow_data'].shape}")
+    print(f"  Structure data: {batch['structure_data'].shape}")
+    print(f"  Target data: {batch['target'].shape}")
+    break
+</code></pre>
+<h2 id="training-examples">
+  
+  
+    <a href="#training-examples" class="anchor-heading" aria-labelledby="training-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 Training Examples
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#training-examples" class="anchor-heading" aria-labelledby="training-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Complete Training Process
+  
+  
+</h3>
+    
+<p>Shows the complete model training process.</p>
+
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim.lr_scheduler import CosineAnnealingLR
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.training import Trainer, VIVLoss
+from vivtransformer.utils import set_seed, save_checkpoint
+
+# 1. Set random seed
+set_seed(42)
+
+# 2. Device configuration
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"Using device: {device}")
+
+# 3. Model configuration
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    d_ff=2048,
+    dropout=0.1,
+    max_seq_length=1000,
+    flow_input_dim=64,
+    structure_input_dim=32
+)
+
+# 4. Create model
+model = VIVTransformer(config).to(device)
+
+# 5. Loss function and optimizer
+criterion = VIVLoss(
+    mse_weight=1.0,
+    physics_weight=0.1,
+    consistency_weight=0.05
+)
+
+optimizer = optim.AdamW(
+    model.parameters(),
+    lr=1e-4,
+    weight_decay=1e-5
+)
+
+scheduler = CosineAnnealingLR(
+    optimizer,
+    T_max=100,
+    eta_min=1e-6
+)
+
+# 6. Training configuration
+training_config = {
+    'epochs': 100,
+    'save_every': 10,
+    'eval_every': 5,
+    'early_stopping_patience': 15,
+    'gradient_clip_norm': 1.0,
+    'log_every': 100
+}
+
+# 7. Start training
+for epoch in range(training_config['epochs']):
+    model.train()
+    total_loss = 0
+    
+    for batch_idx, batch in enumerate(train_loader):
+        # Move data to device
+        flow_data = batch['flow_data'].to(device)
+        structure_data = batch['structure_data'].to(device)
+        target = batch['target'].to(device)
+        
+        # Forward pass
+        optimizer.zero_grad()
+        outputs = model(flow_data, structure_data)
+        loss = criterion(outputs, target)
+        
+        # Backward pass
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), training_config['gradient_clip_norm'])
+        optimizer.step()
+        
+        total_loss += loss.item()
+        
+        if batch_idx % training_config['log_every'] == 0:
+            print(f'Epoch {epoch}, Batch {batch_idx}, Loss: {loss.item():.6f}')
+    
+    # Learning rate scheduling
+    scheduler.step()
+    
+    # Validation
+    if epoch % training_config['eval_every'] == 0:
+        model.eval()
+        val_loss = 0
+        with torch.no_grad():
+            for batch in val_loader:
+                flow_data = batch['flow_data'].to(device)
+                structure_data = batch['structure_data'].to(device)
+                target = batch['target'].to(device)
+                
+                outputs = model(flow_data, structure_data)
+                loss = criterion(outputs, target)
+                val_loss += loss.item()
+        
+        print(f'Epoch {epoch}, Train Loss: {total_loss/len(train_loader):.6f}, Val Loss: {val_loss/len(val_loader):.6f}')
+    
+    # Save checkpoint
+    if epoch % training_config['save_every'] == 0:
+        save_checkpoint({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'scheduler_state_dict': scheduler.state_dict(),
+            'loss': total_loss/len(train_loader)
+        }, f'checkpoint_epoch_{epoch}.pth')
+</code></pre>
+<h2 id="inference-examples">
+  
+  
+    <a href="#inference-examples" class="anchor-heading" aria-labelledby="inference-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔮 Inference Examples
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#inference-examples" class="anchor-heading" aria-labelledby="inference-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Model Inference
+  
+  
+</h3>
+    
+<p>Shows how to use a trained model for inference.</p>
+
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+from vivtransformer import VIVTransformer, VIVConfig
+from vivtransformer.utils import load_checkpoint
+
+# 1. Load model
+config = VIVConfig.from_json('config.json')
+model = VIVTransformer(config)
+checkpoint = load_checkpoint('best_model.pth')
+model.load_state_dict(checkpoint['model_state_dict'])
+model.eval()
+
+# 2. Prepare test data
+test_flow_data = torch.randn(1, 200, config.flow_input_dim)
+test_structure_data = torch.randn(1, 200, config.structure_input_dim)
+
+# 3. Perform inference
+with torch.no_grad():
+    predictions = model(test_flow_data, test_structure_data)
+
+# 4. Process results
+displacement = predictions['displacement'].squeeze().numpy()
+velocity = predictions['velocity'].squeeze().numpy()
+force = predictions['force'].squeeze().numpy()
+
+# 5. Visualize results
+fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+
+# Displacement
+axes[0].plot(displacement)
+axes[0].set_title('Structure Displacement Prediction')
+axes[0].set_ylabel('Displacement (m)')
+axes[0].grid(True)
+
+# Velocity
+axes[1].plot(velocity)
+axes[1].set_title('Structure Velocity Prediction')
+axes[1].set_ylabel('Velocity (m/s)')
+axes[1].grid(True)
+
+# Force
+axes[2].plot(force)
+axes[2].set_title('Fluid Force Prediction')
+axes[2].set_xlabel('Time Step')
+axes[2].set_ylabel('Force (N)')
+axes[2].grid(True)
+
+plt.tight_layout()
+plt.savefig('predictions.png', dpi=300, bbox_inches='tight')
+plt.show()
+</code></pre>
+<h2 id="advanced-usage">
+  
+  
+    <a href="#advanced-usage" class="anchor-heading" aria-labelledby="advanced-usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 Advanced Usage
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#advanced-usage" class="anchor-heading" aria-labelledby="advanced-usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Custom Attention Mechanism
+  
+  
+</h3>
+    
+<p>Shows how to implement and use custom attention mechanisms.</p>
+
+<pre><code class="language-python">import torch
+import torch.nn as nn
+from vivtransformer.attention import BaseAttention
+
+class CustomAttention(BaseAttention):
+    """Custom attention mechanism example"""
+    
+    def __init__(self, d_model, num_heads, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+        
+        self.w_q = nn.Linear(d_model, d_model)
+        self.w_k = nn.Linear(d_model, d_model)
+        self.w_v = nn.Linear(d_model, d_model)
+        self.w_o = nn.Linear(d_model, d_model)
+        
+        self.dropout = nn.Dropout(dropout)
+        self.layer_norm = nn.LayerNorm(d_model)
+        
+    def forward(self, query, key, value, mask=None):
+        batch_size, seq_len, d_model = query.size()
+        
+        # 1. Linear transformations
+        Q = self.w_q(query).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        K = self.w_k(key).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        V = self.w_v(value).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        
+        # 2. Compute attention scores
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.d_k ** 0.5)
+        
+        # 3. Apply mask
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        
+        # 4. Apply softmax
+        attention_weights = torch.softmax(scores, dim=-1)
+        attention_weights = self.dropout(attention_weights)
+        
+        # 5. Apply attention weights
+        context = torch.matmul(attention_weights, V)
+        
+        # 6. Reshape and output projection
+        context = context.transpose(1, 2).contiguous().view(
+            batch_size, seq_len, d_model
+        )
+        output = self.w_o(context)
+        
+        # 7. Residual connection and layer normalization
+        output = self.layer_norm(output + query)
+        
+        return output, attention_weights
+
+# Use custom attention mechanism
+config = VIVConfig(
+    d_model=512,
+    num_layers=6,
+    num_heads=8,
+    attention_class=CustomAttention  # Specify custom attention
+)
+
+model = VIVTransformer(config)
+</code></pre>
+<h3>
+  
+  
+    <a href="#advanced-usage" class="anchor-heading" aria-labelledby="advanced-usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Model Analysis and Visualization
+  
+  
+</h3>
+    
+<p>Shows how to analyze model performance and visualize attention weights.</p>
+
+<pre><code class="language-python">import torch
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from vivtransformer.analysis import AttentionVisualizer, ModelAnalyzer
+
+# 1. Create analyzer
+analyzer = ModelAnalyzer(model)
+visualizer = AttentionVisualizer()
+
+# 2. Analyze model complexity
+flops, params = analyzer.compute_flops(input_shape=(1, 100, 64))
+print(f"Model parameters: {params:,}")
+print(f"FLOPs: {flops:,}")
+
+# 3. Get attention weights
+with torch.no_grad():
+    outputs, attention_weights = model(test_flow_data, test_structure_data, return_attention=True)
+
+# 4. Visualize attention weights
+for layer_idx, layer_attention in enumerate(attention_weights):
+    # Select attention weights from the first head
+    attention = layer_attention[0, 0].cpu().numpy()  # [seq_len, seq_len]
+    
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(attention, cmap='Blues', cbar=True)
+    plt.title(f'Layer {layer_idx + 1} - Attention Weights')
+    plt.xlabel('Key Position')
+    plt.ylabel('Query Position')
+    plt.savefig(f'attention_layer_{layer_idx + 1}.png', dpi=300, bbox_inches='tight')
+    plt.show()
+
+# 5. Analyze attention patterns
+attention_patterns = analyzer.analyze_attention_patterns(attention_weights)
+print("Attention pattern analysis:")
+for pattern_name, score in attention_patterns.items():
+    print(f"  {pattern_name}: {score:.4f}")
+</code></pre>
+</div>
+
+          
+
+          
+            
+          
+        </main>
+        
+
+  <hr>
+  <footer>
+    
+      <p><a href="#top" id="back-to-top">Back to top</a></p>
+    
+
+    <p class="text-small text-grey-dk-100 mb-0">Copyright &copy; 2024 Pitohuie. Distributed by an <a href="https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt">MIT license.</a></p>
+
+    
+  </footer>
+
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
+</html>
+

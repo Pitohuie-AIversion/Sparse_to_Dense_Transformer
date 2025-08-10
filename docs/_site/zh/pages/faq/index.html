@@ -1,0 +1,1828 @@
+
+
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/Sparse_to_Dense_Transformer/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(1)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(11) > ul > li:nth-child(1) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(11) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(11) > ul > li:nth-child(1) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(11) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(11) > ul.nav-list > li.nav-list-item:nth-child(1) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/Sparse_to_Dense_Transformer/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/Sparse_to_Dense_Transformer/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>FAQ | VIVTransformer Documentation</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="FAQ" />
+<meta name="author" content="Pitohuie" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="Frequently Asked Questions" />
+<meta property="og:description" content="Frequently Asked Questions" />
+<link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/faq/" />
+<meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/faq/" />
+<meta property="og:site_name" content="VIVTransformer Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="FAQ" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"Frequently Asked Questions","headline":"FAQ","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pitoyounglogopink.png"},"name":"Pitohuie"},"url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/faq/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/Sparse_to_Dense_Transformer/" class="site-title lh-tight">
+  <div class="site-logo" role="img" aria-label="VIVTransformer Documentation"></div>
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-navigation/" class="nav-list-link">快速导航</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/examples/" class="nav-list-link">Examples</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/technical-deep-dive/" class="nav-list-link">技术深度解析</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/api-reference/" class="nav-list-link">API Reference</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-showcase/" class="nav-list-link">实验结果展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/project-showcase/" class="nav-list-link">项目展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in 评估与结果 category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/evaluation-results/" class="nav-list-link">评估与结果</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/benchmark-results/" class="nav-list-link">基准测试结果</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/ablation-study/" class="nav-list-link">消融研究</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/interactive-demo/" class="nav-list-link">交互式演示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Help category" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/getting-help/" class="nav-list-link">Getting Help</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/advanced-configuration/" class="nav-list-link">Advanced Configuration Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li></ul>
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
+            
+          >
+            GitHub Repository
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search VIVTransformer Documentation" aria-label="Search VIVTransformer Documentation" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/getting-help/">Getting Help</a></li>
+    <li class="breadcrumb-nav-list-item"><span>FAQ</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <!-- Language Switcher Component -->
+<div class="language-switcher">
+  <div class="language-switcher-label">
+    <span data-lang-en="Language:">Language:</span>
+    <span data-lang-zh="语言:" style="display: none;">语言:</span>
+  </div>
+  <div class="language-switcher-buttons">
+    <button class="language-switcher-button active" data-lang="en" onclick="switchLanguage('en')">
+      English
+    </button>
+    <button class="language-switcher-button" data-lang="zh" onclick="switchLanguage('zh')">
+      中文
+    </button>
+  </div>
+</div>
+
+<script>
+// Language switching functionality
+function switchLanguage(lang) {
+  // Update active button
+  document.querySelectorAll('.language-switcher-button').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('data-lang') === lang) {
+      btn.classList.add('active');
+    }
+  });
+  
+  // Show/hide language-specific content
+  document.querySelectorAll('[data-lang-en]').forEach(el => {
+    el.style.display = lang === 'en' ? 'block' : 'none';
+  });
+  
+  document.querySelectorAll('[data-lang-zh]').forEach(el => {
+    el.style.display = lang === 'zh' ? 'block' : 'none';
+  });
+  
+  // Update language switcher label
+  document.querySelectorAll('.language-switcher-label [data-lang-en]').forEach(el => {
+    el.style.display = lang === 'en' ? 'inline' : 'none';
+  });
+  
+  document.querySelectorAll('.language-switcher-label [data-lang-zh]').forEach(el => {
+    el.style.display = lang === 'zh' ? 'inline' : 'none';
+  });
+  
+  // Store language preference
+  localStorage.setItem('preferred-language', lang);
+}
+
+// Load saved language preference
+document.addEventListener('DOMContentLoaded', function() {
+  const savedLang = localStorage.getItem('preferred-language') || 'en';
+  switchLanguage(savedLang);
+});
+</script>
+
+<style>
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: var(--color-background-secondary, #f8f9fa);
+  border-radius: 0.375rem;
+  border: 1px solid var(--color-border, #e1e4e8);
+}
+
+.language-switcher-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.language-switcher-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.language-switcher-button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.language-switcher-button:not(.active) {
+  color: var(--color-link, #0969da);
+  background: var(--color-background, #ffffff);
+  border-color: var(--color-border, #e1e4e8);
+}
+
+.language-switcher-button:not(.active):hover {
+  background: var(--color-background-hover, #f3f4f6);
+  border-color: var(--color-border-hover, #d1d5db);
+}
+
+.language-switcher-button.active {
+  color: var(--color-text-inverse, #ffffff);
+  background: var(--color-primary, #0969da);
+  border-color: var(--color-primary, #0969da);
+  cursor: default;
+}
+
+@media (max-width: 768px) {
+  .language-switcher {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .language-switcher-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .language-switcher-button {
+    flex: 1;
+    text-align: center;
+  }
+}
+</style>
+
+<div data-lang-zh="" style="display: none;">
+<h1 id="常见问题-faq">
+  
+  
+    <a href="#常见问题-faq" class="anchor-heading" aria-labelledby="常见问题-faq"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 常见问题 (FAQ)
+  
+  
+</h1>
+    
+
+<p>本页面收集了VIVTransformer项目使用过程中的常见问题和解决方案。如果您的问题不在此列表中，请查看其他文档或提交Issue。</p>
+<h2 id="目录">
+  
+  
+    <a href="#目录" class="anchor-heading" aria-labelledby="目录"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 目录
+  
+  
+</h2>
+    
+
+<ul>
+<li><a href="#安装和环境问题">安装和环境问题</a></li>
+<li><a href="#配置和运行问题">配置和运行问题</a></li>
+<li><a href="#性能和资源问题">性能和资源问题</a></li>
+<li><a href="#结果和分析问题">结果和分析问题</a></li>
+<li><a href="#开发和扩展问题">开发和扩展问题</a></li>
+<li><a href="#错误诊断">错误诊断</a></li>
+</ul>
+<h2 id="安装和环境问题">
+  
+  
+    <a href="#安装和环境问题" class="anchor-heading" aria-labelledby="安装和环境问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 安装和环境问题
+  
+  
+</h2>
+    
+<h3 id="q1-安装依赖时出现版本冲突">
+  
+  
+    <a href="#q1-安装依赖时出现版本冲突" class="anchor-heading" aria-labelledby="q1-安装依赖时出现版本冲突"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q1: 安装依赖时出现版本冲突
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code class="language-bash">ERROR: pip's dependency resolver does not currently consider all the packages that are installed.
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-bash"># 方案1：创建新的虚拟环境
+conda create -n vivtransformer python=3.9
+conda activate vivtransformer
+pip install -r modify_multi_attention/requirements.txt
+
+# 方案2：强制重新安装
+pip install -r modify_multi_attention/requirements.txt --force-reinstall
+
+# 方案3：逐个安装依赖
+pip install torch numpy pyyaml matplotlib fightingcv_attention black flake8 tensorboard
+</code></pre>
+<h3 id="q2-cuda版本不匹配">
+  
+  
+    <a href="#q2-cuda版本不匹配" class="anchor-heading" aria-labelledby="q2-cuda版本不匹配"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q2: CUDA版本不匹配
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>RuntimeError: CUDA runtime error: no kernel image is available for execution on the device
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-bash"># 检查CUDA版本
+nvcc --version
+nvidia-smi
+
+# 安装对应版本的PyTorch
+# CUDA 11.6
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
+
+# CUDA 11.7
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
+
+# CPU版本（如果没有GPU）
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+</code></pre>
+<h3 id="q3-fightingcv-attention安装失败">
+  
+  
+    <a href="#q3-fightingcv-attention安装失败" class="anchor-heading" aria-labelledby="q3-fightingcv-attention安装失败"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q3: fightingcv_attention安装失败
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>ERROR: Could not find a version that satisfies the requirement fightingcv_attention
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-bash"># 方案1：从GitHub安装
+pip install git+https://github.com/xmu-xiaoma666/External-Attention-pytorch.git
+
+# 方案2：手动下载安装
+git clone https://github.com/xmu-xiaoma666/External-Attention-pytorch.git
+cd External-Attention-pytorch
+pip install -e .
+
+# 方案3：使用替代源
+pip install fightingcv_attention -i https://pypi.tuna.tsinghua.edu.cn/simple/
+</code></pre>
+<h3 id="q4-python版本过低">
+  
+  
+    <a href="#q4-python版本过低" class="anchor-heading" aria-labelledby="q4-python版本过低"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q4: Python版本过低
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>SyntaxError: invalid syntax (使用了f-string等新特性)
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-bash"># 检查Python版本
+python --version
+
+# 升级Python（推荐使用conda）
+conda install python=3.9
+
+# 或者使用pyenv
+pyenv install 3.9.16
+pyenv global 3.9.16
+</code></pre>
+<h2 id="配置和运行问题">
+  
+  
+    <a href="#配置和运行问题" class="anchor-heading" aria-labelledby="配置和运行问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 配置和运行问题
+  
+  
+</h2>
+    
+<h3 id="q5-找不到配置文件">
+  
+  
+    <a href="#q5-找不到配置文件" class="anchor-heading" aria-labelledby="q5-找不到配置文件"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q5: 找不到配置文件
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>FileNotFoundError: [Errno 2] No such file or directory: 'config.yaml'
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-bash"># 检查配置文件路径
+ls modify_multi_attention/configs/
+
+# 使用绝对路径
+python -m modify_multi_attention.main --config /absolute/path/to/config.yaml
+
+# 从项目根目录运行
+cd VIVTransformer
+python -m modify_multi_attention.main
+</code></pre>
+<h3 id="q6-数据文件路径错误">
+  
+  
+    <a href="#q6-数据文件路径错误" class="anchor-heading" aria-labelledby="q6-数据文件路径错误"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q6: 数据文件路径错误
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>FileNotFoundError: Data file not found at specified path
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-yaml"># 修改config.yaml中的数据路径
+data:
+  path: "/correct/path/to/your/data.pt"  # 使用绝对路径
+  # 或者
+  path: "./relative/path/to/data.pt"     # 使用相对路径
+</code></pre>
+
+<pre><code class="language-bash"># 检查数据文件是否存在
+ls -la /path/to/your/data.pt
+
+# 创建软链接（如果数据在其他位置）
+ln -s /actual/data/path/data.pt /config/data/path/data.pt
+</code></pre>
+<h3 id="q7-yaml配置文件语法错误">
+  
+  
+    <a href="#q7-yaml配置文件语法错误" class="anchor-heading" aria-labelledby="q7-yaml配置文件语法错误"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q7: YAML配置文件语法错误
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>yaml.scanner.ScannerError: mapping values are not allowed here
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-bash"># 验证YAML语法
+python -c "import yaml; yaml.safe_load(open('modify_multi_attention/configs/config.yaml'))"
+
+# 常见错误修复：
+# 1. 缩进问题（使用空格，不要使用Tab）
+# 2. 冒号后面要有空格
+# 3. 字符串包含特殊字符时要加引号
+</code></pre>
+
+<p><strong>正确的YAML格式</strong>：</p>
+<pre><code class="language-yaml">global:
+  seed: 42                    # 冒号后有空格
+  device: "cuda:0"            # 字符串加引号
+data:
+  batch_size: 128             # 正确缩进
+  use_augmentation: true      # 布尔值
+</code></pre>
+<h3 id="q8-注意力机制名称错误">
+  
+  
+    <a href="#q8-注意力机制名称错误" class="anchor-heading" aria-labelledby="q8-注意力机制名称错误"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q8: 注意力机制名称错误
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>KeyError: 'unknown_attention' not found in attention registry
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-python"># 查看支持的注意力机制
+python -c "
+from modify_multi_attention.mymodels.model_factory import ModelFactory
+print('支持的注意力机制:', ModelFactory.list_available_attentions())
+"
+
+# 或者查看配置文件中的完整列表
+grep -A 50 "attention_test:" modify_multi_attention/configs/config.yaml
+</code></pre>
+<h2 id="性能和资源问题">
+  
+  
+    <a href="#性能和资源问题" class="anchor-heading" aria-labelledby="性能和资源问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 性能和资源问题
+  
+  
+</h2>
+    
+<h3 id="q9-cuda内存不足-oom">
+  
+  
+    <a href="#q9-cuda内存不足-oom" class="anchor-heading" aria-labelledby="q9-cuda内存不足-oom"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q9: CUDA内存不足 (OOM)
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>RuntimeError: CUDA out of memory. Tried to allocate 2.00 GiB
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-yaml"># 方案1：减少批大小
+data:
+  batch_size: 32  # 从128减少到32
+
+# 方案2：限制GPU内存使用
+global:
+  max_memory_fraction: 0.6  # 只使用60%的GPU内存
+
+# 方案3：使用CPU模式
+global:
+  device: cpu
+</code></pre>
+
+<pre><code class="language-python"># 方案4：启用梯度累积
+training:
+  gradient_accumulation_steps: 4
+  effective_batch_size: 128  # 实际批大小 = batch_size * accumulation_steps
+</code></pre>
+<h3 id="q10-训练速度太慢">
+  
+  
+    <a href="#q10-训练速度太慢" class="anchor-heading" aria-labelledby="q10-训练速度太慢"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q10: 训练速度太慢
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：每个epoch需要很长时间完成</p>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-yaml"># 方案1：使用高效注意力机制
+model:
+  attention_type: muse  # 或 eca, ufo
+
+# 方案2：减少模型复杂度
+model:
+  d_model: 128      # 从256减少到128
+  num_heads: 4      # 从8减少到4
+  num_layers: 4     # 从6减少到4
+
+# 方案3：增大批大小
+data:
+  batch_size: 256   # 如果内存允许
+
+# 方案4：启用混合精度训练
+training:
+  use_amp: true
+</code></pre>
+<h3 id="q11-多gpu训练问题">
+  
+  
+    <a href="#q11-多gpu训练问题" class="anchor-heading" aria-labelledby="q11-多gpu训练问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q11: 多GPU训练问题
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>RuntimeError: Expected all tensors to be on the same device
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-yaml"># 启用数据并行
+training:
+  use_data_parallel: true
+  gpu_ids: [0, 1, 2, 3]  # 指定使用的GPU
+</code></pre>
+
+<pre><code class="language-python"># 检查GPU可用性
+import torch
+print(f"可用GPU数量: {torch.cuda.device_count()}")
+for i in range(torch.cuda.device_count()):
+    print(f"GPU {i}: {torch.cuda.get_device_name(i)}")
+</code></pre>
+<h2 id="结果和分析问题">
+  
+  
+    <a href="#结果和分析问题" class="anchor-heading" aria-labelledby="结果和分析问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 结果和分析问题
+  
+  
+</h2>
+    
+<h3 id="q12-结果文件找不到">
+  
+  
+    <a href="#q12-结果文件找不到" class="anchor-heading" aria-labelledby="q12-结果文件找不到"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q12: 结果文件找不到
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：</p>
+<pre><code>FileNotFoundError: Results file not found
+</code></pre>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-bash"># 检查输出目录
+ls -la outputs/
+ls -la results/
+
+# 查看配置中的输出路径
+grep -r "output" modify_multi_attention/configs/config.yaml
+
+# 手动指定输出目录
+python -m modify_multi_attention.main --output_dir ./my_results
+</code></pre>
+<h3 id="q13-可视化图表不显示">
+  
+  
+    <a href="#q13-可视化图表不显示" class="anchor-heading" aria-labelledby="q13-可视化图表不显示"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q13: 可视化图表不显示
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：运行完成但没有生成图表</p>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-yaml"># 启用可视化
+visualization:
+  enabled: true
+  save_plots: true
+  show_plots: false  # 服务器环境设为false
+</code></pre>
+
+<pre><code class="language-python"># 检查matplotlib后端
+import matplotlib
+print(f"当前后端: {matplotlib.get_backend()}")
+
+# 设置非交互式后端
+import matplotlib
+matplotlib.use('Agg')
+</code></pre>
+<h3 id="q14-注意力权重分析异常">
+  
+  
+    <a href="#q14-注意力权重分析异常" class="anchor-heading" aria-labelledby="q14-注意力权重分析异常"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q14: 注意力权重分析异常
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：注意力权重全为0或异常值</p>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-python"># 检查注意力权重
+def debug_attention_weights(model, data):
+    model.eval()
+    with torch.no_grad():
+        # 获取注意力权重
+        output, attention_weights = model(data, return_attention=True)
+        
+        print(f"注意力权重形状: {attention_weights.shape}")
+        print(f"权重范围: [{attention_weights.min():.6f}, {attention_weights.max():.6f}]")
+        print(f"权重和: {attention_weights.sum(dim=-1).mean():.6f}")
+        
+        # 检查是否有异常值
+        if torch.isnan(attention_weights).any():
+            print("警告: 注意力权重包含NaN")
+        if torch.isinf(attention_weights).any():
+            print("警告: 注意力权重包含无穷值")
+</code></pre>
+<h2 id="开发和扩展问题">
+  
+  
+    <a href="#开发和扩展问题" class="anchor-heading" aria-labelledby="开发和扩展问题"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 开发和扩展问题
+  
+  
+</h2>
+    
+<h3 id="q15-添加新的注意力机制">
+  
+  
+    <a href="#q15-添加新的注意力机制" class="anchor-heading" aria-labelledby="q15-添加新的注意力机制"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q15: 添加新的注意力机制
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：如何集成自定义的注意力机制</p>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-python"># 1. 创建新的注意力类
+class MyCustomAttention(nn.Module):
+    def __init__(self, d_model, num_heads):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        # 实现您的注意力机制
+    
+    def forward(self, x):
+        # 实现前向传播
+        return x
+
+# 2. 注册到工厂类
+from modify_multi_attention.mymodels.model_factory import ModelFactory
+
+@ModelFactory.register_attention('my_custom')
+class MyCustomAttentionWrapper:
+    @staticmethod
+    def create(d_model, num_heads, **kwargs):
+        return MyCustomAttention(d_model, num_heads)
+</code></pre>
+<h3 id="q16-修改模型架构">
+  
+  
+    <a href="#q16-修改模型架构" class="anchor-heading" aria-labelledby="q16-修改模型架构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q16: 修改模型架构
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：如何修改Transformer的层数或维度</p>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-yaml"># 在配置文件中修改
+model:
+  d_model: 512        # 模型维度
+  num_heads: 8        # 注意力头数
+  num_layers: 6       # Transformer层数
+  d_ff: 2048         # 前馈网络维度
+  dropout: 0.1       # Dropout率
+</code></pre>
+
+<pre><code class="language-python"># 或者在代码中直接修改
+from modify_multi_attention.mymodels.vivtransformer import VIVTransformer
+
+model = VIVTransformer(
+    d_model=512,
+    num_heads=8,
+    num_layers=6,
+    attention_type='muse'
+)
+</code></pre>
+<h3 id="q17-自定义数据加载">
+  
+  
+    <a href="#q17-自定义数据加载" class="anchor-heading" aria-labelledby="q17-自定义数据加载"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q17: 自定义数据加载
+  
+  
+</h3>
+    
+
+<p><strong>问题描述</strong>：如何使用自己的数据集</p>
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-python"># 1. 创建自定义数据集类
+from torch.utils.data import Dataset
+
+class MyCustomDataset(Dataset):
+    def __init__(self, data_path):
+        # 加载您的数据
+        self.data = self.load_data(data_path)
+    
+    def __len__(self):
+        return len(self.data)
+    
+    def __getitem__(self, idx):
+        # 返回单个样本
+        return self.data[idx]
+    
+    def load_data(self, path):
+        # 实现数据加载逻辑
+        pass
+
+# 2. 在配置中指定数据集
+data:
+  dataset_class: "MyCustomDataset"
+  dataset_args:
+    data_path: "/path/to/your/data"
+</code></pre>
+<h2 id="错误诊断">
+  
+  
+    <a href="#错误诊断" class="anchor-heading" aria-labelledby="错误诊断"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 错误诊断
+  
+  
+</h2>
+    
+<h3 id="q18-启用调试模式">
+  
+  
+    <a href="#q18-启用调试模式" class="anchor-heading" aria-labelledby="q18-启用调试模式"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q18: 启用调试模式
+  
+  
+</h3>
+    
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-yaml"># 在配置文件中启用调试
+global:
+  debug: true
+  log_level: DEBUG
+  
+logging:
+  console_level: DEBUG
+  file_level: DEBUG
+  save_logs: true
+</code></pre>
+
+<pre><code class="language-bash"># 或者使用命令行参数
+python -m modify_multi_attention.main --debug --verbose
+</code></pre>
+<h3 id="q19-性能分析">
+  
+  
+    <a href="#q19-性能分析" class="anchor-heading" aria-labelledby="q19-性能分析"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q19: 性能分析
+  
+  
+</h3>
+    
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-python"># 使用PyTorch Profiler
+import torch.profiler
+
+with torch.profiler.profile(
+    activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.CUDA],
+    schedule=torch.profiler.schedule(wait=1, warmup=1, active=3, repeat=2),
+    on_trace_ready=torch.profiler.tensorboard_trace_handler('./log/profiler'),
+    record_shapes=True,
+    profile_memory=True,
+    with_stack=True
+) as prof:
+    for step, batch in enumerate(dataloader):
+        # 训练步骤
+        output = model(batch)
+        loss = criterion(output, target)
+        loss.backward()
+        optimizer.step()
+        prof.step()
+</code></pre>
+<h3 id="q20-内存泄漏检测">
+  
+  
+    <a href="#q20-内存泄漏检测" class="anchor-heading" aria-labelledby="q20-内存泄漏检测"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q20: 内存泄漏检测
+  
+  
+</h3>
+    
+
+<p><strong>解决方案</strong>：</p>
+<pre><code class="language-python"># 监控GPU内存使用
+import torch
+
+def monitor_memory():
+    if torch.cuda.is_available():
+        allocated = torch.cuda.memory_allocated() / 1024**3
+        cached = torch.cuda.memory_reserved() / 1024**3
+        print(f"GPU内存 - 已分配: {allocated:.2f}GB, 已缓存: {cached:.2f}GB")
+
+# 在训练循环中定期调用
+for epoch in range(num_epochs):
+    for batch in dataloader:
+        # 训练代码
+        pass
+    
+    # 每个epoch后检查内存
+    monitor_memory()
+    torch.cuda.empty_cache()  # 清理缓存
+</code></pre>
+<h2>
+  
+  
+    <a href="#q20-内存泄漏检测" class="anchor-heading" aria-labelledby="q20-内存泄漏检测"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 💡 最佳实践建议
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#q20-内存泄漏检测" class="anchor-heading" aria-labelledby="q20-内存泄漏检测"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 开发环境设置
+  
+  
+</h3>
+    
+
+<ol>
+<li><strong>使用虚拟环境</strong>：始终在独立的conda或venv环境中工作</li>
+<li><strong>版本固定</strong>：在requirements.txt中固定依赖版本</li>
+<li><strong>代码格式化</strong>：使用black和flake8保持代码风格一致</li>
+<li><strong>版本控制</strong>：使用git跟踪代码变更</li>
+</ol>
+<h3>
+  
+  
+    <a href="#q20-内存泄漏检测" class="anchor-heading" aria-labelledby="q20-内存泄漏检测"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 性能优化
+  
+  
+</h3>
+    
+
+<ol>
+<li><strong>批大小调优</strong>：根据GPU内存调整批大小</li>
+<li><strong>混合精度</strong>：在支持的硬件上启用AMP</li>
+<li><strong>数据预处理</strong>：使用多进程数据加载</li>
+<li><strong>模型选择</strong>：根据任务选择合适的注意力机制</li>
+</ol>
+<h3>
+  
+  
+    <a href="#q20-内存泄漏检测" class="anchor-heading" aria-labelledby="q20-内存泄漏检测"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🐛 调试技巧
+  
+  
+</h3>
+    
+
+<ol>
+<li><strong>逐步验证</strong>：从简单配置开始，逐步增加复杂度</li>
+<li><strong>日志记录</strong>：启用详细日志记录</li>
+<li><strong>可视化</strong>：使用TensorBoard监控训练过程</li>
+<li><strong>单元测试</strong>：为关键组件编写测试</li>
+</ol>
+<h2>
+  
+  
+    <a href="#q20-内存泄漏检测" class="anchor-heading" aria-labelledby="q20-内存泄漏检测"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📞 获取更多帮助
+  
+  
+</h2>
+    
+
+<p>如果您的问题仍未解决，请通过以下方式获取帮助：</p>
+
+<ul>
+<li><strong>GitHub Issues</strong>: <a href="https://github.com/your-repo/issues">提交详细的问题报告</a></li>
+<li><strong>讨论区</strong>: <a href="https://github.com/your-repo/discussions">参与社区讨论</a></li>
+<li><strong>文档</strong>: <a href="/">查阅完整文档</a></li>
+<li><strong>示例代码</strong>: <a href="/pages/examples/">参考示例代码</a></li>
+</ul>
+
+<p>提交问题时，请包含：</p>
+<ul>
+<li>完整的错误信息和堆栈跟踪</li>
+<li>使用的配置文件</li>
+<li>Python和依赖包版本信息</li>
+<li>硬件环境（GPU型号、内存等）</li>
+<li>重现问题的最小代码示例</li>
+</ul>
+</div>
+
+<div data-lang-en="">
+<h1 id="faq">
+  
+  
+    <a href="#faq" class="anchor-heading" aria-labelledby="faq"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Frequently Asked Questions (FAQ)
+  
+  
+</h1>
+    
+
+<p>This page collects common questions and solutions encountered when using the VIVTransformer project. If your question is not listed here, please check other documentation or submit an Issue.</p>
+<h2 id="table-of-contents">
+  
+  
+    <a href="#table-of-contents" class="anchor-heading" aria-labelledby="table-of-contents"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 Table of Contents
+  
+  
+</h2>
+    
+
+<ul>
+<li><a href="#installation-and-environment-issues">Installation and Environment Issues</a></li>
+<li><a href="#configuration-and-runtime-issues">Configuration and Runtime Issues</a></li>
+<li><a href="#performance-and-resource-issues">Performance and Resource Issues</a></li>
+<li><a href="#results-and-analysis-issues">Results and Analysis Issues</a></li>
+<li><a href="#development-and-extension-issues">Development and Extension Issues</a></li>
+<li><a href="#error-diagnosis">Error Diagnosis</a></li>
+</ul>
+<h2 id="installation-and-environment-issues">
+  
+  
+    <a href="#installation-and-environment-issues" class="anchor-heading" aria-labelledby="installation-and-environment-issues"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Installation and Environment Issues
+  
+  
+</h2>
+    
+<h3 id="q1-version-conflicts-when-installing-dependencies">
+  
+  
+    <a href="#q1-version-conflicts-when-installing-dependencies" class="anchor-heading" aria-labelledby="q1-version-conflicts-when-installing-dependencies"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q1: Version conflicts when installing dependencies
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code class="language-bash">ERROR: pip's dependency resolver does not currently consider all the packages that are installed.
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-bash"># Solution 1: Create a new virtual environment
+conda create -n vivtransformer python=3.9
+conda activate vivtransformer
+pip install -r modify_multi_attention/requirements.txt
+
+# Solution 2: Force reinstall
+pip install -r modify_multi_attention/requirements.txt --force-reinstall
+
+# Solution 3: Install dependencies individually
+pip install torch numpy pyyaml matplotlib fightingcv_attention black flake8 tensorboard
+</code></pre>
+<h3 id="q2-cuda-version-mismatch">
+  
+  
+    <a href="#q2-cuda-version-mismatch" class="anchor-heading" aria-labelledby="q2-cuda-version-mismatch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q2: CUDA version mismatch
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>RuntimeError: CUDA runtime error: no kernel image is available for execution on the device
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-bash"># Check CUDA version
+nvcc --version
+nvidia-smi
+
+# Install corresponding PyTorch version
+# CUDA 11.6
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
+
+# CUDA 11.7
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
+
+# CPU version (if no GPU)
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+</code></pre>
+<h3 id="q3-fightingcv-attention-installation-failed">
+  
+  
+    <a href="#q3-fightingcv-attention-installation-failed" class="anchor-heading" aria-labelledby="q3-fightingcv-attention-installation-failed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q3: fightingcv_attention installation failed
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>ERROR: Could not find a version that satisfies the requirement fightingcv_attention
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-bash"># Solution 1: Install from GitHub
+pip install git+https://github.com/xmu-xiaoma666/External-Attention-pytorch.git
+
+# Solution 2: Manual download and install
+git clone https://github.com/xmu-xiaoma666/External-Attention-pytorch.git
+cd External-Attention-pytorch
+pip install -e .
+
+# Solution 3: Use alternative source
+pip install fightingcv_attention -i https://pypi.tuna.tsinghua.edu.cn/simple/
+</code></pre>
+<h3 id="q4-python-version-too-low">
+  
+  
+    <a href="#q4-python-version-too-low" class="anchor-heading" aria-labelledby="q4-python-version-too-low"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q4: Python version too low
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>SyntaxError: invalid syntax (using f-string and other new features)
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-bash"># Check Python version
+python --version
+
+# Upgrade Python (recommended using conda)
+conda install python=3.9
+
+# Or use pyenv
+pyenv install 3.9.16
+pyenv global 3.9.16
+</code></pre>
+<h2 id="configuration-and-runtime-issues">
+  
+  
+    <a href="#configuration-and-runtime-issues" class="anchor-heading" aria-labelledby="configuration-and-runtime-issues"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Configuration and Runtime Issues
+  
+  
+</h2>
+    
+<h3 id="q5-configuration-file-not-found">
+  
+  
+    <a href="#q5-configuration-file-not-found" class="anchor-heading" aria-labelledby="q5-configuration-file-not-found"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q5: Configuration file not found
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>FileNotFoundError: [Errno 2] No such file or directory: 'config.yaml'
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-bash"># Check configuration file path
+ls modify_multi_attention/configs/
+
+# Use absolute path
+python -m modify_multi_attention.main --config /absolute/path/to/config.yaml
+
+# Run from project root directory
+cd VIVTransformer
+python -m modify_multi_attention.main
+</code></pre>
+<h3 id="q6-data-file-path-error">
+  
+  
+    <a href="#q6-data-file-path-error" class="anchor-heading" aria-labelledby="q6-data-file-path-error"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q6: Data file path error
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>FileNotFoundError: Data file not found at specified path
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-yaml"># Modify data path in config.yaml
+data:
+  path: "/correct/path/to/your/data.pt"  # Use absolute path
+  # or
+  path: "./relative/path/to/data.pt"     # Use relative path
+</code></pre>
+
+<pre><code class="language-bash"># Check if data file exists
+ls -la /path/to/your/data.pt
+
+# Create symbolic link (if data is in another location)
+ln -s /actual/data/path/data.pt /config/data/path/data.pt
+</code></pre>
+<h3 id="q7-yaml-configuration-syntax-error">
+  
+  
+    <a href="#q7-yaml-configuration-syntax-error" class="anchor-heading" aria-labelledby="q7-yaml-configuration-syntax-error"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q7: YAML configuration syntax error
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>yaml.scanner.ScannerError: mapping values are not allowed here
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-bash"># Validate YAML syntax
+python -c "import yaml; yaml.safe_load(open('modify_multi_attention/configs/config.yaml'))"
+
+# Common error fixes:
+# 1. Indentation issues (use spaces, not tabs)
+# 2. Space required after colon
+# 3. Quote strings with special characters
+</code></pre>
+
+<p><strong>Correct YAML format</strong>:</p>
+<pre><code class="language-yaml">global:
+  seed: 42                    # Space after colon
+  device: "cuda:0"            # Quote strings
+data:
+  batch_size: 128             # Correct indentation
+  use_augmentation: true      # Boolean value
+</code></pre>
+<h3 id="q8-attention-mechanism-name-error">
+  
+  
+    <a href="#q8-attention-mechanism-name-error" class="anchor-heading" aria-labelledby="q8-attention-mechanism-name-error"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q8: Attention mechanism name error
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>KeyError: 'unknown_attention' not found in attention registry
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-python"># Check supported attention mechanisms
+python -c "
+from modify_multi_attention.mymodels.model_factory import ModelFactory
+print('Supported attention mechanisms:', ModelFactory.list_available_attentions())
+"
+
+# Or check complete list in config file
+grep -A 50 "attention_test:" modify_multi_attention/configs/config.yaml
+</code></pre>
+<h2 id="performance-and-resource-issues">
+  
+  
+    <a href="#performance-and-resource-issues" class="anchor-heading" aria-labelledby="performance-and-resource-issues"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Performance and Resource Issues
+  
+  
+</h2>
+    
+<h3 id="q9-cuda-out-of-memory-oom">
+  
+  
+    <a href="#q9-cuda-out-of-memory-oom" class="anchor-heading" aria-labelledby="q9-cuda-out-of-memory-oom"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q9: CUDA out of memory (OOM)
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>RuntimeError: CUDA out of memory. Tried to allocate 2.00 GiB
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-yaml"># Solution 1: Reduce batch size
+data:
+  batch_size: 32  # Reduce from 128 to 32
+
+# Solution 2: Limit GPU memory usage
+global:
+  max_memory_fraction: 0.6  # Use only 60% of GPU memory
+
+# Solution 3: Use CPU mode
+global:
+  device: cpu
+</code></pre>
+
+<pre><code class="language-python"># Solution 4: Enable gradient accumulation
+training:
+  gradient_accumulation_steps: 4
+  effective_batch_size: 128  # Actual batch size = batch_size * accumulation_steps
+</code></pre>
+<h3 id="q10-training-speed-too-slow">
+  
+  
+    <a href="#q10-training-speed-too-slow" class="anchor-heading" aria-labelledby="q10-training-speed-too-slow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q10: Training speed too slow
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>: Each epoch takes too long to complete</p>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-yaml"># Solution 1: Use efficient attention mechanisms
+model:
+  attention_type: muse  # or eca, ufo
+
+# Solution 2: Reduce model complexity
+model:
+  d_model: 128      # Reduce from 256 to 128
+  num_heads: 4      # Reduce from 8 to 4
+  num_layers: 4     # Reduce from 6 to 4
+
+# Solution 3: Increase batch size
+data:
+  batch_size: 256   # If memory allows
+
+# Solution 4: Enable mixed precision training
+training:
+  use_amp: true
+</code></pre>
+<h3 id="q11-multi-gpu-training-issues">
+  
+  
+    <a href="#q11-multi-gpu-training-issues" class="anchor-heading" aria-labelledby="q11-multi-gpu-training-issues"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q11: Multi-GPU training issues
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>RuntimeError: Expected all tensors to be on the same device
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-yaml"># Enable data parallelism
+training:
+  use_data_parallel: true
+  gpu_ids: [0, 1, 2, 3]  # Specify GPUs to use
+</code></pre>
+
+<pre><code class="language-python"># Check GPU availability
+import torch
+print(f"Available GPUs: {torch.cuda.device_count()}")
+for i in range(torch.cuda.device_count()):
+    print(f"GPU {i}: {torch.cuda.get_device_name(i)}")
+</code></pre>
+<h2 id="results-and-analysis-issues">
+  
+  
+    <a href="#results-and-analysis-issues" class="anchor-heading" aria-labelledby="results-and-analysis-issues"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Results and Analysis Issues
+  
+  
+</h2>
+    
+<h3 id="q12-results-file-not-found">
+  
+  
+    <a href="#q12-results-file-not-found" class="anchor-heading" aria-labelledby="q12-results-file-not-found"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q12: Results file not found
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>:</p>
+<pre><code>FileNotFoundError: Results file not found
+</code></pre>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-bash"># Check output directories
+ls -la outputs/
+ls -la results/
+
+# Check output path in configuration
+grep -r "output" modify_multi_attention/configs/config.yaml
+
+# Manually specify output directory
+python -m modify_multi_attention.main --output_dir ./my_results
+</code></pre>
+<h3 id="q13-visualization-charts-not-displayed">
+  
+  
+    <a href="#q13-visualization-charts-not-displayed" class="anchor-heading" aria-labelledby="q13-visualization-charts-not-displayed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q13: Visualization charts not displayed
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>: Execution completes but no charts are generated</p>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-yaml"># Enable visualization
+visualization:
+  enabled: true
+  save_plots: true
+  show_plots: false  # Set to false in server environment
+</code></pre>
+
+<pre><code class="language-python"># Check matplotlib backend
+import matplotlib
+print(f"Current backend: {matplotlib.get_backend()}")
+
+# Set non-interactive backend
+import matplotlib
+matplotlib.use('Agg')
+</code></pre>
+<h3 id="q14-attention-weight-analysis-anomaly">
+  
+  
+    <a href="#q14-attention-weight-analysis-anomaly" class="anchor-heading" aria-labelledby="q14-attention-weight-analysis-anomaly"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q14: Attention weight analysis anomaly
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>: Attention weights are all zeros or abnormal values</p>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-python"># Check attention weights
+def debug_attention_weights(model, data):
+    model.eval()
+    with torch.no_grad():
+        # Get attention weights
+        output, attention_weights = model(data, return_attention=True)
+        
+        print(f"Attention weight shape: {attention_weights.shape}")
+        print(f"Weight range: [{attention_weights.min():.6f}, {attention_weights.max():.6f}]")
+        print(f"Weight sum: {attention_weights.sum(dim=-1).mean():.6f}")
+        
+        # Check for anomalies
+        if torch.isnan(attention_weights).any():
+            print("Warning: Attention weights contain NaN")
+        if torch.isinf(attention_weights).any():
+            print("Warning: Attention weights contain infinite values")
+</code></pre>
+<h2 id="development-and-extension-issues">
+  
+  
+    <a href="#development-and-extension-issues" class="anchor-heading" aria-labelledby="development-and-extension-issues"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Development and Extension Issues
+  
+  
+</h2>
+    
+<h3 id="q15-adding-new-attention-mechanisms">
+  
+  
+    <a href="#q15-adding-new-attention-mechanisms" class="anchor-heading" aria-labelledby="q15-adding-new-attention-mechanisms"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q15: Adding new attention mechanisms
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>: How to integrate custom attention mechanisms</p>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-python"># 1. Create new attention class
+class MyCustomAttention(nn.Module):
+    def __init__(self, d_model, num_heads):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        # Implement your attention mechanism
+    
+    def forward(self, x):
+        # Implement forward pass
+        return x
+
+# 2. Register to factory class
+from modify_multi_attention.mymodels.model_factory import ModelFactory
+
+@ModelFactory.register_attention('my_custom')
+class MyCustomAttentionWrapper:
+    @staticmethod
+    def create(d_model, num_heads, **kwargs):
+        return MyCustomAttention(d_model, num_heads)
+</code></pre>
+<h3 id="q16-modifying-model-architecture">
+  
+  
+    <a href="#q16-modifying-model-architecture" class="anchor-heading" aria-labelledby="q16-modifying-model-architecture"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q16: Modifying model architecture
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>: How to modify the number of Transformer layers or dimensions</p>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-yaml"># Modify in configuration file
+model:
+  d_model: 512        # Model dimension
+  num_heads: 8        # Number of attention heads
+  num_layers: 6       # Number of Transformer layers
+  d_ff: 2048         # Feed-forward network dimension
+  dropout: 0.1       # Dropout rate
+</code></pre>
+
+<pre><code class="language-python"># Or modify directly in code
+from modify_multi_attention.mymodels.vivtransformer import VIVTransformer
+
+model = VIVTransformer(
+    d_model=512,
+    num_heads=8,
+    num_layers=6,
+    attention_type='muse'
+)
+</code></pre>
+<h3 id="q17-custom-data-loading">
+  
+  
+    <a href="#q17-custom-data-loading" class="anchor-heading" aria-labelledby="q17-custom-data-loading"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q17: Custom data loading
+  
+  
+</h3>
+    
+
+<p><strong>Problem Description</strong>: How to use your own dataset</p>
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-python"># 1. Create custom dataset class
+from torch.utils.data import Dataset
+
+class MyCustomDataset(Dataset):
+    def __init__(self, data_path):
+        # Load your data
+        self.data = self.load_data(data_path)
+    
+    def __len__(self):
+        return len(self.data)
+    
+    def __getitem__(self, idx):
+        # Return single sample
+        return self.data[idx]
+    
+    def load_data(self, path):
+        # Implement data loading logic
+        pass
+
+# 2. Specify dataset in configuration
+data:
+  dataset_class: "MyCustomDataset"
+  dataset_args:
+    data_path: "/path/to/your/data"
+</code></pre>
+<h2 id="error-diagnosis">
+  
+  
+    <a href="#error-diagnosis" class="anchor-heading" aria-labelledby="error-diagnosis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Error Diagnosis
+  
+  
+</h2>
+    
+<h3 id="q18-enable-debug-mode">
+  
+  
+    <a href="#q18-enable-debug-mode" class="anchor-heading" aria-labelledby="q18-enable-debug-mode"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q18: Enable debug mode
+  
+  
+</h3>
+    
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-yaml"># Enable debugging in configuration file
+global:
+  debug: true
+  log_level: DEBUG
+  
+logging:
+  console_level: DEBUG
+  file_level: DEBUG
+  save_logs: true
+</code></pre>
+
+<pre><code class="language-bash"># Or use command line arguments
+python -m modify_multi_attention.main --debug --verbose
+</code></pre>
+<h3 id="q19-performance-profiling">
+  
+  
+    <a href="#q19-performance-profiling" class="anchor-heading" aria-labelledby="q19-performance-profiling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q19: Performance profiling
+  
+  
+</h3>
+    
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-python"># Use PyTorch Profiler
+import torch.profiler
+
+with torch.profiler.profile(
+    activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.CUDA],
+    schedule=torch.profiler.schedule(wait=1, warmup=1, active=3, repeat=2),
+    on_trace_ready=torch.profiler.tensorboard_trace_handler('./log/profiler'),
+    record_shapes=True,
+    profile_memory=True,
+    with_stack=True
+) as prof:
+    for step, batch in enumerate(dataloader):
+        # Training step
+        output = model(batch)
+        loss = criterion(output, target)
+        loss.backward()
+        optimizer.step()
+        prof.step()
+</code></pre>
+<h3 id="q20-memory-leak-detection">
+  
+  
+    <a href="#q20-memory-leak-detection" class="anchor-heading" aria-labelledby="q20-memory-leak-detection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ❓ Q20: Memory leak detection
+  
+  
+</h3>
+    
+
+<p><strong>Solutions</strong>:</p>
+<pre><code class="language-python"># Monitor GPU memory usage
+import torch
+
+def monitor_memory():
+    if torch.cuda.is_available():
+        allocated = torch.cuda.memory_allocated() / 1024**3
+        cached = torch.cuda.memory_reserved() / 1024**3
+        print(f"GPU Memory - Allocated: {allocated:.2f}GB, Cached: {cached:.2f}GB")
+
+# Call regularly in training loop
+for epoch in range(num_epochs):
+    for batch in dataloader:
+        # Training code
+        pass
+    
+    # Check memory after each epoch
+    monitor_memory()
+    torch.cuda.empty_cache()  # Clear cache
+</code></pre>
+<h2>
+  
+  
+    <a href="#q20-memory-leak-detection" class="anchor-heading" aria-labelledby="q20-memory-leak-detection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 💡 Best Practice Recommendations
+  
+  
+</h2>
+    
+<h3>
+  
+  
+    <a href="#q20-memory-leak-detection" class="anchor-heading" aria-labelledby="q20-memory-leak-detection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 Development Environment Setup
+  
+  
+</h3>
+    
+
+<ol>
+<li><strong>Use Virtual Environments</strong>: Always work in isolated conda or venv environments</li>
+<li><strong>Version Pinning</strong>: Pin dependency versions in requirements.txt</li>
+<li><strong>Code Formatting</strong>: Use black and flake8 to maintain consistent code style</li>
+<li><strong>Version Control</strong>: Use git to track code changes</li>
+</ol>
+<h3>
+  
+  
+    <a href="#q20-memory-leak-detection" class="anchor-heading" aria-labelledby="q20-memory-leak-detection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🚀 Performance Optimization
+  
+  
+</h3>
+    
+
+<ol>
+<li><strong>Batch Size Tuning</strong>: Adjust batch size according to GPU memory</li>
+<li><strong>Mixed Precision</strong>: Enable AMP on supported hardware</li>
+<li><strong>Data Preprocessing</strong>: Use multi-process data loading</li>
+<li><strong>Model Selection</strong>: Choose appropriate attention mechanisms for your task</li>
+</ol>
+<h3>
+  
+  
+    <a href="#q20-memory-leak-detection" class="anchor-heading" aria-labelledby="q20-memory-leak-detection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🐛 Debugging Tips
+  
+  
+</h3>
+    
+
+<ol>
+<li><strong>Incremental Validation</strong>: Start with simple configurations, gradually increase complexity</li>
+<li><strong>Logging</strong>: Enable detailed logging</li>
+<li><strong>Visualization</strong>: Use TensorBoard to monitor training process</li>
+<li><strong>Unit Testing</strong>: Write tests for critical components</li>
+</ol>
+<h2>
+  
+  
+    <a href="#q20-memory-leak-detection" class="anchor-heading" aria-labelledby="q20-memory-leak-detection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📞 Getting More Help
+  
+  
+</h2>
+    
+
+<p>If your issue is still unresolved, please get help through the following channels:</p>
+
+<ul>
+<li><strong>GitHub Issues</strong>: <a href="https://github.com/your-repo/issues">Submit detailed issue reports</a></li>
+<li><strong>Discussion Forum</strong>: <a href="https://github.com/your-repo/discussions">Participate in community discussions</a></li>
+<li><strong>Documentation</strong>: <a href="/">Refer to complete documentation</a></li>
+<li><strong>Example Code</strong>: <a href="/pages/examples/">Check example code</a></li>
+</ul>
+
+<p>When submitting issues, please include:</p>
+<ul>
+<li>Complete error messages and stack traces</li>
+<li>Configuration files used</li>
+<li>Python and dependency package version information</li>
+<li>Hardware environment (GPU model, memory, etc.)</li>
+<li>Minimal code example to reproduce the issue</li>
+</ul>
+</div>
+
+          
+
+          
+            
+          
+        </main>
+        
+
+  <hr>
+  <footer>
+    
+      <p><a href="#top" id="back-to-top">Back to top</a></p>
+    
+
+    <p class="text-small text-grey-dk-100 mb-0">Copyright &copy; 2024 Pitohuie. Distributed by an <a href="https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt">MIT license.</a></p>
+
+    
+  </footer>
+
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
+</html>
+

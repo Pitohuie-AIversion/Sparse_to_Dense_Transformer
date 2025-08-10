@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html lang="en-US">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -14,10 +14,9 @@
   <style id="jtd-nav-activation">
   
 
-    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(3)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(14)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
       background-image: none;
     }
 
@@ -26,14 +25,12 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(3) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(3) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list > li.nav-list-item:nth-child(3) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list {
       display: block;
     }
   </style>
@@ -57,9 +54,9 @@
 <meta name="generator" content="Jekyll v4.3.4" />
 <meta property="og:title" content="Basic Concepts" />
 <meta name="author" content="Pitohuie" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="VIVTransformer核心概念和基础知识" />
-<meta property="og:description" content="VIVTransformer核心概念和基础知识" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Advanced Transformer Architecture with Vision Integration" />
+<meta property="og:description" content="Advanced Transformer Architecture with Vision Integration" />
 <link rel="canonical" href="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/basic-concepts/" />
 <meta property="og:url" content="http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/basic-concepts/" />
 <meta property="og:site_name" content="VIVTransformer Documentation" />
@@ -67,7 +64,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Basic Concepts" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"VIVTransformer核心概念和基础知识","headline":"Basic Concepts","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pitoyounglogopink.png"},"name":"Pitohuie"},"url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/basic-concepts/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Pitohuie"},"description":"Advanced Transformer Architecture with Vision Integration","headline":"Basic Concepts","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pitoyounglogopink.png"},"name":"Pitohuie"},"url":"http://0.0.0.0:4000/Sparse_to_Dense_Transformer/pages/basic-concepts/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -158,15 +155,15 @@
   
     <ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-navigation/" class="nav-list-link">快速导航</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Started category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/technical-deep-dive/" class="nav-list-link">技术深度解析</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
+      </button><a href="/Sparse_to_Dense_Transformer/getting-started/" class="nav-list-link">Getting Started</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/quick-start-tutorial/" class="nav-list-link">Quick Start Tutorial</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/examples/" class="nav-list-link">Examples</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/technical-deep-dive/" class="nav-list-link">技术深度解析</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Core Documentation category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-showcase/" class="nav-list-link">实验结果展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
+      </button><a href="/Sparse_to_Dense_Transformer/core-documentation/" class="nav-list-link">Core Documentation</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/architecture-overview/" class="nav-list-link">Architecture Overview</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/model-design/" class="nav-list-link">Model Design</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/api-reference/" class="nav-list-link">API Reference</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/experimental-showcase/" class="nav-list-link">实验结果展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Training & Optimization category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
       </button><a href="/Sparse_to_Dense_Transformer/training-optimization/" class="nav-list-link">Training & Optimization</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/training-guide/" class="nav-list-link">Training Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/loss-functions/" class="nav-list-link">Loss Functions</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/svd-loss-functions/" class="nav-list-link">SVD Loss Functions</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/project-showcase/" class="nav-list-link">项目展示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in 评估与结果 category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/pages/evaluation-results/" class="nav-list-link">评估与结果</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/benchmark-results/" class="nav-list-link">基准测试结果</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/ablation-study/" class="nav-list-link">消融研究</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/interactive-demo/" class="nav-list-link">交互式演示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in 获取帮助 category" aria-pressed="false">
+      </button><a href="/Sparse_to_Dense_Transformer/pages/evaluation-results/" class="nav-list-link">评估与结果</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/benchmark-results/" class="nav-list-link">基准测试结果</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/ablation-study/" class="nav-list-link">消融研究</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/interactive-demo/" class="nav-list-link">交互式演示</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Getting Help category" aria-pressed="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/Sparse_to_Dense_Transformer/pages/getting-help/" class="nav-list-link">获取帮助</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/advanced-configuration/" class="nav-list-link">高级配置指南</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li></ul>
+      </button><a href="/Sparse_to_Dense_Transformer/pages/getting-help/" class="nav-list-link">Getting Help</a><ul class="nav-list"><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/faq/" class="nav-list-link">FAQ</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/troubleshooting/" class="nav-list-link">Troubleshooting</a></li></ul></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/advanced-configuration/" class="nav-list-link">Advanced Configuration Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/attention-mechanisms-guide/" class="nav-list-link">Attention Mechanisms Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/basic-concepts/" class="nav-list-link">Basic Concepts</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/configuration-system/" class="nav-list-link">Configuration System</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/convergence-analysis/" class="nav-list-link">Convergence Analysis</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/custom-attention/" class="nav-list-link">Custom Attention</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/data-pipeline/" class="nav-list-link">Data Pipeline</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/deployment-guide/" class="nav-list-link">Deployment Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/hyperparameter-tuning/" class="nav-list-link">Hyperparameter Tuning</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/implementation-details/" class="nav-list-link">Implementation Details</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/installation-guide/" class="nav-list-link">Installation Guide</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/multi-loss-strategy/" class="nav-list-link">Multi-Loss Strategy</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/pages/performance-comparison/" class="nav-list-link">Performance Comparison</a></li><li class="nav-list-item"><a href="/Sparse_to_Dense_Transformer/sitemap/" class="nav-list-link">Site Map</a></li></ul>
   <ul class="nav-list"><li class="nav-list-item external">
           <a href="https://github.com/Pitohuie-AIversion/Sparse_to_Dense_Transformer" class="nav-list-link external"
             
@@ -225,754 +222,782 @@
 </div>
 
     <div class="main-content-wrap">
-      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
-  <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/Sparse_to_Dense_Transformer/getting-started/">Getting Started</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Basic Concepts</span></li>
-  </ol>
-</nav>
-
-
+      
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 id="基础概念">
+            <div class="doc-content">
+<h1>
   
   
-    <a href="#基础概念" class="anchor-heading" aria-labelledby="基础概念"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 基础概念
+    Basic Concepts
   
   
 </h1>
     
+  
+  
+  
+  
+  <!-- Language Switcher Component -->
+<div class="language-switcher">
+  <div class="language-switcher-label">
+    <span data-lang-en="Language:">Language:</span>
+    <span data-lang-zh="语言:" style="display: none;">语言:</span>
+  </div>
+  <div class="language-switcher-buttons">
+    <button class="language-switcher-button active" data-lang="en" onclick="switchLanguage('en')">
+      English
+    </button>
+    <button class="language-switcher-button" data-lang="zh" onclick="switchLanguage('zh')">
+      中文
+    </button>
+  </div>
+</div>
 
-<p>本文档介绍VIVTransformer项目的核心概念、基础理论和关键术语，帮助您更好地理解和使用本项目。</p>
-<h2 id="目录">
+<script>
+// Language switching functionality
+function switchLanguage(lang) {
+  // Update active button
+  document.querySelectorAll('.language-switcher-button').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('data-lang') === lang) {
+      btn.classList.add('active');
+    }
+  });
   
+  // Show/hide language-specific content
+  document.querySelectorAll('[data-lang-en]').forEach(el => {
+    el.style.display = lang === 'en' ? 'block' : 'none';
+  });
   
-    <a href="#目录" class="anchor-heading" aria-labelledby="目录"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📋 目录
+  document.querySelectorAll('[data-lang-zh]').forEach(el => {
+    el.style.display = lang === 'zh' ? 'block' : 'none';
+  });
   
+  // Update language switcher label
+  document.querySelectorAll('.language-switcher-label [data-lang-en]').forEach(el => {
+    el.style.display = lang === 'en' ? 'inline' : 'none';
+  });
   
-</h2>
-    
+  document.querySelectorAll('.language-switcher-label [data-lang-zh]').forEach(el => {
+    el.style.display = lang === 'zh' ? 'inline' : 'none';
+  });
+  
+  // Store language preference
+  localStorage.setItem('preferred-language', lang);
+}
 
-<ul>
-  <li><a href="#项目概述">项目概述</a></li>
-  <li><a href="#核心概念">核心概念</a></li>
-  <li><a href="#技术架构">技术架构</a></li>
-  <li><a href="#数学基础">数学基础</a></li>
-  <li><a href="#关键术语">关键术语</a></li>
-  <li><a href="#应用场景">应用场景</a></li>
-</ul>
-<h2 id="项目概述">
-  
-  
-    <a href="#项目概述" class="anchor-heading" aria-labelledby="项目概述"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 项目概述
-  
-  
-</h2>
-    
-<h3 id="什么是vivtransformer">
-  
-  
-    <a href="#什么是vivtransformer" class="anchor-heading" aria-labelledby="什么是vivtransformer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🎯 什么是VIVTransformer
-  
-  
-</h3>
-    
+// Load saved language preference
+document.addEventListener('DOMContentLoaded', function() {
+  const savedLang = localStorage.getItem('preferred-language') || 'en';
+  switchLanguage(savedLang);
+});
+</script>
 
-<p><strong>VIVTransformer</strong>（Vortex-Induced Vibration Transformer）是一个专门用于<strong>涡激振动分析</strong>的先进Transformer架构。它结合了深度学习、计算机视觉和流体力学的最新研究成果。</p>
-<h3 id="核心特性">
-  
-  
-    <a href="#核心特性" class="anchor-heading" aria-labelledby="核心特性"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔬 核心特性
-  
-  
-</h3>
-    
+<style>
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: var(--color-background-secondary, #f8f9fa);
+  border-radius: 0.375rem;
+  border: 1px solid var(--color-border, #e1e4e8);
+}
 
-<ul>
-  <li><strong>多模态融合</strong>：同时处理数值数据和视觉信息</li>
-  <li><strong>注意力机制</strong>：多种注意力机制的集成和比较</li>
-  <li><strong>损失函数优化</strong>：创新的SVD损失函数设计</li>
-  <li><strong>实验框架</strong>：完整的实验管理和结果分析系统</li>
-</ul>
-<h2 id="核心概念">
-  
-  
-    <a href="#核心概念" class="anchor-heading" aria-labelledby="核心概念"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 核心概念
-  
-  
-</h2>
-    
-<h3 id="涡激振动-viv">
-  
-  
-    <a href="#涡激振动-viv" class="anchor-heading" aria-labelledby="涡激振动-viv"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🌊 涡激振动 (VIV)
-  
-  
-</h3>
-    
+.language-switcher-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #6b7280);
+}
 
-<p><strong>涡激振动</strong>是流体绕过钝体时产生的周期性涡脱落现象，导致结构物产生振动。</p>
-<h4 id="物理机制">
-  
-  
-    <a href="#物理机制" class="anchor-heading" aria-labelledby="物理机制"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 物理机制
-  
-  
-</h4>
-    
+.language-switcher-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>流体流动 → 涡脱落 → 压力变化 → 结构振动 → 反馈影响流场
-</code></pre></div></div>
-<h4 id="关键参数">
-  
-  
-    <a href="#关键参数" class="anchor-heading" aria-labelledby="关键参数"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 关键参数
-  
-  
-</h4>
-    
+.language-switcher-button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>参数</th>
-      <th>符号</th>
-      <th>描述</th>
-      <th>影响</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>雷诺数</strong></td>
-      <td>Re</td>
-      <td>惯性力与粘性力比值</td>
-      <td>决定流动状态</td>
-    </tr>
-    <tr>
-      <td><strong>约化速度</strong></td>
-      <td>Ur</td>
-      <td>流速与固有频率比值</td>
-      <td>振动幅度关键参数</td>
-    </tr>
-    <tr>
-      <td><strong>质量比</strong></td>
-      <td>m*</td>
-      <td>结构质量与流体质量比</td>
-      <td>影响振动响应</td>
-    </tr>
-    <tr>
-      <td><strong>阻尼比</strong></td>
-      <td>ζ</td>
-      <td>系统阻尼特性</td>
-      <td>振动衰减速度</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="transformer架构">
-  
-  
-    <a href="#transformer架构" class="anchor-heading" aria-labelledby="transformer架构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🧠 Transformer架构
-  
-  
-</h3>
-    
-<h4 id="基本原理">
-  
-  
-    <a href="#基本原理" class="anchor-heading" aria-labelledby="基本原理"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 基本原理
-  
-  
-</h4>
-    
+.language-switcher-button:not(.active) {
+  color: var(--color-link, #0969da);
+  background: var(--color-background, #ffffff);
+  border-color: var(--color-border, #e1e4e8);
+}
 
-<p>Transformer是基于<strong>自注意力机制</strong>的神经网络架构，特别适合处理序列数据。</p>
+.language-switcher-button:not(.active):hover {
+  background: var(--color-background-hover, #f3f4f6);
+  border-color: var(--color-border-hover, #d1d5db);
+}
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 注意力机制核心公式
-</span><span class="nc">Attention</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span> <span class="o">=</span> <span class="nf">softmax</span><span class="p">(</span><span class="n">QK</span><span class="o">^</span><span class="n">T</span> <span class="o">/</span> <span class="err">√</span><span class="n">d_k</span><span class="p">)</span><span class="n">V</span>
+.language-switcher-button.active {
+  color: var(--color-text-inverse, #ffffff);
+  background: var(--color-primary, #0969da);
+  border-color: var(--color-primary, #0969da);
+  cursor: default;
+}
 
-<span class="c1"># 其中：
-# Q: Query矩阵
-# K: Key矩阵  
-# V: Value矩阵
-# d_k: Key向量维度
-</span></code></pre></div></div>
-<h4 id="多头注意力">
+@media (max-width: 768px) {
+  .language-switcher {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
   
+  .language-switcher-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
   
-    <a href="#多头注意力" class="anchor-heading" aria-labelledby="多头注意力"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 多头注意力
-  
-  
-</h4>
+  .language-switcher-button {
+    flex: 1;
+    text-align: center;
+  }
+}
+</style>
+
+<div data-lang-zh="">
+# 基础概念
+
+## 目录
+- [项目概述](#项目概述)
+  - [什么是VIVTransformer](#什么是vivtransformer)
+  - [核心特性](#核心特性)
+- [核心概念](#核心概念)
+  - [涡激振动 (VIV)](#涡激振动-viv)
+  - [Transformer架构](#transformer架构)
+  - [注意力机制](#注意力机制)
+- [技术架构](#技术架构)
+  - [系统层次](#系统层次)
+  - [模块组织](#模块组织)
+- [数学基础](#数学基础)
+  - [损失函数](#损失函数)
+  - [关键公式](#关键公式)
+- [关键术语](#关键术语)
+- [应用场景](#应用场景)
+- [延伸阅读](#延伸阅读)
+
+## 项目概述
+
+### 什么是VIVTransformer
+
+VIVTransformer是一个基于Transformer架构的深度学习框架，专门用于涡激振动（Vortex-Induced Vibration, VIV）现象的建模和预测。该项目结合了现代深度学习技术和流体力学理论，为工程应用提供了高精度的VIV预测解决方案。
+
+### 核心特性
+
+| 特性 | 描述 | 优势 |
+|------|------|------|
+| **多注意力机制** | 支持多种注意力机制的组合使用 | 提高模型表达能力和预测精度 |
+| **SVD损失函数** | 基于奇异值分解的损失函数设计 | 更好地捕捉数据的低维结构 |
+| **模块化设计** | 高度模块化的架构设计 | 便于扩展和定制 |
+| **配置驱动** | 基于YAML的配置系统 | 灵活的参数调整和实验管理 |
+| **可视化支持** | 内置的训练监控和结果可视化 | 便于模型调试和结果分析 |
+
+## 核心概念
+
+### 涡激振动 (VIV)
+
+涡激振动是流体绕过钝体时产生的一种重要现象，在海洋工程、土木工程等领域具有重要意义：
+
+- **物理机制**：当流体绕过圆柱体等钝体时，会在物体后方形成交替脱落的涡旋
+- **振动特性**：涡旋脱落频率与结构固有频率接近时，会引起结构的大幅振动
+- **工程影响**：可能导致结构疲劳、损坏，需要准确预测和控制
+
+### Transformer架构
+
+Transformer是一种基于注意力机制的神经网络架构，在VIV建模中具有独特优势：
+
+```python
+class VIVTransformer(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.embedding = nn.Linear(config.input_dim, config.hidden_dim)
+        self.transformer_layers = nn.ModuleList([
+            TransformerLayer(config) for _ in range(config.num_layers)
+        ])
+        self.output_layer = nn.Linear(config.hidden_dim, config.output_dim)
     
+    def forward(self, x):
+        x = self.embedding(x)
+        for layer in self.transformer_layers:
+            x = layer(x)
+        return self.output_layer(x)
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 多头注意力机制
-</span><span class="nc">MultiHead</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span> <span class="o">=</span> <span class="nc">Concat</span><span class="p">(</span><span class="n">head_1</span><span class="p">,</span> <span class="p">...,</span> <span class="n">head_h</span><span class="p">)</span><span class="n">W</span><span class="o">^</span><span class="n">O</span>
+### 注意力机制
 
-<span class="c1"># 其中每个头：
-</span><span class="n">head_i</span> <span class="o">=</span> <span class="nc">Attention</span><span class="p">(</span><span class="n">QW_i</span><span class="o">^</span><span class="n">Q</span><span class="p">,</span> <span class="n">KW_i</span><span class="o">^</span><span class="n">K</span><span class="p">,</span> <span class="n">VW_i</span><span class="o">^</span><span class="n">V</span><span class="p">)</span>
-</code></pre></div></div>
-<h3 id="注意力机制类型">
-  
-  
-    <a href="#注意力机制类型" class="anchor-heading" aria-labelledby="注意力机制类型"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔄 注意力机制类型
-  
-  
-</h3>
-    
-<h4 id="1-自注意力-self-attention-1-自注意力-self-attention">
-  
-  
-    <a href="#1-自注意力-self-attention-1-自注意力-self-attention" class="anchor-heading" aria-labelledby="1-自注意力-self-attention-1-自注意力-self-attention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 自注意力 (Self-Attention) {#1-自注意力-self-attention}
-  
-  
-</h4>
-    
+注意力机制是Transformer的核心组件，用于建模序列中不同位置之间的依赖关系：
 
-<ul>
-  <li><strong>定义</strong>：序列内部元素之间的注意力</li>
-  <li><strong>用途</strong>：捕获时间序列的内在依赖关系</li>
-  <li><strong>优势</strong>：并行计算，长距离依赖建模</li>
-</ul>
-<h4 id="2-交叉注意力-cross-attention-2-交叉注意力-cross-attention">
-  
-  
-    <a href="#2-交叉注意力-cross-attention-2-交叉注意力-cross-attention" class="anchor-heading" aria-labelledby="2-交叉注意力-cross-attention-2-交叉注意力-cross-attention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 交叉注意力 (Cross-Attention) {#2-交叉注意力-cross-attention}
-  
-  
-</h4>
-    
+#### 数学表示
 
-<ul>
-  <li><strong>定义</strong>：不同模态之间的注意力</li>
-  <li><strong>用途</strong>：融合视觉和数值特征</li>
-  <li><strong>优势</strong>：多模态信息整合</li>
-</ul>
-<h4 id="3-稀疏注意力-sparse-attention-3-稀疏注意力-sparse-attention">
-  
-  
-    <a href="#3-稀疏注意力-sparse-attention-3-稀疏注意力-sparse-attention" class="anchor-heading" aria-labelledby="3-稀疏注意力-sparse-attention-3-稀疏注意力-sparse-attention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 稀疏注意力 (Sparse Attention) {#3-稀疏注意力-sparse-attention}
-  
-  
-</h4>
-    
+注意力机制的基本公式：
 
-<ul>
-  <li><strong>定义</strong>：只关注部分重要位置的注意力</li>
-  <li><strong>用途</strong>：降低计算复杂度</li>
-  <li><strong>优势</strong>：处理长序列，提高效率</li>
-</ul>
-<h2 id="技术架构">
-  
-  
-    <a href="#技术架构" class="anchor-heading" aria-labelledby="技术架构"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 技术架构
-  
-  
-</h2>
-    
-<h3 id="系统层次">
-  
-  
-    <a href="#系统层次" class="anchor-heading" aria-labelledby="系统层次"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏗️ 系统层次
-  
-  
-</h3>
-    
+```
+Attention(Q, K, V) = softmax(QK^T / √d_k)V
+```
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>应用层 (Application Layer)
-├── 实验管理 (Experiment Management)
-├── 结果分析 (Result Analysis)
-└── 可视化 (Visualization)
+其中：
+- Q (Query): 查询矩阵
+- K (Key): 键矩阵  
+- V (Value): 值矩阵
+- d_k: 键向量的维度
+
+#### 多头注意力
+
+```
+MultiHead(Q, K, V) = Concat(head_1, ..., head_h)W^O
+```
+
+其中每个头计算为：
+```
+head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)
+```
+
+#### 注意力机制类型
+
+| 类型 | 定义 | 用途 | 优势 |
+|------|------|------|------|
+| **自注意力** | Q、K、V来自同一序列 | 建模序列内部依赖 | 捕捉长距离依赖关系 |
+| **交叉注意力** | Q来自一个序列，K、V来自另一序列 | 建模不同序列间关系 | 融合多模态信息 |
+| **稀疏注意力** | 只关注部分位置 | 降低计算复杂度 | 提高计算效率 |
+
+## 技术架构
+
+### 系统层次
+
+```
+应用层 (Application Layer)
+├── 训练脚本 (Training Scripts)
+├── 评估工具 (Evaluation Tools)
+└── 可视化界面 (Visualization Interface)
 
 模型层 (Model Layer)
-├── 注意力机制 (Attention Mechanisms)
-├── 编码器 (Encoder)
-└── 解码器 (Decoder)
+├── VIVTransformer 核心模型
+├── 注意力机制模块
+└── 损失函数模块
 
 数据层 (Data Layer)
-├── 数据预处理 (Preprocessing)
-├── 特征提取 (Feature Extraction)
+├── 数据加载器 (Data Loaders)
+├── 预处理模块 (Preprocessing)
 └── 数据增强 (Data Augmentation)
 
-基础层 (Infrastructure Layer)
-├── 配置管理 (Configuration)
-├── 日志系统 (Logging)
-└── 工具函数 (Utilities)
-</code></pre></div></div>
-<h3 id="模块组织">
-  
-  
-    <a href="#模块组织" class="anchor-heading" aria-labelledby="模块组织"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔧 模块组织
-  
-  
-</h3>
-    
-<h4 id="核心模块">
-  
-  
-    <a href="#核心模块" class="anchor-heading" aria-labelledby="核心模块"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 核心模块
-  
-  
-</h4>
-    
+配置层 (Configuration Layer)
+├── 模型配置 (Model Config)
+├── 训练配置 (Training Config)
+└── 数据配置 (Data Config)
+```
 
-<ul>
-  <li><strong>mymodels/</strong>：模型定义和注意力机制</li>
-  <li><strong>training/</strong>：训练逻辑和实验管理</li>
-  <li><strong>data/</strong>：数据处理和加载</li>
-  <li><strong>utils/</strong>：工具函数和配置管理</li>
-</ul>
-<h4 id="配置系统">
-  
-  
-    <a href="#配置系统" class="anchor-heading" aria-labelledby="配置系统"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 配置系统
-  
-  
-</h4>
-    
+### 模块组织
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 配置文件结构</span>
-<span class="na">global</span><span class="pi">:</span>          <span class="c1"># 全局设置</span>
-  <span class="na">seed</span><span class="pi">:</span> <span class="m">42</span>
-  <span class="na">device</span><span class="pi">:</span> <span class="s">cuda:0</span>
+#### 核心模块
 
-<span class="na">data</span><span class="pi">:</span>            <span class="c1"># 数据配置</span>
-  <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">data.pt"</span>
-  <span class="na">batch_size</span><span class="pi">:</span> <span class="m">128</span>
+```python
+# 模型核心组件
+from vivtransformer.models import VIVTransformer
+from vivtransformer.attention import MultiHeadAttention
+from vivtransformer.losses import SVDLoss, MSELoss
 
-<span class="na">model</span><span class="pi">:</span>           <span class="c1"># 模型配置</span>
-  <span class="na">attention_type</span><span class="pi">:</span> <span class="s">self</span>
-  <span class="na">d_model</span><span class="pi">:</span> <span class="m">256</span>
-  <span class="na">num_heads</span><span class="pi">:</span> <span class="m">4</span>
+# 数据处理
+from vivtransformer.data import VIVDataLoader
+from vivtransformer.preprocessing import DataPreprocessor
 
-<span class="na">training</span><span class="pi">:</span>        <span class="c1"># 训练配置</span>
-  <span class="na">epochs</span><span class="pi">:</span> <span class="m">100</span>
-  <span class="na">learning_rate</span><span class="pi">:</span> <span class="m">0.0001</span>
-</code></pre></div></div>
-<h2 id="数学基础">
-  
-  
-    <a href="#数学基础" class="anchor-heading" aria-labelledby="数学基础"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 数学基础
-  
-  
-</h2>
-    
-<h3 id="损失函数">
-  
-  
-    <a href="#损失函数" class="anchor-heading" aria-labelledby="损失函数"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📊 损失函数
-  
-  
-</h3>
-    
-<h4 id="1-基础损失-base-loss-1-基础损失-base-loss">
-  
-  
-    <a href="#1-基础损失-base-loss-1-基础损失-base-loss" class="anchor-heading" aria-labelledby="1-基础损失-base-loss-1-基础损失-base-loss"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 基础损失 (Base Loss) {#1-基础损失-base-loss}
-  
-  
-</h4>
-    
+# 训练和评估
+from vivtransformer.training import Trainer
+from vivtransformer.evaluation import Evaluator
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 均方误差损失
-</span><span class="n">L_base</span> <span class="o">=</span> <span class="nc">MSE</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span> <span class="o">*</span> <span class="n">Σ</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_true</span><span class="p">)</span><span class="err">²</span>
-</code></pre></div></div>
-<h4 id="2-svd损失-svd-loss-2-svd损失-svd-loss">
-  
-  
-    <a href="#2-svd损失-svd-loss-2-svd损失-svd-loss" class="anchor-heading" aria-labelledby="2-svd损失-svd-loss-2-svd损失-svd-loss"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. SVD损失 (SVD Loss) {#2-svd损失-svd-loss}
-  
-  
-</h4>
-    
+#### 配置系统
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 奇异值分解损失
-</span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="nc">SVD</span><span class="p">(</span><span class="n">prediction_matrix</span><span class="p">)</span>
-<span class="n">L_svd</span> <span class="o">=</span> <span class="n">Σ</span> <span class="n">w_i</span> <span class="o">*</span> <span class="o">|</span><span class="n">S_i</span> <span class="o">-</span> <span class="n">S_target_i</span><span class="o">|</span>
+```yaml
+# config/model_config.yaml
+model:
+  name: "VIVTransformer"
+  hidden_dim: 512
+  num_layers: 6
+  num_heads: 8
+  dropout: 0.1
 
-<span class="c1"># 其中：
-# S_i: 第i个奇异值
-# w_i: 第i个奇异值的权重
-# S_target_i: 目标奇异值
-</span></code></pre></div></div>
-<h4 id="3-总损失-total-loss-3-总损失-total-loss">
-  
-  
-    <a href="#3-总损失-total-loss-3-总损失-total-loss" class="anchor-heading" aria-labelledby="3-总损失-total-loss-3-总损失-total-loss"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 总损失 (Total Loss) {#3-总损失-total-loss}
-  
-  
-</h4>
-    
+attention:
+  mechanisms:
+    - type: "MultiHeadAttention"
+      heads: 8
+    - type: "SparseAttention"
+      sparsity: 0.1
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 加权组合损失
-</span><span class="n">L_total</span> <span class="o">=</span> <span class="n">α</span> <span class="o">*</span> <span class="n">L_base</span> <span class="o">+</span> <span class="n">β</span> <span class="o">*</span> <span class="n">L_svd</span> <span class="o">+</span> <span class="n">γ</span> <span class="o">*</span> <span class="n">L_regularization</span>
+loss:
+  primary: "SVDLoss"
+  secondary: "MSELoss"
+  weights: [0.7, 0.3]
+```
 
-<span class="c1"># 其中：
-# α, β, γ: 损失权重系数
-# L_regularization: 正则化项
-</span></code></pre></div></div>
-<h3 id="关键公式">
-  
-  
-    <a href="#关键公式" class="anchor-heading" aria-labelledby="关键公式"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔢 关键公式
-  
-  
-</h3>
-    
-<h4 id="位置编码">
-  
-  
-    <a href="#位置编码" class="anchor-heading" aria-labelledby="位置编码"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 位置编码
-  
-  
-</h4>
-    
+## 数学基础
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 正弦位置编码
-</span><span class="nc">PE</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">2</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nf">sin</span><span class="p">(</span><span class="n">pos</span> <span class="o">/</span> <span class="mi">10000</span><span class="o">^</span><span class="p">(</span><span class="mi">2</span><span class="n">i</span><span class="o">/</span><span class="n">d_model</span><span class="p">))</span>
-<span class="nc">PE</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">2</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="nf">cos</span><span class="p">(</span><span class="n">pos</span> <span class="o">/</span> <span class="mi">10000</span><span class="o">^</span><span class="p">(</span><span class="mi">2</span><span class="n">i</span><span class="o">/</span><span class="n">d_model</span><span class="p">))</span>
+### 损失函数
 
-<span class="c1"># 其中：
-# pos: 位置索引
-# i: 维度索引
-# d_model: 模型维度
-</span></code></pre></div></div>
-<h4 id="层归一化">
-  
-  
-    <a href="#层归一化" class="anchor-heading" aria-labelledby="层归一化"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 层归一化
-  
-  
-</h4>
-    
+#### 均方误差损失 (MSE Loss)
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Layer Normalization
-</span><span class="nc">LN</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="n">γ</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">μ</span><span class="p">)</span> <span class="o">/</span> <span class="n">σ</span> <span class="o">+</span> <span class="n">β</span>
+```
+L_MSE = (1/N) Σ(y_pred - y_true)²
+```
 
-<span class="c1"># 其中：
-# μ: 均值
-# σ: 标准差
-# γ, β: 可学习参数
-</span></code></pre></div></div>
-<h2 id="关键术语">
-  
-  
-    <a href="#关键术语" class="anchor-heading" aria-labelledby="关键术语"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 关键术语
-  
-  
-</h2>
-    
-<h3 id="技术术语">
-  
-  
-    <a href="#技术术语" class="anchor-heading" aria-labelledby="技术术语"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔤 技术术语
-  
-  
-</h3>
-    
+#### SVD损失函数
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>术语</th>
-      <th>英文</th>
-      <th>定义</th>
-      <th>应用</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>注意力权重</strong></td>
-      <td>Attention Weights</td>
-      <td>衡量不同位置重要性的权重</td>
-      <td>可视化分析</td>
-    </tr>
-    <tr>
-      <td><strong>嵌入维度</strong></td>
-      <td>Embedding Dimension</td>
-      <td>特征向量的维度大小</td>
-      <td>模型容量控制</td>
-    </tr>
-    <tr>
-      <td><strong>序列长度</strong></td>
-      <td>Sequence Length</td>
-      <td>输入序列的时间步数</td>
-      <td>内存使用优化</td>
-    </tr>
-    <tr>
-      <td><strong>批大小</strong></td>
-      <td>Batch Size</td>
-      <td>一次训练的样本数量</td>
-      <td>训练效率平衡</td>
-    </tr>
-    <tr>
-      <td><strong>学习率</strong></td>
-      <td>Learning Rate</td>
-      <td>参数更新的步长</td>
-      <td>收敛速度控制</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="流体力学术语">
-  
-  
-    <a href="#流体力学术语" class="anchor-heading" aria-labelledby="流体力学术语"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🌊 流体力学术语
-  
-  
-</h3>
-    
+基于奇异值分解的损失函数，用于捕捉数据的低维结构：
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>术语</th>
-      <th>英文</th>
-      <th>定义</th>
-      <th>重要性</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>涡脱落</strong></td>
-      <td>Vortex Shedding</td>
-      <td>流体绕过物体时形成的涡旋脱落</td>
-      <td>VIV的根本原因</td>
-    </tr>
-    <tr>
-      <td><strong>升力系数</strong></td>
-      <td>Lift Coefficient</td>
-      <td>升力与动压的比值</td>
-      <td>振动幅度预测</td>
-    </tr>
-    <tr>
-      <td><strong>阻力系数</strong></td>
-      <td>Drag Coefficient</td>
-      <td>阻力与动压的比值</td>
-      <td>能量损失评估</td>
-    </tr>
-    <tr>
-      <td><strong>斯特劳哈尔数</strong></td>
-      <td>Strouhal Number</td>
-      <td>涡脱落频率的无量纲参数</td>
-      <td>频率预测</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="机器学习术语">
-  
-  
-    <a href="#机器学习术语" class="anchor-heading" aria-labelledby="机器学习术语"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🤖 机器学习术语
-  
-  
-</h3>
-    
+```
+L_SVD = ||U_pred Σ_pred V_pred^T - U_true Σ_true V_true^T||_F
+```
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>术语</th>
-      <th>英文</th>
-      <th>定义</th>
-      <th>作用</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>过拟合</strong></td>
-      <td>Overfitting</td>
-      <td>模型在训练集上表现好但泛化差</td>
-      <td>需要正则化</td>
-    </tr>
-    <tr>
-      <td><strong>欠拟合</strong></td>
-      <td>Underfitting</td>
-      <td>模型复杂度不足，表现差</td>
-      <td>需要增加容量</td>
-    </tr>
-    <tr>
-      <td><strong>梯度爆炸</strong></td>
-      <td>Gradient Explosion</td>
-      <td>梯度值过大导致训练不稳定</td>
-      <td>需要梯度裁剪</td>
-    </tr>
-    <tr>
-      <td><strong>梯度消失</strong></td>
-      <td>Gradient Vanishing</td>
-      <td>梯度值过小导致训练缓慢</td>
-      <td>需要残差连接</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="应用场景">
-  
-  
-    <a href="#应用场景" class="anchor-heading" aria-labelledby="应用场景"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 应用场景
-  
-  
-</h2>
-    
-<h3 id="工程应用">
-  
-  
-    <a href="#工程应用" class="anchor-heading" aria-labelledby="工程应用"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🏗️ 工程应用
-  
-  
-</h3>
-    
-<h4 id="1-海洋工程-1-海洋工程">
-  
-  
-    <a href="#1-海洋工程-1-海洋工程" class="anchor-heading" aria-labelledby="1-海洋工程-1-海洋工程"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 海洋工程 {#1-海洋工程}
-  
-  
-</h4>
-    
+#### 总损失
 
-<ul>
-  <li><strong>海底管道</strong>：预测管道的涡激振动响应</li>
-  <li><strong>海洋平台</strong>：立管系统的振动分析</li>
-  <li><strong>海缆系统</strong>：海底电缆的动态响应</li>
-</ul>
-<h4 id="2-土木工程-2-土木工程">
-  
-  
-    <a href="#2-土木工程-2-土木工程" class="anchor-heading" aria-labelledby="2-土木工程-2-土木工程"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 土木工程 {#2-土木工程}
-  
-  
-</h4>
-    
+```
+L_total = α * L_MSE + β * L_SVD
+```
 
-<ul>
-  <li><strong>桥梁工程</strong>：斜拉索和悬索的风致振动</li>
-  <li><strong>高层建筑</strong>：风荷载下的结构响应</li>
-  <li><strong>烟囱塔架</strong>：细长结构的涡激振动</li>
-</ul>
-<h4 id="3-能源工程-3-能源工程">
-  
-  
-    <a href="#3-能源工程-3-能源工程" class="anchor-heading" aria-labelledby="3-能源工程-3-能源工程"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 能源工程 {#3-能源工程}
-  
-  
-</h4>
-    
+其中α和β是权重参数。
 
-<ul>
-  <li><strong>风力发电</strong>：风机叶片和塔架振动</li>
-  <li><strong>核电工程</strong>：换热器管束振动</li>
-  <li><strong>石油工程</strong>：钻井立管动态分析</li>
-</ul>
-<h3 id="研究方向">
-  
-  
-    <a href="#研究方向" class="anchor-heading" aria-labelledby="研究方向"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔬 研究方向
-  
-  
-</h3>
-    
-<h4 id="1-理论研究-1-理论研究">
-  
-  
-    <a href="#1-理论研究-1-理论研究" class="anchor-heading" aria-labelledby="1-理论研究-1-理论研究"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 理论研究 {#1-理论研究}
-  
-  
-</h4>
-    
+### 关键公式
 
-<ul>
-  <li><strong>流固耦合机理</strong>：深入理解VIV物理机制</li>
-  <li><strong>非线性动力学</strong>：复杂系统的动态行为</li>
-  <li><strong>多尺度建模</strong>：跨尺度现象的统一描述</li>
-</ul>
-<h4 id="2-方法创新-2-方法创新">
-  
-  
-    <a href="#2-方法创新-2-方法创新" class="anchor-heading" aria-labelledby="2-方法创新-2-方法创新"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 方法创新 {#2-方法创新}
-  
-  
-</h4>
-    
+#### 位置编码
 
-<ul>
-  <li><strong>深度学习</strong>：神经网络在VIV预测中的应用</li>
-  <li><strong>数据驱动</strong>：基于大数据的模型构建</li>
-  <li><strong>混合建模</strong>：物理模型与数据模型结合</li>
-</ul>
-<h4 id="3-技术发展-3-技术发展">
-  
-  
-    <a href="#3-技术发展-3-技术发展" class="anchor-heading" aria-labelledby="3-技术发展-3-技术发展"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 技术发展 {#3-技术发展}
-  
-  
-</h4>
-    
+正弦位置编码用于为序列中的每个位置提供位置信息：
 
-<ul>
-  <li><strong>实时预测</strong>：在线VIV监测和预警</li>
-  <li><strong>优化设计</strong>：基于VIV的结构优化</li>
-  <li><strong>智能控制</strong>：主动VIV抑制技术</li>
-</ul>
-<h2 id="延伸阅读">
-  
-  
-    <a href="#延伸阅读" class="anchor-heading" aria-labelledby="延伸阅读"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📚 延伸阅读
-  
-  
-</h2>
-    
-<h3 id="推荐资料">
-  
-  
-    <a href="#推荐资料" class="anchor-heading" aria-labelledby="推荐资料"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 📖 推荐资料
-  
-  
-</h3>
-    
-<h4 id="基础理论">
-  
-  
-    <a href="#基础理论" class="anchor-heading" aria-labelledby="基础理论"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 基础理论
-  
-  
-</h4>
-    
+```
+PE(pos, 2i) = sin(pos / 10000^(2i/d_model))
+PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+```
 
-<ul>
-  <li><strong>流体力学</strong>：《流体力学基础》- Frank M. White</li>
-  <li><strong>振动理论</strong>：《机械振动》- Singiresu S. Rao</li>
-  <li><strong>深度学习</strong>：《深度学习》- Ian Goodfellow</li>
-</ul>
-<h4 id="专业文献">
-  
-  
-    <a href="#专业文献" class="anchor-heading" aria-labelledby="专业文献"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 专业文献
-  
-  
-</h4>
+#### 层归一化
+
+```
+LayerNorm(x) = γ * (x - μ) / σ + β
+```
+
+其中μ和σ分别是均值和标准差。
+
+## 关键术语
+
+### 技术术语
+
+| 术语 | 英文 | 定义 |
+|------|------|------|
+| **注意力机制** | Attention Mechanism | 用于建模序列中不同位置间依赖关系的机制 |
+| **多头注意力** | Multi-Head Attention | 并行计算多个注意力头的注意力机制 |
+| **位置编码** | Positional Encoding | 为序列位置提供位置信息的编码方式 |
+| **层归一化** | Layer Normalization | 对每个样本的特征进行归一化的技术 |
+| **残差连接** | Residual Connection | 将输入直接加到输出上的连接方式 |
+
+### 流体力学术语
+
+| 术语 | 英文 | 定义 |
+|------|------|------|
+| **涡激振动** | Vortex-Induced Vibration | 流体绕过钝体时产生涡旋引起的振动现象 |
+| **雷诺数** | Reynolds Number | 表征流体惯性力与粘性力比值的无量纲数 |
+| **斯特劳哈尔数** | Strouhal Number | 表征涡旋脱落频率的无量纲参数 |
+| **升力系数** | Lift Coefficient | 表征升力大小的无量纲系数 |
+| **阻力系数** | Drag Coefficient | 表征阻力大小的无量纲系数 |
+
+### 机器学习术语
+
+| 术语 | 英文 | 定义 |
+|------|------|------|
+| **损失函数** | Loss Function | 衡量模型预测与真实值差异的函数 |
+| **梯度下降** | Gradient Descent | 通过梯度信息优化模型参数的算法 |
+| **过拟合** | Overfitting | 模型在训练数据上表现好但泛化能力差 |
+| **正则化** | Regularization | 防止过拟合的技术手段 |
+| **批量大小** | Batch Size | 每次训练使用的样本数量 |
+
+## 应用场景
+
+### 工程应用
+
+#### 海洋工程
+- **海底管道**：预测海流作用下管道的VIV响应
+- **海洋平台**：分析立管和导管架的振动特性
+- **海上风电**：评估风机塔架和基础的VIV风险
+
+#### 土木工程
+- **桥梁工程**：分析桥梁拉索和主梁的风致振动
+- **高层建筑**：评估建筑物的风荷载和振动响应
+- **烟囱和塔架**：预测细长结构的涡激振动
+
+#### 能源工程
+- **核电站**：分析冷却系统管道的流致振动
+- **火电厂**：评估锅炉管束的振动特性
+- **化工装置**：预测换热器管束的VIV响应
+
+### 研究方向
+
+#### 理论研究
+- **VIV机理**：深入理解涡激振动的物理机制
+- **流固耦合**：研究流体与结构的相互作用
+- **非线性动力学**：分析复杂的非线性振动现象
+
+#### 方法创新
+- **深度学习**：探索新的神经网络架构
+- **注意力机制**：开发适用于VIV的注意力机制
+- **多尺度建模**：结合不同时空尺度的建模方法
+
+#### 技术发展
+- **实时预测**：开发快速准确的在线预测系统
+- **智能控制**：基于预测结果的主动控制策略
+- **数字孪生**：构建VIV现象的数字化模型
+
+## 延伸阅读
+
+### 推荐资料
+
+#### 学术论文
+- "Attention Is All You Need" - Transformer原始论文
+- "Vortex-Induced Vibrations" - VIV经典综述
+- "Deep Learning for Fluid Mechanics" - 深度学习在流体力学中的应用
+
+#### 技术文档
+- [PyTorch官方文档](https://pytorch.org/docs/)
+- [Transformer详解](https://jalammar.github.io/illustrated-transformer/)
+- [VIV研究进展](https://www.sciencedirect.com/topics/engineering/vortex-induced-vibration)
+
+#### 开源项目
+- [Transformers库](https://github.com/huggingface/transformers)
+- [OpenFOAM](https://www.openfoam.com/) - 开源CFD软件
+- [FEniCS](https://fenicsproject.org/) - 有限元计算平台
+
+### 相关链接
+
+- [项目GitHub仓库](https://github.com/your-repo/vivtransformer)
+- [在线文档](https://your-docs-site.com)
+- [社区论坛](https://your-community-forum.com)
+- [技术博客](https://your-tech-blog.com)
+
+</div>
+
+<div data-lang-en="">
+# Basic Concepts
+
+## Table of Contents
+- [Project Overview](#project-overview)
+  - [What is VIVTransformer](#what-is-vivtransformer)
+  - [Core Features](#core-features)
+- [Core Concepts](#core-concepts)
+  - [Vortex-Induced Vibration (VIV)](#vortex-induced-vibration-viv)
+  - [Transformer Architecture](#transformer-architecture)
+  - [Attention Mechanisms](#attention-mechanisms)
+- [Technical Architecture](#technical-architecture)
+  - [System Hierarchy](#system-hierarchy)
+  - [Module Organization](#module-organization)
+- [Mathematical Foundations](#mathematical-foundations)
+  - [Loss Functions](#loss-functions)
+  - [Key Formulas](#key-formulas)
+- [Key Terminology](#key-terminology)
+- [Application Scenarios](#application-scenarios)
+- [Further Reading](#further-reading)
+
+## Project Overview
+
+### What is VIVTransformer
+
+VIVTransformer is a deep learning framework based on Transformer architecture, specifically designed for modeling and predicting Vortex-Induced Vibration (VIV) phenomena. This project combines modern deep learning techniques with fluid mechanics theory to provide high-precision VIV prediction solutions for engineering applications.
+
+### Core Features
+
+| Feature | Description | Advantages |
+|---------|-------------|------------|
+| **Multi-Attention Mechanisms** | Support for combining multiple attention mechanisms | Enhanced model expressiveness and prediction accuracy |
+| **SVD Loss Functions** | Loss function design based on Singular Value Decomposition | Better capture of low-dimensional data structures |
+| **Modular Design** | Highly modular architecture design | Easy to extend and customize |
+| **Configuration-Driven** | YAML-based configuration system | Flexible parameter adjustment and experiment management |
+| **Visualization Support** | Built-in training monitoring and result visualization | Convenient for model debugging and result analysis |
+
+## Core Concepts
+
+### Vortex-Induced Vibration (VIV)
+
+Vortex-Induced Vibration is an important phenomenon that occurs when fluid flows around bluff bodies, with significant implications in marine engineering, civil engineering, and other fields:
+
+- **Physical Mechanism**: When fluid flows around cylindrical or other bluff bodies, alternating vortex shedding occurs behind the object
+- **Vibration Characteristics**: When vortex shedding frequency approaches the structural natural frequency, large-amplitude structural vibrations are induced
+- **Engineering Impact**: Can lead to structural fatigue and damage, requiring accurate prediction and control
+
+### Transformer Architecture
+
+Transformer is a neural network architecture based on attention mechanisms, offering unique advantages in VIV modeling:
+
+```python
+class VIVTransformer(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.embedding = nn.Linear(config.input_dim, config.hidden_dim)
+        self.transformer_layers = nn.ModuleList([
+            TransformerLayer(config) for _ in range(config.num_layers)
+        ])
+        self.output_layer = nn.Linear(config.hidden_dim, config.output_dim)
     
+    def forward(self, x):
+        x = self.embedding(x)
+        for layer in self.transformer_layers:
+            x = layer(x)
+        return self.output_layer(x)
+```
 
-<ul>
-  <li><strong>VIV综述</strong>：”Vortex-induced vibrations” - Williamson &amp; Govardhan (2004)</li>
-  <li><strong>Transformer</strong>：”Attention is All You Need” - Vaswani et al. (2017)</li>
-  <li><strong>多模态学习</strong>：”Multimodal Deep Learning” - Ngiam et al. (2011)</li>
-</ul>
-<h3 id="相关链接">
-  
-  
-    <a href="#相关链接" class="anchor-heading" aria-labelledby="相关链接"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🔗 相关链接
-  
-  
-</h3>
-    
+### Attention Mechanisms
 
-<ul>
-  <li><a href="https://pytorch.org/docs/">PyTorch官方文档</a></li>
-  <li><a href="https://jalammar.github.io/illustrated-transformer/">Transformer详解</a></li>
-  <li><a href="http://www.vivdr.org/">VIV数据库</a></li>
-  <li><a href="https://www.openfoam.com/">流体力学CFD</a></li>
-</ul><hr />
+Attention mechanisms are the core components of Transformers, used to model dependencies between different positions in sequences:
 
-<p><em>最后更新：2025-08-03</em></p>
+#### Mathematical Representation
+
+Basic attention mechanism formula:
+
+```
+Attention(Q, K, V) = softmax(QK^T / √d_k)V
+```
+
+Where:
+- Q (Query): Query matrix
+- K (Key): Key matrix  
+- V (Value): Value matrix
+- d_k: Dimension of key vectors
+
+#### Multi-Head Attention
+
+```
+MultiHead(Q, K, V) = Concat(head_1, ..., head_h)W^O
+```
+
+Where each head is computed as:
+```
+head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)
+```
+
+#### Types of Attention Mechanisms
+
+| Type | Definition | Purpose | Advantages |
+|------|------------|---------|------------|
+| **Self-Attention** | Q, K, V from the same sequence | Model intra-sequence dependencies | Capture long-range dependencies |
+| **Cross-Attention** | Q from one sequence, K, V from another | Model inter-sequence relationships | Fuse multi-modal information |
+| **Sparse Attention** | Attend to only subset of positions | Reduce computational complexity | Improve computational efficiency |
+
+## Technical Architecture
+
+### System Hierarchy
+
+```
+Application Layer
+├── Training Scripts
+├── Evaluation Tools
+└── Visualization Interface
+
+Model Layer
+├── VIVTransformer Core Model
+├── Attention Mechanism Modules
+└── Loss Function Modules
+
+Data Layer
+├── Data Loaders
+├── Preprocessing Modules
+└── Data Augmentation
+
+Configuration Layer
+├── Model Config
+├── Training Config
+└── Data Config
+```
+
+### Module Organization
+
+#### Core Modules
+
+```python
+# Model core components
+from vivtransformer.models import VIVTransformer
+from vivtransformer.attention import MultiHeadAttention
+from vivtransformer.losses import SVDLoss, MSELoss
+
+# Data processing
+from vivtransformer.data import VIVDataLoader
+from vivtransformer.preprocessing import DataPreprocessor
+
+# Training and evaluation
+from vivtransformer.training import Trainer
+from vivtransformer.evaluation import Evaluator
+```
+
+#### Configuration System
+
+```yaml
+# config/model_config.yaml
+model:
+  name: "VIVTransformer"
+  hidden_dim: 512
+  num_layers: 6
+  num_heads: 8
+  dropout: 0.1
+
+attention:
+  mechanisms:
+    - type: "MultiHeadAttention"
+      heads: 8
+    - type: "SparseAttention"
+      sparsity: 0.1
+
+loss:
+  primary: "SVDLoss"
+  secondary: "MSELoss"
+  weights: [0.7, 0.3]
+```
+
+## Mathematical Foundations
+
+### Loss Functions
+
+#### Mean Squared Error (MSE) Loss
+
+```
+L_MSE = (1/N) Σ(y_pred - y_true)²
+```
+
+#### SVD Loss Function
+
+Loss function based on Singular Value Decomposition, used to capture low-dimensional data structures:
+
+```
+L_SVD = ||U_pred Σ_pred V_pred^T - U_true Σ_true V_true^T||_F
+```
+
+#### Total Loss
+
+```
+L_total = α * L_MSE + β * L_SVD
+```
+
+Where α and β are weight parameters.
+
+### Key Formulas
+
+#### Positional Encoding
+
+Sinusoidal positional encoding provides position information for each position in the sequence:
+
+```
+PE(pos, 2i) = sin(pos / 10000^(2i/d_model))
+PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+```
+
+#### Layer Normalization
+
+```
+LayerNorm(x) = γ * (x - μ) / σ + β
+```
+
+Where μ and σ are the mean and standard deviation respectively.
+
+## Key Terminology
+
+### Technical Terms
+
+| Term | Chinese | Definition |
+|------|---------|------------|
+| **Attention Mechanism** | 注意力机制 | Mechanism for modeling dependencies between different positions in sequences |
+| **Multi-Head Attention** | 多头注意力 | Attention mechanism that computes multiple attention heads in parallel |
+| **Positional Encoding** | 位置编码 | Encoding method that provides position information for sequence positions |
+| **Layer Normalization** | 层归一化 | Technique for normalizing features of each sample |
+| **Residual Connection** | 残差连接 | Connection method that adds input directly to output |
+
+### Fluid Mechanics Terms
+
+| Term | Chinese | Definition |
+|------|---------|------------|
+| **Vortex-Induced Vibration** | 涡激振动 | Vibration phenomenon caused by vortices when fluid flows around bluff bodies |
+| **Reynolds Number** | 雷诺数 | Dimensionless number representing the ratio of inertial to viscous forces |
+| **Strouhal Number** | 斯特劳哈尔数 | Dimensionless parameter characterizing vortex shedding frequency |
+| **Lift Coefficient** | 升力系数 | Dimensionless coefficient characterizing lift magnitude |
+| **Drag Coefficient** | 阻力系数 | Dimensionless coefficient characterizing drag magnitude |
+
+### Machine Learning Terms
+
+| Term | Chinese | Definition |
+|------|---------|------------|
+| **Loss Function** | 损失函数 | Function measuring the difference between model predictions and true values |
+| **Gradient Descent** | 梯度下降 | Algorithm for optimizing model parameters using gradient information |
+| **Overfitting** | 过拟合 | Model performs well on training data but has poor generalization |
+| **Regularization** | 正则化 | Techniques to prevent overfitting |
+| **Batch Size** | 批量大小 | Number of samples used in each training iteration |
+
+## Application Scenarios
+
+### Engineering Applications
+
+#### Marine Engineering
+- **Subsea Pipelines**: Predict VIV response of pipelines under ocean currents
+- **Offshore Platforms**: Analyze vibration characteristics of risers and jacket structures
+- **Offshore Wind**: Assess VIV risks for wind turbine towers and foundations
+
+#### Civil Engineering
+- **Bridge Engineering**: Analyze wind-induced vibrations of bridge cables and main girders
+- **High-rise Buildings**: Evaluate wind loads and vibration response of buildings
+- **Chimneys and Towers**: Predict vortex-induced vibrations of slender structures
+
+#### Energy Engineering
+- **Nuclear Power Plants**: Analyze flow-induced vibrations in cooling system pipelines
+- **Thermal Power Plants**: Evaluate vibration characteristics of boiler tube bundles
+- **Chemical Plants**: Predict VIV response of heat exchanger tube bundles
+
+### Research Directions
+
+#### Theoretical Research
+- **VIV Mechanisms**: Deep understanding of physical mechanisms of vortex-induced vibrations
+- **Fluid-Structure Interaction**: Study interactions between fluids and structures
+- **Nonlinear Dynamics**: Analyze complex nonlinear vibration phenomena
+
+#### Methodological Innovation
+- **Deep Learning**: Explore new neural network architectures
+- **Attention Mechanisms**: Develop attention mechanisms suitable for VIV
+- **Multi-scale Modeling**: Combine modeling methods across different spatiotemporal scales
+
+#### Technical Development
+- **Real-time Prediction**: Develop fast and accurate online prediction systems
+- **Intelligent Control**: Active control strategies based on prediction results
+- **Digital Twins**: Construct digital models of VIV phenomena
+
+## Further Reading
+
+### Recommended Materials
+
+#### Academic Papers
+- "Attention Is All You Need" - Original Transformer paper
+- "Vortex-Induced Vibrations" - Classic VIV review
+- "Deep Learning for Fluid Mechanics" - Applications of deep learning in fluid mechanics
+
+#### Technical Documentation
+- [PyTorch Official Documentation](https://pytorch.org/docs/)
+- [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
+- [VIV Research Progress](https://www.sciencedirect.com/topics/engineering/vortex-induced-vibration)
+
+#### Open Source Projects
+- [Transformers Library](https://github.com/huggingface/transformers)
+- [OpenFOAM](https://www.openfoam.com/) - Open source CFD software
+- [FEniCS](https://fenicsproject.org/) - Finite element computing platform
+
+### Related Links
+
+- [Project GitHub Repository](https://github.com/your-repo/vivtransformer)
+- [Online Documentation](https://your-docs-site.com)
+- [Community Forum](https://your-community-forum.com)
+- [Technical Blog](https://your-tech-blog.com)
+
+</div>
+
+  
+  
+</div>
 
           
 

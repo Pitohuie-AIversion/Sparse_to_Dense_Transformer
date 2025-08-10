@@ -1,320 +1,637 @@
 ---
-layout: default
+layout: doc
 title: Basic Concepts
-parent: Getting Started
-nav_order: 3
-description: "VIVTransformer核心概念和基础知识"
 permalink: /pages/basic-concepts/
 ---
 
-# 基础概念 {#基础概念}
+{% include language-switcher.html %}
 
-本文档介绍VIVTransformer项目的核心概念、基础理论和关键术语，帮助您更好地理解和使用本项目。
+<div data-lang-zh>
+# 基础概念
 
-## 📋 目录 {#目录}
-
+## 目录
 - [项目概述](#项目概述)
+  - [什么是VIVTransformer](#什么是vivtransformer)
+  - [核心特性](#核心特性)
 - [核心概念](#核心概念)
+  - [涡激振动 (VIV)](#涡激振动-viv)
+  - [Transformer架构](#transformer架构)
+  - [注意力机制](#注意力机制)
 - [技术架构](#技术架构)
+  - [系统层次](#系统层次)
+  - [模块组织](#模块组织)
 - [数学基础](#数学基础)
+  - [损失函数](#损失函数)
+  - [关键公式](#关键公式)
 - [关键术语](#关键术语)
 - [应用场景](#应用场景)
+- [延伸阅读](#延伸阅读)
 
-## 项目概述 {#项目概述}
+## 项目概述
 
-### 🎯 什么是VIVTransformer {#什么是vivtransformer}
+### 什么是VIVTransformer
 
-**VIVTransformer**（Vortex-Induced Vibration Transformer）是一个专门用于**涡激振动分析**的先进Transformer架构。它结合了深度学习、计算机视觉和流体力学的最新研究成果。
+VIVTransformer是一个基于Transformer架构的深度学习框架，专门用于涡激振动（Vortex-Induced Vibration, VIV）现象的建模和预测。该项目结合了现代深度学习技术和流体力学理论，为工程应用提供了高精度的VIV预测解决方案。
 
-### 🔬 核心特性 {#核心特性}
+### 核心特性
 
-- **多模态融合**：同时处理数值数据和视觉信息
-- **注意力机制**：多种注意力机制的集成和比较
-- **损失函数优化**：创新的SVD损失函数设计
-- **实验框架**：完整的实验管理和结果分析系统
+| 特性 | 描述 | 优势 |
+|------|------|------|
+| **多注意力机制** | 支持多种注意力机制的组合使用 | 提高模型表达能力和预测精度 |
+| **SVD损失函数** | 基于奇异值分解的损失函数设计 | 更好地捕捉数据的低维结构 |
+| **模块化设计** | 高度模块化的架构设计 | 便于扩展和定制 |
+| **配置驱动** | 基于YAML的配置系统 | 灵活的参数调整和实验管理 |
+| **可视化支持** | 内置的训练监控和结果可视化 | 便于模型调试和结果分析 |
 
-## 核心概念 {#核心概念}
+## 核心概念
 
-### 🌊 涡激振动 (VIV) {#涡激振动-viv}
+### 涡激振动 (VIV)
 
-**涡激振动**是流体绕过钝体时产生的周期性涡脱落现象，导致结构物产生振动。
+涡激振动是流体绕过钝体时产生的一种重要现象，在海洋工程、土木工程等领域具有重要意义：
 
-#### 物理机制 {#物理机制}
+- **物理机制**：当流体绕过圆柱体等钝体时，会在物体后方形成交替脱落的涡旋
+- **振动特性**：涡旋脱落频率与结构固有频率接近时，会引起结构的大幅振动
+- **工程影响**：可能导致结构疲劳、损坏，需要准确预测和控制
 
-```
-流体流动 → 涡脱落 → 压力变化 → 结构振动 → 反馈影响流场
-```
+### Transformer架构
 
-#### 关键参数 {#关键参数}
-
-| 参数 | 符号 | 描述 | 影响 |
-|------|------|------|------|
-| **雷诺数** | Re | 惯性力与粘性力比值 | 决定流动状态 |
-| **约化速度** | Ur | 流速与固有频率比值 | 振动幅度关键参数 |
-| **质量比** | m* | 结构质量与流体质量比 | 影响振动响应 |
-| **阻尼比** | ζ | 系统阻尼特性 | 振动衰减速度 |
-
-### 🧠 Transformer架构 {#transformer架构}
-
-#### 基本原理 {#基本原理}
-
-Transformer是基于**自注意力机制**的神经网络架构，特别适合处理序列数据。
+Transformer是一种基于注意力机制的神经网络架构，在VIV建模中具有独特优势：
 
 ```python
-# 注意力机制核心公式
+class VIVTransformer(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.embedding = nn.Linear(config.input_dim, config.hidden_dim)
+        self.transformer_layers = nn.ModuleList([
+            TransformerLayer(config) for _ in range(config.num_layers)
+        ])
+        self.output_layer = nn.Linear(config.hidden_dim, config.output_dim)
+    
+    def forward(self, x):
+        x = self.embedding(x)
+        for layer in self.transformer_layers:
+            x = layer(x)
+        return self.output_layer(x)
+```
+
+### 注意力机制
+
+注意力机制是Transformer的核心组件，用于建模序列中不同位置之间的依赖关系：
+
+#### 数学表示
+
+注意力机制的基本公式：
+
+```
 Attention(Q, K, V) = softmax(QK^T / √d_k)V
-
-# 其中：
-# Q: Query矩阵
-# K: Key矩阵  
-# V: Value矩阵
-# d_k: Key向量维度
 ```
 
-#### 多头注意力 {#多头注意力}
+其中：
+- Q (Query): 查询矩阵
+- K (Key): 键矩阵  
+- V (Value): 值矩阵
+- d_k: 键向量的维度
 
-```python
-# 多头注意力机制
+#### 多头注意力
+
+```
 MultiHead(Q, K, V) = Concat(head_1, ..., head_h)W^O
+```
 
-# 其中每个头：
+其中每个头计算为：
+```
 head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)
 ```
 
-### 🔄 注意力机制类型 {#注意力机制类型}
+#### 注意力机制类型
 
-#### 1. 自注意力 (Self-Attention) {#1-自注意力-self-attention}
+| 类型 | 定义 | 用途 | 优势 |
+|------|------|------|------|
+| **自注意力** | Q、K、V来自同一序列 | 建模序列内部依赖 | 捕捉长距离依赖关系 |
+| **交叉注意力** | Q来自一个序列，K、V来自另一序列 | 建模不同序列间关系 | 融合多模态信息 |
+| **稀疏注意力** | 只关注部分位置 | 降低计算复杂度 | 提高计算效率 |
 
-- **定义**：序列内部元素之间的注意力
-- **用途**：捕获时间序列的内在依赖关系
-- **优势**：并行计算，长距离依赖建模
+## 技术架构
 
-#### 2. 交叉注意力 (Cross-Attention) {#2-交叉注意力-cross-attention}
-
-- **定义**：不同模态之间的注意力
-- **用途**：融合视觉和数值特征
-- **优势**：多模态信息整合
-
-#### 3. 稀疏注意力 (Sparse Attention) {#3-稀疏注意力-sparse-attention}
-
-- **定义**：只关注部分重要位置的注意力
-- **用途**：降低计算复杂度
-- **优势**：处理长序列，提高效率
-
-## 技术架构 {#技术架构}
-
-### 🏗️ 系统层次 {#系统层次}
+### 系统层次
 
 ```
 应用层 (Application Layer)
-├── 实验管理 (Experiment Management)
-├── 结果分析 (Result Analysis)
-└── 可视化 (Visualization)
+├── 训练脚本 (Training Scripts)
+├── 评估工具 (Evaluation Tools)
+└── 可视化界面 (Visualization Interface)
 
 模型层 (Model Layer)
-├── 注意力机制 (Attention Mechanisms)
-├── 编码器 (Encoder)
-└── 解码器 (Decoder)
+├── VIVTransformer 核心模型
+├── 注意力机制模块
+└── 损失函数模块
 
 数据层 (Data Layer)
-├── 数据预处理 (Preprocessing)
-├── 特征提取 (Feature Extraction)
+├── 数据加载器 (Data Loaders)
+├── 预处理模块 (Preprocessing)
 └── 数据增强 (Data Augmentation)
 
-基础层 (Infrastructure Layer)
-├── 配置管理 (Configuration)
-├── 日志系统 (Logging)
-└── 工具函数 (Utilities)
+配置层 (Configuration Layer)
+├── 模型配置 (Model Config)
+├── 训练配置 (Training Config)
+└── 数据配置 (Data Config)
 ```
 
-### 🔧 模块组织 {#模块组织}
+### 模块组织
 
-#### 核心模块 {#核心模块}
+#### 核心模块
 
-- **mymodels/**：模型定义和注意力机制
-- **training/**：训练逻辑和实验管理
-- **data/**：数据处理和加载
-- **utils/**：工具函数和配置管理
+```python
+# 模型核心组件
+from vivtransformer.models import VIVTransformer
+from vivtransformer.attention import MultiHeadAttention
+from vivtransformer.losses import SVDLoss, MSELoss
 
-#### 配置系统 {#配置系统}
+# 数据处理
+from vivtransformer.data import VIVDataLoader
+from vivtransformer.preprocessing import DataPreprocessor
+
+# 训练和评估
+from vivtransformer.training import Trainer
+from vivtransformer.evaluation import Evaluator
+```
+
+#### 配置系统
 
 ```yaml
-# 配置文件结构
-global:          # 全局设置
-  seed: 42
-  device: cuda:0
+# config/model_config.yaml
+model:
+  name: "VIVTransformer"
+  hidden_dim: 512
+  num_layers: 6
+  num_heads: 8
+  dropout: 0.1
 
-data:            # 数据配置
-  path: "data.pt"
-  batch_size: 128
+attention:
+  mechanisms:
+    - type: "MultiHeadAttention"
+      heads: 8
+    - type: "SparseAttention"
+      sparsity: 0.1
 
-model:           # 模型配置
-  attention_type: self
-  d_model: 256
-  num_heads: 4
-
-training:        # 训练配置
-  epochs: 100
-  learning_rate: 0.0001
+loss:
+  primary: "SVDLoss"
+  secondary: "MSELoss"
+  weights: [0.7, 0.3]
 ```
 
-## 数学基础 {#数学基础}
+## 数学基础
 
-### 📊 损失函数 {#损失函数}
+### 损失函数
 
-#### 1. 基础损失 (Base Loss) {#1-基础损失-base-loss}
+#### 均方误差损失 (MSE Loss)
 
-```python
-# 均方误差损失
-L_base = MSE(y_pred, y_true) = 1/n * Σ(y_pred - y_true)²
+```
+L_MSE = (1/N) Σ(y_pred - y_true)²
 ```
 
-#### 2. SVD损失 (SVD Loss) {#2-svd损失-svd-loss}
+#### SVD损失函数
 
-```python
-# 奇异值分解损失
-U, S, V = SVD(prediction_matrix)
-L_svd = Σ w_i * |S_i - S_target_i|
+基于奇异值分解的损失函数，用于捕捉数据的低维结构：
 
-# 其中：
-# S_i: 第i个奇异值
-# w_i: 第i个奇异值的权重
-# S_target_i: 目标奇异值
+```
+L_SVD = ||U_pred Σ_pred V_pred^T - U_true Σ_true V_true^T||_F
 ```
 
-#### 3. 总损失 (Total Loss) {#3-总损失-total-loss}
+#### 总损失
 
-```python
-# 加权组合损失
-L_total = α * L_base + β * L_svd + γ * L_regularization
-
-# 其中：
-# α, β, γ: 损失权重系数
-# L_regularization: 正则化项
+```
+L_total = α * L_MSE + β * L_SVD
 ```
 
-### 🔢 关键公式 {#关键公式}
+其中α和β是权重参数。
 
-#### 位置编码 {#位置编码}
+### 关键公式
 
-```python
-# 正弦位置编码
+#### 位置编码
+
+正弦位置编码用于为序列中的每个位置提供位置信息：
+
+```
 PE(pos, 2i) = sin(pos / 10000^(2i/d_model))
 PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
-
-# 其中：
-# pos: 位置索引
-# i: 维度索引
-# d_model: 模型维度
 ```
 
-#### 层归一化 {#层归一化}
+#### 层归一化
 
-```python
-# Layer Normalization
-LN(x) = γ * (x - μ) / σ + β
-
-# 其中：
-# μ: 均值
-# σ: 标准差
-# γ, β: 可学习参数
+```
+LayerNorm(x) = γ * (x - μ) / σ + β
 ```
 
-## 关键术语 {#关键术语}
+其中μ和σ分别是均值和标准差。
 
-### 🔤 技术术语 {#技术术语}
+## 关键术语
 
-| 术语 | 英文 | 定义 | 应用 |
-|------|------|------|------|
-| **注意力权重** | Attention Weights | 衡量不同位置重要性的权重 | 可视化分析 |
-| **嵌入维度** | Embedding Dimension | 特征向量的维度大小 | 模型容量控制 |
-| **序列长度** | Sequence Length | 输入序列的时间步数 | 内存使用优化 |
-| **批大小** | Batch Size | 一次训练的样本数量 | 训练效率平衡 |
-| **学习率** | Learning Rate | 参数更新的步长 | 收敛速度控制 |
+### 技术术语
 
-### 🌊 流体力学术语 {#流体力学术语}
+| 术语 | 英文 | 定义 |
+|------|------|------|
+| **注意力机制** | Attention Mechanism | 用于建模序列中不同位置间依赖关系的机制 |
+| **多头注意力** | Multi-Head Attention | 并行计算多个注意力头的注意力机制 |
+| **位置编码** | Positional Encoding | 为序列位置提供位置信息的编码方式 |
+| **层归一化** | Layer Normalization | 对每个样本的特征进行归一化的技术 |
+| **残差连接** | Residual Connection | 将输入直接加到输出上的连接方式 |
 
-| 术语 | 英文 | 定义 | 重要性 |
-|------|------|------|--------|
-| **涡脱落** | Vortex Shedding | 流体绕过物体时形成的涡旋脱落 | VIV的根本原因 |
-| **升力系数** | Lift Coefficient | 升力与动压的比值 | 振动幅度预测 |
-| **阻力系数** | Drag Coefficient | 阻力与动压的比值 | 能量损失评估 |
-| **斯特劳哈尔数** | Strouhal Number | 涡脱落频率的无量纲参数 | 频率预测 |
+### 流体力学术语
 
-### 🤖 机器学习术语 {#机器学习术语}
+| 术语 | 英文 | 定义 |
+|------|------|------|
+| **涡激振动** | Vortex-Induced Vibration | 流体绕过钝体时产生涡旋引起的振动现象 |
+| **雷诺数** | Reynolds Number | 表征流体惯性力与粘性力比值的无量纲数 |
+| **斯特劳哈尔数** | Strouhal Number | 表征涡旋脱落频率的无量纲参数 |
+| **升力系数** | Lift Coefficient | 表征升力大小的无量纲系数 |
+| **阻力系数** | Drag Coefficient | 表征阻力大小的无量纲系数 |
 
-| 术语 | 英文 | 定义 | 作用 |
-|------|------|------|------|
-| **过拟合** | Overfitting | 模型在训练集上表现好但泛化差 | 需要正则化 |
-| **欠拟合** | Underfitting | 模型复杂度不足，表现差 | 需要增加容量 |
-| **梯度爆炸** | Gradient Explosion | 梯度值过大导致训练不稳定 | 需要梯度裁剪 |
-| **梯度消失** | Gradient Vanishing | 梯度值过小导致训练缓慢 | 需要残差连接 |
+### 机器学习术语
 
-## 应用场景 {#应用场景}
+| 术语 | 英文 | 定义 |
+|------|------|------|
+| **损失函数** | Loss Function | 衡量模型预测与真实值差异的函数 |
+| **梯度下降** | Gradient Descent | 通过梯度信息优化模型参数的算法 |
+| **过拟合** | Overfitting | 模型在训练数据上表现好但泛化能力差 |
+| **正则化** | Regularization | 防止过拟合的技术手段 |
+| **批量大小** | Batch Size | 每次训练使用的样本数量 |
 
-### 🏗️ 工程应用 {#工程应用}
+## 应用场景
 
-#### 1. 海洋工程 {#1-海洋工程}
+### 工程应用
 
-- **海底管道**：预测管道的涡激振动响应
-- **海洋平台**：立管系统的振动分析
-- **海缆系统**：海底电缆的动态响应
+#### 海洋工程
+- **海底管道**：预测海流作用下管道的VIV响应
+- **海洋平台**：分析立管和导管架的振动特性
+- **海上风电**：评估风机塔架和基础的VIV风险
 
-#### 2. 土木工程 {#2-土木工程}
+#### 土木工程
+- **桥梁工程**：分析桥梁拉索和主梁的风致振动
+- **高层建筑**：评估建筑物的风荷载和振动响应
+- **烟囱和塔架**：预测细长结构的涡激振动
 
-- **桥梁工程**：斜拉索和悬索的风致振动
-- **高层建筑**：风荷载下的结构响应
-- **烟囱塔架**：细长结构的涡激振动
+#### 能源工程
+- **核电站**：分析冷却系统管道的流致振动
+- **火电厂**：评估锅炉管束的振动特性
+- **化工装置**：预测换热器管束的VIV响应
 
-#### 3. 能源工程 {#3-能源工程}
+### 研究方向
 
-- **风力发电**：风机叶片和塔架振动
-- **核电工程**：换热器管束振动
-- **石油工程**：钻井立管动态分析
+#### 理论研究
+- **VIV机理**：深入理解涡激振动的物理机制
+- **流固耦合**：研究流体与结构的相互作用
+- **非线性动力学**：分析复杂的非线性振动现象
 
-### 🔬 研究方向 {#研究方向}
+#### 方法创新
+- **深度学习**：探索新的神经网络架构
+- **注意力机制**：开发适用于VIV的注意力机制
+- **多尺度建模**：结合不同时空尺度的建模方法
 
-#### 1. 理论研究 {#1-理论研究}
+#### 技术发展
+- **实时预测**：开发快速准确的在线预测系统
+- **智能控制**：基于预测结果的主动控制策略
+- **数字孪生**：构建VIV现象的数字化模型
 
-- **流固耦合机理**：深入理解VIV物理机制
-- **非线性动力学**：复杂系统的动态行为
-- **多尺度建模**：跨尺度现象的统一描述
+## 延伸阅读
 
-#### 2. 方法创新 {#2-方法创新}
+### 推荐资料
 
-- **深度学习**：神经网络在VIV预测中的应用
-- **数据驱动**：基于大数据的模型构建
-- **混合建模**：物理模型与数据模型结合
+#### 学术论文
+- "Attention Is All You Need" - Transformer原始论文
+- "Vortex-Induced Vibrations" - VIV经典综述
+- "Deep Learning for Fluid Mechanics" - 深度学习在流体力学中的应用
 
-#### 3. 技术发展 {#3-技术发展}
-
-- **实时预测**：在线VIV监测和预警
-- **优化设计**：基于VIV的结构优化
-- **智能控制**：主动VIV抑制技术
-
-## 📚 延伸阅读 {#延伸阅读}
-
-### 📖 推荐资料 {#推荐资料}
-
-#### 基础理论 {#基础理论}
-
-- **流体力学**：《流体力学基础》- Frank M. White
-- **振动理论**：《机械振动》- Singiresu S. Rao
-- **深度学习**：《深度学习》- Ian Goodfellow
-
-#### 专业文献 {#专业文献}
-
-- **VIV综述**："Vortex-induced vibrations" - Williamson & Govardhan (2004)
-- **Transformer**："Attention is All You Need" - Vaswani et al. (2017)
-- **多模态学习**："Multimodal Deep Learning" - Ngiam et al. (2011)
-
-### 🔗 相关链接 {#相关链接}
-
+#### 技术文档
 - [PyTorch官方文档](https://pytorch.org/docs/)
 - [Transformer详解](https://jalammar.github.io/illustrated-transformer/)
-- [VIV数据库](http://www.vivdr.org/)
-- [流体力学CFD](https://www.openfoam.com/)
+- [VIV研究进展](https://www.sciencedirect.com/topics/engineering/vortex-induced-vibration)
 
----
+#### 开源项目
+- [Transformers库](https://github.com/huggingface/transformers)
+- [OpenFOAM](https://www.openfoam.com/) - 开源CFD软件
+- [FEniCS](https://fenicsproject.org/) - 有限元计算平台
 
-*最后更新：{{ site.time | date: "%Y-%m-%d" }}*
+### 相关链接
+
+- [项目GitHub仓库](https://github.com/your-repo/vivtransformer)
+- [在线文档](https://your-docs-site.com)
+- [社区论坛](https://your-community-forum.com)
+- [技术博客](https://your-tech-blog.com)
+
+</div>
+
+<div data-lang-en>
+# Basic Concepts
+
+## Table of Contents
+- [Project Overview](#project-overview)
+  - [What is VIVTransformer](#what-is-vivtransformer)
+  - [Core Features](#core-features)
+- [Core Concepts](#core-concepts)
+  - [Vortex-Induced Vibration (VIV)](#vortex-induced-vibration-viv)
+  - [Transformer Architecture](#transformer-architecture)
+  - [Attention Mechanisms](#attention-mechanisms)
+- [Technical Architecture](#technical-architecture)
+  - [System Hierarchy](#system-hierarchy)
+  - [Module Organization](#module-organization)
+- [Mathematical Foundations](#mathematical-foundations)
+  - [Loss Functions](#loss-functions)
+  - [Key Formulas](#key-formulas)
+- [Key Terminology](#key-terminology)
+- [Application Scenarios](#application-scenarios)
+- [Further Reading](#further-reading)
+
+## Project Overview
+
+### What is VIVTransformer
+
+VIVTransformer is a deep learning framework based on Transformer architecture, specifically designed for modeling and predicting Vortex-Induced Vibration (VIV) phenomena. This project combines modern deep learning techniques with fluid mechanics theory to provide high-precision VIV prediction solutions for engineering applications.
+
+### Core Features
+
+| Feature | Description | Advantages |
+|---------|-------------|------------|
+| **Multi-Attention Mechanisms** | Support for combining multiple attention mechanisms | Enhanced model expressiveness and prediction accuracy |
+| **SVD Loss Functions** | Loss function design based on Singular Value Decomposition | Better capture of low-dimensional data structures |
+| **Modular Design** | Highly modular architecture design | Easy to extend and customize |
+| **Configuration-Driven** | YAML-based configuration system | Flexible parameter adjustment and experiment management |
+| **Visualization Support** | Built-in training monitoring and result visualization | Convenient for model debugging and result analysis |
+
+## Core Concepts
+
+### Vortex-Induced Vibration (VIV)
+
+Vortex-Induced Vibration is an important phenomenon that occurs when fluid flows around bluff bodies, with significant implications in marine engineering, civil engineering, and other fields:
+
+- **Physical Mechanism**: When fluid flows around cylindrical or other bluff bodies, alternating vortex shedding occurs behind the object
+- **Vibration Characteristics**: When vortex shedding frequency approaches the structural natural frequency, large-amplitude structural vibrations are induced
+- **Engineering Impact**: Can lead to structural fatigue and damage, requiring accurate prediction and control
+
+### Transformer Architecture
+
+Transformer is a neural network architecture based on attention mechanisms, offering unique advantages in VIV modeling:
+
+```python
+class VIVTransformer(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.embedding = nn.Linear(config.input_dim, config.hidden_dim)
+        self.transformer_layers = nn.ModuleList([
+            TransformerLayer(config) for _ in range(config.num_layers)
+        ])
+        self.output_layer = nn.Linear(config.hidden_dim, config.output_dim)
+    
+    def forward(self, x):
+        x = self.embedding(x)
+        for layer in self.transformer_layers:
+            x = layer(x)
+        return self.output_layer(x)
+```
+
+### Attention Mechanisms
+
+Attention mechanisms are the core components of Transformers, used to model dependencies between different positions in sequences:
+
+#### Mathematical Representation
+
+Basic attention mechanism formula:
+
+```
+Attention(Q, K, V) = softmax(QK^T / √d_k)V
+```
+
+Where:
+- Q (Query): Query matrix
+- K (Key): Key matrix  
+- V (Value): Value matrix
+- d_k: Dimension of key vectors
+
+#### Multi-Head Attention
+
+```
+MultiHead(Q, K, V) = Concat(head_1, ..., head_h)W^O
+```
+
+Where each head is computed as:
+```
+head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)
+```
+
+#### Types of Attention Mechanisms
+
+| Type | Definition | Purpose | Advantages |
+|------|------------|---------|------------|
+| **Self-Attention** | Q, K, V from the same sequence | Model intra-sequence dependencies | Capture long-range dependencies |
+| **Cross-Attention** | Q from one sequence, K, V from another | Model inter-sequence relationships | Fuse multi-modal information |
+| **Sparse Attention** | Attend to only subset of positions | Reduce computational complexity | Improve computational efficiency |
+
+## Technical Architecture
+
+### System Hierarchy
+
+```
+Application Layer
+├── Training Scripts
+├── Evaluation Tools
+└── Visualization Interface
+
+Model Layer
+├── VIVTransformer Core Model
+├── Attention Mechanism Modules
+└── Loss Function Modules
+
+Data Layer
+├── Data Loaders
+├── Preprocessing Modules
+└── Data Augmentation
+
+Configuration Layer
+├── Model Config
+├── Training Config
+└── Data Config
+```
+
+### Module Organization
+
+#### Core Modules
+
+```python
+# Model core components
+from vivtransformer.models import VIVTransformer
+from vivtransformer.attention import MultiHeadAttention
+from vivtransformer.losses import SVDLoss, MSELoss
+
+# Data processing
+from vivtransformer.data import VIVDataLoader
+from vivtransformer.preprocessing import DataPreprocessor
+
+# Training and evaluation
+from vivtransformer.training import Trainer
+from vivtransformer.evaluation import Evaluator
+```
+
+#### Configuration System
+
+```yaml
+# config/model_config.yaml
+model:
+  name: "VIVTransformer"
+  hidden_dim: 512
+  num_layers: 6
+  num_heads: 8
+  dropout: 0.1
+
+attention:
+  mechanisms:
+    - type: "MultiHeadAttention"
+      heads: 8
+    - type: "SparseAttention"
+      sparsity: 0.1
+
+loss:
+  primary: "SVDLoss"
+  secondary: "MSELoss"
+  weights: [0.7, 0.3]
+```
+
+## Mathematical Foundations
+
+### Loss Functions
+
+#### Mean Squared Error (MSE) Loss
+
+```
+L_MSE = (1/N) Σ(y_pred - y_true)²
+```
+
+#### SVD Loss Function
+
+Loss function based on Singular Value Decomposition, used to capture low-dimensional data structures:
+
+```
+L_SVD = ||U_pred Σ_pred V_pred^T - U_true Σ_true V_true^T||_F
+```
+
+#### Total Loss
+
+```
+L_total = α * L_MSE + β * L_SVD
+```
+
+Where α and β are weight parameters.
+
+### Key Formulas
+
+#### Positional Encoding
+
+Sinusoidal positional encoding provides position information for each position in the sequence:
+
+```
+PE(pos, 2i) = sin(pos / 10000^(2i/d_model))
+PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+```
+
+#### Layer Normalization
+
+```
+LayerNorm(x) = γ * (x - μ) / σ + β
+```
+
+Where μ and σ are the mean and standard deviation respectively.
+
+## Key Terminology
+
+### Technical Terms
+
+| Term | Chinese | Definition |
+|------|---------|------------|
+| **Attention Mechanism** | 注意力机制 | Mechanism for modeling dependencies between different positions in sequences |
+| **Multi-Head Attention** | 多头注意力 | Attention mechanism that computes multiple attention heads in parallel |
+| **Positional Encoding** | 位置编码 | Encoding method that provides position information for sequence positions |
+| **Layer Normalization** | 层归一化 | Technique for normalizing features of each sample |
+| **Residual Connection** | 残差连接 | Connection method that adds input directly to output |
+
+### Fluid Mechanics Terms
+
+| Term | Chinese | Definition |
+|------|---------|------------|
+| **Vortex-Induced Vibration** | 涡激振动 | Vibration phenomenon caused by vortices when fluid flows around bluff bodies |
+| **Reynolds Number** | 雷诺数 | Dimensionless number representing the ratio of inertial to viscous forces |
+| **Strouhal Number** | 斯特劳哈尔数 | Dimensionless parameter characterizing vortex shedding frequency |
+| **Lift Coefficient** | 升力系数 | Dimensionless coefficient characterizing lift magnitude |
+| **Drag Coefficient** | 阻力系数 | Dimensionless coefficient characterizing drag magnitude |
+
+### Machine Learning Terms
+
+| Term | Chinese | Definition |
+|------|---------|------------|
+| **Loss Function** | 损失函数 | Function measuring the difference between model predictions and true values |
+| **Gradient Descent** | 梯度下降 | Algorithm for optimizing model parameters using gradient information |
+| **Overfitting** | 过拟合 | Model performs well on training data but has poor generalization |
+| **Regularization** | 正则化 | Techniques to prevent overfitting |
+| **Batch Size** | 批量大小 | Number of samples used in each training iteration |
+
+## Application Scenarios
+
+### Engineering Applications
+
+#### Marine Engineering
+- **Subsea Pipelines**: Predict VIV response of pipelines under ocean currents
+- **Offshore Platforms**: Analyze vibration characteristics of risers and jacket structures
+- **Offshore Wind**: Assess VIV risks for wind turbine towers and foundations
+
+#### Civil Engineering
+- **Bridge Engineering**: Analyze wind-induced vibrations of bridge cables and main girders
+- **High-rise Buildings**: Evaluate wind loads and vibration response of buildings
+- **Chimneys and Towers**: Predict vortex-induced vibrations of slender structures
+
+#### Energy Engineering
+- **Nuclear Power Plants**: Analyze flow-induced vibrations in cooling system pipelines
+- **Thermal Power Plants**: Evaluate vibration characteristics of boiler tube bundles
+- **Chemical Plants**: Predict VIV response of heat exchanger tube bundles
+
+### Research Directions
+
+#### Theoretical Research
+- **VIV Mechanisms**: Deep understanding of physical mechanisms of vortex-induced vibrations
+- **Fluid-Structure Interaction**: Study interactions between fluids and structures
+- **Nonlinear Dynamics**: Analyze complex nonlinear vibration phenomena
+
+#### Methodological Innovation
+- **Deep Learning**: Explore new neural network architectures
+- **Attention Mechanisms**: Develop attention mechanisms suitable for VIV
+- **Multi-scale Modeling**: Combine modeling methods across different spatiotemporal scales
+
+#### Technical Development
+- **Real-time Prediction**: Develop fast and accurate online prediction systems
+- **Intelligent Control**: Active control strategies based on prediction results
+- **Digital Twins**: Construct digital models of VIV phenomena
+
+## Further Reading
+
+### Recommended Materials
+
+#### Academic Papers
+- "Attention Is All You Need" - Original Transformer paper
+- "Vortex-Induced Vibrations" - Classic VIV review
+- "Deep Learning for Fluid Mechanics" - Applications of deep learning in fluid mechanics
+
+#### Technical Documentation
+- [PyTorch Official Documentation](https://pytorch.org/docs/)
+- [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
+- [VIV Research Progress](https://www.sciencedirect.com/topics/engineering/vortex-induced-vibration)
+
+#### Open Source Projects
+- [Transformers Library](https://github.com/huggingface/transformers)
+- [OpenFOAM](https://www.openfoam.com/) - Open source CFD software
+- [FEniCS](https://fenicsproject.org/) - Finite element computing platform
+
+### Related Links
+
+- [Project GitHub Repository](https://github.com/your-repo/vivtransformer)
+- [Online Documentation](https://your-docs-site.com)
+- [Community Forum](https://your-community-forum.com)
+- [Technical Blog](https://your-tech-blog.com)
+
+</div>

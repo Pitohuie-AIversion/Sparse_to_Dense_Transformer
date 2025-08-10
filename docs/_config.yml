@@ -17,6 +17,11 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
+# Multi-language configuration (custom implementation)
+languages: ["en", "zh"]
+default_lang: "en"
+active_lang: "en"
+
 # Just The Docs theme configuration
 color_scheme: light
 search_enabled: true

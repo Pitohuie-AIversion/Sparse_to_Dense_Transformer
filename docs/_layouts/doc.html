@@ -61,55 +61,80 @@
 </head>
 <body>
   <!-- Language Switcher -->
-  <div class="language-switcher">
-    <div class="language-switcher-label">🌐 Language / 语言</div>
-    <div class="language-switcher-buttons">
-            <script>
-                // JavaScript to detect current language from URL and set up links
-                document.addEventListener('DOMContentLoaded', function() {
-                  var currentPath = window.location.pathname;
-                  var baseUrl = '{{ site.baseurl }}';
-                  var isZh = currentPath.includes('/zh/');
-                  var englishBtn = document.querySelector('.lang-btn-en');
-                  var chineseBtn = document.querySelector('.lang-btn-zh');
-                  
-                  if (isZh) {
-                    // We're on Chinese page
-                    englishBtn.classList.remove('active');
-                    chineseBtn.classList.add('active');
-                    
-                    // Set up English link - remove /zh from current path
-                    var enPath = currentPath.replace('/zh/', '/').replace('/zh', '');
-                    if (enPath === baseUrl || enPath === baseUrl + '/') {
-                      enPath = baseUrl + '/';
-                    }
-                    englishBtn.onclick = function() {
-                      window.location.href = enPath;
-                    };
-                    englishBtn.style.cursor = 'pointer';
-                  } else {
-                    // We're on English page
-                    englishBtn.classList.add('active');
-                    chineseBtn.classList.remove('active');
-                    
-                    // Set up Chinese link - add /zh to current path
-                    var zhPath;
-                    if (currentPath === baseUrl + '/' || currentPath === baseUrl) {
-                      zhPath = baseUrl + '/zh/';
-                    } else {
-                      zhPath = currentPath.replace(baseUrl + '/', baseUrl + '/zh/');
-                    }
-                    chineseBtn.onclick = function() {
-                      window.location.href = zhPath;
-                    };
-                    chineseBtn.style.cursor = 'pointer';
-                  }
-                });
-              </script>
-             <span class="lang-btn lang-btn-en active">English</span>
-             <span class="lang-btn lang-btn-zh">中文</span>
-          </div>
-  </div>
+  {% include language-switcher.html %}
+  
+  <script>
+  // Enhanced language switching for runtime content switching
+  document.addEventListener('DOMContentLoaded', function() {
+    var currentPath = window.location.pathname;
+    var baseUrl = '{{ site.baseurl }}';
+    var isZh = currentPath.includes('/zh/');
+    var englishBtn = document.querySelector('.lang-btn-en');
+    var chineseBtn = document.querySelector('.lang-btn-zh');
+    
+    // Function to switch language content on the same page
+    function switchLanguageContent(lang) {
+      var allContent = document.querySelectorAll('.lang-content');
+      allContent.forEach(function(element) {
+        if (element.getAttribute('data-lang') === lang) {
+          element.style.display = 'block';
+        } else {
+          element.style.display = 'none';
+        }
+      });
+      
+      // Update active button state
+      if (lang === 'zh') {
+        englishBtn.classList.remove('active');
+        chineseBtn.classList.add('active');
+      } else {
+        englishBtn.classList.add('active');
+        chineseBtn.classList.remove('active');
+      }
+      
+      // Dispatch custom event for other components
+      window.dispatchEvent(new CustomEvent('languageChanged', {
+        detail: { language: lang }
+      }));
+    }
+    
+    // Set up click handlers for runtime switching on index page
+    if (currentPath === baseUrl + '/' || currentPath === baseUrl || currentPath.endsWith('/index.html')) {
+      englishBtn.onclick = function(e) {
+        e.preventDefault();
+        switchLanguageContent('en');
+      };
+      chineseBtn.onclick = function(e) {
+        e.preventDefault();
+        switchLanguageContent('zh');
+      };
+      
+      // Initialize with detected language
+      switchLanguageContent(isZh ? 'zh' : 'en');
+    } else {
+      // For other pages, use navigation-based switching
+      if (isZh) {
+        var enPath = currentPath.replace('/zh/', '/').replace('/zh', '');
+        if (enPath === baseUrl || enPath === baseUrl + '/') {
+          enPath = baseUrl + '/';
+        }
+        englishBtn.onclick = function() {
+          window.location.href = enPath;
+        };
+      } else {
+        var zhPath;
+        if (currentPath === baseUrl + '/' || currentPath === baseUrl) {
+          zhPath = baseUrl + '/zh/';
+        } else {
+          zhPath = currentPath.replace(baseUrl + '/', baseUrl + '/zh/');
+        }
+        chineseBtn.onclick = function() {
+          window.location.href = zhPath;
+        };
+      }
+    }
+  });
+  </script>
 
 <div class="doc-content">
   {% if page.title %}

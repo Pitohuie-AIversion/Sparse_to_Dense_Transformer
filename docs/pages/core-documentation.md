@@ -13,17 +13,17 @@ permalink: /core-documentation/
 ## 📚 文档结构
 
 ### 🏗️ 架构与设计
-- **[架构概览](/pages/architecture-overview/)** - 整体架构设计
-- **[模型设计](/pages/model-design/)** - 详细模型结构
-- **[实现细节](/pages/implementation-details/)** - 核心实现说明
+- **[架构概览]({{ site.baseurl }}/pages/architecture-overview/)** - 整体架构设计
+- **[模型设计]({{ site.baseurl }}/pages/model-design/)** - 详细模型结构
+- **[实现细节]({{ site.baseurl }}/pages/implementation-details/)** - 核心实现说明
 
 ### 🧠 注意力机制
-- **[注意力机制指南](/pages/attention-mechanisms-guide/)** - 多头注意力实现
-- **[自定义注意力](/pages/custom-attention/)** - 扩展注意力机制
+- **[注意力机制指南]({{ site.baseurl }}/pages/attention-mechanisms-guide/)** - 多头注意力实现
+- **[自定义注意力]({{ site.baseurl }}/pages/custom-attention/)** - 扩展注意力机制
 
 ### 📊 数据与配置
-- **[数据管道](/pages/data-pipeline/)** - 数据处理流程
-- **[配置系统](/pages/configuration-system/)** - 配置文件管理
+- **[数据管道]({{ site.baseurl }}/pages/data-pipeline/)** - 数据处理流程
+- **[配置系统]({{ site.baseurl }}/pages/configuration-system/)** - 配置文件管理
 
 ## 🎯 阅读建议
 
@@ -33,6 +33,6 @@ permalink: /core-documentation/
 
 ## 💡 相关资源
 
-- [训练指南](/pages/training-guide/) - 了解如何训练模型
-- [API 参考](/pages/api-reference/) - 查看详细的 API 文档
-- [示例代码](/pages/examples/) - 查看实际使用示例
+- [训练指南]({{ site.baseurl }}/pages/training-guide/) - 了解如何训练模型
+- [API 参考]({{ site.baseurl }}/pages/api-reference/) - 查看详细的 API 文档
+- [示例代码]({{ site.baseurl }}/pages/examples/) - 查看实际使用示例

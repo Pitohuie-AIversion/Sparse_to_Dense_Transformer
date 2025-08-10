@@ -13,14 +13,14 @@ permalink: /training-optimization/
 ## 📚 训练文档
 
 ### 🎯 基础训练
-- **[训练指南](/pages/training-guide/)** - 完整的模型训练流程
-- **[损失函数](/pages/loss-functions/)** - 损失函数设计与使用
-- **[SVD损失函数](/pages/svd-loss-functions/)** - 特殊损失函数详解
+- **[训练指南]({{ site.baseurl }}/pages/training-guide/)** - 完整的模型训练流程
+- **[损失函数]({{ site.baseurl }}/pages/loss-functions/)** - 损失函数设计与使用
+- **[SVD损失函数]({{ site.baseurl }}/pages/svd-loss-functions/)** - 特殊损失函数详解
 
-### 🔧 优化策略
-- **[多损失策略](/pages/multi-loss-strategy/)** - 多损失函数配置
-- **[超参数调优](/pages/hyperparameter-tuning/)** - 自动化参数优化
-- **[收敛性分析](/pages/convergence-analysis/)** - 训练收敛监控
+### 🎯 优化策略
+- **[多损失策略]({{ site.baseurl }}/pages/multi-loss-strategy/)** - 多损失函数配置
+- **[超参数调优]({{ site.baseurl }}/pages/hyperparameter-tuning/)** - 自动化参数优化
+- **[收敛性分析]({{ site.baseurl }}/pages/convergence-analysis/)** - 训练收敛监控
 
 ## 🎯 学习路径
 
@@ -48,6 +48,6 @@ permalink: /training-optimization/
 
 ## 🔗 相关资源
 
-- [评估指标](/pages/evaluation-metrics/) - 了解模型评估方法
-- [实验结果](/pages/experimental-results/) - 查看基准测试结果
-- [故障排除](/pages/troubleshooting/) - 解决常见训练问题
+- [评估指标]({{ site.baseurl }}/pages/evaluation-metrics/) - 了解模型评估方法
+- [实验结果]({{ site.baseurl }}/pages/experimental-results/) - 查看基准测试结果
+- [故障排除]({{ site.baseurl }}/pages/troubleshooting/) - 解决常见训练问题

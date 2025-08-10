@@ -13,14 +13,14 @@ permalink: /pages/evaluation-results/
 ## 📊 评估文档
 
 ### 🎯 评估方法
-- **[评估指标](/pages/evaluation-metrics/)** - 模型评估方法和指标
-- **[性能对比](/pages/performance-comparison/)** - 与其他方法的对比分析
-- **[收敛性分析](/pages/convergence-analysis/)** - 训练收敛性监控
+- **[评估指标]({{ site.baseurl }}/pages/evaluation-metrics/)** - 模型评估方法和指标
+- **[性能对比]({{ site.baseurl }}/pages/performance-comparison/)** - 与其他方法的对比分析
+- **[收敛性分析]({{ site.baseurl }}/pages/convergence-analysis/)** - 训练收敛性监控
 
-### 🔬 深度分析
-- **[实验结果](/pages/experimental-results/)** - 详细的实验数据和分析
-- **[基准测试](/pages/benchmark-results/)** - 标准数据集上的性能
-- **[消融研究](/pages/ablation-study/)** - 组件重要性分析
+### 📊 实验数据
+- **[实验结果]({{ site.baseurl }}/pages/experimental-results/)** - 详细的实验数据和分析
+- **[基准测试]({{ site.baseurl }}/pages/benchmark-results/)** - 标准数据集上的性能
+- **[消融研究]({{ site.baseurl }}/pages/ablation-study/)** - 组件重要性分析
 
 ## 🎯 关键发现
 
@@ -56,6 +56,6 @@ permalink: /pages/evaluation-results/
 
 ## 🔗 相关资源
 
-- [训练指南](/pages/training-guide/) - 了解如何训练模型
-- [部署指南](/pages/deployment-guide/) - 学习模型部署
-- [故障排除](/pages/troubleshooting/) - 解决评估中的问题
+- [训练指南]({{ site.baseurl }}/pages/training-guide/) - 了解如何训练模型
+- [部署指南]({{ site.baseurl }}/pages/deployment-guide/) - 学习模型部署
+- [故障排除]({{ site.baseurl }}/pages/troubleshooting/) - 解决评估中的问题

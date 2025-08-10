@@ -1272,4 +1272,4 @@ if __name__ == "__main__":
 
 ---
 
-*本教程与示例页面提供了详细的使用指导和代码示例。更多高级功能请参考[API文档](/pages/api-reference)和[最佳实践](/pages/best-practices)。*
+*本教程与示例页面提供了详细的使用指导和代码示例。更多高级功能请参考[API文档]({{ site.baseurl }}/pages/api-reference)和[最佳实践]({{ site.baseurl }}/pages/best-practices)。*

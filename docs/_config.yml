@@ -16,13 +16,11 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
-  - jekyll-multiple-languages-plugin
+  - jekyll-include-cache
 
-# Multi-language configuration
+# Multi-language configuration (custom implementation)
 languages: ["en", "zh"]
 default_lang: "en"
-default_locale_in_subfolder: false
-exclude_from_localizations: ["javascript", "images", "css", "README.md"]
 
 # Just The Docs theme configuration
 color_scheme: light

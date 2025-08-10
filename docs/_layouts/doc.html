@@ -6,92 +6,17 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="site-baseurl" content="{{ site.baseurl }}">
   <title>{{ page.title | default: site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   <link rel="stylesheet" href="{{ '/assets/css/just-the-docs-default.css' | relative_url }}">
   <script type="text/javascript" src="{{ '/assets/js/vendor/lunr.min.js' | relative_url }}"></script>
   <script type="text/javascript" src="{{ '/assets/js/just-the-docs.js' | relative_url }}"></script>
+  <script type="text/javascript" src="{{ '/assets/js/language-switcher.js' | relative_url }}"></script>
 </head>
 <body>
   <!-- Language Switcher -->
   {% include language-switcher.html %}
-  
-  <script>
-  // Enhanced language switching for runtime content switching
-  document.addEventListener('DOMContentLoaded', function() {
-    var currentPath = window.location.pathname;
-    var baseUrl = '{{ site.baseurl }}';
-    var isZh = currentPath.includes('/zh/');
-    var englishBtn = document.querySelector('.lang-btn-en');
-    var chineseBtn = document.querySelector('.lang-btn-zh');
-    
-    // Function to switch language content on the same page
-    function switchLanguageContent(lang) {
-      // Support both .lang-content class and data-lang attributes
-      var allContent = document.querySelectorAll('.lang-content, [data-lang], [data-lang-zh], [data-lang-en]');
-      allContent.forEach(function(element) {
-        var elementLang = element.getAttribute('data-lang') || 
-                         (element.hasAttribute('data-lang-zh') ? 'zh' : '') ||
-                         (element.hasAttribute('data-lang-en') ? 'en' : '');
-        if (elementLang === lang) {
-          element.style.display = 'block';
-        } else {
-          element.style.display = 'none';
-        }
-      });
-      
-      // Update active button state
-      if (lang === 'zh') {
-        englishBtn.classList.remove('active');
-        chineseBtn.classList.add('active');
-      } else {
-        englishBtn.classList.add('active');
-        chineseBtn.classList.remove('active');
-      }
-      
-      // Dispatch custom event for other components
-      window.dispatchEvent(new CustomEvent('languageChanged', {
-        detail: { language: lang }
-      }));
-    }
-    
-    // Set up click handlers for runtime switching on index page
-    if (currentPath === baseUrl + '/' || currentPath === baseUrl || currentPath.endsWith('/index.html')) {
-      englishBtn.onclick = function(e) {
-        e.preventDefault();
-        switchLanguageContent('en');
-      };
-      chineseBtn.onclick = function(e) {
-        e.preventDefault();
-        switchLanguageContent('zh');
-      };
-      
-      // Initialize with detected language
-      switchLanguageContent(isZh ? 'zh' : 'en');
-    } else {
-      // For other pages, use navigation-based switching
-      if (isZh) {
-        var enPath = currentPath.replace('/zh/', '/').replace('/zh', '');
-        if (enPath === baseUrl || enPath === baseUrl + '/') {
-          enPath = baseUrl + '/';
-        }
-        englishBtn.onclick = function() {
-          window.location.href = enPath;
-        };
-      } else {
-        var zhPath;
-        if (currentPath === baseUrl + '/' || currentPath === baseUrl) {
-          zhPath = baseUrl + '/zh/';
-        } else {
-          zhPath = currentPath.replace(baseUrl + '/', baseUrl + '/zh/');
-        }
-        chineseBtn.onclick = function() {
-          window.location.href = zhPath;
-        };
-      }
-    }
-  });
-  </script>
 
 <div class="doc-content">
   {% if page.title %}

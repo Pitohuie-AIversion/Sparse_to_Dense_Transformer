@@ -7,7 +7,7 @@ parent: Getting Help
 permalink: /pages/troubleshooting/
 ---
 
-<div data-lang-zh style="display: none;">
+<div class="lang-content" data-lang-zh style="display: none;">
 <h1 id="故障排除指南">故障排除指南</h1>
 
 <p>本文档提供VIVTransformer项目常见问题的解决方案和调试技巧。</p>
@@ -916,7 +916,7 @@ if model is not None:
 </ul>
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 <h1 id="troubleshooting-guide">Troubleshooting Guide</h1>
 
 <p>This document provides solutions and debugging techniques for common issues in the VIVTransformer project.</p>

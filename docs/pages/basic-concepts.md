@@ -4,7 +4,7 @@ title: Basic Concepts
 permalink: /pages/basic-concepts/
 ---
 
-<div data-lang-zh>
+<div class="lang-content" data-lang-zh>
 # 基础概念
 
 ## 目录
@@ -319,7 +319,7 @@ LayerNorm(x) = γ * (x - μ) / σ + β
 
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 # Basic Concepts
 
 ## Table of Contents

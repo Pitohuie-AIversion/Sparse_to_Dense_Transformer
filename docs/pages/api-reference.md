@@ -6,7 +6,7 @@ parent: Core Documentation
 permalink: /pages/api-reference/
 ---
 
-<div data-lang-zh>
+<div class="lang-content" data-lang-zh>
 # API 参考
 {: .no_toc }
 
@@ -578,7 +578,7 @@ with torch.no_grad():
 
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 # API Reference
 {: .no_toc }
 

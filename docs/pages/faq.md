@@ -7,7 +7,7 @@ parent: Getting Help
 permalink: /pages/faq/
 ---
 
-<div data-lang-zh style="display: none;">
+<div class="lang-content" data-lang-zh style="display: none;">
 <h1 id="常见问题-faq">常见问题 (FAQ)</h1>
 
 <p>本页面收集了VIVTransformer项目使用过程中的常见问题和解决方案。如果您的问题不在此列表中，请查看其他文档或提交Issue。</p>
@@ -510,7 +510,7 @@ for epoch in range(num_epochs):
 <li><strong>GitHub Issues</strong>: <a href="https://github.com/your-repo/issues">提交详细的问题报告</a></li>
 <li><strong>讨论区</strong>: <a href="https://github.com/your-repo/discussions">参与社区讨论</a></li>
 <li><strong>文档</strong>: <a href="/">查阅完整文档</a></li>
-<li><strong>示例代码</strong>: <a href="/pages/examples/">参考示例代码</a></li>
+<li><strong>示例代码</strong>: <a href="{{ site.baseurl }}/pages/examples/">参考示例代码</a></li>
 </ul>
 
 <p>提交问题时，请包含：</p>
@@ -523,7 +523,7 @@ for epoch in range(num_epochs):
 </ul>
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 <h1 id="faq">Frequently Asked Questions (FAQ)</h1>
 
 <p>This page collects common questions and solutions encountered when using the VIVTransformer project. If your question is not listed here, please check other documentation or submit an Issue.</p>
@@ -1026,7 +1026,7 @@ for epoch in range(num_epochs):
 <li><strong>GitHub Issues</strong>: <a href="https://github.com/your-repo/issues">Submit detailed issue reports</a></li>
 <li><strong>Discussion Forum</strong>: <a href="https://github.com/your-repo/discussions">Participate in community discussions</a></li>
 <li><strong>Documentation</strong>: <a href="/">Refer to complete documentation</a></li>
-<li><strong>Example Code</strong>: <a href="/pages/examples/">Check example code</a></li>
+<li><strong>Example Code</strong>: <a href="{{ site.baseurl }}/pages/examples/">Check example code</a></li>
 </ul>
 
 <p>When submitting issues, please include:</p>

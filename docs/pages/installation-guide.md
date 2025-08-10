@@ -4,7 +4,7 @@ title: Installation Guide
 permalink: /pages/installation-guide/
 ---
 
-<div data-lang-zh>
+<div class="lang-content" data-lang-zh>
 # 安装指南
 
 本指南将详细介绍如何在不同环境中安装和配置VIVTransformer项目。
@@ -373,7 +373,7 @@ cp -r modify_multi_attention/data/ ~/backup/
 
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 # Installation Guide
 
 This guide provides detailed instructions on how to install and configure the VIVTransformer project in different environments.

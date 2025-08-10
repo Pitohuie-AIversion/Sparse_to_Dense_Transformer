@@ -6,7 +6,7 @@ parent: Getting Started
 permalink: /pages/examples/
 ---
 
-<div data-lang-zh style="display: none;">
+<div class="lang-content" data-lang-zh style="display: none;">
 <h1>示例代码</h1>
 <p class="fs-6 fw-300">本页面提供了VIVTransformer项目的实用代码示例，帮助您快速上手和理解项目的使用方法。</p>
 
@@ -410,7 +410,7 @@ for pattern_name, score in attention_patterns.items():
 </code></pre>
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 <h1>Examples</h1>
 <p class="fs-6 fw-300">This page provides practical code examples for the VIVTransformer project to help you get started quickly and understand how to use the project.</p>
 

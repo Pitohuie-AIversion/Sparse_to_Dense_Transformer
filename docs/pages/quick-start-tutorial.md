@@ -6,7 +6,7 @@ parent: Getting Started
 permalink: /pages/quick-start-tutorial/
 ---
 
-<div data-lang-zh style="display: none;">
+<div class="lang-content" data-lang-zh style="display: none;">
 <h1>快速开始教程</h1>
 <p class="fs-6 fw-300">本教程将指导您在5分钟内完成VIVTransformer项目的安装、配置和首次运行。</p>
 
@@ -130,14 +130,14 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 <p>恭喜！您已经成功运行了第一个VIVTransformer实验。接下来可以：</p>
 
 <ul>
-<li><a href="/pages/training-guide/">深入学习训练指南</a></li>
-<li><a href="/pages/api-reference/">查看API参考文档</a></li>
-<li><a href="/pages/examples/">探索更多示例</a></li>
-<li><a href="/pages/faq/">查看常见问题</a></li>
+<li><a href="{{ site.baseurl }}/pages/training-guide/">深入学习训练指南</a></li>
+<li><a href="{{ site.baseurl }}/pages/api-reference/">查看API参考文档</a></li>
+<li><a href="{{ site.baseurl }}/pages/examples/">探索更多示例</a></li>
+<li><a href="{{ site.baseurl }}/pages/faq/">查看常见问题</a></li>
 </ul>
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 <h1>Quick Start Tutorial</h1>
 <p class="fs-6 fw-300">This tutorial will guide you through installing, configuring, and running the VIVTransformer project for the first time in 5 minutes.</p>
 
@@ -261,9 +261,9 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 <p>Congratulations! You have successfully run your first VIVTransformer experiment. Next, you can:</p>
 
 <ul>
-<li><a href="/pages/training-guide/">Learn more about training guide</a></li>
-<li><a href="/pages/api-reference/">Check API reference documentation</a></li>
-<li><a href="/pages/examples/">Explore more examples</a></li>
-<li><a href="/pages/faq/">View frequently asked questions</a></li>
+<li><a href="{{ site.baseurl }}/pages/training-guide/">Learn more about training guide</a></li>
+<li><a href="{{ site.baseurl }}/pages/api-reference/">Check API reference documentation</a></li>
+<li><a href="{{ site.baseurl }}/pages/examples/">Explore more examples</a></li>
+<li><a href="{{ site.baseurl }}/pages/faq/">View frequently asked questions</a></li>
 </ul>
 </div>

@@ -6,7 +6,7 @@ permalink: /pages/advanced-configuration/
 description: "VIVTransformer advanced configuration and customization guide"
 ---
 
-<div data-lang-zh style="display: none;">
+<div class="lang-content" data-lang-zh style="display: none;">
 <h1>高级配置指南 ⚙️</h1>
 
 <p>本指南提供VIVTransformer的高级配置选项和定制化方案，帮助您充分发挥系统的潜力。</p>
@@ -938,7 +938,7 @@ trainer.train()
 <p>通过合理的配置管理，您可以充分发挥VIVTransformer的潜力，实现最佳的训练和推理性能。</p>
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 <h1>Advanced Configuration Guide ⚙️</h1>
 
 <p>This guide provides advanced configuration options and customization solutions for VIVTransformer to help you fully unleash the system's potential.</p>

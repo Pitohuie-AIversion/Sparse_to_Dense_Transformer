@@ -6,7 +6,7 @@ permalink: /pages/technical-deep-dive/
 description: "VIVTransformer核心技术实现和算法深度解析"
 ---
 
-<div data-lang-zh>
+<div class="lang-content" data-lang-zh>
 # 技术深度解析 🔬
 
 深入了解VIVTransformer的核心技术实现、算法原理和创新设计。
@@ -609,7 +609,7 @@ class DistributedTrainingManager:
 
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 # Technical Deep Dive 🔬
 
 Explore the core technical implementation, algorithmic principles, and innovative design of VIVTransformer.

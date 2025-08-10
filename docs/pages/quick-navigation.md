@@ -18,9 +18,9 @@ description: "VIVTransformer文档快速导航和内容索引"
   <h3>🚀 快速开始</h3>
   <p>我是新用户，想要快速上手</p>
   <div style="margin-top: 15px;">
-    <a href="/pages/quick-start-tutorial/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">5分钟教程</a>
-    <a href="/pages/installation-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">安装指南</a>
-    <a href="/pages/examples/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">示例代码</a>
+    <a href="{{ site.baseurl }}/pages/quick-start-tutorial/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">5分钟教程</a>
+<a href="{{ site.baseurl }}/pages/installation-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">安装指南</a>
+<a href="{{ site.baseurl }}/pages/examples/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">示例代码</a>
   </div>
 </div>
 
@@ -28,9 +28,9 @@ description: "VIVTransformer文档快速导航和内容索引"
   <h3>🔬 深入研究</h3>
   <p>我想了解技术细节和原理</p>
   <div style="margin-top: 15px;">
-    <a href="/pages/technical-deep-dive/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">技术解析</a>
-    <a href="/pages/architecture-overview/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">架构设计</a>
-    <a href="/pages/attention-mechanisms-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">注意力机制</a>
+    <a href="{{ site.baseurl }}/pages/technical-deep-dive/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">技术解析</a>
+<a href="{{ site.baseurl }}/pages/architecture-overview/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">架构设计</a>
+<a href="{{ site.baseurl }}/pages/attention-mechanisms-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">注意力机制</a>
   </div>
 </div>
 
@@ -38,9 +38,9 @@ description: "VIVTransformer文档快速导航和内容索引"
   <h3>📊 查看结果</h3>
   <p>我想看实验数据和性能对比</p>
   <div style="margin-top: 15px;">
-    <a href="/pages/experimental-showcase/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">实验结果</a>
-    <a href="/pages/benchmark-results/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">性能基准</a>
-    <a href="/pages/performance-comparison/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">对比分析</a>
+    <a href="{{ site.baseurl }}/pages/experimental-showcase/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">实验结果</a>
+<a href="{{ site.baseurl }}/pages/benchmark-results/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">性能基准</a>
+<a href="{{ site.baseurl }}/pages/performance-comparison/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">对比分析</a>
   </div>
 </div>
 
@@ -48,8 +48,8 @@ description: "VIVTransformer文档快速导航和内容索引"
   <h3>🎮 在线体验</h3>
   <p>我想直接试用和体验功能</p>
   <div style="margin-top: 15px;">
-    <a href="/pages/interactive-demo/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">交互演示</a>
-    <a href="/pages/project-showcase/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">项目展示</a>
+    <a href="{{ site.baseurl }}/pages/interactive-demo/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">交互演示</a>
+<a href="{{ site.baseurl }}/pages/project-showcase/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">项目展示</a>
     <a href="#online-demo" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">在线演示</a>
   </div>
 </div>
@@ -58,9 +58,9 @@ description: "VIVTransformer文档快速导航和内容索引"
   <h3>🛠️ 开发配置</h3>
   <p>我想配置开发环境和训练模型</p>
   <div style="margin-top: 15px;">
-    <a href="/pages/development-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">开发指南</a>
-    <a href="/pages/training-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">训练教程</a>
-    <a href="/pages/configuration-system/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">配置系统</a>
+    <a href="{{ site.baseurl }}/pages/development-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">开发指南</a>
+<a href="{{ site.baseurl }}/pages/training-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">训练教程</a>
+<a href="{{ site.baseurl }}/pages/configuration-system/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">配置系统</a>
   </div>
 </div>
 
@@ -68,9 +68,9 @@ description: "VIVTransformer文档快速导航和内容索引"
   <h3>🚀 部署应用</h3>
   <p>我想在生产环境中部署模型</p>
   <div style="margin-top: 15px;">
-    <a href="/pages/deployment-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">部署指南</a>
-    <a href="/pages/api-reference/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">API文档</a>
-    <a href="/pages/troubleshooting/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">故障排除</a>
+    <a href="{{ site.baseurl }}/pages/deployment-guide/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">部署指南</a>
+<a href="{{ site.baseurl }}/pages/api-reference/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">API文档</a>
+<a href="{{ site.baseurl }}/pages/troubleshooting/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 5px;">故障排除</a>
   </div>
 </div>
 
@@ -85,19 +85,19 @@ description: "VIVTransformer文档快速导航和内容索引"
     <div>
       <h4>🔧 核心架构</h4>
       <ul style="list-style: none; padding: 0;">
-        <li>📋 <a href="/pages/architecture-overview/">架构概览</a></li>
-        <li>🏗️ <a href="/pages/model-design/">模型设计</a></li>
-        <li>🔄 <a href="/pages/attention-mechanisms-guide/">注意力机制</a></li>
-        <li>⚙️ <a href="/pages/implementation-details/">实现细节</a></li>
+        <li>📋 <a href="{{ site.baseurl }}/pages/architecture-overview/">架构概览</a></li>
+<li>🏗️ <a href="{{ site.baseurl }}/pages/model-design/">模型设计</a></li>
+<li>🔄 <a href="{{ site.baseurl }}/pages/attention-mechanisms-guide/">注意力机制</a></li>
+<li>⚙️ <a href="{{ site.baseurl }}/pages/implementation-details/">实现细节</a></li>
       </ul>
     </div>
     <div>
       <h4>🎯 专业特性</h4>
       <ul style="list-style: none; padding: 0;">
-        <li>🌊 <a href="/pages/custom-attention/">自定义注意力</a></li>
-        <li>📊 <a href="/pages/loss-functions/">损失函数</a></li>
-        <li>🔬 <a href="/pages/svd-loss-functions/">SVD损失</a></li>
-        <li>🎛️ <a href="/pages/multi-loss-strategy/">多损失策略</a></li>
+        <li>🌊 <a href="{{ site.baseurl }}/pages/custom-attention/">自定义注意力</a></li>
+<li>📊 <a href="{{ site.baseurl }}/pages/loss-functions/">损失函数</a></li>
+<li>🔬 <a href="{{ site.baseurl }}/pages/svd-loss-functions/">SVD损失</a></li>
+<li>🎛️ <a href="{{ site.baseurl }}/pages/multi-loss-strategy/">多损失策略</a></li>
       </ul>
     </div>
   </div>
@@ -110,19 +110,19 @@ description: "VIVTransformer文档快速导航和内容索引"
     <div>
       <h4>📈 训练流程</h4>
       <ul style="list-style: none; padding: 0;">
-        <li>🎓 <a href="/pages/training-guide/">训练指南</a></li>
-        <li>📊 <a href="/pages/data-pipeline/">数据管道</a></li>
-        <li>🔄 <a href="/pages/hyperparameter-tuning/">超参数调优</a></li>
-        <li>📉 <a href="/pages/convergence-analysis/">收敛分析</a></li>
+        <li>🎓 <a href="{{ site.baseurl }}/pages/training-guide/">训练指南</a></li>
+<li>📊 <a href="{{ site.baseurl }}/pages/data-pipeline/">数据管道</a></li>
+<li>🔄 <a href="{{ site.baseurl }}/pages/hyperparameter-tuning/">超参数调优</a></li>
+<li>📉 <a href="{{ site.baseurl }}/pages/convergence-analysis/">收敛分析</a></li>
       </ul>
     </div>
     <div>
       <h4>⚡ 性能优化</h4>
       <ul style="list-style: none; padding: 0;">
-        <li>🚀 <a href="/pages/training-optimization/">训练优化</a></li>
-        <li>💾 <a href="/pages/configuration-system/">配置管理</a></li>
-        <li>🔧 <a href="/pages/development-guide/">开发环境</a></li>
-        <li>🛠️ <a href="/pages/troubleshooting/">问题解决</a></li>
+        <li>🚀 <a href="{{ site.baseurl }}/pages/training-optimization/">训练优化</a></li>
+<li>💾 <a href="{{ site.baseurl }}/pages/configuration-system/">配置管理</a></li>
+<li>🔧 <a href="{{ site.baseurl }}/pages/development-guide/">开发环境</a></li>
+<li>🛠️ <a href="{{ site.baseurl }}/pages/troubleshooting/">问题解决</a></li>
       </ul>
     </div>
   </div>
@@ -135,19 +135,19 @@ description: "VIVTransformer文档快速导航和内容索引"
     <div>
       <h4>📈 性能评估</h4>
       <ul style="list-style: none; padding: 0;">
-        <li>📊 <a href="/pages/evaluation-metrics/">评估指标</a></li>
-        <li>🏆 <a href="/pages/benchmark-results/">基准测试</a></li>
-        <li>⚖️ <a href="/pages/performance-comparison/">性能对比</a></li>
-        <li>🔬 <a href="/pages/ablation-study/">消融实验</a></li>
+        <li>📊 <a href="{{ site.baseurl }}/pages/evaluation-metrics/">评估指标</a></li>
+<li>🏆 <a href="{{ site.baseurl }}/pages/benchmark-results/">基准测试</a></li>
+<li>⚖️ <a href="{{ site.baseurl }}/pages/performance-comparison/">性能对比</a></li>
+<li>🔬 <a href="{{ site.baseurl }}/pages/ablation-study/">消融实验</a></li>
       </ul>
     </div>
     <div>
       <h4>📋 实验结果</h4>
       <ul style="list-style: none; padding: 0;">
-        <li>🧪 <a href="/pages/experimental-results/">实验数据</a></li>
-        <li>📈 <a href="/pages/evaluation-results/">评估结果</a></li>
-        <li>📊 <a href="/pages/experimental-showcase/">结果展示</a></li>
-        <li>🎯 <a href="/pages/project-showcase/">项目亮点</a></li>
+        <li>🧪 <a href="{{ site.baseurl }}/pages/experimental-results/">实验数据</a></li>
+<li>📈 <a href="{{ site.baseurl }}/pages/evaluation-results/">评估结果</a></li>
+<li>📊 <a href="{{ site.baseurl }}/pages/experimental-showcase/">结果展示</a></li>
+<li>🎯 <a href="{{ site.baseurl }}/pages/project-showcase/">项目亮点</a></li>
       </ul>
     </div>
   </div>
@@ -160,19 +160,19 @@ description: "VIVTransformer文档快速导航和内容索引"
     <div>
       <h4>🚀 生产部署</h4>
       <ul style="list-style: none; padding: 0;">
-        <li>📦 <a href="/pages/deployment-guide/">部署指南</a></li>
-        <li>🔌 <a href="/pages/api-reference/">API参考</a></li>
-        <li>💻 <a href="/pages/examples/">使用示例</a></li>
-        <li>🛡️ <a href="/pages/troubleshooting/">故障排除</a></li>
+        <li>📦 <a href="{{ site.baseurl }}/pages/deployment-guide/">部署指南</a></li>
+<li>🔌 <a href="{{ site.baseurl }}/pages/api-reference/">API参考</a></li>
+<li>💻 <a href="{{ site.baseurl }}/pages/examples/">使用示例</a></li>
+<li>🛡️ <a href="{{ site.baseurl }}/pages/troubleshooting/">故障排除</a></li>
       </ul>
     </div>
     <div>
       <h4>🎮 交互体验</h4>
       <ul style="list-style: none; padding: 0;">
-        <li>🎯 <a href="/pages/interactive-demo/">在线演示</a></li>
-        <li>📚 <a href="/pages/quick-start-tutorial/">快速教程</a></li>
-        <li>❓ <a href="/pages/faq/">常见问题</a></li>
-        <li>🆘 <a href="/pages/getting-help/">获取帮助</a></li>
+        <li>🎯 <a href="{{ site.baseurl }}/pages/interactive-demo/">在线演示</a></li>
+<li>📚 <a href="{{ site.baseurl }}/pages/quick-start-tutorial/">快速教程</a></li>
+<li>❓ <a href="{{ site.baseurl }}/pages/faq/">常见问题</a></li>
+<li>🆘 <a href="{{ site.baseurl }}/pages/getting-help/">获取帮助</a></li>
       </ul>
     </div>
   </div>
@@ -188,11 +188,11 @@ description: "VIVTransformer文档快速导航和内容索引"
   <div style="margin-top: 15px;">
     <h4 style="font-size: 16px; margin-bottom: 10px;">推荐阅读:</h4>
     <ul style="font-size: 14px; line-height: 1.6;">
-      <li><a href="/pages/technical-deep-dive/">技术深度解析</a></li>
-      <li><a href="/pages/attention-mechanisms-guide/">注意力机制详解</a></li>
-      <li><a href="/pages/svd-loss-functions/">SVD损失函数</a></li>
-      <li><a href="/pages/experimental-showcase/">实验结果分析</a></li>
-      <li><a href="/pages/ablation-study/">消融实验</a></li>
+      <li><a href="{{ site.baseurl }}/pages/technical-deep-dive/">技术深度解析</a></li>
+<li><a href="{{ site.baseurl }}/pages/attention-mechanisms-guide/">注意力机制详解</a></li>
+<li><a href="{{ site.baseurl }}/pages/svd-loss-functions/">SVD损失函数</a></li>
+<li><a href="{{ site.baseurl }}/pages/experimental-showcase/">实验结果分析</a></li>
+<li><a href="{{ site.baseurl }}/pages/ablation-study/">消融实验</a></li>
     </ul>
   </div>
 </div>
@@ -203,11 +203,11 @@ description: "VIVTransformer文档快速导航和内容索引"
   <div style="margin-top: 15px;">
     <h4 style="font-size: 16px; margin-bottom: 10px;">推荐阅读:</h4>
     <ul style="font-size: 14px; line-height: 1.6;">
-      <li><a href="/pages/quick-start-tutorial/">快速开始</a></li>
-      <li><a href="/pages/development-guide/">开发指南</a></li>
-      <li><a href="/pages/api-reference/">API文档</a></li>
-      <li><a href="/pages/examples/">代码示例</a></li>
-      <li><a href="/pages/troubleshooting/">故障排除</a></li>
+      <li><a href="{{ site.baseurl }}/pages/quick-start-tutorial/">快速开始</a></li>
+<li><a href="{{ site.baseurl }}/pages/development-guide/">开发指南</a></li>
+<li><a href="{{ site.baseurl }}/pages/api-reference/">API文档</a></li>
+<li><a href="{{ site.baseurl }}/pages/examples/">代码示例</a></li>
+<li><a href="{{ site.baseurl }}/pages/troubleshooting/">故障排除</a></li>
     </ul>
   </div>
 </div>
@@ -218,11 +218,11 @@ description: "VIVTransformer文档快速导航和内容索引"
   <div style="margin-top: 15px;">
     <h4 style="font-size: 16px; margin-bottom: 10px;">推荐阅读:</h4>
     <ul style="font-size: 14px; line-height: 1.6;">
-      <li><a href="/pages/installation-guide/">安装配置</a></li>
-      <li><a href="/pages/training-guide/">训练教程</a></li>
-      <li><a href="/pages/deployment-guide/">部署指南</a></li>
-      <li><a href="/pages/performance-comparison/">性能对比</a></li>
-      <li><a href="/pages/hyperparameter-tuning/">参数调优</a></li>
+      <li><a href="{{ site.baseurl }}/pages/installation-guide/">安装配置</a></li>
+<li><a href="{{ site.baseurl }}/pages/training-guide/">训练教程</a></li>
+<li><a href="{{ site.baseurl }}/pages/deployment-guide/">部署指南</a></li>
+<li><a href="{{ site.baseurl }}/pages/performance-comparison/">性能对比</a></li>
+<li><a href="{{ site.baseurl }}/pages/hyperparameter-tuning/">参数调优</a></li>
     </ul>
   </div>
 </div>
@@ -233,11 +233,11 @@ description: "VIVTransformer文档快速导航和内容索引"
   <div style="margin-top: 15px;">
     <h4 style="font-size: 16px; margin-bottom: 10px;">推荐阅读:</h4>
     <ul style="font-size: 14px; line-height: 1.6;">
-      <li><a href="/pages/basic-concepts/">基础概念</a></li>
-      <li><a href="/pages/interactive-demo/">交互演示</a></li>
-      <li><a href="/pages/project-showcase/">项目展示</a></li>
-      <li><a href="/pages/examples/">教学示例</a></li>
-      <li><a href="/pages/faq/">常见问题</a></li>
+      <li><a href="{{ site.baseurl }}/pages/basic-concepts/">基础概念</a></li>
+<li><a href="{{ site.baseurl }}/pages/interactive-demo/">交互演示</a></li>
+<li><a href="{{ site.baseurl }}/pages/project-showcase/">项目展示</a></li>
+<li><a href="{{ site.baseurl }}/pages/examples/">教学示例</a></li>
+<li><a href="{{ site.baseurl }}/pages/faq/">常见问题</a></li>
     </ul>
   </div>
 </div>

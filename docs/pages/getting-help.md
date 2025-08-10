@@ -6,7 +6,7 @@ has_children: true
 permalink: /pages/getting-help/
 ---
 
-<div data-lang-zh style="display: none;">
+<div class="lang-content" data-lang-zh style="display: none;">
 <h1 class="no_toc">获取帮助</h1>
 
 <p class="fs-6 fw-300">当您在使用 VIVTransformer 项目时遇到问题，本节提供了多种获取帮助的方式和资源。</p>
@@ -25,11 +25,11 @@ permalink: /pages/getting-help/
 
 <table>
 <tr><th>问题类型</th><th>推荐文档</th><th>描述</th></tr>
-<tr><td><strong>安装问题</strong></td><td><a href="/pages/quick-start-tutorial/">快速开始教程</a></td><td>环境配置和依赖安装</td></tr>
-<tr><td><strong>配置问题</strong></td><td><a href="/pages/configuration/">配置指南</a></td><td>参数设置和配置文件</td></tr>
-<tr><td><strong>训练问题</strong></td><td><a href="/pages/training-guide/">训练指南</a></td><td>模型训练和优化</td></tr>
-<tr><td><strong>API使用</strong></td><td><a href="/pages/api-reference/">API参考</a></td><td>函数和类的详细说明</td></tr>
-<tr><td><strong>示例代码</strong></td><td><a href="/pages/examples/">示例代码</a></td><td>实际使用案例</td></tr>
+<tr><td><strong>安装问题</strong></td><td><a href="{{ site.baseurl }}/pages/quick-start-tutorial/">快速开始教程</a></td><td>环境配置和依赖安装</td></tr>
+<tr><td><strong>配置问题</strong></td><td><a href="{{ site.baseurl }}/pages/configuration/">配置指南</a></td><td>参数设置和配置文件</td></tr>
+<tr><td><strong>训练问题</strong></td><td><a href="{{ site.baseurl }}/pages/training-guide/">训练指南</a></td><td>模型训练和优化</td></tr>
+<tr><td><strong>API使用</strong></td><td><a href="{{ site.baseurl }}/pages/api-reference/">API参考</a></td><td>函数和类的详细说明</td></tr>
+<tr><td><strong>示例代码</strong></td><td><a href="{{ site.baseurl }}/pages/examples/">示例代码</a></td><td>实际使用案例</td></tr>
 </table>
 
 <h3>📖 完整文档结构</h3>
@@ -37,23 +37,23 @@ permalink: /pages/getting-help/
 <ul>
 <li><strong>入门指南</strong>
 <ul>
-<li><a href="/pages/quick-start-tutorial/">快速开始教程</a></li>
-<li><a href="/pages/installation/">安装指南</a></li>
-<li><a href="/pages/basic-concepts/">基础概念</a></li>
+<li><a href="{{ site.baseurl }}/pages/quick-start-tutorial/">快速开始教程</a></li>
+<li><a href="{{ site.baseurl }}/pages/installation/">安装指南</a></li>
+<li><a href="{{ site.baseurl }}/pages/basic-concepts/">基础概念</a></li>
 </ul>
 </li>
 <li><strong>用户指南</strong>
 <ul>
-<li><a href="/pages/training-guide/">训练指南</a></li>
-<li><a href="/pages/configuration/">配置系统</a></li>
-<li><a href="/pages/data-preparation/">数据准备</a></li>
+<li><a href="{{ site.baseurl }}/pages/training-guide/">训练指南</a></li>
+<li><a href="{{ site.baseurl }}/pages/configuration/">配置系统</a></li>
+<li><a href="{{ site.baseurl }}/pages/data-preparation/">数据准备</a></li>
 </ul>
 </li>
 <li><strong>开发者资源</strong>
 <ul>
-<li><a href="/pages/api-reference/">API参考</a></li>
-<li><a href="/pages/architecture/">架构设计</a></li>
-<li><a href="/pages/contributing/">贡献指南</a></li>
+<li><a href="{{ site.baseurl }}/pages/api-reference/">API参考</a></li>
+<li><a href="{{ site.baseurl }}/pages/architecture/">架构设计</a></li>
+<li><a href="{{ site.baseurl }}/pages/contributing/">贡献指南</a></li>
 </ul>
 </li>
 </ul>
@@ -171,7 +171,7 @@ permalink: /pages/getting-help/
 </code></pre>
 </div>
 
-<div data-lang-en>
+<div class="lang-content" data-lang-en>
 <h1 class="no_toc">Getting Help</h1>
 
 <p class="fs-6 fw-300">When you encounter problems while using the VIVTransformer project, this section provides various ways and resources to get help.</p>
@@ -190,11 +190,11 @@ permalink: /pages/getting-help/
 
 <table>
 <tr><th>Issue Type</th><th>Recommended Docs</th><th>Description</th></tr>
-<tr><td><strong>Installation Issues</strong></td><td><a href="/pages/quick-start-tutorial/">Quick Start Tutorial</a></td><td>Environment setup and dependency installation</td></tr>
-<tr><td><strong>Configuration Issues</strong></td><td><a href="/pages/configuration/">Configuration Guide</a></td><td>Parameter settings and config files</td></tr>
-<tr><td><strong>Training Issues</strong></td><td><a href="/pages/training-guide/">Training Guide</a></td><td>Model training and optimization</td></tr>
-<tr><td><strong>API Usage</strong></td><td><a href="/pages/api-reference/">API Reference</a></td><td>Detailed function and class descriptions</td></tr>
-<tr><td><strong>Example Code</strong></td><td><a href="/pages/examples/">Examples</a></td><td>Practical use cases</td></tr>
+<tr><td><strong>Installation Issues</strong></td><td><a href="{{ site.baseurl }}/pages/quick-start-tutorial/">Quick Start Tutorial</a></td><td>Environment setup and dependency installation</td></tr>
+<tr><td><strong>Configuration Issues</strong></td><td><a href="{{ site.baseurl }}/pages/configuration/">Configuration Guide</a></td><td>Parameter settings and config files</td></tr>
+<tr><td><strong>Training Issues</strong></td><td><a href="{{ site.baseurl }}/pages/training-guide/">Training Guide</a></td><td>Model training and optimization</td></tr>
+<tr><td><strong>API Usage</strong></td><td><a href="{{ site.baseurl }}/pages/api-reference/">API Reference</a></td><td>Detailed function and class descriptions</td></tr>
+<tr><td><strong>Example Code</strong></td><td><a href="{{ site.baseurl }}/pages/examples/">Examples</a></td><td>Practical use cases</td></tr>
 </table>
 
 <h3>📖 Complete Documentation Structure</h3>
@@ -202,23 +202,23 @@ permalink: /pages/getting-help/
 <ul>
 <li><strong>Getting Started</strong>
 <ul>
-<li><a href="/pages/quick-start-tutorial/">Quick Start Tutorial</a></li>
-<li><a href="/pages/installation/">Installation Guide</a></li>
-<li><a href="/pages/basic-concepts/">Basic Concepts</a></li>
+<li><a href="{{ site.baseurl }}/pages/quick-start-tutorial/">Quick Start Tutorial</a></li>
+<li><a href="{{ site.baseurl }}/pages/installation/">Installation Guide</a></li>
+<li><a href="{{ site.baseurl }}/pages/basic-concepts/">Basic Concepts</a></li>
 </ul>
 </li>
 <li><strong>User Guide</strong>
 <ul>
-<li><a href="/pages/training-guide/">Training Guide</a></li>
-<li><a href="/pages/configuration/">Configuration System</a></li>
-<li><a href="/pages/data-preparation/">Data Preparation</a></li>
+<li><a href="{{ site.baseurl }}/pages/training-guide/">Training Guide</a></li>
+<li><a href="{{ site.baseurl }}/pages/configuration/">Configuration System</a></li>
+<li><a href="{{ site.baseurl }}/pages/data-preparation/">Data Preparation</a></li>
 </ul>
 </li>
 <li><strong>Developer Resources</strong>
 <ul>
-<li><a href="/pages/api-reference/">API Reference</a></li>
-<li><a href="/pages/architecture/">Architecture Design</a></li>
-<li><a href="/pages/contributing/">Contributing Guide</a></li>
+<li><a href="{{ site.baseurl }}/pages/api-reference/">API Reference</a></li>
+<li><a href="{{ site.baseurl }}/pages/architecture/">Architecture Design</a></li>
+<li><a href="{{ site.baseurl }}/pages/contributing/">Contributing Guide</a></li>
 </ul>
 </li>
 </ul>

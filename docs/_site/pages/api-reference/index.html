@@ -281,8 +281,68 @@ function switchLanguage(lang) {
     el.style.display = lang === 'zh' ? 'inline' : 'none';
   });
   
+  // Update navigation titles based on language
+  updateNavigationTitles(lang);
+  
   // Store language preference
   localStorage.setItem('preferred-language', lang);
+}
+
+// Update navigation titles based on selected language
+function updateNavigationTitles(lang) {
+  const titleMappings = {
+    'zh': {
+      'Quick Start Tutorial': '快速开始教程',
+      'Getting Started': '开始使用',
+      'Core Documentation': '核心文档',
+      'Training & Optimization': '训练与优化',
+      'Getting Help': '获取帮助',
+      'Advanced Configuration Guide': '高级配置指南',
+      'Attention Mechanisms Guide': '注意力机制指南',
+      'Basic Concepts': '基本概念',
+      'Configuration System': '配置系统',
+      'Convergence Analysis': '收敛性分析',
+      'Custom Attention': '自定义注意力',
+      'Data Pipeline': '数据管道',
+      'Deployment Guide': '部署指南',
+      'Hyperparameter Tuning': '超参数调优',
+      'Implementation Details': '实现细节',
+      'Installation Guide': '安装指南',
+      'Multi-Loss Strategy': '多损失策略',
+      'Performance Comparison': '性能对比',
+      'Site Map': '站点地图',
+      'Examples': '示例',
+      'FAQ': '常见问题',
+      'Training Guide': '训练指南',
+      'Loss Functions': '损失函数',
+      'SVD Loss Functions': 'SVD损失函数',
+      'API Reference': 'API参考',
+      'Architecture Overview': '架构概览',
+      'Model Design': '模型设计',
+      'Troubleshooting': '故障排除',
+      'Experimental Results': '实验结果',
+      'Development Guide': '开发指南',
+      'Evaluation Metrics': '评估指标'
+    },
+    'en': {
+      '快速导航': 'Quick Navigation',
+      '技术深度解析': 'Technical Deep Dive',
+      '实验结果展示': 'Experimental Showcase',
+      '项目展示': 'Project Showcase',
+      '评估与结果': 'Evaluation & Results',
+      '交互式演示': 'Interactive Demo',
+      '消融研究': 'Ablation Study',
+      '基准测试结果': 'Benchmark Results'
+    }
+  };
+  
+  // Update navigation links
+  document.querySelectorAll('.nav-list-link').forEach(link => {
+    const currentText = link.textContent.trim();
+    if (titleMappings[lang] && titleMappings[lang][currentText]) {
+      link.textContent = titleMappings[lang][currentText];
+    }
+  });
 }
 
 // Load saved language preference

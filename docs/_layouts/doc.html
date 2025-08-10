@@ -74,25 +74,40 @@
                   var chineseBtn = document.querySelector('.lang-btn-zh');
                   
                   if (isZh) {
+                    // We're on Chinese page
                     englishBtn.classList.remove('active');
                     chineseBtn.classList.add('active');
                     
-                    // Set up English link - remove /zh/ from current path
-                    var enPath = currentPath.replace(baseUrl + '/zh/', baseUrl + '/').replace(baseUrl + '/zh', baseUrl + '/');
-                    if (enPath === baseUrl + '/') enPath = baseUrl + '/';
+                    // Set up English link - remove /zh from current path
+                    var enPath = currentPath.replace('/zh/', '/').replace('/zh', '');
+                    if (enPath === baseUrl || enPath === baseUrl + '/') {
+                      enPath = baseUrl + '/';
+                    }
                     englishBtn.onclick = function() {
                       window.location.href = enPath;
                     };
                     englishBtn.style.cursor = 'pointer';
                   } else {
-                    // Set up Chinese link - add /zh/ to current path
-                    var zhPath = currentPath.replace(baseUrl + '/', baseUrl + '/zh/');
-                    chineseBtn.href = zhPath;
+                    // We're on English page
+                    englishBtn.classList.add('active');
+                    chineseBtn.classList.remove('active');
+                    
+                    // Set up Chinese link - add /zh to current path
+                    var zhPath;
+                    if (currentPath === baseUrl + '/' || currentPath === baseUrl) {
+                      zhPath = baseUrl + '/zh/';
+                    } else {
+                      zhPath = currentPath.replace(baseUrl + '/', baseUrl + '/zh/');
+                    }
+                    chineseBtn.onclick = function() {
+                      window.location.href = zhPath;
+                    };
+                    chineseBtn.style.cursor = 'pointer';
                   }
                 });
               </script>
              <span class="lang-btn lang-btn-en active">English</span>
-             <a href="{{ site.baseurl }}/zh{{ page.url }}" class="lang-btn lang-btn-zh">中文</a>
+             <span class="lang-btn lang-btn-zh">中文</span>
           </div>
   </div>
 

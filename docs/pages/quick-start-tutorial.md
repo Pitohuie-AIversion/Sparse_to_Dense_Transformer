@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Quick Start Tutorial
 nav_order: 2
 parent: Getting Started

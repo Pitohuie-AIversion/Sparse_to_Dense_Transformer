@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Advanced Configuration Guide
 nav_order: 14
 permalink: /pages/advanced-configuration/

@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Custom Attention
 description: 自定义注意力机制的实现指南
 permalink: /pages/custom-attention/

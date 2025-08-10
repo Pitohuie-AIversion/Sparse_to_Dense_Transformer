@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Getting Help
 nav_order: 7
 has_children: true

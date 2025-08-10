@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: 交互式演示
 nav_order: 5
 permalink: /pages/interactive-demo/

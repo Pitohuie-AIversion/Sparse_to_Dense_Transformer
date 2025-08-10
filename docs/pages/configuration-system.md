@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Configuration System
 description: 配置文件系统的使用和管理
 permalink: /pages/configuration-system/

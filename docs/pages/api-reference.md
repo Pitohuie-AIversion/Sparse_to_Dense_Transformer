@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: API Reference
 nav_order: 15
 parent: Core Documentation

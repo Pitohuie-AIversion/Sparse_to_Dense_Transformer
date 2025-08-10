@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: 首页
 nav_order: 1
 description: "先进的Transformer架构，集成视觉处理用于涡激振动分析"

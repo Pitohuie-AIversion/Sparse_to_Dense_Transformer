@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Training & Optimization
 nav_order: 4
 has_children: true

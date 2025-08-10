@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Troubleshooting
 description: Troubleshooting and problem solving
 nav_order: 18

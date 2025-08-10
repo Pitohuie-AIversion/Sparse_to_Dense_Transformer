@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Hyperparameter Tuning
 description: 超参数调优策略和工具
 permalink: /pages/hyperparameter-tuning/

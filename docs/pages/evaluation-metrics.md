@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Evaluation Metrics
 parent: Evaluation & Results
 nav_order: 1

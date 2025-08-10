@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: 技术深度解析
 nav_order: 3
 permalink: /pages/technical-deep-dive/

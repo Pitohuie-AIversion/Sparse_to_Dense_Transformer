@@ -1,8 +1,10 @@
 <!-- Custom head content for Just The Docs theme -->
-<!-- Add any custom meta tags, stylesheets, or scripts here -->
+<!-- Language switching JavaScript -->
+<script type="text/javascript" src="{{ '/assets/js/language-switcher.js' | relative_url }}"></script>
+<meta name="site-baseurl" content="{{ site.baseurl }}">
 
-<!-- Custom CSS for enhanced styling -->
-<link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+<!-- Custom CSS for enhanced styling (temporarily disabled) -->
+<!-- <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}"> -->
 
 <!-- Auto dark mode support using CSS media queries -->
 <style>
@@ -126,3 +128,16 @@
 <!-- Performance optimizations -->
 <link rel="dns-prefetch" href="//github.com">
 <link rel="dns-prefetch" href="//api.github.com">
+
+<!-- Default to English content only -->
+<style>
+  /* Prefer English: hide Chinese content blocks by default */
+  .lang-content[data-lang-zh],
+  .lang-content[data-lang="zh"] {
+    display: none !important;
+  }
+  .lang-content[data-lang-en],
+  .lang-content[data-lang="en"] {
+    display: block !important;
+  }
+</style>

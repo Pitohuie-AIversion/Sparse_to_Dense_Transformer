@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Installation Guide
 permalink: /pages/installation-guide/
 ---

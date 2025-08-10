@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Performance Comparison
 description: 性能对比和基准测试
 permalink: /pages/performance-comparison/

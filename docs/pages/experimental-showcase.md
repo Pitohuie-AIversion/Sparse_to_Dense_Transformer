@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: 实验结果展示
 nav_order: 4
 permalink: /pages/experimental-showcase/

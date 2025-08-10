@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Data Pipeline
 description: 数据处理管道的设计和实现
 permalink: /pages/data-pipeline/

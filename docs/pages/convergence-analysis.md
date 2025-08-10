@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Convergence Analysis
 description: 训练收敛性分析方法和工具
 permalink: /pages/convergence-analysis/

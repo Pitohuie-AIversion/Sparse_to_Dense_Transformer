@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: 快速导航
 nav_order: 1
 permalink: /pages/quick-navigation/

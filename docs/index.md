@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Home
 nav_order: 1
 description: "Advanced Transformer Architecture with Vision Integration for Vortex-Induced Vibration Analysis"

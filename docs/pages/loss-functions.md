@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Loss Functions
 parent: Training & Optimization
 nav_order: 2

@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: 项目展示
 nav_order: 5
 description: "VIVTransformer 项目核心特性与技术亮点展示"

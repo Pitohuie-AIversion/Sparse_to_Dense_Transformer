@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: FAQ
 description: Frequently Asked Questions
 nav_order: 17

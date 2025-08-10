@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Development Guide
 description: 开发环境配置和贡献指南
 nav_order: 19

@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: default
 title: Model Design
 parent: Core Documentation
 nav_order: 2

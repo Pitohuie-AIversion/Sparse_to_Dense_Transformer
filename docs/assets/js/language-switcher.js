@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   var currentPath = window.location.pathname;
   var baseUrl = document.querySelector('meta[name="site-baseurl"]')?.getAttribute('content') || '';
-  var isZh = currentPath.includes('/zh/');
+  var isZh = currentPath.includes('/zh/') && !currentPath.endsWith('/') && !currentPath.endsWith('/index.html');
   var englishBtn = document.querySelector('.lang-btn-en');
   var chineseBtn = document.querySelector('.lang-btn-zh');
   

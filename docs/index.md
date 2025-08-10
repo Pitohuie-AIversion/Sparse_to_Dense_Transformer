@@ -6,34 +6,7 @@ description: "Advanced Transformer Architecture with Vision Integration for Vort
 permalink: /
 ---
 
-<!-- Language switching JavaScript -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Detect language from URL or default to English
-  var currentPath = window.location.pathname;
-  var isZh = currentPath.includes('/zh/');
-  
-  // Show appropriate language content
-  function showLanguage(lang) {
-    var allContent = document.querySelectorAll('.lang-content');
-    allContent.forEach(function(element) {
-      if (element.getAttribute('data-lang') === lang) {
-        element.style.display = 'block';
-      } else {
-        element.style.display = 'none';
-      }
-    });
-  }
-  
-  // Initialize with detected language
-  showLanguage(isZh ? 'zh' : 'en');
-  
-  // Listen for language switch events
-  window.addEventListener('languageChanged', function(e) {
-    showLanguage(e.detail.language);
-  });
-});
-</script>
+
 
 <!-- English Content -->
 <div class="lang-content" data-lang="en">
@@ -172,7 +145,3 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>❓ <a href="{{ site.baseurl }}/pages/faq/">常见问题</a> - FAQ和快速解答</li>
 </ul>
 </div>
-
----
-
-*Last updated: {{ site.time | date: "%Y-%m-%d" }}*

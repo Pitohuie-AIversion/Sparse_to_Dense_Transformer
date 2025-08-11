@@ -1,24 +1,24 @@
 #!/bin/bash
 # =============================================================================
-# VIVTransformer 压力场重建训练脚本 - Shell版本
-# 适用于Linux/macOS环境的训练启动脚本
+# VIVTransformer Pressure Field Reconstruction Training Script - Shell Version
+# Training startup script for Linux/macOS environment
 # =============================================================================
 
-set -e  # 遇到错误立即退出
+set -e  # Exit immediately on error
 
-# 切换到主项目目录
-# 直接使用相对路径，更简单可靠
+# Switch to main project directory
+# Use relative paths directly, simpler and more reliable
 PROJECT_DIR="../../VIVTransformer-4sh2r1-codex/pdebench_extended"
 if [ -d "$PROJECT_DIR" ]; then
     cd "$PROJECT_DIR"
 else
-    echo "错误: 无法找到项目目录 $PROJECT_DIR"
-    echo "当前目录: $(pwd)"
-    echo "请确保脚本在正确的位置运行"
+    echo "Error: Cannot find project directory $PROJECT_DIR"
+    echo "Current directory: $(pwd)"
+    echo "Please make sure the script is run from the correct location"
     exit 1
 fi
 
-# 颜色定义
+# Color definitions
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'

@@ -91,13 +91,12 @@ if exist "%DATA_PATH%" (
     echo %GREEN%✓%NC% Data file: !DATA_SIZE_MB!MB
     set "DATA_FOUND=1"
 ) else (
-    REM 搜索其他可能的数据文件
-    echo 搜索现有数据文件...
+    REM Search for other possible data files
+    echo Searching for existing data files...
     for %%f in (*.pt *.hdf5 *.h5) do (
         if exist "%%f" (
             set "DATA_PATH=%%f"
             for %%A in ("%%f") do set "DATA_SIZE=%%~zA"
-echo Searching for existing data files...
             set /a "DATA_SIZE_MB=!DATA_SIZE! / 1024 / 1024"
             echo %GREEN%✓%NC% Found data file: %%f (!DATA_SIZE_MB!MB)
             set "DATA_FOUND=1"
@@ -105,14 +104,14 @@ echo Searching for existing data files...
         )
     )
     
-    REM 在data目录中搜索
+    REM Search in data directory
     if exist "data" (
         for /r "data" %%f in (*.pt *.hdf5 *.h5) do (
             if exist "%%f" (
                 set "DATA_PATH=%%f"
                 for %%A in ("%%f") do set "DATA_SIZE=%%~zA"
                 set /a "DATA_SIZE_MB=!DATA_SIZE! / 1024 / 1024"
-                echo %GREEN%✓%NC% 找到数据文件: %%f (!DATA_SIZE_MB!MB)
+                echo %GREEN%✓%NC% Found data file: %%f (!DATA_SIZE_MB!MB)
                 set "DATA_FOUND=1"
                 goto :data_found
             )
@@ -121,39 +120,39 @@ echo Searching for existing data files...
     
     :data_found
     if "!DATA_FOUND!"=="0" (
-        echo %YELLOW%⚠️  未找到数据文件%NC%
+        echo %YELLOW%⚠️  No data file found%NC%
         echo.
-        echo 数据获取选项:
-        echo 1. 运行 quick_start_windows.bat 自动下载数据
-        echo 2. 手动下载数据到 data\ 目录
-        echo 3. 生成示例数据用于测试
+        echo Data acquisition options:
+        echo 1. Run quick_start_windows.bat to automatically download data
+        echo 2. Manually download data to the data\ directory
+        echo 3. Generate sample data for testing
         echo.
-        set /p "DATA_CHOICE=请选择 [1-3]: "
+        set /p "DATA_CHOICE=Please choose [1-3]: "
         
         if "!DATA_CHOICE!"=="1" (
-            echo %BLUE%启动数据下载脚本...%NC%
+            echo %BLUE%Starting data download script...%NC%
             call quick_start_windows.bat
             goto :check_data_again
         )
         if "!DATA_CHOICE!"=="2" (
-            echo %YELLOW%请手动下载数据文件到 data\ 目录%NC%
-            echo 数据源:
+            echo %YELLOW%Please manually download the data file to the data\ directory%NC%
+            echo Data sources:
             echo - GitHub: https://github.com/pdebench/PDEBench
-            echo - 直接下载: https://darus.uni-stuttgart.de/dataset.xhtml?persistentId=doi:10.18419/darus-2986
+            echo - Direct download: https://darus.uni-stuttgart.de/dataset.xhtml?persistentId=doi:10.18419/darus-2986
             pause
             exit /b 1
         )
         if "!DATA_CHOICE!"=="3" (
-            echo %BLUE%生成示例数据...%NC%
+            echo %BLUE%Generating sample data...%NC%
             python -c "
 import torch
 import numpy as np
 import os
 
-# 创建示例压力场数据
-print('生成示例压力场数据...')
+# Create sample pressure field data
+print('Generating sample pressure field data...')
 data = {
-    'pressure_field': torch.randn(100, 64, 64),  # 100个样本，64x64网格
+    'pressure_field': torch.randn(100, 64, 64),  # 100 samples, 64x64 grid
     'coordinates': torch.meshgrid(torch.linspace(0, 1, 64), torch.linspace(0, 1, 64)),
     'reynolds_number': torch.rand(100) * 1000 + 100,
     'time_steps': torch.arange(100)
@@ -161,14 +160,14 @@ data = {
 
 os.makedirs('data', exist_ok=True)
 torch.save(data, 'data/sample_pressure_data.pt')
-print('示例数据已生成: data/sample_pressure_data.pt')
+print('Sample data generated: data/sample_pressure_data.pt')
 "
             set "DATA_PATH=data\sample_pressure_data.pt"
             set "DATA_FOUND=1"
         )
         
         :check_data_again
-        REM 重新检查数据文件
+        REM Re-check data file
         for %%f in (*.pt *.hdf5 *.h5) do (
             if exist "%%f" (
                 set "DATA_PATH=%%f"
@@ -188,16 +187,16 @@ print('示例数据已生成: data/sample_pressure_data.pt')
 )
 
 if "!DATA_FOUND!"=="0" (
-    echo %RED%❌ 未找到数据文件%NC%
-    echo 请先获取数据集后再运行训练
+    echo %RED%❌ Data file not found%NC%
+    echo Please obtain the dataset before running training
     pause
     exit /b 1
 )
 
 REM 检查配置文件
 if not exist "%CONFIG_FILE%" (
-    echo %RED%❌ 配置文件不存在: %CONFIG_FILE%%NC%
-    echo 请检查配置文件路径
+    echo %RED%❌ Configuration file does not exist: %CONFIG_FILE%%NC%
+    echo Please check the configuration file path
     pause
     exit /b 1
 )
@@ -206,21 +205,21 @@ REM 创建输出目录
 if not exist "%OUTPUT_DIR%" mkdir "%OUTPUT_DIR%"
 
 echo.
-echo %BLUE%=== 训练配置 ===%NC%
-echo 数据文件: %DATA_PATH%
-echo 配置文件: %CONFIG_FILE%
-echo 输出目录: %OUTPUT_DIR%\%EXPERIMENT_NAME%
-echo 实验名称: %EXPERIMENT_NAME%
+echo %BLUE%=== Training Configuration ===%NC%
+echo Data file: %DATA_PATH%
+echo Config file: %CONFIG_FILE%
+echo Output directory: %OUTPUT_DIR%\%EXPERIMENT_NAME%
+echo Experiment name: %EXPERIMENT_NAME%
 echo.
 
 REM 询问运行方式
-echo %CYAN%=== 运行选项 ===%NC%
-echo 1. 直接开始训练
-echo 2. 启动TensorBoard监控
-echo 3. 运行测试模式
-echo 4. 查看配置信息
+echo %CYAN%=== Run Options ===%NC%
+echo 1. Start training directly
+echo 2. Launch TensorBoard monitoring
+echo 3. Run test mode
+echo 4. View configuration info
 echo.
-set /p "RUN_CHOICE=请选择运行方式 [1-4]: "
+set /p "RUN_CHOICE=Please choose a run mode [1-4]: "
 
 if "%RUN_CHOICE%"=="1" goto :start_training
 if "%RUN_CHOICE%"=="2" goto :start_tensorboard
@@ -229,8 +228,8 @@ if "%RUN_CHOICE%"=="4" goto :show_config
 
 :start_training
 echo.
-echo %GREEN%=== 开始训练 ===%NC%
-echo 启动压力场重建训练...
+echo %GREEN%=== Start Training ===%NC%
+echo Starting pressure field reconstruction training...
 echo.
 
 REM 设置环境变量
@@ -241,64 +240,63 @@ python train_pressure_field.py --config "%CONFIG_FILE%" --data "%DATA_PATH%" --o
 
 if %errorlevel% == 0 (
     echo.
-    echo %GREEN%✓ 训练完成%NC%
-    echo 结果保存在: %OUTPUT_DIR%\%EXPERIMENT_NAME%
+    echo %GREEN%✓ Training complete%NC%
+    echo Results saved to: %OUTPUT_DIR%\%EXPERIMENT_NAME%
 ) else (
     echo.
-    echo %RED%❌ 训练过程中出现错误%NC%
+    echo %RED%❌ An error occurred during training%NC%
 )
 goto :end
 
 :start_tensorboard
 echo.
-echo %BLUE%=== 启动TensorBoard ===%NC%
-echo 启动TensorBoard监控界面...
-echo.
+echo %BLUE%=== Launch TensorBoard ===%NC%
+echo Launching TensorBoard monitoring UI...
 
-start "TensorBoard" cmd /k "tensorboard --logdir=%OUTPUT_DIR% --port=6006 && echo TensorBoard已启动，访问 http://localhost:6006"
-echo TensorBoard已在新窗口中启动
-echo 访问地址: http://localhost:6006
+echo.
+start "TensorBoard" cmd /k "tensorboard --logdir=%OUTPUT_DIR% --port=6006 && echo TensorBoard started, visit http://localhost:6006"
+echo TensorBoard has been started in a new window
+echo Access URL: http://localhost:6006
 echo.
 goto :start_training
 
 :test_mode
 echo.
-echo %YELLOW%=== 测试模式 ===%NC%
-echo 运行快速测试...
-echo.
+echo %YELLOW%=== Test Mode ===%NC%
+echo Running a quick test...
 
 set PYTHONPATH=%CD%;%PYTHONPATH%
 python -c "
 import torch
-print(f'PyTorch版本: {torch.__version__}')
-print(f'CUDA可用: {torch.cuda.is_available()}')
+print(f'PyTorch version: {torch.__version__}')
+print(f'CUDA available: {torch.cuda.is_available()}')
 if torch.cuda.is_available():
-    print(f'GPU数量: {torch.cuda.device_count()}')
-    print(f'当前GPU: {torch.cuda.get_device_name()}')
-print('环境测试完成')
+    print(f'GPU count: {torch.cuda.device_count()}')
+    print(f'Current GPU: {torch.cuda.get_device_name()}')
+print('Environment test complete')
 "
 
 echo.
-echo 测试完成，按任意键继续训练...
+echo Test complete, press any key to continue training...
 pause >nul
 goto :start_training
 
 :show_config
 echo.
-echo %PURPLE%=== 配置信息 ===%NC%
+echo %PURPLE%=== Configuration Info ===%NC%
 echo.
-echo 项目路径: %CD%
-echo Python路径: 
+echo Project path: %CD%
+echo Python path: 
 where python
 echo.
-echo 配置文件内容:
+echo Config file content:
 type "%CONFIG_FILE%"
 echo.
-echo 按任意键返回主菜单...
+echo Press any key to return to the main menu...
 pause >nul
 goto :start_training
 
 :end
 echo.
-echo 按任意键退出...
+echo Press any key to exit...
 pause >nul

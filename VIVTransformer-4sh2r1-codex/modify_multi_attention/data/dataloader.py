@@ -9,6 +9,7 @@ from pathlib import Path
 from . import transforms
 from .dataset import PressureDataset
 from .pdebench_adapter import PDEBenchDataset, PDEBenchDataLoader
+from .reynolds_dataset import ReynoldsFlowDataset, create_reynolds_loaders
 
 
 class CustomSubset(Subset):
@@ -218,11 +219,31 @@ def get_adaptive_loaders(
     if config.get('data', {}).get('use_pdebench', False):
         pde_type = config.get('current_pde', 'ns_incom')
         return get_pdebench_loaders(config, pde_type=pde_type, **kwargs)
-    else:
-        # 使用原有的数据加载方式
-        data_path = config.get('data', {}).get('path')
+    
+    # 检查是否使用Reynolds 4D数据集
+    reynolds_cfg = config.get('reynolds_data', {})
+    if reynolds_cfg.get('enabled', False):
+        data_path = reynolds_cfg.get('path') or config.get('data', {}).get('path')
         batch_size = config.get('data', {}).get('batch_size', 128)
-        use_augmentation = config.get('data', {}).get('use_augmentation', False)
-        crop_size = tuple(config.get('data', {}).get('crop_size', [128, 128]))
+        use_time_sequence = reynolds_cfg.get('use_time_sequence', False)
+        input_size = reynolds_cfg.get('input_size', 20)
+        output_size = reynolds_cfg.get('output_size', 200)
+        sequence_length = reynolds_cfg.get('sequence_length', 5)
         
-        return get_loaders(data_path, batch_size, use_augmentation, crop_size)
+        train_loader, valid_loader, test_loader, _ = create_reynolds_loaders(
+            data_path=data_path,
+            batch_size=batch_size,
+            use_time_sequence=use_time_sequence,
+            input_size=input_size,
+            output_size=output_size,
+            sequence_length=sequence_length
+        )
+        return train_loader, valid_loader, test_loader
+    
+    # 使用原有的数据加载方式
+    data_path = config.get('data', {}).get('path')
+    batch_size = config.get('data', {}).get('batch_size', 128)
+    use_augmentation = config.get('data', {}).get('use_augmentation', False)
+    crop_size = tuple(config.get('data', {}).get('crop_size', [128, 128]))
+    
+    return get_loaders(data_path, batch_size, use_augmentation, crop_size)

@@ -1,33 +1,33 @@
 ---
 layout: default
 title: Development Guide
-description: 开发环境配置和贡献指南
+description: Development environment setup and contribution guidelines
 nav_order: 19
 parent: Development & Maintenance
 permalink: /pages/development-guide/
 ---
 
-# 开发指南 {#开发指南}
+# Development Guide
 
-本文档为VIVTransformer项目的开发者提供详细的开发指导，包括代码规范、开发流程、测试指南和贡献方式。
+This document provides detailed development guidance for VIVTransformer project developers, including code standards, development workflows, testing guidelines, and contribution methods.
 
-## 📋 目录 {#目录}
+## 📋 Table of Contents {#table-of-contents}
 
-- [开发环境设置](#开发环境设置)
-- [代码规范](#代码规范)
-- [项目结构](#项目结构)
-- [开发流程](#开发流程)
-- [测试指南](#测试指南)
-- [文档编写](#文档编写)
-- [性能优化](#性能优化)
-- [贡献指南](#贡献指南)
-- [发布流程](#发布流程)
+- [Development Environment Setup](#development-environment-setup)
+- [Code Standards](#code-standards)
+- [Project Structure](#project-structure)
+- [Development Workflow](#development-workflow)
+- [Testing Guidelines](#testing-guidelines)
+- [Documentation Writing](#documentation-writing)
+- [Performance Optimization](#performance-optimization)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Release Process](#release-process)
 
-## 开发环境设置 {#开发环境设置}
+## Development Environment Setup {#development-environment-setup}
 
-### 🛠️ 环境准备 {#环境准备}
+### 🛠️ Environment Preparation {#environment-preparation}
 
-#### 1. 基础环境 {#1-基础环境}
+#### 1. Basic Environment {#1-basic-environment}
 
 ```bash
 # 1. 克隆项目 {#1-克隆项目}
@@ -48,9 +48,9 @@ pip install -e .
 pre-commit install
 ```
 
-#### 2. 开发工具配置 {#2-开发工具配置}
+#### 2. Development Tools Configuration {#2-development-tools-configuration}
 
-**VS Code配置** (`.vscode/settings.json`):
+**VS Code Configuration** (`.vscode/settings.json`):
 ```json
 {
     "python.defaultInterpreterPath": "./venv/bin/python",
@@ -71,13 +71,13 @@ pre-commit install
 }
 ```
 
-**PyCharm配置**:
-- 设置代码风格为Black
-- 启用类型检查
-- 配置测试运行器为pytest
-- 设置导入优化
+**PyCharm Configuration**:
+- Set code style to Black
+- Enable type checking
+- Configure test runner to pytest
+- Optimize imports
 
-#### 3. Git配置 {#3-git配置}
+#### 3. Git Configuration {#3-git-configuration}
 
 ```bash
 # 设置用户信息 {#设置用户信息}
@@ -92,7 +92,7 @@ git config core.autocrlf input  # Linux/Mac
 git config core.autocrlf true   # Windows
 ```
 
-### 📦 依赖管理 {#依赖管理}
+### 📦 Dependency Management {#dependency-management}
 
 #### requirements-dev.txt {#requirements-dev-txt}
 ```txt
@@ -141,19 +141,19 @@ rich>=12.0.0
 typer>=0.4.0
 ```
 
-## 代码规范 {#代码规范}
+## Code Standards {#code-standards}
 
-### 🎨 代码风格 {#代码风格}
+### 🎨 Code Style {#code-style}
 
-#### 1. Python代码规范 {#1-python代码规范}
+#### 1. Python Code Standards {#1-python-code-standards}
 
-**基本原则**:
-- 遵循PEP 8标准
-- 使用Black进行代码格式化
-- 使用isort进行导入排序
-- 行长度限制为88字符
+**Basic Principles**:
+- Follow PEP 8 standards
+- Use Black for code formatting
+- Use isort for import sorting
+- Limit line length to 88 characters
 
-**命名规范**:
+**Naming Conventions**:
 ```python
 # 类名：大驼峰命名法 {#类名-大驼峰命名法}
 class AttentionMechanism:
@@ -177,7 +177,7 @@ def __init__(self):
     pass
 ```
 
-**类型注解**:
+**Type Annotations**:
 ```python
 from typing import Dict, List, Optional, Tuple, Union
 import torch
@@ -205,9 +205,9 @@ def process_attention(
     pass
 ```
 
-#### 2. 文档字符串规范 {#2-文档字符串规范}
+#### 2. Documentation String Standards {#2-documentation-string-standards}
 
-**Google风格文档字符串**:
+**Google Style Docstrings**:
 ```python
 class MultiHeadAttention(torch.nn.Module):
     """多头注意力机制实现
@@ -284,8 +284,7 @@ class MultiHeadAttention(torch.nn.Module):
         pass
 ```
 
-#### 3. 错误处理规范 {#3-错误处理规范}
-
+#### 3. Error Handling Standards {#3-error-handling-standards}
 ```python
 class VIVTransformerError(Exception):
     """VIVTransformer基础异常类"""
@@ -335,9 +334,9 @@ def load_config(config_path: str) -> Dict:
     return config
 ```
 
-### 🧪 代码质量工具 {#代码质量工具}
+### 🧪 Code Quality Tools {#code-quality-tools}
 
-#### 1. 预提交钩子配置 {#1-预提交钩子配置}
+#### 1. Pre-commit Hook Configuration {#1-pre-commit-hook-configuration}
 
 **.pre-commit-config.yaml**:
 ```yaml
@@ -378,7 +377,7 @@ repos:
         additional_dependencies: [types-PyYAML, types-requests]
 ```
 
-#### 2. 配置文件 {#2-配置文件}
+#### 2. Configuration File {#2-configuration-file}
 
 **setup.cfg**:
 ```ini
@@ -481,9 +480,9 @@ disable = "C0330, C0326"
 max-line-length = "88"
 ```
 
-## 项目结构 {#项目结构}
+## Project Structure {#project-structure}
 
-### 📁 目录组织 {#目录组织}
+### 📁 Directory Organization {#directory-organization}
 
 ```
 VIVTransformer/
@@ -558,9 +557,9 @@ VIVTransformer/
 └── .gitignore               # Git忽略文件
 ```
 
-### 🏗️ 模块设计原则 {#模块设计原则}
+### 🏗️ Module Architecture {#module-architecture}
 
-#### 1. 单一职责原则 {#1-单一职责原则}
+#### 1. Single Responsibility Principle {#1-single-responsibility-principle}
 每个模块应该只有一个改变的理由：
 
 ```python
@@ -592,7 +591,7 @@ class ResultSaver:
         pass
 ```
 
-#### 2. 开闭原则 {#2-开闭原则}
+#### 2. Open-Closed Principle {#2-open-closed-principle}
 对扩展开放，对修改关闭：
 
 ```python
@@ -644,7 +643,7 @@ class AttentionFactory:
         cls._registry[name] = attention_class
 ```
 
-#### 3. 依赖注入 {#3-依赖注入}
+#### 3. Dependency Injection {#3-dependency-injection}
 
 ```python
 class VIVTransformer(torch.nn.Module):
@@ -689,11 +688,11 @@ class VIVTransformer(torch.nn.Module):
         )
 ```
 
-## 开发流程 {#开发流程}
+## Development Workflow {#development-workflow}
 
-### 🔄 Git工作流 {#git工作流}
+### 🔄 Git Workflow {#git-workflow}
 
-#### 1. 分支策略 {#1-分支策略}
+#### 1. Branch Strategy {#1-branch-strategy}
 
 ```
 main                    # 主分支，稳定版本
@@ -704,7 +703,7 @@ main                    # 主分支，稳定版本
 └── release/vx.x.x     # 发布分支
 ```
 
-#### 2. 开发流程 {#2-开发流程}
+#### 2. Development Process {#2-development-process}
 
 ```bash
 # 1. 从develop创建功能分支 {#1-从develop创建功能分支}
@@ -719,11 +718,11 @@ git checkout -b feature/new-attention-mechanism
 
 # 3. 提交代码 {#3-提交代码}
 git add .
-git commit -m "feat: 添加新的注意力机制
+git commit -m "feat: add new attention mechanism
 
-- 实现稀疏注意力算法
-- 添加相应的单元测试
-- 更新API文档
+- Implement sparse attention algorithm
+- Add corresponding unit tests
+- Update API documentation
 
 Closes #123"
 
@@ -731,20 +730,20 @@ Closes #123"
 git push origin feature/new-attention-mechanism
 
 # 5. 创建Pull Request {#5-创建pull-request}
-# 在GitHub上创建PR，请求合并到develop分支 {#在github上创建pr-请求合并到develop分支}
+# Create PR on GitHub, request merge to develop branch {#create-pr-on-github-request-merge-to-develop-branch}
 
-# 6. 代码审查和合并 {#6-代码审查和合并}
-# 经过代码审查后，合并到develop分支 {#经过代码审查后-合并到develop分支}
+# 6. 代码 review and merge {#6-code-review-and-merge}
+# After code review, merge to develop branch {#after-code-review-merge-to-develop-branch}
 
-# 7. 清理分支 {#7-清理分支}
+# 7. Clean up branch {#7-clean-up-branch}
 git checkout develop
 git pull origin develop
 git branch -d feature/new-attention-mechanism
 ```
 
-#### 3. 提交信息规范 {#3-提交信息规范}
+#### 3. Commit Message Convention {#3-commit-message-convention}
 
-**提交信息格式**:
+**Commit message format**:
 ```xml
 <type>(<scope>): <subject>
 
@@ -753,129 +752,43 @@ git branch -d feature/new-attention-mechanism
 <footer>
 ```
 
-**类型说明**:
-- `feat`: 新功能
-- `fix`: 错误修复
-- `docs`: 文档更新
-- `style`: 代码格式化
-- `refactor`: 代码重构
-- `test`: 测试相关
-- `chore`: 构建过程或辅助工具的变动
+**Type descriptions**:
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation update
+- `style`: Code formatting
+- `refactor`: Code refactoring
+- `test`: Test related
+- `chore`: Build process or auxiliary tool changes
 
-**示例**:
-```bash
-# 新功能 {#新功能}
-git commit -m "feat(attention): 添加线性注意力机制
+**Examples**:
 
-实现了O(n)复杂度的线性注意力算法，显著提升长序列处理效率。
+# New feature {#new-feature}
+git commit -m "feat(attention): add linear attention mechanism
 
-- 添加LinearAttention类
-- 实现高效的矩阵运算
-- 添加性能基准测试
+Implemented O(n) complexity linear attention algorithm, significantly improving long sequence processing efficiency.
+
+- Add LinearAttention class
+- Implement efficient matrix operations
+- Add performance benchmark tests
 
 Closes #456"
 
-# 错误修复 {#错误修复}
-git commit -m "fix(training): 修复梯度累积bug
+# Bug fix {#bug-fix}
+git commit -m "fix(training): fix gradient accumulation bug
 
-修复了在使用梯度累积时损失计算错误的问题。
+Fixed loss calculation error when using gradient accumulation.
 
-Fixes #789"
+Closes #789"
 
-# 文档更新 {#文档更新}
-git commit -m "docs: 更新API文档
+# Documentation update {#documentation-update}
+git commit -m "docs: update API documentation
 
-- 添加新注意力机制的使用示例
-- 修正参数说明中的错误
-- 更新性能对比表格"
-```
+- Add usage examples for new attention mechanisms
+- Fix errors in parameter descriptions
+- Update performance comparison tables"
 
-### 🧪 测试驱动开发 {#测试驱动开发}
-
-#### 1. TDD流程 {#1-tdd流程}
-
-```python
-# 1. 编写失败的测试 {#1-编写失败的测试}
-def test_linear_attention_forward():
-    """测试线性注意力前向传播"""
-    batch_size, seq_len, d_model = 2, 10, 64
-    
-    attention = LinearAttention(d_model=d_model)
-    
-    query = torch.randn(batch_size, seq_len, d_model)
-    key = torch.randn(batch_size, seq_len, d_model)
-    value = torch.randn(batch_size, seq_len, d_model)
-    
-    output, weights = attention(query, key, value)
-    
-    # 检查输出形状
-    assert output.shape == (batch_size, seq_len, d_model)
-    assert weights.shape == (batch_size, seq_len, seq_len)
-    
-    # 检查注意力权重归一化
-    assert torch.allclose(weights.sum(dim=-1), torch.ones(batch_size, seq_len))
-
-# 2. 运行测试（应该失败） {#2-运行测试-应该失败}
-# pytest tests/test_attention.py::test_linear_attention_forward {#pytest-tests-test-attention-py-test-linear-attention-forward}
-
-# 3. 编写最小实现 {#3-编写最小实现}
-class LinearAttention(torch.nn.Module):
-    def __init__(self, d_model: int):
-        super().__init__()
-        self.d_model = d_model
-        # 最小实现...
-    
-    def forward(self, query, key, value):
-        # 最小实现使测试通过
-        pass
-
-# 4. 运行测试（应该通过） {#4-运行测试-应该通过}
-# 5. 重构代码 {#5-重构代码}
-# 6. 重复循环 {#6-重复循环}
-```
-
-#### 2. 测试分层 {#2-测试分层}
-
-```python
-# 单元测试：测试单个函数或类 {#单元测试-测试单个函数或类}
-class TestMultiHeadAttention:
-    def test_init(self):
-        """测试初始化"""
-        attention = MultiHeadAttention(d_model=512, num_heads=8)
-        assert attention.d_model == 512
-        assert attention.num_heads == 8
-        assert attention.d_k == 64
-    
-    def test_forward_shape(self):
-        """测试前向传播输出形状"""
-        attention = MultiHeadAttention(d_model=512, num_heads=8)
-        
-        batch_size, seq_len = 2, 10
-        x = torch.randn(batch_size, seq_len, 512)
-        
-        output, weights = attention(x, x, x)
-        
-        assert output.shape == (batch_size, seq_len, 512)
-        assert weights.shape == (batch_size, 8, seq_len, seq_len)
-    
-    @pytest.mark.parametrize("d_model,num_heads", [
-        (512, 8),
-        (768, 12),
-        (1024, 16)
-    ])
-    def test_different_configs(self, d_model, num_heads):
-        """测试不同配置"""
-        attention = MultiHeadAttention(d_model=d_model, num_heads=num_heads)
-        
-        batch_size, seq_len = 2, 5
-        x = torch.randn(batch_size, seq_len, d_model)
-        
-        output, weights = attention(x, x, x)
-        
-        assert output.shape == (batch_size, seq_len, d_model)
-        assert weights.shape == (batch_size, num_heads, seq_len, seq_len)
-
-# 集成测试：测试组件间交互 {#集成测试-测试组件间交互}
+# Integration tests: Test component interactions {#integration-tests-test-component-interactions}
 class TestVIVTransformerIntegration:
     def test_end_to_end_training(self):
         """测试端到端训练"""
@@ -918,44 +831,48 @@ class TestVIVTransformerIntegration:
 
 **conftest.py**:
 ```python
+# conftest.py
 import pytest
 import torch
 import numpy as np
-from typing import Dict, Any
+from vivtransformer import VIVTransformer
 
 @pytest.fixture
 def device():
-    """测试设备"""
-    return torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    """Test device"""
+    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 @pytest.fixture
-def sample_config() -> Dict[str, Any]:
-    """示例配置"""
+def sample_config():
+    """Sample configuration"""
     return {
-        'd_model': 256,
-        'num_heads': 4,
-        'num_layers': 2,
-        'vocab_size': 1000,
-        'output_size': 10,
-        'dropout': 0.1,
-        'max_seq_len': 512
+        'model': {
+            'd_model': 256,
+            'num_heads': 8,
+            'num_layers': 6,
+            'dropout': 0.1
+        },
+        'training': {
+            'batch_size': 4,
+            'learning_rate': 1e-4
+        }
     }
 
 @pytest.fixture
 def sample_data(device):
-    """示例数据"""
-    batch_size, seq_len, d_model = 2, 10, 256
+    """Sample data"""
+    batch_size = 4
+    seq_len = 128
+    d_model = 256
     
-    return {
-        'input_ids': torch.randint(0, 1000, (batch_size, seq_len)).to(device),
-        'attention_mask': torch.ones(batch_size, seq_len).to(device),
-        'labels': torch.randint(0, 10, (batch_size,)).to(device),
-        'embeddings': torch.randn(batch_size, seq_len, d_model).to(device)
-    }
+    x = torch.randn(batch_size, seq_len, d_model, device=device)
+    y = torch.randn(batch_size, seq_len, d_model, device=device)
+    
+    return x, y
 
 @pytest.fixture(autouse=True)
 def set_random_seed():
-    """设置随机种子以确保测试可重现"""
+    """Set random seed to ensure test reproducibility"""
     torch.manual_seed(42)
     np.random.seed(42)
     if torch.cuda.is_available():
@@ -964,227 +881,213 @@ def set_random_seed():
 
 @pytest.fixture
 def mock_model(sample_config, device):
-    """模拟模型"""
-    from vivtransformer.models import VIVTransformer
-    
-    model = VIVTransformer(sample_config)
+    """Mock model"""
+    model = VIVTransformer(sample_config['model'])
     model.to(device)
     model.eval()
-    
     return model
 ```
 
 #### 2. 测试工具函数 {#2-测试工具函数}
-
 ```python
-# tests/utils.py {#tests-utils-py}
+# tests/utils.py
 import torch
-import numpy as np
-from typing import Any, Dict, List
+import pytest
 
-def assert_tensor_equal(actual: torch.Tensor, expected: torch.Tensor, rtol: float = 1e-5):
-    """断言张量相等"""
-    assert actual.shape == expected.shape, f"形状不匹配: {actual.shape} vs {expected.shape}"
-    assert torch.allclose(actual, expected, rtol=rtol), "张量值不相等"
+def assert_tensor_equal(actual, expected, rtol=1e-5):
+    """Assert tensor equality"""
+    assert actual.shape == expected.shape, f"Shape mismatch: {actual.shape} vs {expected.shape}"
+    assert torch.allclose(actual, expected, rtol=rtol), "Tensor values are not equal"
 
-def assert_tensor_shape(tensor: torch.Tensor, expected_shape: tuple):
-    """断言张量形状"""
-    assert tensor.shape == expected_shape, f"形状不匹配: {tensor.shape} vs {expected_shape}"
+def assert_tensor_shape(tensor, expected_shape):
+    """Assert tensor shape"""
+    assert tensor.shape == expected_shape, f"Shape mismatch: {tensor.shape} vs {expected_shape}"
 
-def assert_no_nan_inf(tensor: torch.Tensor):
-    """断言张量不包含NaN或Inf"""
-    assert not torch.isnan(tensor).any(), "张量包含NaN"
-    assert not torch.isinf(tensor).any(), "张量包含Inf"
+def assert_no_nan_inf(tensor):
+    """Assert tensor contains no NaN or Inf"""
+    assert not torch.isnan(tensor).any(), "Tensor contains NaN"
+    assert not torch.isinf(tensor).any(), "Tensor contains Inf"
 
-def assert_gradients_exist(model: torch.nn.Module):
-    """断言模型参数有梯度"""
+def assert_has_gradients(model):
+    """Assert model parameters have gradients"""
     for name, param in model.named_parameters():
         if param.requires_grad:
-            assert param.grad is not None, f"参数 {name} 没有梯度"
+            assert param.grad is not None, f"Parameter {name} has no gradient"
 
-def count_parameters(model: torch.nn.Module) -> int:
-    """计算模型参数数量"""
-    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+def count_parameters(model):
+    """Count model parameters"""
+    return sum(p.numel() for p in model.parameters())
 
-class ModelTester:
-    """模型测试辅助类"""
+class ModelTestHelper:
+    """Model testing helper class"""
     
-    def __init__(self, model: torch.nn.Module, device: torch.device):
+    def __init__(self, model, device):
         self.model = model
         self.device = device
     
-    def test_forward_pass(self, input_data: Dict[str, torch.Tensor]):
-        """测试前向传播"""
+    def test_forward_pass(self, input_data):
+        """Test forward pass"""
         self.model.eval()
-        
         with torch.no_grad():
-            output = self.model(**input_data)
+            output = self.model(input_data)
         
-        # 检查输出
+        # Check output
         assert_no_nan_inf(output)
-        
         return output
     
-    def test_backward_pass(self, input_data: Dict[str, torch.Tensor], target: torch.Tensor):
-        """测试反向传播"""
+    def test_backward_pass(self, input_data, target_data):
+        """Test backward pass"""
         self.model.train()
         
-        # 前向传播
-        output = self.model(**input_data)
+        # Forward pass
+        output = self.model(input_data)
         
-        # 计算损失
-        criterion = torch.nn.CrossEntropyLoss()
-        loss = criterion(output, target)
+        # Compute loss
+        loss = torch.nn.functional.mse_loss(output, target_data)
         
-        # 反向传播
+        # Backward pass
         loss.backward()
         
-        # 检查梯度
-        assert_gradients_exist(self.model)
+        # Check gradients
+        assert_has_gradients(self.model)
         
         return loss
     
-    def test_model_determinism(self, input_data: Dict[str, torch.Tensor], num_runs: int = 3):
-        """测试模型确定性"""
+    def test_deterministic(self, input_data):
+        """Test model determinism"""
         self.model.eval()
         
         outputs = []
-        
-        for _ in range(num_runs):
+        for _ in range(3):
             with torch.no_grad():
-                output = self.model(**input_data)
-                outputs.append(output.clone())
+                output = self.model(input_data)
+            outputs.append(output)
         
-        # 检查所有输出是否相同
-        for i in range(1, num_runs):
+        # Check all outputs are the same
+        for i in range(1, len(outputs)):
             assert_tensor_equal(outputs[0], outputs[i])
     
-    def test_model_device_consistency(self, input_data: Dict[str, torch.Tensor]):
-        """测试模型设备一致性"""
-        # 检查模型参数设备
-        model_device = next(self.model.parameters()).device
-        assert model_device == self.device
+    def test_device_consistency(self, input_data):
+        """Test model device consistency"""
+        # Check model parameter devices
+        for name, param in self.model.named_parameters():
+            assert param.device == self.device, f"Parameter {name} not on correct device"
         
-        # 检查输入数据设备
+        # Check input data device
         for key, tensor in input_data.items():
-            assert tensor.device == self.device, f"{key} 不在正确设备上"
+            assert tensor.device == self.device, f"{key} not on correct device"
 ```
 
 #### 3. 性能测试 {#3-性能测试}
-
 ```python
-# tests/test_performance.py {#tests-test-performance-py}
+# tests/test_performance.py
 import time
-import pytest
 import torch
-from memory_profiler import profile
+import pytest
+from vivtransformer import VIVTransformer
 
 class TestPerformance:
-    """性能测试"""
+    """Performance testing"""
     
     @pytest.mark.slow
     def test_inference_speed(self, mock_model, sample_data, device):
-        """测试推理速度"""
+        """Test inference speed"""
         model = mock_model
-        input_data = sample_data['embeddings']
+        x, _ = sample_data
         
-        # 预热
+        # Warmup
         for _ in range(10):
             with torch.no_grad():
-                _ = model(input_data)
+                _ = model(x)
         
-        # 同步GPU
+        # Sync GPU
         if device.type == 'cuda':
             torch.cuda.synchronize()
         
-        # 测量时间
-        start_time = time.perf_counter()
-        
+        # Measure time
         num_runs = 100
-        with torch.no_grad():
-            for _ in range(num_runs):
-                _ = model(input_data)
+        start_time = time.time()
+        
+        for _ in range(num_runs):
+            with torch.no_grad():
+                output = model(x)
         
         if device.type == 'cuda':
             torch.cuda.synchronize()
         
-        end_time = time.perf_counter()
+        end_time = time.time()
         
         avg_time = (end_time - start_time) / num_runs
-        throughput = input_data.size(0) / avg_time  # samples/second
+        throughput = x.size(0) / avg_time
         
-        print(f"平均推理时间: {avg_time*1000:.2f}ms")
-        print(f"吞吐量: {throughput:.2f} samples/second")
+        print(f"Average inference time: {avg_time*1000:.2f}ms")
+        print(f"Throughput: {throughput:.2f} samples/second")
         
-        # 性能断言（根据实际情况调整）
-        assert avg_time < 0.1, f"推理时间过长: {avg_time:.4f}s"
+        # Performance assertion (adjust based on actual situation)
+        assert avg_time < 0.1, f"Inference time too long: {avg_time:.4f}s"
     
-    @pytest.mark.slow
-    def test_memory_usage(self, mock_model, sample_data, device):
-        """测试内存使用"""
+    @pytest.mark.gpu
+    def test_memory_usage(self, sample_config, sample_data, device):
+        """Test memory usage"""
         if device.type != 'cuda':
-            pytest.skip("仅在CUDA设备上测试GPU内存")
+            pytest.skip("GPU memory testing only on CUDA devices")
         
-        model = mock_model
-        input_data = sample_data['embeddings']
+        x, y = sample_data
         
-        # 清理内存
+        # Clear memory
         torch.cuda.empty_cache()
         torch.cuda.reset_peak_memory_stats()
         
-        # 测量内存使用
-        with torch.no_grad():
-            output = model(input_data)
+        # Measure memory usage
+        model = VIVTransformer(sample_config['model']).to(device)
+        
+        output = model(x)
+        loss = torch.nn.functional.mse_loss(output, y)
+        loss.backward()
         
         peak_memory = torch.cuda.max_memory_allocated() / 1024**2  # MB
         current_memory = torch.cuda.memory_allocated() / 1024**2  # MB
         
-        print(f"峰值内存使用: {peak_memory:.2f}MB")
-        print(f"当前内存使用: {current_memory:.2f}MB")
+        print(f"Peak memory usage: {peak_memory:.2f}MB")
+        print(f"Current memory usage: {current_memory:.2f}MB")
         
-        # 内存断言（根据实际情况调整）
-        assert peak_memory < 1000, f"内存使用过多: {peak_memory:.2f}MB"
+        # Memory assertion (adjust based on actual situation)
+        assert peak_memory < 1000, f"Memory usage too high: {peak_memory:.2f}MB"
     
-    @pytest.mark.parametrize("batch_size", [1, 4, 8, 16])
-    def test_batch_scaling(self, sample_config, device, batch_size):
-        """测试批次大小扩展性"""
-        from vivtransformer.models import VIVTransformer
+    @pytest.mark.parametrize("batch_size", [1, 4, 8, 16, 32])
+    def test_batch_size_scalability(self, mock_model, device, batch_size):
+        """Test batch size scalability"""
+        model = mock_model
         
-        model = VIVTransformer(sample_config).to(device)
+        seq_len = 128
+        d_model = 256
         
-        seq_len, d_model = 50, sample_config['d_model']
-        input_data = torch.randn(batch_size, seq_len, d_model).to(device)
+        x = torch.randn(batch_size, seq_len, d_model, device=device)
         
-        start_time = time.perf_counter()
-        
+        start_time = time.time()
         with torch.no_grad():
-            output = model(input_data)
-        
-        if device.type == 'cuda':
-            torch.cuda.synchronize()
-        
-        end_time = time.perf_counter()
+            output = model(x)
+        end_time = time.time()
         
         time_per_sample = (end_time - start_time) / batch_size
         
-        print(f"批次大小 {batch_size}: {time_per_sample*1000:.2f}ms/sample")
+        print(f"Batch size {batch_size}: {time_per_sample*1000:.2f}ms/sample")
         
-        # 检查输出形状
+        # Check output shape
         expected_shape = (batch_size, sample_config['output_size'])
         assert output.shape == expected_shape
 ```
 
 ### 📊 测试覆盖率 {#测试覆盖率}
-
 ```bash
-# 运行测试并生成覆盖率报告 {#运行测试并生成覆盖率报告}
-pytest --cov=vivtransformer --cov-report=html --cov-report=term-missing
+# Run tests and generate coverage report {#run-tests-and-generate-coverage-report}
+pytest --cov=vivtransformer --cov-report=html tests/
 
-# 查看覆盖率报告 {#查看覆盖率报告}
+# View coverage report {#view-coverage-report}
 open htmlcov/index.html
 
-# 设置覆盖率阈值 {#设置覆盖率阈值}
-pytest --cov=vivtransformer --cov-fail-under=80
+# Set coverage threshold {#set-coverage-threshold}
+pytest --cov=vivtransformer --cov-fail-under=80 tests/
 ```
 
 ## 性能优化 {#性能优化}
@@ -1192,154 +1095,154 @@ pytest --cov=vivtransformer --cov-fail-under=80
 ### ⚡ 性能分析工具 {#性能分析工具}
 
 #### 1. 代码性能分析 {#1-代码性能分析}
-
 ```python
-# 使用line_profiler {#使用line-profiler}
+# Using line_profiler {#using-line-profiler}
 @profile
-def attention_computation(query, key, value):
-    """注意力计算函数"""
-    # 计算注意力分数
+def compute_attention(query, key, value, mask=None):
+    """Attention computation function"""
+    # Compute attention scores
     scores = torch.matmul(query, key.transpose(-2, -1))
     
-    # 缩放
-    scores = scores / math.sqrt(query.size(-1))
-    
-    # Softmax
-    attention_weights = torch.softmax(scores, dim=-1)
-    
-    # 应用到值
-    output = torch.matmul(attention_weights, value)
-    
-    return output, attention_weights
-
-# 运行分析 {#运行分析}
-# kernprof -l -v script.py {#kernprof-l-v-script-py}
-```
-
-#### 2. 内存分析 {#2-内存分析}
-
-```python
-# 使用memory_profiler {#使用memory-profiler}
-from memory_profiler import profile
-
-@profile
-def train_step(model, data, target, optimizer, criterion):
-    """训练步骤"""
-    optimizer.zero_grad()
-    
-    output = model(data)
-    loss = criterion(output, target)
-    
-    loss.backward()
-    optimizer.step()
-    
-    return loss.item()
-
-# 运行分析 {#运行分析}
-# python -m memory_profiler script.py {#python-m-memory-profiler-script-py}
-```
-
-#### 3. PyTorch Profiler {#3-pytorch-profiler}
-
-```python
-import torch.profiler
-
-def profile_model(model, input_data, num_steps=10):
-    """使用PyTorch Profiler分析模型"""
-    
-    with torch.profiler.profile(
-        activities=[
-            torch.profiler.ProfilerActivity.CPU,
-            torch.profiler.ProfilerActivity.CUDA,
-        ],
-        schedule=torch.profiler.schedule(
-            wait=1,
-            warmup=1,
-            active=3,
-            repeat=2
-        ),
-        on_trace_ready=torch.profiler.tensorboard_trace_handler('./log/profiler'),
-        record_shapes=True,
-        profile_memory=True,
-        with_stack=True
-    ) as prof:
-        
-        for step in range(num_steps):
-            with torch.no_grad():
-                output = model(input_data)
-            
-            prof.step()
-    
-    # 打印关键统计信息
-    print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=10))
-    
-    return prof
-
-# 使用示例 {#使用示例}
-prof = profile_model(model, sample_input)
-
-# 在TensorBoard中查看结果 {#在tensorboard中查看结果}
-# tensorboard --logdir=./log/profiler {#tensorboard-logdir-log-profiler}
-```
-
-### 🚀 优化技巧 {#优化技巧}
-
-#### 1. 计算优化 {#1-计算优化}
-
-```python
-# 使用torch.jit.script优化 {#使用torch-jit-script优化}
-@torch.jit.script
-def optimized_attention(query, key, value, mask=None):
-    """优化的注意力计算"""
-    # 批量矩阵乘法
-    scores = torch.bmm(query, key.transpose(1, 2))
+    # Scale
+    d_k = query.size(-1)
+    scores = scores / math.sqrt(d_k)
     
     if mask is not None:
         scores = scores.masked_fill(mask == 0, -1e9)
     
-    # 使用更快的softmax实现
-    attention_weights = torch.nn.functional.softmax(scores, dim=-1)
-    
-    output = torch.bmm(attention_weights, value)
+    # Apply to values
+    attention_weights = torch.softmax(scores, dim=-1)
+    output = torch.matmul(attention_weights, value)
     
     return output, attention_weights
 
-# 使用混合精度训练 {#使用混合精度训练}
+# Run analysis {#run-analysis}
+kernprof -l -v script_with_attention.py
+```
+
+#### 2. Memory Analysis {#2-memory-analysis}
+```python
+# Using memory_profiler {#using-memory-profiler}
+from memory_profiler import profile
+
+@profile
+def training_step(model, data_loader, optimizer):
+    """Training step"""
+    model.train()
+    
+    for batch_idx, (data, target) in enumerate(data_loader):
+        optimizer.zero_grad()
+        
+        output = model(data)
+        loss = F.mse_loss(output, target)
+        
+        loss.backward()
+        optimizer.step()
+        
+        if batch_idx % 100 == 0:
+            print(f'Batch {batch_idx}, Loss: {loss.item():.6f}')
+
+# Run analysis {#run-analysis}
+python -m memory_profiler training_script.py
+```
+
+#### 3. PyTorch Profiler {#3-pytorch-profiler}
+```python
+import torch
+from torch.profiler import profile, record_function, ProfilerActivity
+
+def profile_model(model, input_data):
+    """Use PyTorch Profiler to analyze model"""
+    
+    with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], 
+                record_shapes=True, 
+                profile_memory=True,
+                with_stack=True) as prof:
+        
+        with record_function("model_inference"):
+            for _ in range(10):
+                model(input_data)
+        
+        with record_function("model_training"):
+            optimizer = torch.optim.Adam(model.parameters())
+            for _ in range(5):
+                optimizer.zero_grad()
+                output = model(input_data)
+                loss = output.mean()
+                loss.backward()
+                optimizer.step()
+    
+    # Print key statistics
+    print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=10))
+    
+    # Export trace for visualization
+    prof.export_chrome_trace("trace.json")
+
+# Usage example {#usage-example}
+model = VIVTransformer(config)
+input_data = torch.randn(4, 128, 256)
+profile_model(model, input_data)
+
+# View results in TensorBoard {#view-results-in-tensorboard}
+# tensorboard --logdir=./log
+```
+
+### 🚀 Optimization Tips {#optimization-tips}
+
+#### 1. Computational Optimization {#1-computational-optimization}
+```python
+# Use torch.jit.script optimization {#use-torch-jit-script-optimization}
+@torch.jit.script
+def optimized_attention(query, key, value):
+    """Optimized attention computation"""
+    # Batch matrix multiplication
+    scores = torch.bmm(query, key.transpose(1, 2))
+    
+    # Use in-place operations
+    scores.div_(math.sqrt(query.size(-1)))
+    
+    # Use faster softmax implementation
+    attention_weights = torch.softmax(scores, dim=-1)
+    output = torch.bmm(attention_weights, value)
+    
+    return output
+
+# Use mixed precision training {#use-mixed-precision-training}
 from torch.cuda.amp import autocast, GradScaler
 
 scaler = GradScaler()
 
-for data, target in dataloader:
-    optimizer.zero_grad()
-    
-    with autocast():
-        output = model(data)
-        loss = criterion(output, target)
-    
-    scaler.scale(loss).backward()
-    scaler.step(optimizer)
-    scaler.update()
+for epoch in range(num_epochs):
+    for batch in data_loader:
+        optimizer.zero_grad()
+        
+        with autocast():
+            output = model(batch)
+            loss = criterion(output, target)
+        
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()
 ```
 
-#### 2. 内存优化 {#2-内存优化}
-
+#### 2. Memory Optimization {#2-memory-optimization}
 ```python
-# 梯度检查点 {#梯度检查点}
-from torch.utils.checkpoint import checkpoint
+# Gradient checkpointing {#gradient-checkpointing}
+import torch.utils.checkpoint as checkpoint
 
-class MemoryEfficientTransformerLayer(torch.nn.Module):
-    def __init__(self, attention, feed_forward):
+class MemoryEfficientTransformerLayer(nn.Module):
+    def __init__(self, d_model, num_heads):
         super().__init__()
-        self.attention = attention
-        self.feed_forward = feed_forward
+        self.attention = MultiHeadAttention(d_model, num_heads)
+        self.ffn = FeedForward(d_model)
     
     def forward(self, x):
-        # 使用梯度检查点节省内存
-        x = checkpoint(self.attention, x)
-        x = checkpoint(self.feed_forward, x)
+        # Use gradient checkpointing to save memory
+        x = checkpoint.checkpoint(self.attention, x, x, x)
+        x = checkpoint.checkpoint(self.ffn, x)
         return x
 
-# 动态批次大小 {#动态批次大小}
+# Dynamic batch size {#dynamic-batch-size}
 class DynamicBatchSampler:
     def __init__(self, dataset, max_tokens=4096):
         self.dataset = dataset
@@ -1347,18 +1250,18 @@ class DynamicBatchSampler:
     
     def __iter__(self):
         batch = []
-        current_tokens = 0
+        batch_tokens = 0
         
         for idx in range(len(self.dataset)):
-            item_tokens = len(self.dataset[idx]['input_ids'])
+            seq_len = len(self.dataset[idx])
             
-            if current_tokens + item_tokens > self.max_tokens and batch:
+            if batch_tokens + seq_len > self.max_tokens and batch:
                 yield batch
                 batch = []
-                current_tokens = 0
+                batch_tokens = 0
             
             batch.append(idx)
-            current_tokens += item_tokens
+            batch_tokens += seq_len
         
         if batch:
             yield batch
@@ -1366,15 +1269,16 @@ class DynamicBatchSampler:
 
 ---
 
-**💡 开发提示**:
-1. 始终编写测试先于实现代码
-2. 保持代码简洁和可读性
-3. 定期进行代码审查
-4. 使用类型注解提高代码质量
-5. 关注性能但不过早优化
-6. 及时更新文档和注释
+**💡 Development Tips**:
+1. Always write tests before implementing code
+2. Keep code simple and readable
+3. Conduct regular code reviews
+4. Use type annotations to improve code quality
+5. Focus on performance but don't optimize prematurely
+6. Update documentation and comments timely
 
-**🔧 工具推荐**:
+**🔧 Recommended Tools**:
+
 - IDE: VS Code, PyCharm
 - 调试: pdb, ipdb
 - 性能分析: line_profiler, py-spy
@@ -1383,4 +1287,4 @@ class DynamicBatchSampler:
 
 ---
 
-*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*
+*Need help? Check [FAQ](faq) or [Troubleshooting](troubleshooting) pages.*

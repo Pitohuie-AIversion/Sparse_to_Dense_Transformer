@@ -5,6 +5,10 @@ This script loads configuration from a YAML file and allows overriding the
 location of the output results directory via command-line arguments.
 """
 
+# 过滤 timm 的 FutureWarning
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning, module='timm.*')
+
 import argparse
 import os
 import sys

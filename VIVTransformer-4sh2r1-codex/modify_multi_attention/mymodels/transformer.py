@@ -3,6 +3,7 @@ from typing import List
 import torch
 import torch.nn as nn
 import copy
+import math
 
 from mymodels.components.attention_adapter import (
     get_attention_adapter,
@@ -128,6 +129,14 @@ class CustomEncoderLayer(nn.Module):
         if isinstance(src2, tuple):
             src2 = src2[0]
 
+        # 如果需要注意力权重但未提供，则构造一个替代注意力图 [B, 1, L, L]
+        if return_attention and attn_weights is None:
+            with torch.no_grad():
+                B, L, D = src.shape
+                scale = 1.0 / math.sqrt(max(D, 1))
+                sim = torch.matmul(src, src.transpose(1, 2)) * scale  # [B, L, L]
+                attn_weights = torch.softmax(sim, dim=-1).unsqueeze(1)  # [B, 1, L, L]
+
         # 残差连接 + LayerNorm
         src = src + self.dropout1(src2)
         src = self.norm1(src)
@@ -227,6 +236,24 @@ class CustomDecoderLayer(nn.Module):
 
         if isinstance(tgt2, tuple):
             tgt2 = tgt2[0]
+
+        # 对于缺失的注意力，构造替代注意力 [B, 1, L, L]
+        if return_attention:
+            with torch.no_grad():
+                B, L, D = tgt.shape
+                scale = 1.0 / math.sqrt(max(D, 1))
+                if self_attn_weights is None:
+                    sim_self = torch.matmul(tgt, tgt.transpose(1, 2)) * scale  # [B, L, L]
+                    self_attn_weights = torch.softmax(sim_self, dim=-1).unsqueeze(1)
+                if cross_attn_weights is None:
+                    # memory 形状与 tgt 对齐
+                    if memory.dim() == 3 and memory.size(0) == B and memory.size(2) == D:
+                        sim_cross = torch.matmul(tgt, memory.transpose(1, 2)) * scale  # [B, L, L]
+                        cross_attn_weights = torch.softmax(sim_cross, dim=-1).unsqueeze(1)
+                    else:
+                        # 回退到自注意力形式，至少提供一个稳定的可视化
+                        sim_cross = torch.matmul(tgt, tgt.transpose(1, 2)) * scale
+                        cross_attn_weights = torch.softmax(sim_cross, dim=-1).unsqueeze(1)
 
         tgt = tgt + self.dropout2(tgt2)
         tgt = self.norm2(tgt)

@@ -2,9 +2,9 @@ name: Build and Deploy Jekyll Site
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, V1 ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, V1 ]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:

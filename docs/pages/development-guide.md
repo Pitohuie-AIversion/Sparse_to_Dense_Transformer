@@ -3,7 +3,7 @@ layout: default
 title: Development Guide
 description: 开发环境配置和贡献指南
 nav_order: 19
-parent: 开发与维护
+parent: Development & Maintenance
 permalink: /pages/development-guide/
 ---
 

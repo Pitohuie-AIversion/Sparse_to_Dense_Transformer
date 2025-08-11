@@ -3,44 +3,44 @@ layout: default
 title: Experimental Results
 parent: Evaluation & Results
 nav_order: 2
-description: "实验结果和性能分析"
+description: "Experimental results and performance analysis"
 permalink: /pages/experimental-results/
 ---
 
-# 实验结果 {#实验结果}
+# Experimental Results {#experimental-results}
 
-本文档详细展示了VIVTransformer项目在各种数据集和任务上的实验结果，包括性能对比、消融实验和分析。
+This document presents the experimental results of the VIVTransformer project across various datasets and tasks, including performance comparisons, ablation studies, and analyses.
 
-## 📋 目录 {#目录}
+## 📋 Table of Contents {#table-of-contents}
 
-- [实验设置](#实验设置)
-- [基准测试结果](#基准测试结果)
-- [注意力机制对比](#注意力机制对比)
-- [消融实验](#消融实验)
-- [计算效率分析](#计算效率分析)
-- [可视化分析](#可视化分析)
-- [案例研究](#案例研究)
-- [结论与讨论](#结论与讨论)
+- [Experimental Setup](#experimental-setup)
+- [Benchmark Results](#benchmark-results)
+- [Attention Mechanism Comparison](#attention-mechanism-comparison)
+- [Ablation Studies](#ablation-studies)
+- [Efficiency Analysis](#efficiency-analysis)
+- [Visualization Analysis](#visualization-analysis)
+- [Case Studies](#case-studies)
+- [Conclusions & Discussion](#conclusions-discussion)
 
-## 实验设置 {#实验设置}
+## Experimental Setup {#experimental-setup}
 
-### 🔧 实验环境 {#实验环境}
+### 🔧 Environment {#environment}
 
-**硬件配置**:
+**Hardware**:
 - GPU: NVIDIA RTX 4090 (24GB VRAM)
 - CPU: Intel i9-13900K
-- 内存: 64GB DDR5
-- 存储: 2TB NVMe SSD
+- Memory: 64GB DDR5
+- Storage: 2TB NVMe SSD
 
-**软件环境**:
+**Software**:
 - Python 3.9.16
 - PyTorch 2.0.1
 - CUDA 11.8
 - cuDNN 8.7.0
 
-**训练配置**:
+**Training configuration**:
 ```yaml
-# 基础训练配置 {#基础训练配置}
+# Basic training configuration {#basic-training-config}
 training:
   batch_size: 32
   learning_rate: 1e-4
@@ -50,7 +50,7 @@ training:
   warmup_steps: 1000
   gradient_clip_norm: 1.0
 
-# 模型配置 {#模型配置}
+# Model configuration {#model-config}
 model:
   d_model: 512
   num_heads: 8
@@ -58,7 +58,7 @@ model:
   dropout: 0.1
   max_seq_length: 1024
 
-# 数据配置 {#数据配置}
+# Data configuration {#data-config}
 data:
   train_split: 0.8
   val_split: 0.1
@@ -66,103 +66,103 @@ data:
   random_seed: 42
 ```
 
-### 📊 数据集 {#数据集}
+### 📊 Datasets {#datasets}
 
-| 数据集 | 任务类型 | 样本数量 | 序列长度 | 特征维度 |
+| Dataset | Task type | Number of samples | Sequence length | Feature dimension |
 |--------|----------|----------|----------|----------|
-| IMDB | 文本分类 | 50,000 | 256 | 768 |
-| SST-2 | 情感分析 | 67,349 | 128 | 768 |
-| CoLA | 语法判断 | 10,657 | 64 | 768 |
-| MRPC | 句子相似度 | 5,801 | 256 | 768 |
-| SQuAD 1.1 | 阅读理解 | 107,785 | 512 | 768 |
-| WMT14 En-De | 机器翻译 | 4,500,000 | 256 | 512 |
-| Penn Treebank | 语言建模 | 42,068 | 128 | 512 |
-| WikiText-103 | 语言建模 | 1,801,350 | 512 | 768 |
+| IMDB | Text classification | 50,000 | 256 | 768 |
+| SST-2 | Sentiment analysis | 67,349 | 128 | 768 |
+| CoLA | Acceptability (grammaticality) | 10,657 | 64 | 768 |
+| MRPC | Paraphrase similarity | 5,801 | 256 | 768 |
+| SQuAD 1.1 | Reading comprehension | 107,785 | 512 | 768 |
+| WMT14 En-De | Machine translation | 4,500,000 | 256 | 512 |
+| Penn Treebank | Language modeling | 42,068 | 128 | 512 |
+| WikiText-103 | Language modeling | 1,801,350 | 512 | 768 |
 
-### 🎯 评估指标 {#评估指标}
+### 🎯 Evaluation Metrics {#evaluation-metrics}
 
-**性能指标**:
-- **准确率 (Accuracy)**: 分类任务的正确率
-- **F1分数**: 精确率和召回率的调和平均
-- **BLEU分数**: 机器翻译质量评估
-- **困惑度 (Perplexity)**: 语言模型评估
-- **ROUGE分数**: 文本摘要质量评估
+**Performance metrics**:
+- **Accuracy**: Classification correct rate
+- **F1 score**: Harmonic mean of precision and recall
+- **BLEU score**: Machine translation quality
+- **Perplexity**: Language model evaluation
+- **ROUGE**: Summarization quality
 
-**效率指标**:
-- **推理时间**: 单个样本的推理耗时
-- **吞吐量**: 每秒处理的样本数
-- **内存使用**: 峰值GPU内存占用
-- **FLOPs**: 浮点运算次数
-- **参数量**: 模型参数总数
+**Efficiency metrics**:
+- **Inference time**: Latency per sample
+- **Throughput**: Samples processed per second
+- **Memory usage**: Peak GPU memory
+- **FLOPs**: Floating-point operations
+- **Parameters**: Total number of model parameters
 
-## 基准测试结果 {#基准测试结果}
+## Benchmark Results {#benchmark-results}
 
-### 📈 整体性能对比 {#整体性能对比}
+### 📈 Overall Performance Comparison {#overall-performance-comparison}
 
-#### GLUE基准测试 {#glue基准测试}
+#### GLUE benchmark test {#glue-benchmark-test}
 
-| 模型 | CoLA | SST-2 | MRPC | STS-B | QQP | MNLI | QNLI | RTE | 平均 |
+| Model | CoLA | SST-2 | MRPC | STS-B | QQP | MNLI | QNLI | RTE | Average |
 |------|------|-------|------|-------|-----|------|------|-----|------|
 | BERT-Base | 52.1 | 93.5 | 88.9 | 85.8 | 89.2 | 84.6 | 90.5 | 66.4 | 81.4 |
 | RoBERTa-Base | 56.3 | 94.8 | 90.2 | 86.5 | 89.8 | 87.6 | 92.8 | 78.7 | 84.6 |
 | DeBERTa-Base | 59.7 | 95.3 | 91.1 | 88.2 | 90.7 | 88.8 | 93.9 | 83.8 | 86.4 |
 | **VIVTransformer** | **61.2** | **95.8** | **92.3** | **89.1** | **91.4** | **89.7** | **94.6** | **85.2** | **87.4** |
 
-#### 语言建模任务 {#语言建模任务}
+#### Language modeling tasks {#language-modeling-tasks}
 
-| 模型 | Penn Treebank (PPL) | WikiText-103 (PPL) | 参数量 (M) |
+| Model | Penn Treebank (PPL) | WikiText-103 (PPL) | Parameters (M) |
 |------|---------------------|---------------------|------------|
 | Transformer-Base | 58.7 | 24.2 | 65 |
 | GPT-2 Small | 35.8 | 29.4 | 117 |
 | BERT-Base | 41.2 | 26.8 | 110 |
 | **VIVTransformer** | **32.4** | **22.1** | **89** |
 
-#### 机器翻译任务 {#机器翻译任务}
+#### Machine translation tasks {#machine-translation-tasks}
 
-| 模型 | WMT14 En-De (BLEU) | WMT14 De-En (BLEU) | 训练时间 (小时) |
+| Model | WMT14 En-De (BLEU) | WMT14 De-En (BLEU) | Training time (hours) |
 |------|---------------------|---------------------|----------------|
 | Transformer-Base | 27.3 | 31.3 | 72 |
 | Transformer-Big | 28.4 | 32.8 | 156 |
 | **VIVTransformer** | **29.1** | **33.5** | **58** |
 
-### 🏆 关键优势 {#关键优势}
+### 🏆 Key advantages {#key-advantages}
 
-1. **性能提升**: 在多个基准测试中超越现有模型
-2. **效率优化**: 更少的参数量实现更好的性能
-3. **训练加速**: 显著减少训练时间
-4. **内存友好**: 降低内存使用，支持更长序列
+1. **Performance improvement**: Outperforms existing models across multiple benchmarks
+2. **Efficiency optimization**: Better performance with fewer parameters
+3. **Training acceleration**: Significantly reduces training time
+4. **Memory friendly**: Lower memory usage, supports longer sequences
 
-## 注意力机制对比 {#注意力机制对比}
+## Attention mechanism comparison {#attention-mechanism-comparison}
 
-### 🔍 38种注意力机制性能对比 {#38种注意力机制性能对比}
+### 🔍 Performance comparison of 38 attention mechanisms {#performance-comparison-38-attentions}
 
-#### 分类任务性能 (IMDB数据集) {#分类任务性能-imdb数据集}
+#### Classification performance (IMDB) {#classification-performance-imdb}
 
-| 注意力机制 | 准确率 (%) | F1分数 | 推理时间 (ms) | 内存使用 (MB) |
+| Attention mechanism | Accuracy (%) | F1 score | Inference time (ms) | Memory usage (MB) |
 |------------|------------|--------|---------------|---------------|
-| **基础注意力** |
+| **Basic attention** |
 | Standard Attention | 89.2 | 0.891 | 12.3 | 1024 |
 | Multi-Head Attention | 91.5 | 0.913 | 15.7 | 1156 |
 | Scaled Dot-Product | 90.8 | 0.906 | 11.9 | 998 |
-| **高效注意力** |
+| **Efficient attention** |
 | Linear Attention | 88.7 | 0.885 | 8.4 | 756 |
 | Sparse Attention | 90.3 | 0.901 | 9.8 | 823 |
 | Local Attention | 89.9 | 0.897 | 7.2 | 689 |
-| **位置感知注意力** |
+| **Position-aware attention** |
 | Relative Position | 92.1 | 0.919 | 16.2 | 1203 |
 | Rotary Position | 91.8 | 0.916 | 14.5 | 1087 |
 | Alibi Attention | 91.3 | 0.911 | 13.1 | 1034 |
-| **移动端优化** |
+| **Mobile-optimized** |
 | MobileViT Attention | 87.4 | 0.872 | 6.8 | 512 |
 | EfficientNet Attention | 88.1 | 0.879 | 7.5 | 578 |
-| **高级注意力** |
+| **Advanced attention** |
 | Transformer-XL | 92.8 | 0.926 | 18.9 | 1345 |
 | Longformer | 93.2 | 0.930 | 22.1 | 1567 |
 | BigBird | 92.6 | 0.924 | 20.3 | 1423 |
 
-#### 序列建模性能 (Penn Treebank) {#序列建模性能-penn-treebank}
+#### Sequence modeling performance (Penn Treebank) {#sequence-modeling-performance-penn-treebank}
 
-| 注意力机制 | 困惑度 | 训练时间 (小时) | 收敛轮数 |
+| Attention mechanism | Perplexity | Training time (hours) | Epochs to converge |
 |------------|--------|----------------|----------|
 | Standard Attention | 58.7 | 12.3 | 85 |
 | Multi-Head Attention | 52.4 | 14.7 | 78 |
@@ -171,26 +171,26 @@ data:
 | Relative Position | 49.3 | 16.1 | 72 |
 | **VIV Ensemble** | **45.8** | **11.2** | **68** |
 
-### 📊 注意力机制特性分析 {#注意力机制特性分析}
+### 📊 Attention mechanism characteristics {#attention-mechanism-characteristics}
 
-#### 计算复杂度对比 {#计算复杂度对比}
+#### Computational complexity comparison {#computational-complexity-comparison}
 
 ```python
-# 复杂度分析结果 {#复杂度分析结果}
+# Complexity analysis results {#complexity-analysis-results}
 attention_complexity = {
     'Standard': 'O(n²d)',
     'Multi-Head': 'O(n²d)',
     'Linear': 'O(nd²)',
     'Sparse': 'O(n√n·d)',
-    'Local': 'O(nwd)',  # w为窗口大小
+    'Local': 'O(nwd)',  # w is window size
     'Longformer': 'O(n·w·d)',
-    'BigBird': 'O(n·(w+g)·d)',  # g为全局token数
+    'BigBird': 'O(n·(w+g)·d)',  # g is number of global tokens
 }
 ```
 
-#### 内存使用模式 {#内存使用模式}
+#### Memory usage patterns {#memory-usage-patterns}
 
-| 序列长度 | Standard | Linear | Sparse | Local | Longformer |
+| Sequence length | Standard | Linear | Sparse | Local | Longformer |
 |----------|----------|--------|--------|-------|------------|
 | 128 | 256 MB | 189 MB | 198 MB | 167 MB | 203 MB |
 | 256 | 512 MB | 267 MB | 289 MB | 234 MB | 298 MB |
@@ -198,25 +198,25 @@ attention_complexity = {
 | 1024 | 2048 MB | 534 MB | 723 MB | 456 MB | 789 MB |
 | 2048 | 4096 MB | 756 MB | 1234 MB | 623 MB | 1345 MB |
 
-## 消融实验 {#消融实验}
+## Ablation Studies {#ablation-studies}
 
-### 🧪 组件重要性分析 {#组件重要性分析}
+### 🧪 Component importance analysis {#component-importance-analysis}
 
-#### 损失函数组合实验 {#损失函数组合实验}
+#### Loss function combinations {#loss-function-combinations}
 
-| 损失函数组合 | IMDB准确率 | Penn Treebank PPL | 训练稳定性 |
+| Loss combination | IMDB accuracy | Penn Treebank PPL | Training stability |
 |--------------|------------|-------------------|------------|
-| MSE Only | 87.3 | 62.4 | 中等 |
-| MSE + L1 | 88.7 | 58.9 | 良好 |
-| MSE + SVD | 90.2 | 54.3 | 优秀 |
-| MSE + L1 + SVD | **91.5** | **52.1** | **优秀** |
-| Huber + SVD | 90.8 | 53.7 | 优秀 |
-| Custom + SVD | 91.2 | 52.8 | 优秀 |
+| MSE Only | 87.3 | 62.4 | Medium |
+| MSE + L1 | 88.7 | 58.9 | Good |
+| MSE + SVD | 90.2 | 54.3 | Excellent |
+| MSE + L1 + SVD | **91.5** | **52.1** | **Excellent** |
+| Huber + SVD | 90.8 | 53.7 | Excellent |
+| Custom + SVD | 91.2 | 52.8 | Excellent |
 
-#### SVD正则化权重分析 {#svd正则化权重分析}
+#### SVD regularization weight analysis {#svd-regularization-weight-analysis}
 
 ```python
-# SVD权重对性能的影响 {#svd权重对性能的影响}
+# Impact of SVD weight on performance {#impact-of-svd-weight}
 svd_weight_results = {
     0.0: {'accuracy': 89.2, 'perplexity': 58.7, 'overfitting': 'High'},
     0.001: {'accuracy': 90.1, 'perplexity': 55.3, 'overfitting': 'Medium'},
@@ -226,11 +226,11 @@ svd_weight_results = {
 }
 ```
 
-**最优SVD权重**: 0.01 (在性能和正则化之间取得最佳平衡)
+**Best SVD weight**: 0.01 (best balance between performance and regularization)
 
-#### 注意力头数量实验 {#注意力头数量实验}
+#### Number of attention heads {#num-attention-heads}
 
-| 注意力头数 | 参数量 (M) | GLUE平均分 | 推理时间 (ms) | 内存使用 (MB) |
+| Number of heads | Parameters (M) | GLUE average | Inference time (ms) | Memory usage (MB) |
 |------------|------------|------------|---------------|---------------|
 | 1 | 67 | 82.1 | 8.9 | 756 |
 | 2 | 71 | 84.3 | 10.2 | 823 |
@@ -239,50 +239,50 @@ svd_weight_results = {
 | 12 | 103 | 87.2 | 19.3 | 1398 |
 | 16 | 118 | 86.9 | 23.1 | 1642 |
 
-**最优头数**: 8个头在性能和效率之间达到最佳平衡
+**Best number of heads**: 8 heads strike the best balance between performance and efficiency
 
-#### 模型深度实验 {#模型深度实验}
+#### Model depth {#model-depth}
 
-| 层数 | 参数量 (M) | Penn Treebank PPL | 训练时间 (小时) | 过拟合风险 |
+| Layers | Parameters (M) | Penn Treebank PPL | Training time (hours) | Overfitting risk |
 |------|------------|-------------------|----------------|------------|
-| 2 | 34 | 68.2 | 4.2 | 低 |
-| 4 | 56 | 58.7 | 7.8 | 中等 |
-| 6 | 89 | **52.1** | **11.2** | 中等 |
-| 8 | 123 | 51.8 | 16.7 | 高 |
-| 12 | 178 | 52.3 | 24.5 | 很高 |
+| 2 | 34 | 68.2 | 4.2 | Low |
+| 4 | 56 | 58.7 | 7.8 | Medium |
+| 6 | 89 | **52.1** | **11.2** | Medium |
+| 8 | 123 | 51.8 | 16.7 | High |
+| 12 | 178 | 52.3 | 24.5 | Very High |
 
-**最优深度**: 6层在性能、训练效率和过拟合风险之间取得最佳平衡
+**Best depth**: 6 layers balance performance, training efficiency, and overfitting risk
 
-### 🔬 特征重要性分析 {#特征重要性分析}
+### 🔬 Feature importance analysis {#feature-importance-analysis}
 
-#### 位置编码对比 {#位置编码对比}
+#### Positional encoding comparison {#positional-encoding-comparison}
 
-| 位置编码类型 | BLEU分数 | 长序列性能 | 计算开销 |
+| Positional encoding type | BLEU score | Long sequence performance | Compute cost |
 |--------------|----------|------------|----------|
-| 绝对位置编码 | 27.8 | 中等 | 低 |
-| 相对位置编码 | 28.9 | 良好 | 中等 |
-| 旋转位置编码 | **29.1** | **优秀** | 中等 |
-| 学习位置编码 | 28.6 | 良好 | 高 |
-| 无位置编码 | 24.3 | 差 | 最低 |
+| Absolute positional encoding | 27.8 | Medium | Low |
+| Relative positional encoding | 28.9 | Good | Medium |
+| Rotary positional encoding | **29.1** | **Excellent** | Medium |
+| Learned positional encoding | 28.6 | Good | High |
+| No positional encoding | 24.3 | Poor | Lowest |
 
-#### 激活函数对比 {#激活函数对比}
+#### Activation function comparison {#activation-function-comparison}
 
-| 激活函数 | 收敛速度 | 最终性能 | 梯度稳定性 |
+| Activation | Convergence speed | Final performance | Gradient stability |
 |----------|----------|----------|------------|
-| ReLU | 中等 | 86.2 | 良好 |
-| GELU | 快 | **87.4** | 优秀 |
-| Swish | 快 | 87.1 | 优秀 |
-| Mish | 中等 | 86.8 | 优秀 |
-| LeakyReLU | 中等 | 85.9 | 良好 |
+| ReLU | Medium | 86.2 | Good |
+| GELU | Fast | **87.4** | Excellent |
+| Swish | Fast | 87.1 | Excellent |
+| Mish | Medium | 86.8 | Excellent |
+| LeakyReLU | Medium | 85.9 | Good |
 
-## 计算效率分析 {#计算效率分析}
+## Efficiency Analysis {#efficiency-analysis}
 
-### ⚡ 性能基准测试 {#性能基准测试}
+### ⚡ Performance benchmarks {#performance-benchmarks}
 
-#### 推理速度对比 {#推理速度对比}
+#### Inference speed comparison {#inference-speed-comparison}
 
 ```python
-# 不同批次大小下的推理性能 {#不同批次大小下的推理性能}
+# Inference performance under different batch sizes {#inference-performance-by-batch}
 inference_benchmarks = {
     'batch_size_1': {
         'VIVTransformer': 8.9,  # ms
@@ -305,30 +305,30 @@ inference_benchmarks = {
 }
 ```
 
-#### 内存效率分析 {#内存效率分析}
+#### Memory efficiency analysis {#memory-efficiency-analysis}
 
-| 序列长度 | VIVTransformer | BERT-Base | RoBERTa-Base | 内存节省 |
+| Sequence length | VIVTransformer | BERT-Base | RoBERTa-Base | Memory saving |
 |----------|----------------|-----------|--------------|----------|
 | 128 | 756 MB | 1024 MB | 1156 MB | 26.2% |
 | 256 | 1234 MB | 1789 MB | 1923 MB | 31.0% |
 | 512 | 2156 MB | 3456 MB | 3789 MB | 37.6% |
 | 1024 | 4234 MB | 7123 MB | 7856 MB | 40.5% |
 
-#### 训练效率对比 {#训练效率对比}
+#### Training efficiency comparison {#training-efficiency-comparison}
 
-| 模型 | 每轮训练时间 | 收敛轮数 | 总训练时间 | GPU利用率 |
+| Model | Time per epoch | Epochs to converge | Total training time | GPU utilization |
 |------|--------------|----------|------------|----------|
-| BERT-Base | 45 min | 78 | 58.5 小时 | 87% |
-| RoBERTa-Base | 52 min | 72 | 62.4 小时 | 89% |
-| DeBERTa-Base | 58 min | 69 | 66.7 小时 | 91% |
-| **VIVTransformer** | **38 min** | **68** | **43.1 小时** | **93%** |
+| BERT-Base | 45 min | 78 | 58.5 hours | 87% |
+| RoBERTa-Base | 52 min | 72 | 62.4 hours | 89% |
+| DeBERTa-Base | 58 min | 69 | 66.7 hours | 91% |
+| **VIVTransformer** | **38 min** | **68** | **43.1 hours** | **93%** |
 
-### 📊 扩展性分析 {#扩展性分析}
+### 📊 Scalability analysis {#scalability-analysis}
 
-#### 序列长度扩展性 {#序列长度扩展性}
+#### Sequence length scalability {#sequence-length-scalability}
 
 ```python
-# 不同序列长度下的性能表现 {#不同序列长度下的性能表现}
+# Performance across different sequence lengths {#performance-by-seq-length}
 scalability_results = {
     'sequence_length': [128, 256, 512, 1024, 2048, 4096],
     'inference_time': [8.9, 15.7, 28.4, 52.3, 98.7, 187.2],  # ms
@@ -337,9 +337,9 @@ scalability_results = {
 }
 ```
 
-#### 批次大小扩展性 {#批次大小扩展性}
+#### Batch size scalability {#batch-size-scalability}
 
-| 批次大小 | 吞吐量 (samples/s) | 内存使用 (GB) | GPU利用率 (%) |
+| Batch size | Throughput (samples/s) | Memory (GB) | GPU utilization (%) |
 |----------|-------------------|---------------|---------------|
 | 1 | 112.4 | 1.2 | 45 |
 | 4 | 387.6 | 3.8 | 72 |
@@ -348,39 +348,39 @@ scalability_results = {
 | 32 | 1456.8 | 22.1 | 95 |
 | 64 | 1789.2 | 43.7 | 97 |
 
-## 可视化分析 {#可视化分析}
+## Visualization Analysis {#visualization-analysis}
 
-### 🎨 注意力权重可视化 {#注意力权重可视化}
+### 🎨 Attention weight visualization {#attention-weight-visualization}
 
-#### 注意力模式分析 {#注意力模式分析}
+#### Attention pattern analysis {#attention-pattern-analysis}
 
 ```python
-# 注意力权重统计 {#注意力权重统计}
+# Attention weight statistics {#attention-weight-stats}
 attention_patterns = {
-    'local_attention_ratio': 0.68,    # 局部注意力比例
-    'global_attention_ratio': 0.23,   # 全局注意力比例
-    'sparse_attention_ratio': 0.09,   # 稀疏注意力比例
-    'average_entropy': 2.34,          # 平均注意力熵
-    'head_diversity_score': 0.78      # 注意力头多样性
+    'local_attention_ratio': 0.68,    # ratio of local attention
+    'global_attention_ratio': 0.23,   # ratio of global attention
+    'sparse_attention_ratio': 0.09,   # ratio of sparse attention
+    'average_entropy': 2.34,          # average attention entropy
+    'head_diversity_score': 0.78      # attention head diversity
 }
 ```
 
-#### 不同任务的注意力模式 {#不同任务的注意力模式}
+#### Attention patterns by task {#attention-patterns-by-task}
 
-| 任务类型 | 局部注意力 | 全局注意力 | 平均注意力距离 | 注意力集中度 |
+| Task type | Local attention | Global attention | Avg. attention distance | Attention concentration |
 |----------|------------|------------|----------------|-------------|
-| 文本分类 | 72% | 28% | 15.3 | 0.65 |
-| 序列标注 | 81% | 19% | 8.7 | 0.78 |
-| 机器翻译 | 64% | 36% | 22.1 | 0.52 |
-| 阅读理解 | 58% | 42% | 28.9 | 0.43 |
-| 语言建模 | 76% | 24% | 12.4 | 0.71 |
+| Text classification | 72% | 28% | 15.3 | 0.65 |
+| Sequence labeling | 81% | 19% | 8.7 | 0.78 |
+| Machine translation | 64% | 36% | 22.1 | 0.52 |
+| Reading comprehension | 58% | 42% | 28.9 | 0.43 |
+| Language modeling | 76% | 24% | 12.4 | 0.71 |
 
-### 📈 学习曲线分析 {#学习曲线分析}
+### 📈 Learning curve analysis {#learning-curve-analysis}
 
-#### 训练动态 {#训练动态}
+#### Training dynamics {#training-dynamics}
 
 ```python
-# 训练过程关键指标 {#训练过程关键指标}
+# Key indicators during training {#training-key-indicators}
 training_dynamics = {
     'loss_convergence': {
         'initial_loss': 4.23,
@@ -403,9 +403,9 @@ training_dynamics = {
 }
 ```
 
-#### 验证性能趋势 {#验证性能趋势}
+#### Validation performance trend {#validation-performance-trend}
 
-| 轮数 | 训练损失 | 验证损失 | 训练准确率 | 验证准确率 | 过拟合指标 |
+| Epoch | Train loss | Val loss | Train accuracy | Val accuracy | Overfitting index |
 |------|----------|----------|------------|------------|------------|
 | 10 | 2.34 | 2.41 | 78.2% | 76.8% | 0.03 |
 | 20 | 1.67 | 1.73 | 84.5% | 83.1% | 0.04 |
@@ -413,29 +413,29 @@ training_dynamics = {
 | 60 | 0.89 | 0.97 | 91.7% | 90.8% | 0.08 |
 | 68 | 0.87 | 0.95 | 92.1% | 91.2% | 0.09 |
 
-### 🔍 错误分析 {#错误分析}
+### 🔍 Error analysis {#error-analysis}
 
-#### 分类错误模式 {#分类错误模式}
+#### Classification error patterns {#classification-error-patterns}
 
 ```python
-# 错误类型分析 (IMDB情感分析) {#错误类型分析-imdb情感分析}
+# Error type analysis (IMDB sentiment) {#error-type-analysis-imdb}
 error_analysis = {
     'false_positives': {
         'count': 234,
         'percentage': 4.7,
         'common_patterns': [
-            '讽刺性正面评论',
-            '复杂情感表达',
-            '否定词误判'
+            'sarcastic positive reviews',
+            'complex emotional expressions',
+            'misjudged negations'
         ]
     },
     'false_negatives': {
         'count': 198,
         'percentage': 4.0,
         'common_patterns': [
-            '隐含负面情感',
-            '专业术语影响',
-            '上下文依赖强'
+            'implicit negative sentiment',
+            'impact of domain-specific terms',
+            'strong contextual dependence'
         ]
     },
     'confidence_distribution': {
@@ -447,159 +447,159 @@ error_analysis = {
 }
 ```
 
-#### 序列长度对性能的影响 {#序列长度对性能的影响}
+#### Impact of sequence length on performance {#impact-of-seq-length}
 
-| 序列长度范围 | 样本数量 | 准确率 | 平均置信度 | 主要错误类型 |
+| Sequence length range | Samples | Accuracy | Avg. confidence | Main error types |
 |--------------|----------|--------|------------|-------------|
-| 0-50 | 1,234 | 94.2% | 0.91 | 信息不足 |
-| 51-100 | 2,567 | 92.8% | 0.89 | 局部歧义 |
-| 101-200 | 3,891 | 91.5% | 0.87 | 长距离依赖 |
-| 201-300 | 2,345 | 89.7% | 0.84 | 注意力分散 |
-| 300+ | 963 | 87.3% | 0.81 | 信息过载 |
+| 0-50 | 1,234 | 94.2% | 0.91 | Insufficient information |
+| 51-100 | 2,567 | 92.8% | 0.89 | Local ambiguity |
+| 101-200 | 3,891 | 91.5% | 0.87 | Long-range dependency |
+| 201-300 | 2,345 | 89.7% | 0.84 | Attention dispersion |
+| 300+ | 963 | 87.3% | 0.81 | Information overload |
 
-## 案例研究 {#案例研究}
+## Case Studies {#case-studies}
 
-### 📚 情感分析案例 {#情感分析案例}
+### 📚 Sentiment analysis case {#sentiment-analysis-case}
 
-#### 复杂情感表达处理 {#复杂情感表达处理}
+#### Handling complex emotions {#handling-complex-emotions}
 
-**示例1: 讽刺检测**
+**Example 1: Sarcasm detection**
 ```
-输入: "Oh great, another wonderful movie that puts me to sleep."
-真实标签: Negative
-VIVTransformer预测: Negative (置信度: 0.87)
-BERT预测: Positive (置信度: 0.62)
+Input: "Oh great, another wonderful movie that puts me to sleep."
+Ground truth: Negative
+VIVTransformer prediction: Negative (confidence: 0.87)
+BERT prediction: Positive (confidence: 0.62)
 
-注意力分析:
-- "Oh great" 获得高注意力权重 (0.34)
-- "wonderful" 的注意力被上下文调节 (0.12)
-- "puts me to sleep" 获得关键注意力 (0.41)
-```
-
-**示例2: 混合情感**
-```
-输入: "The acting was superb, but the plot was confusing and boring."
-真实标签: Mixed (标注为Negative)
-VIVTransformer预测: Negative (置信度: 0.73)
-BERT预测: Positive (置信度: 0.58)
-
-注意力分析:
-- "superb" 获得正面注意力 (0.18)
-- "but" 作为转折词获得高权重 (0.23)
-- "confusing and boring" 获得主导注意力 (0.45)
+Attention analysis:
+- "Oh great" receives high attention weight (0.34)
+- Attention to "wonderful" is moderated by context (0.12)
+- "puts me to sleep" receives key attention (0.41)
 ```
 
-### 🌐 机器翻译案例 {#机器翻译案例}
-
-#### 长距离依赖处理 {#长距离依赖处理}
-
-**示例: 德语到英语翻译**
+**Example 2: Mixed emotions**
 ```
-源文本: "Der Mann, der gestern im Park spazieren ging, hat heute einen Brief erhalten."
-参考翻译: "The man who walked in the park yesterday received a letter today."
+Input: "The acting was superb, but the plot was confusing and boring."
+Ground truth: Mixed (annotated as Negative)
+VIVTransformer prediction: Negative (confidence: 0.73)
+BERT prediction: Positive (confidence: 0.58)
+
+Attention analysis:
+- "superb" gets positive attention (0.18)
+- "but" as a contrastive marker gets high weight (0.23)
+- "confusing and boring" dominates attention (0.45)
+```
+
+### 🌐 Machine translation case {#machine-translation-case}
+
+#### Handling long-range dependencies {#handling-long-range-dependencies}
+
+**Example: German to English translation**
+```
+Source: "Der Mann, der gestern im Park spazieren ging, hat heute einen Brief erhalten."
+Reference: "The man who walked in the park yesterday received a letter today."
 VIVTransformer: "The man who walked in the park yesterday received a letter today."
 Transformer-Base: "The man who went for a walk in the park yesterday has received a letter today."
 
-BLEU分数:
+BLEU score:
 - VIVTransformer: 100.0
 - Transformer-Base: 78.3
 
-注意力对齐分析:
-- "Der Mann" → "The man" (对齐度: 0.94)
-- "der...ging" → "who walked" (长距离依赖处理)
-- "heute" → "today" (时间状语对齐: 0.89)
+Attention alignment analysis:
+- "Der Mann" → "The man" (alignment: 0.94)
+- "der...ging" → "who walked" (long-range dependency handled)
+- "heute" → "today" (temporal adverb alignment: 0.89)
 ```
 
-### 📖 阅读理解案例 {#阅读理解案例}
+### 📖 Reading comprehension case {#reading-comprehension-case}
 
-#### 多跳推理 {#多跳推理}
+#### Multi-hop reasoning {#multi-hop-reasoning}
 
-**SQuAD示例**:
+**SQuAD example**:
 ```
-段落: "John works at a technology company in Silicon Valley. The company was founded in 1998 and specializes in artificial intelligence. John joined the company in 2015 as a software engineer."
+Passage: "John works at a technology company in Silicon Valley. The company was founded in 1998 and specializes in artificial intelligence. John joined the company in 2015 as a software engineer."
 
-问题: "When did John start working at the AI company?"
-答案: "2015"
+Question: "When did John start working at the AI company?"
+Answer: "2015"
 
-VIVTransformer推理过程:
-1. 识别关键实体: "John", "company", "artificial intelligence"
-2. 建立时间关联: "founded in 1998", "joined...in 2015"
-3. 推理链: John → works at → company → specializes in AI → joined in 2015
+VIVTransformer reasoning:
+1. Identify key entities: "John", "company", "artificial intelligence"
+2. Establish temporal relations: "founded in 1998", "joined...in 2015"
+3. Reasoning chain: John → works at → company → specializes in AI → joined in 2015
 
-注意力权重分布:
+Attention weights:
 - "John" (0.28)
 - "artificial intelligence" (0.31)
 - "2015" (0.35)
-- 其他词汇 (0.06)
+- other tokens (0.06)
 ```
 
-## 结论与讨论 {#结论与讨论}
+## Conclusions & Discussion {#conclusions-discussion}
 
-### 🎯 主要发现 {#主要发现}
+### 🎯 Key findings {#key-findings}
 
-#### 1. 性能优势 {#1-性能优势}
-- **准确率提升**: 在多个基准测试中平均提升2-3个百分点
-- **效率优化**: 推理速度提升27%，内存使用减少35%
-- **训练加速**: 训练时间减少26%，收敛更稳定
+#### 1. Performance advantages {#1-performance-advantages}
+- **Accuracy improvement**: Average +2–3 points across benchmarks
+- **Efficiency optimization**: +27% inference speed, -35% memory
+- **Training acceleration**: -26% training time, more stable convergence
 
-#### 2. 技术创新 {#2-技术创新}
-- **注意力机制融合**: 38种注意力机制的有效集成
-- **损失函数优化**: SVD正则化显著改善模型泛化
-- **架构设计**: 平衡性能与效率的最优配置
+#### 2. Technical innovations {#2-technical-innovations}
+- **Attention fusion**: Effective integration of 38 attention mechanisms
+- **Loss optimization**: SVD regularization significantly improves generalization
+- **Architecture design**: Optimal balance between performance and efficiency
 
-#### 3. 实用价值 {#3-实用价值}
-- **部署友好**: 更低的计算和内存需求
-- **任务通用**: 在多种NLP任务上表现优异
-- **扩展性强**: 支持长序列和大批次处理
+#### 3. Practical value {#3-practical-value}
+- **Deployment friendly**: Lower compute and memory requirements
+- **Task generality**: Strong performance across diverse NLP tasks
+- **Scalability**: Supports long sequences and large batch sizes
 
-### 🔮 未来方向 {#未来方向}
+### 🔮 Future directions {#future-directions}
 
-#### 1. 技术改进 {#1-技术改进}
-- **动态注意力**: 根据输入自适应选择注意力机制
-- **知识蒸馏**: 将大模型知识迁移到轻量级版本
-- **多模态扩展**: 支持文本、图像、音频的联合建模
+#### 1. Technical improvements {#1-technical-improvements}
+- **Dynamic attention**: Input-adaptive selection of attention mechanisms
+- **Knowledge distillation**: Transfer knowledge to lightweight models
+- **Multimodal extension**: Joint modeling of text, images, and audio
 
-#### 2. 应用拓展 {#2-应用拓展}
-- **领域适应**: 针对特定领域的模型优化
-- **实时应用**: 支持流式处理和在线学习
-- **边缘部署**: 移动设备和嵌入式系统优化
+#### 2. Application expansion {#2-application-expansion}
+- **Domain adaptation**: Task- and domain-specific optimization
+- **Real-time applications**: Streaming processing and online learning
+- **Edge deployment**: Optimizations for mobile and embedded systems
 
-#### 3. 理论研究 {#3-理论研究}
-- **可解释性**: 深入理解注意力机制的工作原理
-- **理论分析**: 建立性能与复杂度的理论关系
-- **泛化能力**: 研究模型的泛化边界和极限
+#### 3. Theoretical research {#3-theoretical-research}
+- **Interpretability**: Deeper understanding of attention mechanisms
+- **Theoretical analysis**: Linking performance and computational complexity
+- **Generalization**: Study of generalization limits and boundaries
 
-### 📊 实验总结 {#实验总结}
+### 📊 Experiment summary {#experiment-summary}
 
-| 评估维度 | VIVTransformer | 基线模型 | 改进幅度 |
+| Dimension | VIVTransformer | Baseline | Improvement |
 |----------|----------------|----------|----------|
-| 平均准确率 | 87.4% | 84.6% | +2.8% |
-| 推理速度 | 15.7ms | 21.5ms | +27% |
-| 内存使用 | 1156MB | 1789MB | -35% |
-| 训练时间 | 43.1h | 58.5h | -26% |
-| 参数效率 | 89M | 110M | -19% |
-| 能耗比 | 0.34 J/sample | 0.52 J/sample | -35% |
+| Avg. accuracy | 87.4% | 84.6% | +2.8% |
+| Inference latency | 15.7ms | 21.5ms | +27% |
+| Memory usage | 1156MB | 1789MB | -35% |
+| Training time | 43.1h | 58.5h | -26% |
+| Parameter efficiency | 89M | 110M | -19% |
+| Energy per sample | 0.34 J/sample | 0.52 J/sample | -35% |
 
-### 💡 关键洞察 {#关键洞察}
+### 💡 Key insights {#key-insights}
 
-1. **注意力机制的多样性**对模型性能至关重要，不同任务需要不同的注意力模式
-2. **SVD正则化**是提升模型泛化能力的有效手段，特别是在小数据集上
-3. **架构优化**比单纯增加参数更能提升模型效率
-4. **训练策略**（学习率调度、梯度裁剪等）对最终性能有显著影响
-5. **评估指标的多样性**有助于全面了解模型的优缺点
-
----
-
-**📈 性能亮点**:
-- 🏆 在8个GLUE任务中有7个达到SOTA
-- ⚡ 推理速度比BERT快27%
-- 💾 内存使用比RoBERTa少35%
-- 🎯 在长序列任务上表现尤为突出
-- 🔧 训练稳定性和收敛速度显著改善
-
-**🔬 实验价值**:
-本实验结果为Transformer架构的改进提供了有价值的参考，证明了通过合理的注意力机制设计和损失函数优化，可以在保持甚至提升性能的同时显著改善计算效率。
+1. Diversity of attention mechanisms is crucial; different tasks require different attention patterns
+2. SVD regularization effectively improves generalization, especially on small datasets
+3. Architecture optimization yields better efficiency than simply increasing parameters
+4. Training strategies (LR scheduling, gradient clipping, etc.) significantly impact final performance
+5. A diverse set of evaluation metrics provides a comprehensive understanding of strengths and weaknesses
 
 ---
 
-*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*
+**📈 Performance highlights**:
+- 🏆 SOTA on 7 out of 8 GLUE tasks
+- ⚡ 27% faster inference than BERT
+- 💾 35% less memory than RoBERTa
+- 🎯 Particularly strong on long-sequence tasks
+- 🔧 Improved training stability and convergence speed
+
+**🔬 Experimental value**:
+These results provide valuable guidance for improving Transformer architectures, showing that with well-designed attention mechanisms and loss functions, we can significantly improve computational efficiency while maintaining or even improving performance.
+
+---
+
+*Need help? Check the [FAQ](faq) or [Troubleshooting](troubleshooting) page.*

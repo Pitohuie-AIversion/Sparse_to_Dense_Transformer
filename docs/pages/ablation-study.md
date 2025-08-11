@@ -1,8 +1,8 @@
 ---
 layout: default
-title: 消融研究
+title: Ablation Study
 nav_order: 14
-parent: 评估与结果
+parent: Evaluation & Results
 permalink: /pages/ablation-study/
 ---
 

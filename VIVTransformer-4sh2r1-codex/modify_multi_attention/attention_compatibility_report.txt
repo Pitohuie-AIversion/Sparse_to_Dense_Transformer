@@ -1,0 +1,46 @@
+Attention Mechanism Compatibility Report
+==================================================
+
+Compatible mechanisms (22):
+  self: qkv_compatible
+  simplified_self: qkv_compatible
+  muse: qkv_compatible
+  ufo: qkv_compatible
+  relative: qkv_compatible
+  sparse: qkv_compatible
+  lsh: qkv_compatible
+  se: cnn_compatible
+  sk: cnn_compatible
+  cbam: cnn_compatible
+  bam: cnn_compatible
+  eca: cnn_compatible
+  shuffle: cnn_compatible
+  residual: cnn_compatible
+  psa: cnn_compatible
+  cot: cnn_compatible
+  polarized: cnn_compatible
+  halo: cnn_compatible
+  a2: cnn_compatible
+  parnet: cnn_compatible
+  external: sequence_compatible
+  aft: sequence_compatible
+
+Incompatible mechanisms (16):
+  emsa: Could not instantiate emsa with default parameters. Error: EMSA.__init__() missing 4 required positional arguments: 'd_model', 'd_k', 'd_v', and 'h'
+  mobilevit: MobileViTAttention.__init__() got an unexpected keyword argument 'ffn_dim'
+  mobilevitv2: MobileViTv2Attention.forward() takes 2 positional arguments but 4 were given
+  dat: groups must be a positive integer
+  crossformer: 'int' object is not subscriptable
+  moa: sequence: not enough values to unpack (expected 4, got 3), image: shape '[2, 64, 2, 3, 32]' is invalid for input of size 6144
+  crisscross: CrissCrossAttention.forward() takes 2 positional arguments but 4 were given
+  axial: Could not instantiate axial with default parameters. Error: AxialImageTransformer.__init__() missing 2 required positional arguments: 'dim' and 'depth'
+  gfnet: GFNet.forward() takes 2 positional arguments but 4 were given
+  s2: S2Attention.__init__() got an unexpected keyword argument 'channel'
+  triplet: TripletAttention.__init__() got an unexpected keyword argument 'channel'
+  coord: CoordAtt.__init__() got an unexpected keyword argument 'channel'
+  danet: Given groups=1, weight of size [512, 512, 3, 3], expected input[2, 256, 7, 7] to have 512 channels, but got 256 channels instead
+  outlook: mat1 and mat2 shapes cannot be multiplied (3584x7 and 256x256)
+  vip: mat1 and mat2 shapes cannot be multiplied (3584x7 and 256x256)
+  coatnet: Given input size: (192x1x1). Calculated output size: (192x0x0). Output size is too small
+
+Success rate: 22/38 (57.9%)

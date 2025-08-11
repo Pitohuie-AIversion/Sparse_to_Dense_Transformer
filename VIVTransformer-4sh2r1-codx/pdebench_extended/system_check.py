@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-系统检查脚本 - Windows/Linux兼容
-检查训练环境的完整性和GPU状态
+System Check Script - Windows/Linux Compatible
+Check the integrity of the training environment and GPU status
 """
 
 import os
@@ -26,7 +26,7 @@ try:
 except ImportError:
     NUMPY_AVAILABLE = False
 
-# 颜色定义
+# Color definitions
 class Colors:
     RED = '\033[0;31m'
     GREEN = '\033[0;32m'
@@ -39,38 +39,38 @@ class Colors:
     
     @classmethod
     def disable_on_windows(cls):
-        """在Windows命令行中禁用颜色"""
+        """Disable ANSI colors in Windows command line"""
         if platform.system() == 'Windows':
             for attr in dir(cls):
                 if not attr.startswith('_') and attr != 'disable_on_windows':
                     setattr(cls, attr, '')
 
-# 在Windows中禁用颜色（除非使用支持ANSI的终端）
+# Disable colors on Windows unless ANSI is supported
 if platform.system() == 'Windows' and 'ANSICON' not in os.environ:
     Colors.disable_on_windows()
 
 def print_header(title):
-    """打印标题"""
+    """Print section header"""
     print(f"\n{Colors.BOLD}{Colors.BLUE}=== {title} ==={Colors.NC}")
 
 def print_success(message):
-    """打印成功信息"""
+    """Print success message"""
     print(f"{Colors.GREEN}✓{Colors.NC} {message}")
 
 def print_warning(message):
-    """打印警告信息"""
+    """Print warning message"""
     print(f"{Colors.YELLOW}⚠️{Colors.NC} {message}")
 
 def print_error(message):
-    """打印错误信息"""
+    """Print error message"""
     print(f"{Colors.RED}❌{Colors.NC} {message}")
 
 def print_info(message):
-    """打印信息"""
+    """Print info message"""
     print(f"{Colors.CYAN}ℹ️{Colors.NC} {message}")
 
 def get_gpu_info():
-    """获取GPU信息"""
+    """Get GPU info via PyTorch"""
     gpu_info = []
     
     if not TORCH_AVAILABLE:
@@ -90,7 +90,7 @@ def get_gpu_info():
     return gpu_info
 
 def get_nvidia_smi_info():
-    """获取nvidia-smi信息"""
+    """Get GPU info via nvidia-smi"""
     try:
         result = subprocess.run(
             ['nvidia-smi', '--query-gpu=index,name,memory.used,memory.total,utilization.gpu,temperature.gpu', 
@@ -120,18 +120,18 @@ def get_nvidia_smi_info():
     return []
 
 def check_python_environment():
-    """检查Python环境"""
-    print_header("Python环境检查")
+    """Check Python environment"""
+    print_header("Python Environment Check")
     
-    # Python版本
+    # Python version
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
-    print_success(f"Python版本: {python_version}")
+    print_success(f"Python version: {python_version}")
     
-    # 平台信息
-    print_info(f"操作系统: {platform.system()} {platform.release()}")
-    print_info(f"架构: {platform.machine()}")
+    # Platform info
+    print_info(f"Operating System: {platform.system()} {platform.release()}")
+    print_info(f"Architecture: {platform.machine()}")
     
-    # 检查必要的包
+    # Required packages
     packages = {
         'torch': TORCH_AVAILABLE,
         'numpy': NUMPY_AVAILABLE,
@@ -144,28 +144,28 @@ def check_python_environment():
             elif package == 'numpy':
                 print_success(f"{package}: {np.__version__}")
         else:
-            print_error(f"{package}: 未安装")
+            print_error(f"{package}: not installed")
     
-    # 检查其他包
+    # Optional packages
     optional_packages = ['tensorboard', 'matplotlib', 'tqdm', 'pyyaml']
     for package in optional_packages:
         try:
             __import__(package)
-            print_success(f"{package}: 已安装")
+            print_success(f"{package}: installed")
         except ImportError:
-            print_warning(f"{package}: 未安装 (可选)")
+            print_warning(f"{package}: not installed (optional)")
 
 def check_gpu_status():
-    """检查GPU状态"""
-    print_header("GPU状态检查")
+    """Check GPU status"""
+    print_header("GPU Status Check")
     
-    # 检查PyTorch CUDA支持
+    # Check PyTorch CUDA support
     if TORCH_AVAILABLE:
         if torch.cuda.is_available():
-            print_success(f"CUDA可用: {torch.version.cuda}")
-            print_success(f"GPU数量: {torch.cuda.device_count()}")
+            print_success(f"CUDA available: {torch.version.cuda}")
+            print_success(f"GPU count: {torch.cuda.device_count()}")
             
-            # PyTorch GPU信息
+            # PyTorch GPU info
             gpu_info = get_gpu_info()
             for gpu in gpu_info:
                 memory_used_gb = gpu['memory_allocated'] / (1024**3)
@@ -173,73 +173,73 @@ def check_gpu_status():
                 memory_usage_percent = (gpu['memory_allocated'] / gpu['memory_total']) * 100
                 
                 print_info(f"GPU {gpu['index']}: {gpu['name']}")
-                print_info(f"  显存: {memory_used_gb:.1f}GB / {memory_total_gb:.1f}GB ({memory_usage_percent:.1f}%)")
+                print_info(f"  Memory: {memory_used_gb:.1f}GB / {memory_total_gb:.1f}GB ({memory_usage_percent:.1f}%)")
         else:
-            print_warning("CUDA不可用")
+            print_warning("CUDA not available")
     else:
-        print_error("PyTorch未安装，无法检查CUDA")
+        print_error("PyTorch not installed, unable to check CUDA")
     
-    # 检查nvidia-smi
+    # Check nvidia-smi
     nvidia_info = get_nvidia_smi_info()
     if nvidia_info:
-        print_success("nvidia-smi可用")
+        print_success("nvidia-smi available")
         for gpu in nvidia_info:
             memory_usage_percent = (gpu['memory_used'] / gpu['memory_total']) * 100
             
-            # 状态判断
+            # Status assessment
             if memory_usage_percent < 10 and gpu['utilization'] < 10:
-                status = f"{Colors.GREEN}空闲{Colors.NC}"
+                status = f"{Colors.GREEN}Idle{Colors.NC}"
             elif memory_usage_percent < 50 and gpu['utilization'] < 50:
-                status = f"{Colors.YELLOW}轻载{Colors.NC}"
+                status = f"{Colors.YELLOW}Light Load{Colors.NC}"
             else:
-                status = f"{Colors.RED}重载{Colors.NC}"
+                status = f"{Colors.RED}Heavy Load{Colors.NC}"
             
             print_info(f"GPU {gpu['index']}: {gpu['name']}")
-            print_info(f"  显存: {gpu['memory_used']}MB / {gpu['memory_total']}MB ({memory_usage_percent:.1f}%)")
-            print_info(f"  利用率: {gpu['utilization']}%")
-            print_info(f"  温度: {gpu['temperature']}°C")
-            print_info(f"  状态: {status}")
+            print_info(f"  Memory: {gpu['memory_used']}MB / {gpu['memory_total']}MB ({memory_usage_percent:.1f}%)")
+            print_info(f"  Utilization: {gpu['utilization']}%")
+            print_info(f"  Temperature: {gpu['temperature']}°C")
+            print_info(f"  Status: {status}")
     else:
-        print_warning("nvidia-smi不可用")
+        print_warning("nvidia-smi not available")
 
 def check_system_resources():
-    """检查系统资源"""
-    print_header("系统资源检查")
+    """Check system resources"""
+    print_header("System Resources Check")
     
-    # CPU信息
+    # CPU info
     cpu_count = psutil.cpu_count(logical=False)
     cpu_count_logical = psutil.cpu_count(logical=True)
     cpu_usage = psutil.cpu_percent(interval=1)
     
-    print_info(f"CPU核心: {cpu_count} 物理核心, {cpu_count_logical} 逻辑核心")
-    print_info(f"CPU使用率: {cpu_usage}%")
+    print_info(f"CPU Cores: {cpu_count} physical, {cpu_count_logical} logical")
+    print_info(f"CPU Usage: {cpu_usage}%")
     
-    # 内存信息
+    # Memory info
     memory = psutil.virtual_memory()
     memory_total_gb = memory.total / (1024**3)
     memory_used_gb = memory.used / (1024**3)
     memory_usage_percent = memory.percent
     
-    print_info(f"内存: {memory_used_gb:.1f}GB / {memory_total_gb:.1f}GB ({memory_usage_percent:.1f}%)")
+    print_info(f"Memory: {memory_used_gb:.1f}GB / {memory_total_gb:.1f}GB ({memory_usage_percent:.1f}%)")
     
-    # 磁盘信息
+    # Disk info
     disk = psutil.disk_usage('.')
     disk_total_gb = disk.total / (1024**3)
     disk_used_gb = disk.used / (1024**3)
     disk_usage_percent = (disk.used / disk.total) * 100
     
-    print_info(f"磁盘: {disk_used_gb:.1f}GB / {disk_total_gb:.1f}GB ({disk_usage_percent:.1f}%)")
+    print_info(f"Disk: {disk_used_gb:.1f}GB / {disk_total_gb:.1f}GB ({disk_usage_percent:.1f}%)")
     
-    # 负载平均值（仅Linux）
+    # Load average (Linux only)
     if hasattr(os, 'getloadavg'):
         load_avg = os.getloadavg()
-        print_info(f"负载平均值: {load_avg[0]:.2f}, {load_avg[1]:.2f}, {load_avg[2]:.2f}")
+        print_info(f"Load Average: {load_avg[0]:.2f}, {load_avg[1]:.2f}, {load_avg[2]:.2f}")
 
 def check_training_files():
-    """检查训练相关文件"""
-    print_header("训练文件检查")
+    """Check training-related files"""
+    print_header("Training Files Check")
     
-    # 检查数据文件
+    # Check data files
     data_files = [
         'data/pressure_field_data.pt',
         'data/pressure_field_data.h5',
@@ -250,14 +250,14 @@ def check_training_files():
     for data_file in data_files:
         if Path(data_file).exists():
             file_size = Path(data_file).stat().st_size / (1024**2)  # MB
-            print_success(f"数据文件: {data_file} ({file_size:.1f}MB)")
+            print_success(f"Data file: {data_file} ({file_size:.1f}MB)")
             data_found = True
             break
     
     if not data_found:
-        print_warning("未找到数据文件")
+        print_warning("No data file found")
     
-    # 检查配置文件
+    # Check config files
     config_files = [
         'configs/pressure_field_training.yaml',
         'config.yaml',
@@ -267,14 +267,14 @@ def check_training_files():
     config_found = False
     for config_file in config_files:
         if Path(config_file).exists():
-            print_success(f"配置文件: {config_file}")
+            print_success(f"Config file: {config_file}")
             config_found = True
             break
     
     if not config_found:
-        print_warning("未找到配置文件")
+        print_warning("No config file found")
     
-    # 检查训练脚本
+    # Check training scripts
     train_scripts = [
         'train_pressure_field.py',
         'train.py',
@@ -284,24 +284,24 @@ def check_training_files():
     script_found = False
     for script in train_scripts:
         if Path(script).exists():
-            print_success(f"训练脚本: {script}")
+            print_success(f"Training script: {script}")
             script_found = True
             break
     
     if not script_found:
-        print_warning("未找到训练脚本")
+        print_warning("No training script found")
     
-    # 检查输出目录
+    # Check output directories
     output_dirs = ['outputs', 'results', 'checkpoints']
     for output_dir in output_dirs:
         if Path(output_dir).exists():
-            print_success(f"输出目录: {output_dir}")
+            print_success(f"Output directory: {output_dir}")
         else:
-            print_info(f"输出目录不存在: {output_dir} (将自动创建)")
+            print_info(f"Output directory not found: {output_dir} (will be created automatically)")
 
 def check_running_processes():
-    """检查运行中的训练进程"""
-    print_header("运行进程检查")
+    """Check running training processes"""
+    print_header("Running Processes Check")
     
     training_processes = []
     
@@ -320,26 +320,26 @@ def check_running_processes():
             continue
     
     if training_processes:
-        print_info(f"发现 {len(training_processes)} 个相关进程:")
+        print_info(f"Found {len(training_processes)} related process(es):")
         for proc in training_processes:
             print_info(f"  PID {proc['pid']}: {proc['name']}")
-            print_info(f"    命令: {proc['cmdline']}")
-            print_info(f"    CPU: {proc['cpu_percent']:.1f}%, 内存: {proc['memory_percent']:.1f}%")
+            print_info(f"    Command: {proc['cmdline']}")
+            print_info(f"    CPU: {proc['cpu_percent']:.1f}%, Memory: {proc['memory_percent']:.1f}%")
     else:
-        print_info("未发现训练相关进程")
+        print_info("No training-related process found")
 
 def generate_report():
-    """生成系统报告"""
-    print_header("生成系统报告")
+    """Generate system report"""
+    print_header("Generate System Report")
     
     report_file = f"system_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     
     with open(report_file, 'w', encoding='utf-8') as f:
-        f.write(f"系统检查报告\n")
-        f.write(f"生成时间: {datetime.now()}\n")
+        f.write(f"System Check Report\n")
+        f.write(f"Generated at: {datetime.now()}\n")
         f.write(f"="*50 + "\n\n")
         
-        # 重定向输出到文件
+        # Redirect output to buffer
         import io
         import contextlib
         
@@ -347,7 +347,7 @@ def generate_report():
         sys.stdout = buffer = io.StringIO()
         
         try:
-            # 重新运行所有检查（不带颜色）
+            # Re-run all checks (without colors)
             Colors.disable_on_windows()
             check_python_environment()
             check_gpu_status()
@@ -357,25 +357,25 @@ def generate_report():
         finally:
             sys.stdout = old_stdout
         
-        # 清理ANSI颜色代码
+        # Strip ANSI color codes
         import re
         content = buffer.getvalue()
         content = re.sub(r'\x1b\[[0-9;]*m', '', content)
         f.write(content)
     
-    print_success(f"系统报告已生成: {report_file}")
+    print_success(f"System report generated: {report_file}")
 
 def main():
-    """主函数"""
+    """Main function"""
     print(f"{Colors.BOLD}{Colors.PURPLE}")
     print("╔══════════════════════════════════════════════════════════════════════════════╗")
-    print("║                          系统检查工具 v1.0                                  ║")
-    print("║                     VIV Transformer 训练环境检查                            ║")
+    print("║                          System Check Tool v1.0                             ║")
+    print("║                 VIV Transformer Training Environment Check                  ║")
     print("╚══════════════════════════════════════════════════════════════════════════════╝")
     print(f"{Colors.NC}")
     
-    print_info(f"检查时间: {datetime.now()}")
-    print_info(f"当前目录: {os.getcwd()}")
+    print_info(f"Check time: {datetime.now()}")
+    print_info(f"Current directory: {os.getcwd()}")
     
     try:
         check_python_environment()
@@ -384,22 +384,22 @@ def main():
         check_training_files()
         check_running_processes()
         
-        print_header("检查完成")
+        print_header("Check Completed")
         
-        # 询问是否生成报告
+        # Ask whether to generate report
         if len(sys.argv) > 1 and '--report' in sys.argv:
             generate_report()
         else:
-            response = input(f"\n{Colors.YELLOW}是否生成详细报告? (y/N): {Colors.NC}")
+            response = input(f"\n{Colors.YELLOW}Generate a detailed report? (y/N): {Colors.NC}")
             if response.lower() in ['y', 'yes']:
                 generate_report()
         
-        print_success("系统检查完成!")
+        print_success("System check completed!")
         
     except KeyboardInterrupt:
-        print(f"\n{Colors.YELLOW}检查被用户中断{Colors.NC}")
+        print(f"\n{Colors.YELLOW}Check interrupted by user{Colors.NC}")
     except Exception as e:
-        print_error(f"检查过程中出现错误: {e}")
+        print_error(f"Error occurred during check: {e}")
 
 if __name__ == '__main__':
     main()

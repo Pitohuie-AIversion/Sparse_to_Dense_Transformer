@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 交互式演示
+title: Interactive Demo
 nav_order: 5
 permalink: /pages/interactive-demo/
 description: "VIVTransformer交互式演示和可视化展示"

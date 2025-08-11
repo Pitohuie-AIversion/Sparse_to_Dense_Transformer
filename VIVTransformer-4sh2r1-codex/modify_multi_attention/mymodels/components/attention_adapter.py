@@ -87,14 +87,19 @@ class CNNStyleAttentionAdapter(AttentionAdapter):
                 output = torch.zeros_like(x_reshaped)
 
         except Exception as e:
-            print(f"ERROR: Exception in {self.attention.__class__.__name__}: {e}")
-            output = torch.zeros_like(x_reshaped)
+            # 记录错误信息但允许程序继续运行，以便调试
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"ERROR: Exception in {self.attention.__class__.__name__}: {e}")
+            # 抛出异常而不是静默失败，这样可以更好地调试问题
+            raise RuntimeError(f"Attention module {self.attention.__class__.__name__} failed: {e}") from e
 
         output = output.view(batch_size, d_model, seq_len).transpose(1, 2)
 
         if return_attention:
-            return output, None
-        return output
+            return output, None  # 没有注意力权重可返回
+        else:
+            return output
 
 
 class SingleInputAttentionAdapter(AttentionAdapter):

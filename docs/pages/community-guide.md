@@ -1169,7 +1169,7 @@ if __name__ == '__main__':
 ---
 name: Bug报告
 about: 报告软件缺陷
-title: '[BUG] 简短描述问题'
+title: '[BUG] Bug report'
 labels: bug
 assignees: ''
 ---
@@ -1310,7 +1310,7 @@ logger.error("错误信息")
 ---
 name: 功能请求
 about: 建议新功能或改进
-title: '[FEATURE] 功能简短描述'
+title: '[FEATURE] Feature request'
 labels: enhancement
 assignees: ''
 ---

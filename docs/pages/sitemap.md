@@ -1,47 +1,96 @@
+# 🗺️ Site Map
+
+> Complete documentation structure and navigation guide for VIVTransformer
+
 ---
-layout: default
-title: Site Map
-permalink: /sitemap/
+
+## 📚 Core Documentation
+
+### 🏠 Home
+- [Home]({{ site.baseurl }}/) - Welcome and project overview
+
+### 🚀 Quick Start
+- [Quick Start Guide]({{ site.baseurl }}/pages/quick-start/) - Get started with VIVTransformer
+
+### 📖 Documentation
+- [Documentation Home]({{ site.baseurl }}/pages/documentation/) - Complete documentation portal
+
 ---
 
-# 站点地图
+## 🔧 Technical Guides
 
+### 🧠 Core Architecture
+- [Technical Deep Dive]({{ site.baseurl }}/pages/technical-deep-dive/) - Detailed technical implementation
+- [Attention Mechanisms]({{ site.baseurl }}/pages/attention-mechanisms/) - Comprehensive attention framework
 
-## 🚀 快速开始
+### 🏃 Training & Optimization
+- [Training Guide]({{ site.baseurl }}/pages/training-guide/) - Complete training workflow
+- [Training Optimization]({{ site.baseurl }}/pages/training-optimization/) - Performance optimization strategies
 
-- [quick-start-tutorial](quick-start-tutorial)
+### ⚙️ Configuration
+- [Configuration Guide]({{ site.baseurl }}/pages/configuration/) - System configuration settings
+- [Advanced Configuration]({{ site.baseurl }}/pages/advanced-config/) - Advanced configuration options
 
-## 🏗️ 架构设计
+---
 
-- [architecture-overview](architecture-overview)
-- [model-design](model-design)
-- [attention-mechanisms-guide](attention-mechanisms-guide)
-- [custom-attention](custom-attention)
+## 🧪 Experimental Resources
 
-## 📚 训练指南
+### 🔬 Experiments
+- [Experimental Showcase]({{ site.baseurl }}/pages/experimental-showcase/) - Research experiments and results
+- [Benchmark Results]({{ site.baseurl }}/pages/benchmarks/) - Performance benchmarks
 
-- [training-guide](training-guide)
-- [loss-functions](loss-functions)
-- [svd-loss-functions](svd-loss-functions)
-- [multi-loss-strategy](multi-loss-strategy)
-- [hyperparameter-tuning](hyperparameter-tuning)
-- [convergence-analysis](convergence-analysis)
+### 📊 Analysis Tools
+- [Performance Analysis]({{ site.baseurl }}/pages/performance-analysis/) - Performance analysis methods
+- [Visualization Tools]({{ site.baseurl }}/pages/visualization/) - Data visualization utilities
 
-## ⚙️ 配置与实现
+---
 
-- [configuration-system](configuration-system)
-- [implementation-details](implementation-details)
-- [data-pipeline](data-pipeline)
+## 🌐 Community & Support
 
-## 📊 评估与部署
+### 👥 Community
+- [Community Guide]({{ site.baseurl }}/pages/community-guide/) - Community participation guidelines
+- [Contributing]({{ site.baseurl }}/pages/contributing/) - How to contribute to the project
 
-- [evaluation-metrics](evaluation-metrics)
-- [experimental-results](experimental-results)
-- [performance-comparison](performance-comparison)
-- [deployment-guide](deployment-guide)
+### 💬 Support
+- [FAQ]({{ site.baseurl }}/pages/faq/) - Frequently asked questions
+- [Troubleshooting]({{ site.baseurl }}/pages/troubleshooting/) - Common issues and solutions
 
-## 🛠️ 开发与维护
+---
 
-- [development-guide](development-guide)
-- [troubleshooting](troubleshooting)
-- [faq](faq)
+## 📚 Academic Resources
+
+### 📄 Research
+- [Research Papers]({{ site.baseurl }}/pages/research-papers/) - Academic papers and references
+- [Publications]({{ site.baseurl }}/pages/publications/) - Project publications
+
+### 🎓 Educational
+- [Tutorials]({{ site.baseurl }}/pages/tutorials/) - Step-by-step tutorials
+- [Examples]({{ site.baseurl }}/pages/examples/) - Code examples and use cases
+
+---
+
+## 🛠️ Development
+
+### 👨‍💻 Development
+- [Development Guide]({{ site.baseurl }}/pages/development-guide/) - Developer resources
+- [API Reference]({{ site.baseurl }}/pages/api-reference/) - Complete API documentation
+
+### 🔧 Tools
+- [Development Tools]({{ site.baseurl }}/pages/dev-tools/) - Development utilities
+- [Testing Guide]({{ site.baseurl }}/pages/testing/) - Testing framework and methods
+
+---
+
+## 📋 Reference
+
+### 📖 Reference Materials
+- [Glossary]({{ site.baseurl }}/pages/glossary/) - Technical terminology
+- [Changelog]({{ site.baseurl }}/pages/changelog/) - Version history and updates
+
+### 🔗 External Links
+- [GitHub Repository](https://github.com/your-repo/VIVTransformer)
+- [Documentation Source](https://github.com/your-repo/VIVTransformer/tree/main/docs)
+
+---
+
+*Site map last updated: {{ site.time | date: "%B %d, %Y" }}*

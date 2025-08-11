@@ -1,132 +1,295 @@
-# 📚 教程与示例
+---
+layout: default
+title: Tutorials and Examples
+lang: en
+ref: tutorials-examples
+description: Comprehensive tutorials and examples for VIVTransformer usage
+keywords: tutorial, examples, VIVTransformer, attention mechanism, configuration, training
+---
 
-> 从入门到精通的VIVTransformer使用教程和代码示例
+# 📚 Tutorials and Examples
+
+Welcome to the VIVTransformer tutorials and examples page! This page provides detailed guidance and practical examples to help you quickly master the use of VIVTransformer.
+
+## 📖 Table of Contents
+
+- [🚀 Quick Start Guide](#-quick-start-guide)
+  - [Basic Model Usage](#basic-model-usage)
+  - [Environment Setup](#environment-setup)
+  - [Basic Configuration](#basic-configuration)
+- [🧠 Attention Mechanism Usage](#-attention-mechanism-usage)
+  - [Multiple Attention Mechanism Comparison](#multiple-attention-mechanism-comparison)
+  - [Custom Attention Mechanisms](#custom-attention-mechanisms)
+- [📊 Loss Function Configuration](#-loss-function-configuration)
+  - [SVD Loss Function Detailed](#svd-loss-function-detailed)
+- [⚙️ Advanced Configuration](#-advanced-configuration)
+  - [Custom Training Loop](#custom-training-loop)
+  - [Multi-GPU Training](#multi-gpu-training)
+- [🎯 Practical Examples](#-practical-examples)
+  - [Time Series Prediction](#time-series-prediction)
+  - [Signal Processing](#signal-processing)
+  - [Feature Extraction](#feature-extraction)
 
 ---
 
-## 📋 目录
+## 🚀 Quick Start Guide
 
-- [🚀 快速入门教程](#-快速入门教程)
-- [🔧 基础配置示例](#-基础配置示例)
-- [🧠 注意力机制使用](#-注意力机制使用)
-- [📊 损失函数配置](#-损失函数配置)
-- [🏋️ 训练流程示例](#️-训练流程示例)
-- [📈 评估与可视化](#-评估与可视化)
-- [🔬 高级应用案例](#-高级应用案例)
-- [🌊 涡激振动专业应用](#-涡激振动专业应用)
-- [🚀 部署与推理](#-部署与推理)
-- [🛠️ 自定义扩展](#️-自定义扩展)
-
----
-
-## 🚀 快速入门教程
-
-### 第一个VIVTransformer模型
+### Basic Model Usage
 
 ```python
-# quick_start.py
+# basic_usage.py
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, TensorDataset
-import numpy as np
+from typing import Dict, Any
+import yaml
 
-# 假设这些是VIVTransformer的核心组件
-from vivtransformer import VIVTransformer, VIVConfig
-from vivtransformer.data import VIVDataset
-from vivtransformer.training import VIVTrainer
-from vivtransformer.losses import SVDLoss
+# Assuming VIVTransformer is imported from the project
+from vivtransformer.models import VIVTransformer
+from vivtransformer.config import VIVConfig
 
-def quick_start_example():
-    """快速入门示例"""
+def basic_example():
+    """Basic VIVTransformer usage example"""
     
-    print("🚀 VIVTransformer 快速入门示例")
+    print("🌟 VIVTransformer Basic Example")
     
-    # 1. 创建配置
+    # 1. Create model configuration
     config = VIVConfig(
-        d_model=256,           # 模型维度
-        n_heads=8,             # 注意力头数
-        n_layers=6,            # 层数
-        attention_type='scaled_dot_product',  # 注意力类型
-        max_seq_length=512,    # 最大序列长度
-        dropout=0.1,           # Dropout率
-        use_svd_loss=True      # 使用SVD损失
+        d_model=512,
+        n_heads=8,
+        n_layers=6,
+        d_ff=2048,
+        max_seq_length=1024,
+        dropout=0.1
     )
     
-    print(f"✅ 配置创建完成: {config}")
-    
-    # 2. 创建模型
+    # 2. Initialize model
     model = VIVTransformer(config)
-    print(f"✅ 模型创建完成，参数量: {sum(p.numel() for p in model.parameters()):,}")
-    
-    # 3. 准备数据
-    # 生成示例数据（实际使用时替换为真实数据）
-    batch_size = 32
-    seq_length = 128
-    input_dim = config.d_model
-    
-    # 输入数据：[batch_size, seq_length, input_dim]
-    x = torch.randn(batch_size, seq_length, input_dim)
-    # 目标数据：[batch_size, seq_length, output_dim]
-    y = torch.randn(batch_size, seq_length, input_dim)
-    
-    print(f"✅ 数据准备完成，输入形状: {x.shape}, 目标形状: {y.shape}")
-    
-    # 4. 前向传播
     model.eval()
+    
+    print(f"Model created: {model.__class__.__name__}")
+    print(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")
+    
+    # 3. Create test data
+    batch_size = 4
+    seq_length = 256
+    
+    # Input data: [batch_size, seq_length, d_model]
+    input_data = torch.randn(batch_size, seq_length, config.d_model)
+    
+    print(f"Input shape: {input_data.shape}")
+    
+    # 4. Forward pass
     with torch.no_grad():
-        output = model(x)
-        print(f"✅ 前向传播完成，输出形状: {output.shape}")
+        output = model(input_data)
     
-    # 5. 计算损失
-    criterion = SVDLoss(alpha=0.5, beta=0.3)
-    loss = criterion(output, y)
-    print(f"✅ 损失计算完成，损失值: {loss.item():.6f}")
+    print(f"Output shape: {output.shape}")
     
-    # 6. 简单训练步骤
+    # 5. Extract attention weights (if supported)
+    if hasattr(model, 'get_attention_weights'):
+        attention_weights = model.get_attention_weights()
+        if attention_weights is not None:
+            print(f"Attention weights shape: {attention_weights.shape}")
+    
+    return model, output
+
+def training_example():
+    """Training example"""
+    
+    print("\n🏋️ VIVTransformer Training Example")
+    
+    # Model configuration
+    config = VIVConfig(
+        d_model=256,
+        n_heads=8,
+        n_layers=4,
+        d_ff=1024,
+        max_seq_length=512,
+        dropout=0.1
+    )
+    
+    # Create model
+    model = VIVTransformer(config)
     model.train()
+    
+    # Loss function and optimizer
+    criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
     
-    optimizer.zero_grad()
-    output = model(x)
-    loss = criterion(output, y)
-    loss.backward()
-    optimizer.step()
+    # Training parameters
+    num_epochs = 5
+    batch_size = 8
+    seq_length = 128
     
-    print(f"✅ 训练步骤完成，损失值: {loss.item():.6f}")
-    print("🎉 快速入门示例完成！")
+    print(f"Training for {num_epochs} epochs...")
+    
+    for epoch in range(num_epochs):
+        # Generate random training data
+        input_data = torch.randn(batch_size, seq_length, config.d_model)
+        target_data = torch.randn(batch_size, seq_length, config.d_model)
+        
+        # Forward pass
+        output = model(input_data)
+        loss = criterion(output, target_data)
+        
+        # Backward pass
+        optimizer.zero_grad()
+        loss.backward()
+        
+        # Gradient clipping
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        
+        optimizer.step()
+        scheduler.step()
+        
+        print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.6f}, LR: {scheduler.get_last_lr()[0]:.2e}")
+    
+    print("✅ Training completed!")
+    return model
 
 if __name__ == "__main__":
-    quick_start_example()
+    model, output = basic_example()
+    trained_model = training_example()
 ```
 
-### 环境设置
+### Environment Setup
 
-```bash
-# 安装依赖
-pip install torch torchvision torchaudio
-pip install numpy pandas matplotlib seaborn
-pip install tensorboard wandb  # 可选：实验跟踪
-pip install plotly dash       # 可选：交互式可视化
+```python
+# environment_setup.py
+import torch
+import platform
+import subprocess
+import sys
+from typing import List, Dict, Any
 
-# 克隆项目
-git clone https://github.com/your-repo/VIVTransformer.git
-cd VIVTransformer
+def check_environment() -> Dict[str, Any]:
+    """Check and display environment information"""
+    
+    print("🔍 Environment Check")
+    
+    env_info = {
+        'python_version': platform.python_version(),
+        'platform': platform.platform(),
+        'pytorch_version': torch.__version__,
+        'cuda_available': torch.cuda.is_available(),
+        'cuda_version': torch.version.cuda if torch.cuda.is_available() else None,
+        'gpu_count': torch.cuda.device_count() if torch.cuda.is_available() else 0,
+        'gpu_names': []
+    }
+    
+    # Get GPU information
+    if torch.cuda.is_available():
+        for i in range(torch.cuda.device_count()):
+            gpu_name = torch.cuda.get_device_name(i)
+            gpu_memory = torch.cuda.get_device_properties(i).total_memory / 1024**3  # GB
+            env_info['gpu_names'].append(f"{gpu_name} ({gpu_memory:.1f}GB)")
+    
+    # Display information
+    print(f"Python Version: {env_info['python_version']}")
+    print(f"Platform: {env_info['platform']}")
+    print(f"PyTorch Version: {env_info['pytorch_version']}")
+    print(f"CUDA Available: {env_info['cuda_available']}")
+    
+    if env_info['cuda_available']:
+        print(f"CUDA Version: {env_info['cuda_version']}")
+        print(f"GPU Count: {env_info['gpu_count']}")
+        for i, gpu_name in enumerate(env_info['gpu_names']):
+            print(f"  GPU {i}: {gpu_name}")
+    
+    return env_info
 
-# 安装项目
-pip install -e .
+def install_dependencies(packages: List[str] = None):
+    """Install required dependencies"""
+    
+    if packages is None:
+        packages = [
+            'torch>=1.12.0',
+            'numpy>=1.21.0',
+            'matplotlib>=3.5.0',
+            'seaborn>=0.11.0',
+            'pyyaml>=6.0',
+            'tqdm>=4.64.0',
+            'tensorboard>=2.9.0',
+            'scikit-learn>=1.1.0'
+        ]
+    
+    print("📦 Installing dependencies...")
+    
+    for package in packages:
+        try:
+            print(f"Installing {package}...")
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
+            print(f"✅ {package} installed successfully")
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Failed to install {package}: {e}")
 
-# 验证安装
-python -c "import vivtransformer; print('安装成功！')"
+def setup_development_environment():
+    """Set up development environment"""
+    
+    print("🛠️ Development Environment Setup")
+    
+    # Check current environment
+    env_info = check_environment()
+    
+    # Install dependencies
+    install_dependencies()
+    
+    # Create directories
+    import os
+    directories = [
+        'data',
+        'experiments',
+        'logs',
+        'checkpoints',
+        'results',
+        'configs'
+    ]
+    
+    for directory in directories:
+        os.makedirs(directory, exist_ok=True)
+        print(f"📁 Created directory: {directory}")
+    
+    # Create basic configuration file
+    basic_config = {
+        'model': {
+            'd_model': 512,
+            'n_heads': 8,
+            'n_layers': 6,
+            'd_ff': 2048,
+            'dropout': 0.1,
+            'max_seq_length': 1024
+        },
+        'training': {
+            'batch_size': 32,
+            'learning_rate': 1e-4,
+            'num_epochs': 100,
+            'warmup_steps': 1000,
+            'gradient_clip_norm': 1.0
+        },
+        'data': {
+            'train_path': 'data/train',
+            'val_path': 'data/val',
+            'test_path': 'data/test'
+        }
+    }
+    
+    import yaml
+    with open('configs/basic_config.yaml', 'w') as f:
+        yaml.dump(basic_config, f, default_flow_style=False)
+    
+    print("📄 Created basic configuration file: configs/basic_config.yaml")
+    print("✅ Development environment setup completed!")
+
+if __name__ == "__main__":
+    setup_development_environment()
 ```
 
----
-
-## 🔧 基础配置示例
-
-### YAML配置文件
+### Basic Configuration
 
 ```yaml
-# config/basic_config.yaml
+# basic_config.yaml
+
+# Model configuration
 model:
   name: "VIVTransformer"
   d_model: 512
@@ -136,18 +299,14 @@ model:
   dropout: 0.1
   max_seq_length: 1024
   
-  # 注意力机制配置
+  # Attention mechanism configuration
   attention:
-    type: "scaled_dot_product"  # 可选: multi_head, external, se_attention等
+    type: "scaled_dot_product"
     use_relative_position: true
     max_relative_position: 32
-    
-  # 位置编码
-  position_encoding:
-    type: "sinusoidal"  # 可选: learned, rotary
-    max_length: 1024
+    dropout: 0.1
 
-# 训练配置
+# Training configuration
 training:
   batch_size: 32
   learning_rate: 1e-4
@@ -155,19 +314,19 @@ training:
   warmup_steps: 1000
   gradient_clip_norm: 1.0
   
-  # 优化器
+  # Optimizer
   optimizer:
     type: "adamw"
     weight_decay: 0.01
     betas: [0.9, 0.999]
     
-  # 学习率调度
+  # Learning rate scheduler
   scheduler:
     type: "cosine_annealing"
     T_max: 100
     eta_min: 1e-6
 
-# 损失函数配置
+# Loss function configuration
 loss:
   primary:
     type: "svd_loss"
@@ -181,13 +340,13 @@ loss:
     - type: "l1_loss"
       weight: 0.05
 
-# 数据配置
+# Data configuration
 data:
   train_path: "data/train"
   val_path: "data/val"
   test_path: "data/test"
   
-  # 数据预处理
+  # Data preprocessing
   preprocessing:
     normalize: true
     standardize: true
@@ -196,28 +355,28 @@ data:
       time_shift_max: 5
       amplitude_scale_range: [0.9, 1.1]
 
-# 实验配置
+# Experiment configuration
 experiment:
   name: "basic_experiment"
   save_dir: "experiments"
   log_interval: 100
   save_interval: 1000
   
-  # 监控指标
+  # Monitoring metrics
   metrics:
     - "mse"
     - "mae"
     - "r2_score"
     - "attention_entropy"
 
-# 硬件配置
+# Hardware configuration
 hardware:
   device: "auto"  # auto, cpu, cuda, cuda:0
   mixed_precision: true
   compile_model: false  # PyTorch 2.0+
 ```
 
-### Python配置类
+### Python Configuration Class
 
 ```python
 # config_example.py
@@ -228,7 +387,7 @@ from pathlib import Path
 
 @dataclass
 class AttentionConfig:
-    """注意力机制配置"""
+    """Attention mechanism configuration"""
     type: str = "scaled_dot_product"
     use_relative_position: bool = True
     max_relative_position: int = 32
@@ -236,7 +395,7 @@ class AttentionConfig:
 
 @dataclass
 class ModelConfig:
-    """模型配置"""
+    """Model configuration"""
     name: str = "VIVTransformer"
     d_model: int = 512
     n_heads: int = 8
@@ -247,16 +406,16 @@ class ModelConfig:
     attention: AttentionConfig = field(default_factory=AttentionConfig)
     
     def __post_init__(self):
-        """配置验证"""
+        """Configuration validation"""
         if self.d_model % self.n_heads != 0:
-            raise ValueError(f"d_model ({self.d_model}) 必须能被 n_heads ({self.n_heads}) 整除")
+            raise ValueError(f"d_model ({self.d_model}) must be divisible by n_heads ({self.n_heads})")
         
         if self.dropout < 0 or self.dropout > 1:
-            raise ValueError(f"dropout 必须在 [0, 1] 范围内，当前值: {self.dropout}")
+            raise ValueError(f"dropout must be in [0, 1] range, current value: {self.dropout}")
 
 @dataclass
 class TrainingConfig:
-    """训练配置"""
+    """Training configuration"""
     batch_size: int = 32
     learning_rate: float = 1e-4
     num_epochs: int = 100
@@ -271,21 +430,21 @@ class TrainingConfig:
 
 @dataclass
 class LossConfig:
-    """损失函数配置"""
+    """Loss function configuration"""
     primary_type: str = "svd_loss"
     primary_params: Dict = field(default_factory=lambda: {"alpha": 0.5, "beta": 0.3, "gamma": 0.2})
     auxiliary_losses: List[Dict] = field(default_factory=list)
 
 @dataclass
 class VIVConfig:
-    """VIVTransformer完整配置"""
+    """VIVTransformer complete configuration"""
     model: ModelConfig = field(default_factory=ModelConfig)
     training: TrainingConfig = field(default_factory=TrainingConfig)
     loss: LossConfig = field(default_factory=LossConfig)
     
     @classmethod
     def from_yaml(cls, yaml_path: Union[str, Path]) -> 'VIVConfig':
-        """从YAML文件加载配置"""
+        """Load configuration from YAML file"""
         with open(yaml_path, 'r', encoding='utf-8') as f:
             config_dict = yaml.safe_load(f)
         
@@ -293,7 +452,7 @@ class VIVConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict) -> 'VIVConfig':
-        """从字典创建配置"""
+        """Create configuration from dictionary"""
         model_config = ModelConfig(**config_dict.get('model', {}))
         training_config = TrainingConfig(**config_dict.get('training', {}))
         loss_config = LossConfig(**config_dict.get('loss', {}))
@@ -305,7 +464,7 @@ class VIVConfig:
         )
     
     def to_dict(self) -> Dict:
-        """转换为字典"""
+        """Convert to dictionary"""
         return {
             'model': self.model.__dict__,
             'training': self.training.__dict__,
@@ -313,21 +472,21 @@ class VIVConfig:
         }
     
     def save_yaml(self, yaml_path: Union[str, Path]):
-        """保存为YAML文件"""
+        """Save as YAML file"""
         with open(yaml_path, 'w', encoding='utf-8') as f:
             yaml.dump(self.to_dict(), f, default_flow_style=False, allow_unicode=True)
 
-# 使用示例
+# Usage example
 if __name__ == "__main__":
-    # 1. 创建默认配置
+    # 1. Create default configuration
     config = VIVConfig()
-    print("默认配置:")
+    print("Default configuration:")
     print(config)
     
-    # 2. 从YAML加载配置
+    # 2. Load configuration from YAML
     # config = VIVConfig.from_yaml('config/basic_config.yaml')
     
-    # 3. 自定义配置
+    # 3. Custom configuration
     custom_config = VIVConfig(
         model=ModelConfig(
             d_model=256,
@@ -340,19 +499,19 @@ if __name__ == "__main__":
         )
     )
     
-    print("\n自定义配置:")
+    print("\nCustom configuration:")
     print(custom_config)
     
-    # 4. 保存配置
+    # 4. Save configuration
     custom_config.save_yaml('config/custom_config.yaml')
-    print("\n配置已保存到 config/custom_config.yaml")
+    print("\nConfiguration saved to config/custom_config.yaml")
 ```
 
 ---
 
-## 🧠 注意力机制使用
+## 🧠 Attention Mechanism Usage
 
-### 多种注意力机制对比
+### Multiple Attention Mechanism Comparison
 
 ```python
 # attention_comparison.py
@@ -364,7 +523,7 @@ import numpy as np
 from typing import Dict, List, Tuple
 import time
 
-# 假设这些是项目中的注意力机制
+# Assuming these are attention mechanisms from the project
 from vivtransformer.attention import (
     ScaledDotProductAttention,
     ExternalAttention,
@@ -375,7 +534,7 @@ from vivtransformer.attention import (
 )
 
 class AttentionBenchmark:
-    """注意力机制基准测试"""
+    """Attention mechanism benchmark testing"""
     
     def __init__(self, d_model: int = 512, seq_length: int = 128, batch_size: int = 32):
         self.d_model = d_model
@@ -383,10 +542,10 @@ class AttentionBenchmark:
         self.batch_size = batch_size
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         
-        # 创建测试数据
+        # Create test data
         self.test_data = torch.randn(batch_size, seq_length, d_model).to(self.device)
         
-        # 注意力机制字典
+        # Attention mechanism dictionary
         self.attention_modules = {
             'Scaled Dot-Product': ScaledDotProductAttention(d_model, n_heads=8),
             'External Attention': ExternalAttention(d_model),
@@ -396,24 +555,24 @@ class AttentionBenchmark:
             'Coordinate Attention': CoordinateAttention(d_model)
         }
         
-        # 移动到设备
+        # Move to device
         for name, module in self.attention_modules.items():
             module.to(self.device)
     
     def benchmark_performance(self, num_runs: int = 100) -> Dict[str, Dict[str, float]]:
-        """性能基准测试"""
+        """Performance benchmark testing"""
         
         results = {}
         
         for name, module in self.attention_modules.items():
-            print(f"测试 {name}...")
+            print(f"Testing {name}...")
             
-            # 预热
+            # Warmup
             for _ in range(10):
                 with torch.no_grad():
                     _ = module(self.test_data)
             
-            # 计时测试
+            # Timing test
             torch.cuda.synchronize() if torch.cuda.is_available() else None
             start_time = time.time()
             
@@ -424,13 +583,13 @@ class AttentionBenchmark:
             torch.cuda.synchronize() if torch.cuda.is_available() else None
             end_time = time.time()
             
-            # 计算指标
+            # Calculate metrics
             avg_time = (end_time - start_time) / num_runs * 1000  # ms
             throughput = (self.batch_size * num_runs) / (end_time - start_time)  # samples/sec
             
-            # 内存使用（近似）
+            # Memory usage (approximate)
             param_count = sum(p.numel() for p in module.parameters())
-            memory_mb = param_count * 4 / (1024 * 1024)  # 假设float32
+            memory_mb = param_count * 4 / (1024 * 1024)  # Assuming float32
             
             results[name] = {
                 'avg_time_ms': avg_time,
@@ -442,7 +601,7 @@ class AttentionBenchmark:
         return results
     
     def analyze_attention_patterns(self) -> Dict[str, torch.Tensor]:
-        """分析注意力模式"""
+        """Analyze attention patterns"""
         
         attention_weights = {}
         
@@ -457,41 +616,41 @@ class AttentionBenchmark:
         return attention_weights
     
     def visualize_results(self, results: Dict[str, Dict[str, float]]):
-        """可视化结果"""
+        """Visualize results"""
         
         fig, axes = plt.subplots(2, 2, figsize=(15, 12))
         
-        # 1. 平均推理时间
+        # 1. Average inference time
         names = list(results.keys())
         times = [results[name]['avg_time_ms'] for name in names]
         
         axes[0, 0].bar(names, times, color='skyblue')
-        axes[0, 0].set_title('平均推理时间 (ms)')
-        axes[0, 0].set_ylabel('时间 (ms)')
+        axes[0, 0].set_title('Average Inference Time (ms)')
+        axes[0, 0].set_ylabel('Time (ms)')
         axes[0, 0].tick_params(axis='x', rotation=45)
         
-        # 2. 吞吐量
+        # 2. Throughput
         throughputs = [results[name]['throughput_samples_per_sec'] for name in names]
         
         axes[0, 1].bar(names, throughputs, color='lightgreen')
-        axes[0, 1].set_title('吞吐量 (samples/sec)')
-        axes[0, 1].set_ylabel('样本数/秒')
+        axes[0, 1].set_title('Throughput (samples/sec)')
+        axes[0, 1].set_ylabel('Samples/sec')
         axes[0, 1].tick_params(axis='x', rotation=45)
         
-        # 3. 参数数量
+        # 3. Parameter count
         param_counts = [results[name]['parameters'] / 1000 for name in names]  # K parameters
         
         axes[1, 0].bar(names, param_counts, color='orange')
-        axes[1, 0].set_title('参数数量 (K)')
-        axes[1, 0].set_ylabel('参数数量 (千)')
+        axes[1, 0].set_title('Parameter Count (K)')
+        axes[1, 0].set_ylabel('Parameters (thousands)')
         axes[1, 0].tick_params(axis='x', rotation=45)
         
-        # 4. 内存使用
+        # 4. Memory usage
         memory_usage = [results[name]['memory_mb'] for name in names]
         
         axes[1, 1].bar(names, memory_usage, color='salmon')
-        axes[1, 1].set_title('内存使用 (MB)')
-        axes[1, 1].set_ylabel('内存 (MB)')
+        axes[1, 1].set_title('Memory Usage (MB)')
+        axes[1, 1].set_ylabel('Memory (MB)')
         axes[1, 1].tick_params(axis='x', rotation=45)
         
         plt.tight_layout()
@@ -499,11 +658,11 @@ class AttentionBenchmark:
         plt.show()
     
     def visualize_attention_weights(self, attention_weights: Dict[str, torch.Tensor]):
-        """可视化注意力权重"""
+        """Visualize attention weights"""
         
         num_attentions = len(attention_weights)
         if num_attentions == 0:
-            print("没有可用的注意力权重")
+            print("No available attention weights")
             return
         
         fig, axes = plt.subplots(1, num_attentions, figsize=(5 * num_attentions, 5))
@@ -511,7 +670,7 @@ class AttentionBenchmark:
             axes = [axes]
         
         for idx, (name, weights) in enumerate(attention_weights.items()):
-            # 取第一个样本的第一个头的注意力权重
+            # Take attention weights of first sample's first head
             if weights.dim() == 4:  # [batch, heads, seq, seq]
                 attn_map = weights[0, 0].numpy()
             elif weights.dim() == 3:  # [batch, seq, seq]
@@ -519,39 +678,39 @@ class AttentionBenchmark:
             else:
                 continue
             
-            # 只显示前32x32的区域（如果序列太长）
+            # Only display first 32x32 region (if sequence is too long)
             display_size = min(32, attn_map.shape[0])
             attn_map = attn_map[:display_size, :display_size]
             
             im = axes[idx].imshow(attn_map, cmap='Blues', aspect='auto')
-            axes[idx].set_title(f'{name}\n注意力权重')
+            axes[idx].set_title(f'{name}\nAttention Weights')
             axes[idx].set_xlabel('Key Position')
             axes[idx].set_ylabel('Query Position')
             
-            # 添加颜色条
+            # Add colorbar
             plt.colorbar(im, ax=axes[idx])
         
         plt.tight_layout()
         plt.savefig('attention_weights_visualization.png', dpi=300, bbox_inches='tight')
         plt.show()
 
-# 使用示例
+# Usage example
 def run_attention_comparison():
-    """运行注意力机制对比"""
+    """Run attention mechanism comparison"""
     
-    print("🧠 注意力机制对比分析")
+    print("🧠 Attention Mechanism Comparison Analysis")
     
-    # 创建基准测试
+    # Create benchmark test
     benchmark = AttentionBenchmark(d_model=512, seq_length=128, batch_size=32)
     
-    # 性能测试
-    print("\n📊 性能基准测试...")
+    # Performance testing
+    print("\n📊 Performance benchmark testing...")
     results = benchmark.benchmark_performance(num_runs=50)
     
-    # 打印结果
-    print("\n📈 性能测试结果:")
+    # Print results
+    print("\n📈 Performance test results:")
     print("-" * 80)
-    print(f"{'注意力机制':<20} {'时间(ms)':<12} {'吞吐量':<15} {'参数数':<12} {'内存(MB)':<10}")
+    print(f"{'Attention Mechanism':<20} {'Time(ms)':<12} {'Throughput':<15} {'Parameters':<12} {'Memory(MB)':<10}")
     print("-" * 80)
     
     for name, metrics in results.items():
@@ -559,27 +718,27 @@ def run_attention_comparison():
               f"{metrics['throughput_samples_per_sec']:<15.1f} "
               f"{metrics['parameters']:<12,} {metrics['memory_mb']:<10.2f}")
     
-    # 可视化性能结果
+    # Visualize performance results
     benchmark.visualize_results(results)
     
-    # 注意力模式分析
-    print("\n🔍 注意力模式分析...")
+    # Attention pattern analysis
+    print("\n🔍 Attention pattern analysis...")
     attention_weights = benchmark.analyze_attention_patterns()
     
     if attention_weights:
         benchmark.visualize_attention_weights(attention_weights)
-        print(f"✅ 分析了 {len(attention_weights)} 种注意力机制的权重模式")
+        print(f"✅ Analyzed {len(attention_weights)} attention mechanism weight patterns")
     else:
-        print("⚠️ 没有可用的注意力权重进行分析")
+        print("⚠️ No available attention weights for analysis")
     
-    print("\n🎉 注意力机制对比完成！")
+    print("\n🎉 Attention mechanism comparison completed!")
     return results, attention_weights
 
 if __name__ == "__main__":
     results, attention_weights = run_attention_comparison()
 ```
 
-### 自定义注意力机制
+### Custom Attention Mechanisms
 
 ```python
 # custom_attention.py
@@ -590,9 +749,9 @@ import math
 from typing import Optional, Tuple
 
 class AdaptiveAttention(nn.Module):
-    """自适应注意力机制
+    """Adaptive Attention Mechanism
     
-    根据输入动态调整注意力计算方式
+    Dynamically adjusts attention computation based on input
     """
     
     def __init__(self, 
@@ -607,13 +766,13 @@ class AdaptiveAttention(nn.Module):
         self.d_k = d_model // n_heads
         self.adaptive_threshold = adaptive_threshold
         
-        # 线性变换层
+        # Linear transformation layers
         self.w_q = nn.Linear(d_model, d_model, bias=False)
         self.w_k = nn.Linear(d_model, d_model, bias=False)
         self.w_v = nn.Linear(d_model, d_model, bias=False)
         self.w_o = nn.Linear(d_model, d_model)
         
-        # 自适应门控
+        # Adaptive gating
         self.adaptive_gate = nn.Sequential(
             nn.Linear(d_model, d_model // 4),
             nn.ReLU(),
@@ -621,13 +780,13 @@ class AdaptiveAttention(nn.Module):
             nn.Sigmoid()
         )
         
-        # 局部注意力卷积
+        # Local attention convolution
         self.local_conv = nn.Conv1d(d_model, d_model, kernel_size=3, padding=1, groups=d_model)
         
         self.dropout = nn.Dropout(dropout)
         self.scale = math.sqrt(self.d_k)
         
-        # 存储注意力权重用于可视化
+        # Store attention weights for visualization
         self.attention_weights = None
     
     def forward(self, 
@@ -635,13 +794,13 @@ class AdaptiveAttention(nn.Module):
                 key: torch.Tensor, 
                 value: torch.Tensor,
                 mask: Optional[torch.Tensor] = None) -> torch.Tensor:
-        """前向传播
+        """Forward pass
         
         Args:
             query: [batch_size, seq_len, d_model]
             key: [batch_size, seq_len, d_model]
             value: [batch_size, seq_len, d_model]
-            mask: [batch_size, seq_len, seq_len] 或 None
+            mask: [batch_size, seq_len, seq_len] or None
             
         Returns:
             output: [batch_size, seq_len, d_model]
@@ -649,16 +808,16 @@ class AdaptiveAttention(nn.Module):
         
         batch_size, seq_len, d_model = query.shape
         
-        # 计算自适应权重
+        # Calculate adaptive weights
         adaptive_weights = self.adaptive_gate(query.mean(dim=1))  # [batch_size, 1]
         
-        # 全局注意力
+        # Global attention
         global_output = self._global_attention(query, key, value, mask)
         
-        # 局部注意力
+        # Local attention
         local_output = self._local_attention(query)
         
-        # 自适应融合
+        # Adaptive fusion
         output = adaptive_weights.unsqueeze(1) * global_output + \
                 (1 - adaptive_weights.unsqueeze(1)) * local_output
         
@@ -669,33 +828,33 @@ class AdaptiveAttention(nn.Module):
                          key: torch.Tensor, 
                          value: torch.Tensor,
                          mask: Optional[torch.Tensor] = None) -> torch.Tensor:
-        """全局注意力计算"""
+        """Global attention computation"""
         
         batch_size, seq_len, d_model = query.shape
         
-        # 线性变换
+        # Linear transformations
         Q = self.w_q(query).view(batch_size, seq_len, self.n_heads, self.d_k).transpose(1, 2)
         K = self.w_k(key).view(batch_size, seq_len, self.n_heads, self.d_k).transpose(1, 2)
         V = self.w_v(value).view(batch_size, seq_len, self.n_heads, self.d_k).transpose(1, 2)
         
-        # 计算注意力分数
+        # Calculate attention scores
         scores = torch.matmul(Q, K.transpose(-2, -1)) / self.scale
         
-        # 应用掩码
+        # Apply mask
         if mask is not None:
             scores = scores.masked_fill(mask.unsqueeze(1) == 0, -1e9)
         
-        # Softmax归一化
+        # Softmax normalization
         attention_weights = F.softmax(scores, dim=-1)
         attention_weights = self.dropout(attention_weights)
         
-        # 保存注意力权重
+        # Save attention weights
         self.attention_weights = attention_weights.detach()
         
-        # 应用注意力
+        # Apply attention
         context = torch.matmul(attention_weights, V)
         
-        # 重塑输出
+        # Reshape output
         context = context.transpose(1, 2).contiguous().view(
             batch_size, seq_len, d_model
         )
@@ -703,27 +862,27 @@ class AdaptiveAttention(nn.Module):
         return self.w_o(context)
     
     def _local_attention(self, x: torch.Tensor) -> torch.Tensor:
-        """局部注意力计算"""
+        """Local attention computation"""
         
-        # 转置用于卷积 [batch_size, d_model, seq_len]
+        # Transpose for convolution [batch_size, d_model, seq_len]
         x_conv = x.transpose(1, 2)
         
-        # 局部卷积
+        # Local convolution
         local_features = self.local_conv(x_conv)
         
-        # 转回原始形状
+        # Transpose back to original shape
         local_output = local_features.transpose(1, 2)
         
         return local_output
     
     def get_attention_weights(self) -> Optional[torch.Tensor]:
-        """获取注意力权重"""
+        """Get attention weights"""
         return self.attention_weights
 
 class HierarchicalAttention(nn.Module):
-    """层次化注意力机制
+    """Hierarchical Attention Mechanism
     
-    在不同层次上计算注意力
+    Computes attention at different hierarchical levels
     """
     
     def __init__(self, 
@@ -738,7 +897,7 @@ class HierarchicalAttention(nn.Module):
         self.n_levels = n_levels
         self.d_k = d_model // n_heads
         
-        # 多层次注意力
+        # Multi-level attention
         self.level_attentions = nn.ModuleList([
             nn.MultiheadAttention(
                 embed_dim=d_model,
@@ -748,10 +907,10 @@ class HierarchicalAttention(nn.Module):
             ) for _ in range(n_levels)
         ])
         
-        # 层次融合权重
+        # Hierarchical fusion weights
         self.level_weights = nn.Parameter(torch.ones(n_levels) / n_levels)
         
-        # 下采样和上采样
+        # Downsampling and upsampling
         self.downsample = nn.ModuleList([
             nn.Conv1d(d_model, d_model, kernel_size=2**i, stride=2**i)
             for i in range(1, n_levels)
@@ -767,39 +926,39 @@ class HierarchicalAttention(nn.Module):
                 key: torch.Tensor, 
                 value: torch.Tensor,
                 mask: Optional[torch.Tensor] = None) -> torch.Tensor:
-        """前向传播"""
+        """Forward pass"""
         
         batch_size, seq_len, d_model = query.shape
         level_outputs = []
         
-        # 第0层：原始分辨率
+        # Level 0: Original resolution
         output_0, _ = self.level_attentions[0](query, key, value, attn_mask=mask)
         level_outputs.append(output_0)
         
-        # 其他层：不同分辨率
+        # Other levels: Different resolutions
         current_q, current_k, current_v = query, key, value
         
         for level in range(1, self.n_levels):
-            # 下采样
+            # Downsample
             current_q = self._downsample_sequence(current_q, level - 1)
             current_k = self._downsample_sequence(current_k, level - 1)
             current_v = self._downsample_sequence(current_v, level - 1)
             
-            # 注意力计算
+            # Attention computation
             level_output, _ = self.level_attentions[level](current_q, current_k, current_v)
             
-            # 上采样回原始分辨率
+            # Upsample back to original resolution
             level_output = self._upsample_sequence(level_output, level - 1, seq_len)
             level_outputs.append(level_output)
         
-        # 加权融合
+        # Weighted fusion
         weights = F.softmax(self.level_weights, dim=0)
         final_output = sum(w * output for w, output in zip(weights, level_outputs))
         
         return final_output
     
     def _downsample_sequence(self, x: torch.Tensor, level: int) -> torch.Tensor:
-        """下采样序列"""
+        """Downsample sequence"""
         # [batch_size, seq_len, d_model] -> [batch_size, d_model, seq_len]
         x = x.transpose(1, 2)
         x = self.downsample[level](x)
@@ -808,12 +967,12 @@ class HierarchicalAttention(nn.Module):
         return x
     
     def _upsample_sequence(self, x: torch.Tensor, level: int, target_len: int) -> torch.Tensor:
-        """上采样序列"""
+        """Upsample sequence"""
         # [batch_size, seq_len, d_model] -> [batch_size, d_model, seq_len]
         x = x.transpose(1, 2)
         x = self.upsample[level](x)
         
-        # 调整到目标长度
+        # Adjust to target length
         current_len = x.shape[-1]
         if current_len != target_len:
             x = F.interpolate(x, size=target_len, mode='linear', align_corners=False)
@@ -822,43 +981,43 @@ class HierarchicalAttention(nn.Module):
         x = x.transpose(1, 2)
         return x
 
-# 使用示例
+# Usage example
 def test_custom_attention():
-    """测试自定义注意力机制"""
+    """Test custom attention mechanisms"""
     
-    print("🧠 测试自定义注意力机制")
+    print("🧠 Testing Custom Attention Mechanisms")
     
-    # 创建测试数据
+    # Create test data
     batch_size, seq_len, d_model = 4, 64, 256
     x = torch.randn(batch_size, seq_len, d_model)
     
-    # 测试自适应注意力
-    print("\n🔄 测试自适应注意力...")
+    # Test adaptive attention
+    print("\n🔄 Testing Adaptive Attention...")
     adaptive_attn = AdaptiveAttention(d_model, n_heads=8)
     adaptive_output = adaptive_attn(x, x, x)
-    print(f"输入形状: {x.shape}")
-    print(f"自适应注意力输出形状: {adaptive_output.shape}")
+    print(f"Input shape: {x.shape}")
+    print(f"Adaptive attention output shape: {adaptive_output.shape}")
     
-    # 获取注意力权重
+    # Get attention weights
     attn_weights = adaptive_attn.get_attention_weights()
     if attn_weights is not None:
-        print(f"注意力权重形状: {attn_weights.shape}")
+        print(f"Attention weights shape: {attn_weights.shape}")
     
-    # 测试层次化注意力
-    print("\n🏗️ 测试层次化注意力...")
+    # Test hierarchical attention
+    print("\n🏗️ Testing Hierarchical Attention...")
     hierarchical_attn = HierarchicalAttention(d_model, n_heads=8, n_levels=3)
     hierarchical_output = hierarchical_attn(x, x, x)
-    print(f"层次化注意力输出形状: {hierarchical_output.shape}")
+    print(f"Hierarchical attention output shape: {hierarchical_output.shape}")
     
-    # 参数统计
+    # Parameter statistics
     adaptive_params = sum(p.numel() for p in adaptive_attn.parameters())
     hierarchical_params = sum(p.numel() for p in hierarchical_attn.parameters())
     
-    print(f"\n📊 参数统计:")
-    print(f"自适应注意力参数数量: {adaptive_params:,}")
-    print(f"层次化注意力参数数量: {hierarchical_params:,}")
+    print(f"\n📊 Parameter Statistics:")
+    print(f"Adaptive attention parameter count: {adaptive_params:,}")
+    print(f"Hierarchical attention parameter count: {hierarchical_params:,}")
     
-    print("\n✅ 自定义注意力机制测试完成！")
+    print("\n✅ Custom attention mechanism testing completed!")
 
 if __name__ == "__main__":
     test_custom_attention()
@@ -866,9 +1025,9 @@ if __name__ == "__main__":
 
 ---
 
-## 📊 损失函数配置
+## 📊 Loss Function Configuration
 
-### SVD损失函数详解
+### SVD Loss Function Detailed
 
 ```python
 # svd_loss_tutorial.py
@@ -880,9 +1039,9 @@ import matplotlib.pyplot as plt
 from typing import Tuple, Optional, Dict, Any
 
 class SVDLoss(nn.Module):
-    """SVD损失函数
+    """SVD Loss Function
     
-    基于奇异值分解的损失函数，用于保持数据的低秩结构
+    Loss function based on Singular Value Decomposition for maintaining low-rank structure
     """
     
     def __init__(self, 
@@ -893,11 +1052,11 @@ class SVDLoss(nn.Module):
                  adaptive_weights: bool = True):
         """
         Args:
-            alpha: 重构损失权重
-            beta: 奇异值损失权重
-            gamma: 正交性损失权重
-            rank_penalty: 是否使用秩惩罚
-            adaptive_weights: 是否使用自适应权重
+            alpha: Reconstruction loss weight
+            beta: Singular value loss weight
+            gamma: Orthogonality loss weight
+            rank_penalty: Whether to use rank penalty
+            adaptive_weights: Whether to use adaptive weights
         """
         super().__init__()
         
@@ -907,10 +1066,10 @@ class SVDLoss(nn.Module):
         self.rank_penalty = rank_penalty
         self.adaptive_weights = adaptive_weights
         
-        # 自适应权重参数
+        # Adaptive weight parameters
         if adaptive_weights:
             self.weight_net = nn.Sequential(
-                nn.Linear(3, 16),  # 3个损失分量
+                nn.Linear(3, 16),  # 3 loss components
                 nn.ReLU(),
                 nn.Linear(16, 3),
                 nn.Softmax(dim=-1)
@@ -921,37 +1080,37 @@ class SVDLoss(nn.Module):
                 target: torch.Tensor,
                 return_components: bool = False) -> torch.Tensor:
         """
-        计算SVD损失
+        Compute SVD loss
         
         Args:
-            pred: 预测值 [batch_size, seq_len, features]
-            target: 目标值 [batch_size, seq_len, features]
-            return_components: 是否返回损失分量
+            pred: Predictions [batch_size, seq_len, features]
+            target: Targets [batch_size, seq_len, features]
+            return_components: Whether to return loss components
             
         Returns:
-            loss: 总损失
-            components (可选): 损失分量字典
+            loss: Total loss
+            components (optional): Loss component dictionary
         """
         
-        # 1. 重构损失（MSE）
+        # 1. Reconstruction loss (MSE)
         reconstruction_loss = F.mse_loss(pred, target)
         
-        # 2. SVD分解
+        # 2. SVD decomposition
         pred_svd = self._compute_svd_loss(pred, target)
         target_svd = self._compute_svd_loss(target, target)
         
-        # 3. 奇异值损失
+        # 3. Singular value loss
         singular_value_loss = F.mse_loss(pred_svd['singular_values'], target_svd['singular_values'])
         
-        # 4. 正交性损失
+        # 4. Orthogonality loss
         orthogonality_loss = self._compute_orthogonality_loss(pred_svd['U'], pred_svd['V'])
         
-        # 5. 秩惩罚（可选）
+        # 5. Rank penalty (optional)
         rank_loss = 0.0
         if self.rank_penalty:
             rank_loss = self._compute_rank_penalty(pred_svd['singular_values'])
         
-        # 损失分量
+        # Loss components
         components = {
             'reconstruction': reconstruction_loss,
             'singular_value': singular_value_loss,
@@ -959,9 +1118,9 @@ class SVDLoss(nn.Module):
             'rank_penalty': rank_loss
         }
         
-        # 计算权重
+        # Calculate weights
         if self.adaptive_weights:
-            # 使用神经网络自适应调整权重
+            # Use neural network to adaptively adjust weights
             loss_values = torch.stack([
                 reconstruction_loss.detach(),
                 singular_value_loss.detach(),
@@ -972,12 +1131,12 @@ class SVDLoss(nn.Module):
         else:
             alpha, beta, gamma = self.alpha, self.beta, self.gamma
         
-        # 总损失
+        # Total loss
         total_loss = (
             alpha * reconstruction_loss +
             beta * singular_value_loss +
             gamma * orthogonality_loss +
-            0.1 * rank_loss  # 固定权重用于秩惩罚
+            0.1 * rank_loss  # Fixed weight for rank penalty
         )
         
         if return_components:
@@ -988,18 +1147,18 @@ class SVDLoss(nn.Module):
         return total_loss
     
     def _compute_svd_loss(self, x: torch.Tensor, reference: torch.Tensor) -> Dict[str, torch.Tensor]:
-        """计算SVD分解"""
+        """Compute SVD decomposition"""
         
         batch_size, seq_len, features = x.shape
         
-        # 重塑为矩阵形式
+        # Reshape to matrix form
         x_matrix = x.view(batch_size, seq_len * features)
         
-        # SVD分解
+        # SVD decomposition
         try:
             U, S, V = torch.svd(x_matrix)
         except RuntimeError:
-            # 如果SVD失败，使用备用方法
+            # If SVD fails, use backup method
             U, S, V = torch.svd(x_matrix + 1e-8 * torch.randn_like(x_matrix))
         
         return {
@@ -1009,14 +1168,14 @@ class SVDLoss(nn.Module):
         }
     
     def _compute_orthogonality_loss(self, U: torch.Tensor, V: torch.Tensor) -> torch.Tensor:
-        """计算正交性损失"""
+        """Compute orthogonality loss"""
         
-        # U的正交性
+        # U orthogonality
         U_orth = torch.matmul(U.transpose(-2, -1), U)
         I_U = torch.eye(U_orth.shape[-1], device=U.device, dtype=U.dtype)
         U_loss = F.mse_loss(U_orth, I_U.expand_as(U_orth))
         
-        # V的正交性
+        # V orthogonality
         V_orth = torch.matmul(V.transpose(-2, -1), V)
         I_V = torch.eye(V_orth.shape[-1], device=V.device, dtype=V.dtype)
         V_loss = F.mse_loss(V_orth, I_V.expand_as(V_orth))
@@ -1024,24 +1183,24 @@ class SVDLoss(nn.Module):
         return (U_loss + V_loss) / 2
     
     def _compute_rank_penalty(self, singular_values: torch.Tensor) -> torch.Tensor:
-        """计算秩惩罚"""
+        """Compute rank penalty"""
         
-        # 使用奇异值的L1范数作为秩的近似
+        # Use L1 norm of singular values as rank approximation
         rank_penalty = torch.sum(singular_values, dim=-1).mean()
         
         return rank_penalty
 
 class CompositeLoss(nn.Module):
-    """复合损失函数
+    """Composite Loss Function
     
-    组合多种损失函数
+    Combines multiple loss functions
     """
     
     def __init__(self, loss_configs: Dict[str, Dict[str, Any]]):
         """
         Args:
-            loss_configs: 损失函数配置字典
-                例如: {
+            loss_configs: Loss function configuration dictionary
+                Example: {
                     'svd': {'type': 'SVDLoss', 'weight': 0.5, 'params': {...}},
                     'mse': {'type': 'MSELoss', 'weight': 0.3, 'params': {}},
                     'l1': {'type': 'L1Loss', 'weight': 0.2, 'params': {}}
@@ -1057,7 +1216,7 @@ class CompositeLoss(nn.Module):
             weight = config.get('weight', 1.0)
             params = config.get('params', {})
             
-            # 创建损失函数
+            # Create loss function
             if loss_type == 'SVDLoss':
                 loss_fn = SVDLoss(**params)
             elif loss_type == 'MSELoss':
@@ -1069,7 +1228,7 @@ class CompositeLoss(nn.Module):
             elif loss_type == 'HuberLoss':
                 loss_fn = nn.HuberLoss(**params)
             else:
-                raise ValueError(f"不支持的损失函数类型: {loss_type}")
+                raise ValueError(f"Unsupported loss function type: {loss_type}")
             
             self.loss_functions[name] = loss_fn
             self.loss_weights[name] = weight
@@ -1078,7 +1237,7 @@ class CompositeLoss(nn.Module):
                 pred: torch.Tensor, 
                 target: torch.Tensor,
                 return_components: bool = False) -> torch.Tensor:
-        """计算复合损失"""
+        """Compute composite loss"""
         
         total_loss = 0.0
         components = {}
@@ -1102,14 +1261,14 @@ class CompositeLoss(nn.Module):
         return total_loss
 
 def demonstrate_svd_loss():
-    """演示SVD损失函数"""
+    """Demonstrate SVD loss function"""
     
-    print("📊 SVD损失函数演示")
+    print("📊 SVD Loss Function Demonstration")
     
-    # 创建测试数据
+    # Create test data
     batch_size, seq_len, features = 8, 64, 32
     
-    # 创建低秩目标数据
+    # Create low-rank target data
     rank = 10
     U_true = torch.randn(batch_size, seq_len * features, rank)
     S_true = torch.abs(torch.randn(batch_size, rank)) + 0.1
@@ -1118,14 +1277,14 @@ def demonstrate_svd_loss():
     target_matrix = torch.bmm(torch.bmm(U_true, torch.diag_embed(S_true)), V_true)
     target = target_matrix.view(batch_size, seq_len, features)
     
-    # 创建预测数据（添加噪声）
+    # Create prediction data (add noise)
     noise = 0.1 * torch.randn_like(target)
     pred = target + noise
     
-    print(f"数据形状: {target.shape}")
-    print(f"目标数据的真实秩: {rank}")
+    print(f"Data shape: {target.shape}")
+    print(f"True rank of target data: {rank}")
     
-    # 测试不同的损失函数
+    # Test different loss functions
     loss_configs = {
         'svd_adaptive': {
             'type': 'SVDLoss',
@@ -1157,63 +1316,63 @@ def demonstrate_svd_loss():
     results = {}
     
     for name, config in loss_configs.items():
-        print(f"\n测试 {name}...")
+        print(f"\nTesting {name}...")
         
         if config['type'] == 'SVDLoss':
             loss_fn = SVDLoss(**config['params'])
             loss_value, components = loss_fn(pred, target, return_components=True)
             
-            print(f"  总损失: {loss_value.item():.6f}")
-            print(f"  重构损失: {components['reconstruction'].item():.6f}")
-            print(f"  奇异值损失: {components['singular_value'].item():.6f}")
-            print(f"  正交性损失: {components['orthogonality'].item():.6f}")
+            print(f"  Total loss: {loss_value.item():.6f}")
+            print(f"  Reconstruction loss: {components['reconstruction'].item():.6f}")
+            print(f"  Singular value loss: {components['singular_value'].item():.6f}")
+            print(f"  Orthogonality loss: {components['orthogonality'].item():.6f}")
             
             if 'weights' in components:
                 weights = components['weights']
-                print(f"  自适应权重: α={weights['alpha']:.3f}, β={weights['beta']:.3f}, γ={weights['gamma']:.3f}")
+                print(f"  Adaptive weights: α={weights['alpha']:.3f}, β={weights['beta']:.3f}, γ={weights['gamma']:.3f}")
         
         else:
             loss_fn = nn.MSELoss()
             loss_value = loss_fn(pred, target)
-            print(f"  损失值: {loss_value.item():.6f}")
+            print(f"  Loss value: {loss_value.item():.6f}")
         
         results[name] = loss_value.item()
     
-    # 可视化结果
+    # Visualize results
     plt.figure(figsize=(10, 6))
     
     names = list(results.keys())
     values = list(results.values())
     
     plt.bar(names, values, color=['skyblue', 'lightgreen', 'salmon'])
-    plt.title('不同损失函数的损失值对比')
-    plt.ylabel('损失值')
+    plt.title('Loss Value Comparison for Different Loss Functions')
+    plt.ylabel('Loss Value')
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.savefig('loss_comparison.png', dpi=300, bbox_inches='tight')
     plt.show()
     
-    print("\n✅ SVD损失函数演示完成！")
+    print("\n✅ SVD loss function demonstration completed!")
 
 def loss_function_tutorial():
-    """损失函数使用教程"""
+    """Loss function usage tutorial"""
     
-    print("📚 损失函数使用教程")
+    print("📚 Loss Function Usage Tutorial")
     
-    # 1. 基本SVD损失
-    print("\n1️⃣ 基本SVD损失使用")
+    # 1. Basic SVD loss
+    print("\n1️⃣ Basic SVD Loss Usage")
     
     svd_loss = SVDLoss(alpha=0.5, beta=0.3, gamma=0.2)
     
-    # 示例数据
+    # Example data
     pred = torch.randn(4, 32, 16)
     target = torch.randn(4, 32, 16)
     
     loss = svd_loss(pred, target)
-    print(f"SVD损失值: {loss.item():.6f}")
+    print(f"SVD loss value: {loss.item():.6f}")
     
-    # 2. 复合损失
-    print("\n2️⃣ 复合损失使用")
+    # 2. Composite loss
+    print("\n2️⃣ Composite Loss Usage")
     
     composite_config = {
         'svd': {
@@ -1236,21 +1395,21 @@ def loss_function_tutorial():
     composite_loss = CompositeLoss(composite_config)
     total_loss, components = composite_loss(pred, target, return_components=True)
     
-    print(f"复合损失总值: {total_loss.item():.6f}")
-    print("各分量损失:")
+    print(f"Composite loss total value: {total_loss.item():.6f}")
+    print("Component losses:")
     for name, component in components.items():
         if name != 'total':
             if isinstance(component, dict) and 'total' in component:
                 print(f"  {name}: {component['total'].item():.6f}")
     
-    # 3. 训练中的使用
-    print("\n3️⃣ 训练中的使用示例")
+    # 3. Usage in training
+    print("\n3️⃣ Usage Example in Training")
     
-    # 创建简单模型
+    # Create simple model
     model = nn.Linear(16, 16)
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
     
-    # 训练循环示例
+    # Training loop example
     for epoch in range(5):
         optimizer.zero_grad()
         
@@ -1262,7 +1421,7 @@ def loss_function_tutorial():
         
         print(f"Epoch {epoch+1}, Loss: {loss.item():.6f}")
     
-    print("\n✅ 损失函数教程完成！")
+    print("\n✅ Loss function tutorial completed!")
 
 if __name__ == "__main__":
     demonstrate_svd_loss()
@@ -1272,4 +1431,4 @@ if __name__ == "__main__":
 
 ---
 
-*本教程与示例页面提供了详细的使用指导和代码示例。更多高级功能请参考[API文档]({{ site.baseurl }}/pages/api-reference)和[最佳实践]({{ site.baseurl }}/pages/best-practices)。*
+*This tutorials and examples page provides detailed usage guidance and code examples. For more advanced features, please refer to the [API Documentation]({{ site.baseurl }}/pages/api-reference) and [Best Practices]({{ site.baseurl }}/pages/best-practices).*

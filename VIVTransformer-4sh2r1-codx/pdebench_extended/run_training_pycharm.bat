@@ -3,17 +3,17 @@ chcp 65001 >nul
 setlocal enabledelayedexpansion
 
 REM =============================================================================
-REM PyCharm环境训练脚本 - 压力场重建训练
-REM 适用于PyCharm IDE环境的训练启动脚本
+REM PyCharm Environment Training Script - Pressure Field Reconstruction Training
+REM Optimized for PyCharm IDE environment, providing one-click training startup functionality
 REM =============================================================================
 
 echo ╔══════════════════════════════════════════════════════════════════════════════╗
-echo ║                    PyCharm环境 - 压力场重建训练                             ║
-echo ║                     VIV Transformer PyCharm版本                            ║
+echo ║                    PyCharm Environment - Pressure Field Reconstruction Training                             ║
+echo ║                     VIV Transformer PyCharm Version                            ║
 echo ╚══════════════════════════════════════════════════════════════════════════════╝
 echo.
 
-REM 设置颜色
+REM Set colors
 for /f %%A in ('echo prompt $E ^| cmd') do set "ESC=%%A"
 set "RED=%ESC%[31m"
 set "GREEN=%ESC%[32m"
@@ -23,14 +23,14 @@ set "PURPLE=%ESC%[35m"
 set "CYAN=%ESC%[36m"
 set "NC=%ESC%[0m"
 
-REM 配置参数
+REM Configuration parameters
 set "DATA_PATH=data\pressure_field_data.pt"
 set "CONFIG_FILE=configs\pressure_field_training.yaml"
 set "OUTPUT_DIR=outputs"
 set "EXPERIMENT_NAME=pressure_field_training_%date:~0,4%%date:~5,2%%date:~8,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
 set "EXPERIMENT_NAME=%EXPERIMENT_NAME: =0%"
 
-echo %CYAN%=== PyCharm环境检查 ===%NC%
+echo %CYAN%=== PyCharm Environment Check ===%NC%
 echo.
 
 REM 检查Python
@@ -39,8 +39,8 @@ if %errorlevel% == 0 (
     for /f "tokens=*" %%i in ('python --version 2^>^&1') do set "PYTHON_VERSION=%%i"
     echo %GREEN%✓%NC% Python: !PYTHON_VERSION!
 ) else (
-    echo %RED%❌ Python未安装或不在PATH中%NC%
-    echo 请在PyCharm中配置Python解释器
+    echo %RED%❌ Python is not installed or not in PATH%NC%
+    echo Please configure a Python interpreter in PyCharm
     pause
     exit /b 1
 )
@@ -52,43 +52,43 @@ if %errorlevel% == 0 (
     for /f "tokens=*" %%i in ('python -c "import torch; print(torch.cuda.is_available())" 2^>^&1') do set "CUDA_AVAILABLE=%%i"
     echo %GREEN%✓%NC% PyTorch: !TORCH_VERSION! (CUDA: !CUDA_AVAILABLE!)
 ) else (
-    echo %RED%❌ PyTorch未安装%NC%
-    echo 请在PyCharm终端中安装: pip install torch torchvision torchaudio
+    echo %RED%❌ PyTorch is not installed%NC%
+    echo Please install in PyCharm terminal: pip install torch torchvision torchaudio
     pause
     exit /b 1
 )
 
 REM 检查其他依赖
-echo %BLUE%检查其他依赖包...%NC%
+echo %BLUE%Checking other dependencies...%NC%
 python -c "import numpy, scipy, matplotlib, yaml" >nul 2>&1
 if %errorlevel% == 0 (
-    echo %GREEN%✓%NC% 基础依赖包已安装
+    echo %GREEN%✓%NC% Base dependencies are installed
 ) else (
-    echo %YELLOW%⚠️  部分依赖包未安装%NC%
-    echo 请在PyCharm终端中运行: pip install -r requirements.txt
+    echo %YELLOW%⚠️  Some dependencies are missing%NC%
+    echo Please run in PyCharm terminal: pip install -r requirements.txt
 )
 
-REM 检查NVIDIA GPU
+REM Check NVIDIA GPU
 nvidia-smi >nul 2>&1
 if %errorlevel% == 0 (
-    echo %GREEN%✓%NC% NVIDIA GPU驱动已安装
+    echo %GREEN%✓%NC% NVIDIA GPU driver is installed
     echo.
-    echo %BLUE%=== GPU状态 ===%NC%
+    echo %BLUE%=== GPU Status ===%NC%
     nvidia-smi --query-gpu=index,name,memory.used,memory.total,utilization.gpu,temperature.gpu --format=csv,noheader,nounits
 ) else (
-    echo %YELLOW%⚠️  NVIDIA驱动未安装或GPU不可用%NC%
-    echo 将使用CPU训练（速度较慢）
+    echo %YELLOW%⚠️  NVIDIA driver not installed or GPU unavailable%NC%
+    echo Will use CPU for training (slower)
 )
 
 echo.
-echo %PURPLE%=== 数据集检查 ===%NC%
+echo %PURPLE%=== Dataset Check ===%NC%
 
 REM 检查数据文件
 set "DATA_FOUND=0"
 if exist "%DATA_PATH%" (
     for %%A in ("%DATA_PATH%") do set "DATA_SIZE=%%~zA"
     set /a "DATA_SIZE_MB=!DATA_SIZE! / 1024 / 1024"
-    echo %GREEN%✓%NC% 数据文件: !DATA_SIZE_MB!MB
+    echo %GREEN%✓%NC% Data file: !DATA_SIZE_MB!MB
     set "DATA_FOUND=1"
 ) else (
     REM 搜索其他可能的数据文件
@@ -97,8 +97,9 @@ if exist "%DATA_PATH%" (
         if exist "%%f" (
             set "DATA_PATH=%%f"
             for %%A in ("%%f") do set "DATA_SIZE=%%~zA"
+echo Searching for existing data files...
             set /a "DATA_SIZE_MB=!DATA_SIZE! / 1024 / 1024"
-            echo %GREEN%✓%NC% 找到数据文件: %%f (!DATA_SIZE_MB!MB)
+            echo %GREEN%✓%NC% Found data file: %%f (!DATA_SIZE_MB!MB)
             set "DATA_FOUND=1"
             goto :data_found
         )

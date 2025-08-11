@@ -7,7 +7,7 @@ class EmbeddingAndEncoding(nn.Module):
         super().__init__()
         self.embedding = nn.Linear(input_dim, seq_len * d_model)
         self.time_step_embedding = nn.Embedding(max_time_steps, d_model)
-        self.positional_encoding = nn.Parameter(torch.zeros(1, d_model))
+        self.positional_encoding = nn.Parameter(torch.zeros(1, seq_len, d_model))
         self.seq_len = seq_len
 
     def forward(self, x_in_pressures_flat, x_time_steps):

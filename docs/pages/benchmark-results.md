@@ -1,8 +1,8 @@
 ---
 layout: default
-title: 基准测试结果
+title: Benchmark Results
 nav_order: 13
-parent: 评估与结果
+parent: Evaluation & Results
 permalink: /pages/benchmark-results/
 ---
 

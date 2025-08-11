@@ -1,248 +1,244 @@
 # VIVTransformer Documentation Site
 
-这是VIVTransformer项目的GitHub Pages文档网站。本文档网站基于Jekyll构建，提供了完整的项目文档、API参考和使用指南。
+This is the GitHub Pages documentation site for the VIVTransformer project. The documentation site is built with Jekyll and provides comprehensive project documentation, API reference, and usage guides.
 
-## 🚀 快速部署
+## 🚀 Quick Deployment
 
-### 方法一：GitHub Pages自动部署（推荐）
+### Method 1: Automatic GitHub Pages Deployment (Recommended)
 
-1. **更新配置文件**
-   ```bash
-   # 编辑 _config.yml
-   # 将 'yourusername' 替换为您的GitHub用户名
-   # 将 'VIVTransformer' 替换为您的仓库名
-   ```
+1. **Update Configuration File**
+```bash
+# Edit _config.yml
+# Replace 'yourusername' with your GitHub username
+# Replace 'VIVTransformer' with your repository name
+```
 
-2. **提交代码到GitHub**
-   ```bash
-   git add .
-   git commit -m "Add GitHub Pages documentation site"
-   git push origin main
-   ```
+2. **Commit Code to GitHub**
+```bash
+git add .
+git commit -m "Setup GitHub Pages documentation"
+git push origin main
+```
 
-3. **启用GitHub Pages**
-   - 进入GitHub仓库设置页面
-   - 滚动到"Pages"部分
-   - 在"Source"下选择"Deploy from a branch"
-   - 选择"main"分支和"/docs"文件夹
-   - 点击"Save"
+3. **Enable GitHub Pages**
+- Go to GitHub repository settings page
+- Scroll to "Pages" section
+- Under "Source", select "Deploy from a branch"
+- Choose "main" branch and "/docs" folder
+- Click "Save"
 
-4. **访问网站**
-   - 网站将在几分钟内可用
-   - 访问地址：`https://yourusername.github.io/VIVTransformer`
+4. **Access Website**
+- The website will be available in a few minutes
+- Access URL: `https://yourusername.github.io/VIVTransformer`
 
-### 方法二：本地开发和预览
+### Method 2: Local Development and Preview
 
-1. **安装依赖**
-   ```bash
-   # 确保已安装Ruby 3.0+
-   cd docs
-   bundle install
-   ```
+1. **Install Dependencies**
+```bash
+# Ensure Ruby 3.0+ is installed
+bundle install
+```
 
-2. **本地运行**
-   ```bash
-   bundle exec jekyll serve
-   # 或者指定端口
-   bundle exec jekyll serve --port 4001
-   ```
+2. **Local Run**
+```bash
+bundle exec jekyll serve
+# Or specify port
+bundle exec jekyll serve --port 4000
+```
 
-3. **访问本地网站**
-   - 打开浏览器访问：`http://localhost:4000`
+3. **Access Local Website**
+- Open browser and visit: `http://localhost:4000`
 
-## 📁 目录结构
+## 📁 Directory Structure
 
 ```
 docs/
-├── _config.yml          # Jekyll配置文件
-├── _layouts/             # 页面布局模板
-│   └── default.html      # 默认布局
-├── assets/               # 静态资源
+├── _config.yml          # Jekyll configuration file
+├── _layouts/             # Page layout templates
+│   └── default.html      # Default layout
+├── assets/               # Static resources
 │   └── css/
-│       └── custom.css    # 自定义样式
-├── pages/                # 文档页面
-│   ├── quick-start-tutorial.md
-│   ├── architecture-overview.md
+│       └── custom.css    # Custom styles
+├── pages/                # Documentation pages
+│   ├── *.md             # Various documentation files
 │   └── ...
-├── index.md              # 首页
-├── Gemfile               # Ruby依赖
-├── convert_wiki.py       # Wiki转换脚本
-└── README.md             # 本文件
+├── index.md              # Homepage
+├── Gemfile               # Ruby dependencies
+├── convert_wiki.py       # Wiki conversion script
+└── README.md             # This file
 ```
 
-## 🔧 自定义配置
+## 🔧 Custom Configuration
 
-### 更新站点信息
+### Update Site Information
 
-编辑 `_config.yml` 文件：
+Edit `_config.yml` file:
 
 ```yaml
-# 基本信息
-title: "您的项目名称"
-description: "项目描述"
-baseurl: "/您的仓库名"
-url: "https://您的用户名.github.io"
+# Basic information
+title: "Your Project Name"
+description: "Project description"
+baseurl: "/YourRepositoryName"
+url: "https://yourusername.github.io"
 
-# 作者信息
+# Author information
 author:
-  name: "您的姓名"
-  email: "您的邮箱"
+  name: "Your Name"
+  email: "your.email@example.com"
 
-# 社交链接
-social:
-  name: "项目名称"
-  links:
-    - https://github.com/您的用户名/您的仓库名
+# Social links
+github:
+  name: "Project Name"
+  repository_url: "https://github.com/yourusername/yourrepository"
 ```
 
-### 自定义样式
+### Custom Styles
 
-编辑 `assets/css/custom.css` 文件来自定义网站外观：
+Edit `assets/css/custom.css` file to customize website appearance:
 
 ```css
-/* 自定义主色调 */
+/* Custom primary color */
 :root {
   --primary-color: #your-color;
-  --secondary-color: #your-secondary-color;
 }
 
-/* 自定义字体 */
+/* Custom font */
 body {
   font-family: 'Your Font', sans-serif;
 }
 ```
 
-### 添加新页面
+### Add New Pages
 
-1. 在 `pages/` 目录下创建新的 `.md` 文件
-2. 添加Jekyll Front Matter：
-   ```yaml
-   ---
-   layout: default
-   title: "页面标题"
-   description: "页面描述"
-   permalink: /pages/your-page/
-   ---
-   ```
-3. 编写Markdown内容
-4. 更新导航菜单（在 `_layouts/default.html` 中）
+1. Create new `.md` file in `pages/` directory
+2. Add Jekyll Front Matter:
 
-## 🔄 从Wiki同步内容
+```yaml
+---
+title: "Page Title"
+description: "Page description"
+---
+```
 
-如果您有现有的Wiki内容，可以使用提供的转换脚本：
+3. Write Markdown content
+4. Update navigation menu (in `_layouts/default.html`)
+
+## 🔄 Sync Content from Wiki
+
+If you have existing Wiki content, you can use the provided conversion script:
 
 ```bash
-cd docs
 python convert_wiki.py
 ```
 
-这个脚本会：
-- 将Wiki文件转换为Jekyll格式
-- 添加适当的Front Matter
-- 修复内部链接
-- 生成站点地图
+This script will:
+- Convert Wiki files to Jekyll format
+- Add appropriate Front Matter
+- Fix internal links
+- Generate sitemap
 
-## 🎨 主题和样式
+## 🎨 Theme and Styles
 
-### 当前主题特性
+### Current Theme Features
 
-- 📱 响应式设计，支持移动端
-- 🌙 自动深色模式支持
-- 🔍 自动生成目录
-- 💫 平滑滚动和动画效果
-- 📊 代码高亮和数学公式支持
-- 🔗 面包屑导航
-- 📋 侧边栏快速链接
+- 📱 Responsive design with mobile support
+- 🌙 Automatic dark mode support
+- 🔍 Auto-generated table of contents
+- 💫 Smooth scrolling and animation effects
+- 📊 Code highlighting and math formula support
+- 🔗 Breadcrumb navigation
+- 📋 Sidebar quick links
 
-### 可用的CSS类
+### Available CSS Classes
 
 ```html
-<!-- 警告框 -->
-<div class="alert alert-info">信息提示</div>
-<div class="alert alert-warning">警告信息</div>
-<div class="alert alert-error">错误信息</div>
-<div class="alert alert-success">成功信息</div>
+<!-- Alert boxes -->
+<div class="alert alert-info">Information message</div>
+<div class="alert alert-warning">Warning message</div>
+<div class="alert alert-error">Error message</div>
+<div class="alert alert-success">Success message</div>
 
-<!-- 工具类 -->
-<p class="text-center">居中文本</p>
-<p class="text-muted">灰色文本</p>
+<!-- Utility classes -->
+<p class="text-center">Centered text</p>
+<p class="text-muted">Muted text</p>
 ```
 
-## 🚀 高级功能
+## 🚀 Advanced Features
 
-### 启用Google Analytics
+### Enable Google Analytics
 
-在 `_config.yml` 中添加：
+Add to `_config.yml`:
 
 ```yaml
 google_analytics: UA-XXXXXXXX-X
 ```
 
-### 添加搜索功能
+### Add Search Functionality
 
-可以集成以下搜索解决方案：
-- [Algolia DocSearch](https://docsearch.algolia.com/)
-- [Simple Jekyll Search](https://github.com/christian-fei/Simple-Jekyll-Search)
+You can integrate the following search solutions:
+- Algolia DocSearch
+- Lunr.js
+- Google Custom Search
 
-### 多语言支持
+### Multi-language Support
 
-可以使用 [jekyll-multiple-languages-plugin](https://github.com/kurtsson/jekyll-multiple-languages-plugin) 添加多语言支持。
+You can use [jekyll-multiple-languages-plugin](https://github.com/kurtsson/jekyll-multiple-languages-plugin) to add multi-language support.
 
-## 🔧 故障排除
+## 🔧 Troubleshooting
 
-### 常见问题
+### Common Issues
 
-1. **页面404错误**
-   - 检查 `baseurl` 配置是否正确
-   - 确认文件路径和permalink设置
+1. **Page 404 Error**
+- Check if `baseurl` configuration is correct
+- Confirm file path and permalink settings
 
-2. **样式不加载**
-   - 检查CSS文件路径
-   - 确认 `_config.yml` 中的URL设置
+2. **Styles Not Loading**
+- Check CSS file paths
+- Confirm URL settings in `_config.yml`
 
-3. **构建失败**
-   - 检查Gemfile依赖
-   - 查看GitHub Actions日志
-   - 确认Markdown语法正确
+3. **Build Failure**
+- Check Gemfile dependencies
+- View GitHub Actions logs
+- Confirm Markdown syntax is correct
 
-4. **链接失效**
-   - 使用相对路径而非绝对路径
-   - 检查文件名大小写
+4. **Broken Links**
+- Use relative paths instead of absolute paths
+- Check file name case sensitivity
 
-### 调试命令
+### Debug Commands
 
 ```bash
-# 检查Jekyll配置
+# Check Jekyll configuration
 bundle exec jekyll doctor
 
-# 详细构建信息
+# Detailed build information
 bundle exec jekyll build --verbose
 
-# 检查依赖
-bundle outdated
+# Check dependencies
+bundle check
 ```
 
-## 📚 相关资源
+## 📚 Related Resources
 
-- [Jekyll官方文档](https://jekyllrb.com/docs/)
-- [GitHub Pages文档](https://docs.github.com/en/pages)
-- [Markdown语法指南](https://www.markdownguide.org/)
-- [Jekyll主题库](https://jekyllthemes.io/)
-- [Liquid模板语言](https://shopify.github.io/liquid/)
+- [Jekyll Official Documentation](https://jekyllrb.com/docs/)
+- [GitHub Pages Documentation](https://docs.github.com/en/pages)
+- [Markdown Syntax Guide](https://www.markdownguide.org/)
+- [Jekyll Themes](https://jekyllthemes.io/)
+- [Liquid Template Language](https://shopify.github.io/liquid/)
 
-## 🤝 贡献
+## 🤝 Contributing
 
-欢迎贡献文档内容！请：
+Welcome to contribute documentation content! Please:
 
-1. Fork本仓库
-2. 创建功能分支
-3. 提交更改
-4. 创建Pull Request
+1. Fork this repository
+2. Create a feature branch
+3. Submit changes
+4. Create a Pull Request
 
-## 📄 许可证
+## 📄 License
 
-本文档网站采用与主项目相同的许可证。
+This documentation site uses the same license as the main project.
 
 ---
 
-*需要帮助？请查看 [GitHub Issues](https://github.com/yourusername/VIVTransformer/issues) 或联系维护者。*
+*Need help? Please check [GitHub Issues](https://github.com/yourusername/VIVTransformer/issues) or contact maintainers.*

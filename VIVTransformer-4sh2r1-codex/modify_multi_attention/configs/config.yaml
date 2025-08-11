@@ -48,6 +48,7 @@ hardware_monitoring:
 # Attention mechanisms to test
 attention_test:
   types: 
+    # QKV Compatible - tested and working (7 mechanisms)
     - self
     - simplified_self
     - muse
@@ -55,15 +56,8 @@ attention_test:
     - relative
     - sparse
     - lsh
-    - emsa
-    - mobilevit
-    - mobilevitv2
-    - dat
-    - crossformer
-    - moa
-    - crisscross
-    - axial
-    - gfnet
+    
+    # CNN Compatible - tested and working (13 mechanisms)
     - se
     - sk
     - cbam
@@ -71,18 +65,31 @@ attention_test:
     - eca
     - shuffle
     - residual
-    - s2
-    - triplet
-    - coord
     - psa
-    - danet
     - cot
     - polarized
-    - outlook
-    - vip
-    - coatnet
     - halo
     - a2
     - parnet
+    
+    # Single Input Compatible - tested and working (2 mechanisms)
     - external
     - aft
+    
+    # Incompatible mechanisms removed:
+    # - emsa (missing required parameters)
+    # - mobilevit (parameter issues)
+    # - mobilevitv2 (forward method signature issues)
+    # - dat (groups parameter issues)
+    # - crossformer (subscriptable issues)
+    # - moa (incompatible with sequence data)
+    # - crisscross (forward method signature issues)
+    # - axial (missing required parameters)
+    # - gfnet (forward method signature issues)
+    # - s2 (parameter name issues)
+    # - triplet (parameter name issues)
+    # - coord (parameter name issues)
+    # - danet (channel mismatch issues)
+    # - outlook (matrix multiplication issues)
+    # - vip (matrix multiplication issues)
+    # - coatnet (output size too small)

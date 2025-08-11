@@ -372,11 +372,7 @@ class TransformerFlowReconstructionModel(nn.Module):
             The predicted flattened output pressure data.
         """
         x_embedded = self.embedding_encoding(x_in_pressures_flat, x_time_steps)
-        print(f"DEBUG: x_embedded shape: {x_embedded.shape}")
-
         encoder_output = self.encoder(x_embedded)
-        print(f"DEBUG: encoder_output shape: {encoder_output.shape}")
-
         decoder_raw_output = self.decoder(encoder_output, encoder_output, return_attention=return_attention)
 
         attention_weights = None
@@ -388,11 +384,7 @@ class TransformerFlowReconstructionModel(nn.Module):
         else:
             decoder_output = decoder_raw_output
 
-        print(f"DEBUG: decoder_output shape: {decoder_output.shape}")
-
         decoder_output_mean = decoder_output.mean(dim=1)
-        print(f"DEBUG: decoder_output_mean shape: {decoder_output_mean.shape}")
-
         out_pressure_flat_pred = self.fc_out(decoder_output_mean)
 
         if return_attention:

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Basic Concepts
 permalink: /pages/basic-concepts/
 ---

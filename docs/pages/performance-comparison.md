@@ -1,52 +1,52 @@
 ---
 layout: default
 title: Performance Comparison
-description: 性能对比和基准测试
+description: Performance comparison and benchmarking analysis
 permalink: /pages/performance-comparison/
 ---
 
-# 性能对比分析 {#性能对比分析}
+# Performance Comparison Analysis {#performance-comparison-analysis}
 
-本文档提供了VIVTransformer项目中38种注意力机制的详细性能对比分析，包括计算效率、内存使用、精度表现和适用场景。
+This document provides a detailed performance comparison analysis of 38 attention mechanisms in the VIVTransformer project, including computational efficiency, memory usage, accuracy performance, and applicability scenarios.
 
-## 📋 目录 {#目录}
+## 📋 Table of Contents {#table-of-contents}
 
-- [评估方法](#评估方法)
-- [整体性能排名](#整体性能排名)
-- [计算效率对比](#计算效率对比)
-- [内存使用分析](#内存使用分析)
-- [精度表现对比](#精度表现对比)
-- [场景适用性分析](#场景适用性分析)
-- [推荐选择指南](#推荐选择指南)
+- [Evaluation Methods](#evaluation-methods)
+- [Overall Performance Ranking](#overall-performance-ranking)
+- [Computational Efficiency Comparison](#computational-efficiency-comparison)
+- [Memory Usage Analysis](#memory-usage-analysis)
+- [Accuracy Performance Comparison](#accuracy-performance-comparison)
+- [Scenario Applicability Analysis](#scenario-applicability-analysis)
+- [Selection Guide](#selection-guide)
 
-## 评估方法 {#评估方法}
+## Evaluation Methods {#evaluation-methods}
 
-### 🎯 评估指标 {#评估指标}
+### 🎯 Evaluation Metrics {#evaluation-metrics}
 
-| 指标类别 | 具体指标 | 单位 | 说明 |
-|----------|----------|------|------|
-| **计算效率** | 训练时间 | 秒/epoch | 单个epoch的训练时间 |
-| | 推理时间 | 毫秒/样本 | 单个样本的推理时间 |
-| | FLOPs | G | 浮点运算次数 |
-| **内存使用** | GPU内存 | GB | 训练时的GPU内存占用 |
-| | 参数量 | M | 模型参数数量 |
-| **精度表现** | 测试损失 | - | 测试集上的损失值 |
-| | 收敛速度 | epoch | 达到收敛的轮数 |
-| **稳定性** | 方差 | - | 多次运行结果的方差 |
+| Metric Category | Specific Metric | Unit | Description |
+|----------------|-----------------|------|-------------|
+| **Computational Efficiency** | Training Time | seconds/epoch | Training time per epoch |
+| | Inference Time | ms/sample | Inference time per sample |
+| | FLOPs | G | Floating point operations |
+| **Memory Usage** | GPU Memory | GB | GPU memory usage during training |
+| | Parameters | M | Number of model parameters |
+| **Accuracy Performance** | Test Loss | - | Loss value on test set |
+| | Convergence Speed | epoch | Number of epochs to convergence |
+| **Stability** | Variance | - | Variance across multiple runs |
 
-### 🔬 测试环境 {#测试环境}
+### 🔬 Test Environment {#test-environment}
 
-- **硬件配置**：NVIDIA RTX 3080 (10GB), Intel i7-10700K, 32GB RAM
-- **软件环境**：PyTorch 1.12, CUDA 11.6, Python 3.9
-- **数据集**：VIV数据集，输入维度400，输出维度40000，序列长度49
-- **训练配置**：batch_size=128, epochs=10, learning_rate=0.0001
+- **Hardware Configuration**: NVIDIA RTX 3080 (10GB), Intel i7-10700K, 32GB RAM
+- **Software Environment**: PyTorch 1.12, CUDA 11.6, Python 3.9
+- **Dataset**: VIV dataset, input dimension 400, output dimension 40000, sequence length 49
+- **Training Configuration**: batch_size=128, epochs=10, learning_rate=0.0001
 
-## 整体性能排名 {#整体性能排名}
+## Overall Performance Ranking {#overall-performance-ranking}
 
-### 🏆 综合性能Top 10 {#综合性能top-10}
+### 🏆 Top 10 Comprehensive Performance {#top-10-comprehensive-performance}
 
-| 排名 | 注意力机制 | 综合得分 | 计算效率 | 内存效率 | 精度表现 | 推荐指数 |
-|------|------------|----------|----------|----------|----------|----------|
+| Rank | Attention Mechanism | Overall Score | Computational Efficiency | Memory Efficiency | Accuracy Performance | Recommendation Index |
+|------|-------------------|---------------|-------------------------|-------------------|---------------------|---------------------|
 | 1 | **MUSE** | 9.2/10 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
 | 2 | **ECA** | 9.0/10 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
 | 3 | **UFO** | 8.8/10 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
@@ -58,12 +58,12 @@ permalink: /pages/performance-comparison/
 | 9 | **Self** | 7.6/10 | ⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
 | 10 | **LSH** | 7.4/10 | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
 
-## 计算效率对比 {#计算效率对比}
+## Computational Efficiency Comparison {#computational-efficiency-comparison}
 
-### ⚡ 训练时间对比 {#训练时间对比}
+### ⚡ Training Time Comparison {#training-time-comparison}
 
 ```
-训练时间 (秒/epoch)
+Training Time (seconds/epoch)
 
 MUSE        ████████████████████████████████████████ 45s
 UFO         ██████████████████████████████████████████ 48s
@@ -81,29 +81,29 @@ CrossFormer ██████████████████████�
 MOA         ██████████████████████████████████████████████████████████ 105s
 ```
 
-### 🚀 推理速度对比 {#推理速度对比}
+### 🚀 Inference Speed Comparison {#inference-speed-comparison}
 
-| 注意力机制 | 推理时间 (ms/样本) | 相对速度 | 适用场景 |
-|------------|-------------------|----------|----------|
-| **MUSE** | 2.1 | 100% | 实时应用 |
-| **ECA** | 2.3 | 91% | 实时应用 |
-| **UFO** | 2.5 | 84% | 实时应用 |
-| **SE** | 2.8 | 75% | 实时应用 |
-| **MobileViT** | 3.2 | 66% | 移动端 |
-| **Sparse** | 3.8 | 55% | 长序列 |
-| **LSH** | 4.2 | 50% | 长序列 |
-| **Simplified** | 4.8 | 44% | 一般应用 |
-| **Relative** | 5.5 | 38% | 高精度任务 |
-| **Self** | 6.2 | 34% | 基线对比 |
-| **CBAM** | 7.1 | 30% | 图像任务 |
-| **DAT** | 8.5 | 25% | 复杂任务 |
-| **CrossFormer** | 9.8 | 21% | 多尺度任务 |
-| **MOA** | 11.2 | 19% | 研究用途 |
+| Attention Mechanism | Inference Time (ms/sample) | Relative Speed | Applicable Scenarios |
+|---------------------|---------------------------|----------------|---------------------|
+| **MUSE** | 2.1 | 100% | Real-time applications |
+| **ECA** | 2.3 | 91% | Real-time applications |
+| **UFO** | 2.5 | 84% | Real-time applications |
+| **SE** | 2.8 | 75% | Real-time applications |
+| **MobileViT** | 3.2 | 66% | Mobile deployment |
+| **Sparse** | 3.8 | 55% | Long sequences |
+| **LSH** | 4.2 | 50% | Long sequences |
+| **Simplified** | 4.8 | 44% | General applications |
+| **Relative** | 5.5 | 38% | High accuracy tasks |
+| **Self** | 6.2 | 34% | Baseline comparison |
+| **CBAM** | 7.1 | 30% | Image tasks |
+| **DAT** | 8.5 | 25% | Complex tasks |
+| **CrossFormer** | 9.8 | 21% | Multi-scale tasks |
+| **MOA** | 11.2 | 19% | Research purposes |
 
-### 📊 FLOPs分析 {#flops分析}
+### 📊 FLOPs Analysis {#flops-analysis}
 
 ```python
-# FLOPs对比 (GFLOPs) {#flops对比-gflops}
+# FLOPs Comparison (GFLOPs)
 flops_data = {
     'MUSE': 2.1,
     'ECA': 1.8,
@@ -121,12 +121,12 @@ flops_data = {
 }
 ```
 
-## 内存使用分析 {#内存使用分析}
+## Memory Usage Analysis {#memory-usage-analysis}
 
-### 💾 GPU内存占用 {#gpu内存占用}
+### 💾 GPU Memory Usage {#gpu-memory-usage}
 
-| 注意力机制 | 内存占用 (GB) | 参数量 (M) | 内存效率 | 批大小支持 |
-|------------|---------------|------------|----------|------------|
+| Attention Mechanism | Memory Usage (GB) | Parameters (M) | Memory Efficiency | Batch Size Support |
+|---------------------|-------------------|----------------|-------------------|-------------------|
 | **ECA** | 3.2 | 12.5 | ⭐⭐⭐⭐⭐ | 256+ |
 | **SE** | 3.4 | 13.1 | ⭐⭐⭐⭐⭐ | 256+ |
 | **MUSE** | 3.8 | 15.2 | ⭐⭐⭐⭐ | 192+ |
@@ -142,26 +142,26 @@ flops_data = {
 | **CrossFormer** | 10.2 | 45.8 | ⭐ | 32+ |
 | **MOA** | 11.8 | 52.3 | ⭐ | 16+ |
 
-### 📈 内存扩展性 {#内存扩展性}
+### 📈 Memory Scalability {#memory-scalability}
 
 ```
-内存使用随序列长度变化
+Memory Usage with Sequence Length
 
-序列长度: 49 → 98 → 196 → 392
+Sequence Length: 49 → 98 → 196 → 392
 
-ECA:        3.2GB → 3.8GB → 4.9GB → 7.2GB    (线性增长)
-MUSE:       3.8GB → 4.6GB → 6.1GB → 9.8GB    (线性增长)
-Sparse:     5.2GB → 6.1GB → 7.8GB → 11.2GB   (亚二次增长)
-Self:       8.1GB → 15.2GB → 58.3GB → OOM    (二次增长)
-Relative:   7.2GB → 13.8GB → 52.1GB → OOM    (二次增长)
+ECA:        3.2GB → 3.8GB → 4.9GB → 7.2GB    (Linear growth)
+MUSE:       3.8GB → 4.6GB → 6.1GB → 9.8GB    (Linear growth)
+Sparse:     5.2GB → 6.1GB → 7.8GB → 11.2GB   (Sub-quadratic growth)
+Self:       8.1GB → 15.2GB → 58.3GB → OOM    (Quadratic growth)
+Relative:   7.2GB → 13.8GB → 52.1GB → OOM    (Quadratic growth)
 ```
 
-## 精度表现对比 {#精度表现对比}
+## Accuracy Performance Comparison {#accuracy-performance-comparison}
 
-### 🎯 测试损失对比 {#测试损失对比}
+### 🎯 Test Loss Comparison {#test-loss-comparison}
 
-| 注意力机制 | 测试损失 | 相对精度 | 收敛轮数 | 稳定性 |
-|------------|----------|----------|----------|--------|
+| Attention Mechanism | Test Loss | Relative Accuracy | Convergence Epochs | Stability |
+|---------------------|-----------|-------------------|-------------------|-----------|
 | **Self** | 0.0467 | 100% | 8 | ⭐⭐⭐⭐⭐ |
 | **Relative** | 0.0471 | 99.1% | 7 | ⭐⭐⭐⭐⭐ |
 | **CBAM** | 0.0485 | 96.3% | 9 | ⭐⭐⭐⭐ |
@@ -177,10 +177,10 @@ Relative:   7.2GB → 13.8GB → 52.1GB → OOM    (二次增长)
 | **Sparse** | 0.0572 | 81.6% | 12 | ⭐⭐ |
 | **LSH** | 0.0589 | 79.3% | 13 | ⭐⭐ |
 
-### 📊 收敛曲线分析 {#收敛曲线分析}
+### 📊 Convergence Curve Analysis {#convergence-curve-analysis}
 
 ```
-训练损失收敛曲线 (前10个epoch)
+Training Loss Convergence Curves (First 10 epochs)
 
 Epoch:  1    2    3    4    5    6    7    8    9    10
 Self:   0.85 0.62 0.48 0.38 0.31 0.26 0.22 0.19 0.17 0.15
@@ -189,10 +189,10 @@ ECA:    0.91 0.68 0.54 0.44 0.37 0.32 0.28 0.25 0.23 0.21
 Sparse: 0.95 0.74 0.61 0.52 0.45 0.40 0.36 0.33 0.30 0.28
 ```
 
-### 🎲 多次运行稳定性 {#多次运行稳定性}
+### 🎲 Multi-run Stability {#multi-run-stability}
 
-| 注意力机制 | 平均损失 | 标准差 | 最佳结果 | 最差结果 | 稳定性评级 |
-|------------|----------|--------|----------|----------|------------|
+| Attention Mechanism | Average Loss | Standard Deviation | Best Result | Worst Result | Stability Rating |
+|---------------------|-------------|-------------------|-------------|--------------|------------------|
 | **Self** | 0.0467 | 0.0012 | 0.0451 | 0.0483 | ⭐⭐⭐⭐⭐ |
 | **Relative** | 0.0471 | 0.0015 | 0.0452 | 0.0489 | ⭐⭐⭐⭐⭐ |
 | **MUSE** | 0.0498 | 0.0018 | 0.0476 | 0.0521 | ⭐⭐⭐⭐ |
@@ -200,85 +200,85 @@ Sparse: 0.95 0.74 0.61 0.52 0.45 0.40 0.36 0.33 0.30 0.28
 | **Sparse** | 0.0572 | 0.0035 | 0.0531 | 0.0618 | ⭐⭐ |
 | **LSH** | 0.0589 | 0.0042 | 0.0541 | 0.0638 | ⭐⭐ |
 
-## 场景适用性分析 {#场景适用性分析}
+## Scenario Applicability Analysis {#scenario-applicability-analysis}
 
-### 🎯 应用场景推荐 {#应用场景推荐}
+### 🎯 Application Scenario Recommendations {#application-scenario-recommendations}
 
-#### 1. 实时推理应用 {#1-实时推理应用}
-**推荐机制**：MUSE, ECA, UFO, SE
+#### 1. Real-time Inference Applications {#1-real-time-inference-applications}
+**Recommended Mechanisms**: MUSE, ECA, UFO, SE
 
-| 机制 | 推理速度 | 精度保持 | 部署难度 | 综合评分 |
-|------|----------|----------|----------|----------|
+| Mechanism | Inference Speed | Accuracy Retention | Deployment Difficulty | Overall Score |
+|-----------|-----------------|-------------------|---------------------|---------------|
 | MUSE | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 9.2/10 |
 | ECA | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 9.0/10 |
 | UFO | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 8.5/10 |
 | SE | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 8.0/10 |
 
-#### 2. 移动端部署 {#2-移动端部署}
-**推荐机制**：MobileViT, ECA, SE
+#### 2. Mobile Deployment {#2-mobile-deployment}
+**Recommended Mechanisms**: MobileViT, ECA, SE
 
-| 机制 | 模型大小 | 功耗 | 精度 | 移动端适配 |
-|------|----------|------|------|------------|
+| Mechanism | Model Size | Power Consumption | Accuracy | Mobile Adaptation |
+|-----------|------------|-------------------|----------|-------------------|
 | MobileViT | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
 | ECA | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
 | SE | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
 
-#### 3. 高精度研究 {#3-高精度研究}
-**推荐机制**：Self, Relative, CBAM, DAT
+#### 3. High-precision Research {#3-high-precision-research}
+**Recommended Mechanisms**: Self, Relative, CBAM, DAT
 
-| 机制 | 精度 | 可解释性 | 研究价值 | 计算成本 |
-|------|------|----------|----------|----------|
+| Mechanism | Accuracy | Interpretability | Research Value | Computational Cost |
+|-----------|----------|------------------|---------------|--------------------|
 | Self | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
 | Relative | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
 | CBAM | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
 | DAT | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ |
 
-#### 4. 长序列处理 {#4-长序列处理}
-**推荐机制**：Sparse, LSH, AFT
+#### 4. Long Sequence Processing {#4-long-sequence-processing}
+**Recommended Mechanisms**: Sparse, LSH, AFT
 
-| 机制 | 序列长度支持 | 内存效率 | 精度保持 | 实现复杂度 |
-|------|--------------|----------|----------|------------|
+| Mechanism | Sequence Length Support | Memory Efficiency | Accuracy Retention | Implementation Complexity |
+|-----------|------------------------|-------------------|-------------------|---------------------------|
 | Sparse | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
 | LSH | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐ |
 | AFT | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
 
-## 推荐选择指南 {#推荐选择指南}
+## Selection Guide {#selection-guide}
 
-### 🎯 决策树 {#决策树}
+### 🎯 Decision Tree {#decision-tree}
 
 ```
-选择注意力机制决策流程
+Attention Mechanism Selection Decision Flow
 
-开始
+Start
   ↓
-是否需要实时推理？
-  ├─ 是 → 资源是否受限？
-  │      ├─ 是 → ECA / SE
-  │      └─ 否 → MUSE / UFO
-  └─ 否 → 是否需要最高精度？
-         ├─ 是 → Self / Relative
-         └─ 否 → 序列是否很长？
-                ├─ 是 → Sparse / LSH
-                └─ 否 → 是否移动端部署？
-                       ├─ 是 → MobileViT
-                       └─ 否 → CBAM / DAT
+Need real-time inference?
+  ├─ Yes → Resource constrained?
+  │      ├─ Yes → ECA / SE
+  │      └─ No → MUSE / UFO
+  └─ No → Need highest accuracy?
+         ├─ Yes → Self / Relative
+         └─ No → Very long sequences?
+                ├─ Yes → Sparse / LSH
+                └─ No → Mobile deployment?
+                       ├─ Yes → MobileViT
+                       └─ No → CBAM / DAT
 ```
 
-### 📊 选择矩阵 {#选择矩阵}
+### 📊 Selection Matrix {#selection-matrix}
 
-| 需求优先级 | 首选 | 次选 | 备选 |
-|------------|------|------|------|
-| **速度优先** | MUSE | ECA | UFO |
-| **精度优先** | Self | Relative | CBAM |
-| **内存优先** | ECA | SE | MobileViT |
-| **平衡性能** | MUSE | UFO | CBAM |
-| **移动端** | MobileViT | ECA | SE |
-| **长序列** | Sparse | LSH | AFT |
-| **研究用途** | Self | DAT | MOA |
+| Priority | First Choice | Second Choice | Alternative |
+|----------|-------------|---------------|-------------|
+| **Speed Priority** | MUSE | ECA | UFO |
+| **Accuracy Priority** | Self | Relative | CBAM |
+| **Memory Priority** | ECA | SE | MobileViT |
+| **Balanced Performance** | MUSE | UFO | CBAM |
+| **Mobile Deployment** | MobileViT | ECA | SE |
+| **Long Sequences** | Sparse | LSH | AFT |
+| **Research Use** | Self | DAT | MOA |
 
-### 🔧 配置建议 {#配置建议}
+### 🔧 Configuration Recommendations {#configuration-recommendations}
 
-#### 高性能配置 {#高性能配置}
+#### High Performance Configuration {#high-performance-configuration}
 ```yaml
 model:
   attention_type: muse
@@ -289,7 +289,7 @@ training:
   learning_rate: 0.0001
 ```
 
-#### 高精度配置 {#高精度配置}
+#### High Accuracy Configuration {#high-accuracy-configuration}
 ```yaml
 model:
   attention_type: self
@@ -300,7 +300,7 @@ training:
   learning_rate: 0.00005
 ```
 
-#### 移动端配置 {#移动端配置}
+#### Mobile Configuration {#mobile-configuration}
 ```yaml
 model:
   attention_type: mobilevit
@@ -311,30 +311,30 @@ training:
   learning_rate: 0.0002
 ```
 
-### 📈 性能调优建议 {#性能调优建议}
+### 📈 Performance Tuning Recommendations {#performance-tuning-recommendations}
 
-1. **提升速度**：
-   - 选择高效注意力机制（MUSE, ECA）
-   - 减少模型维度和头数
-   - 增大批大小
-   - 使用混合精度训练
+1. **Improve Speed**:
+   - Choose efficient attention mechanisms (MUSE, ECA)
+   - Reduce model dimensions and heads
+   - Increase batch size
+   - Use mixed precision training
 
-2. **提升精度**：
-   - 选择高精度机制（Self, Relative）
-   - 增加模型维度和层数
-   - 降低学习率
-   - 使用数据增强
+2. **Improve Accuracy**:
+   - Choose high-precision mechanisms (Self, Relative)
+   - Increase model dimensions and layers
+   - Lower learning rate
+   - Use data augmentation
 
-3. **节省内存**：
-   - 选择轻量级机制（ECA, SE）
-   - 减小批大小
-   - 使用梯度累积
-   - 启用梯度检查点
-
----
-
-**💡 提示**：性能数据会随着硬件环境和数据集的不同而有所变化。建议在您的具体环境中进行测试以获得最准确的性能评估。
+3. **Save Memory**:
+   - Choose lightweight mechanisms (ECA, SE)
+   - Reduce batch size
+   - Use gradient accumulation
+   - Enable gradient checkpointing
 
 ---
 
-*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*
+**💡 Tip**: Performance data may vary with different hardware environments and datasets. We recommend testing in your specific environment for the most accurate performance evaluation.
+
+---
+
+*Need help? Check the [FAQ](faq) or [Troubleshooting](troubleshooting) pages.*

@@ -8,46 +8,46 @@ permalink: /training-optimization/
 
 # Training & Optimization
 
-本节包含了 VIVTransformer 模型训练和优化的完整指南，从基础训练到高级优化技巧。
+This section contains a complete guide for VIVTransformer model training and optimization, from basic training to advanced optimization techniques.
 
-## 📚 训练文档
+## 📚 Training Documentation
 
-### 🎯 基础训练
-- **[训练指南]({{ site.baseurl }}/pages/training-guide/)** - 完整的模型训练流程
-- **[损失函数]({{ site.baseurl }}/pages/loss-functions/)** - 损失函数设计与使用
-- **[SVD损失函数]({{ site.baseurl }}/pages/svd-loss-functions/)** - 特殊损失函数详解
+### 🎯 Basic Training
+- **[Training Guide]({{ site.baseurl }}/pages/training-guide/)** - Complete model training workflow
+- **[Loss Functions]({{ site.baseurl }}/pages/loss-functions/)** - Loss function design and usage
+- **[SVD Loss Functions]({{ site.baseurl }}/pages/svd-loss-functions/)** - Detailed special loss functions
 
-### 🎯 优化策略
-- **[多损失策略]({{ site.baseurl }}/pages/multi-loss-strategy/)** - 多损失函数配置
-- **[超参数调优]({{ site.baseurl }}/pages/hyperparameter-tuning/)** - 自动化参数优化
-- **[收敛性分析]({{ site.baseurl }}/pages/convergence-analysis/)** - 训练收敛监控
+### 🎯 Optimization Strategies
+- **[Multi-Loss Strategy]({{ site.baseurl }}/pages/multi-loss-strategy/)** - Multi-loss function configuration
+- **[Hyperparameter Tuning]({{ site.baseurl }}/pages/hyperparameter-tuning/)** - Automated parameter optimization
+- **[Convergence Analysis]({{ site.baseurl }}/pages/convergence-analysis/)** - Training convergence monitoring
 
-## 🎯 学习路径
+## 🎯 Learning Path
 
-### 🚀 快速开始
-1. 阅读训练指南了解基本流程
-2. 配置损失函数
-3. 开始第一次训练
+### 🚀 Quick Start
+1. Read the training guide to understand basic workflow
+2. Configure loss functions
+3. Start your first training
 
-### 🔬 深入优化
-1. 学习多损失策略
-2. 使用超参数调优工具
-3. 分析训练收敛性
+### 🔬 Deep Optimization
+1. Learn multi-loss strategies
+2. Use hyperparameter tuning tools
+3. Analyze training convergence
 
-### 🏆 高级技巧
-1. 自定义损失函数
-2. 分布式训练
-3. 模型压缩与加速
+### 🏆 Advanced Techniques
+1. Custom loss functions
+2. Distributed training
+3. Model compression and acceleration
 
-## 💡 最佳实践
+## 💡 Best Practices
 
-- **数据准备**：确保数据质量和多样性
-- **模型监控**：使用 TensorBoard 实时监控
-- **实验管理**：记录所有实验配置和结果
-- **资源管理**：合理分配 GPU 和内存资源
+- **Data Preparation**: Ensure data quality and diversity
+- **Model Monitoring**: Use TensorBoard for real-time monitoring
+- **Experiment Management**: Record all experiment configurations and results
+- **Resource Management**: Properly allocate GPU and memory resources
 
-## 🔗 相关资源
+## 🔗 Related Resources
 
-- [评估指标]({{ site.baseurl }}/pages/evaluation-metrics/) - 了解模型评估方法
-- [实验结果]({{ site.baseurl }}/pages/experimental-results/) - 查看基准测试结果
-- [故障排除]({{ site.baseurl }}/pages/troubleshooting/) - 解决常见训练问题
+- [Evaluation Metrics]({{ site.baseurl }}/pages/evaluation-metrics/) - Learn model evaluation methods
+- [Experimental Results]({{ site.baseurl }}/pages/experimental-results/) - View benchmark test results
+- [Troubleshooting]({{ site.baseurl }}/pages/troubleshooting/) - Solve common training issues

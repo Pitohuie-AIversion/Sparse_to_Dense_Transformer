@@ -99,7 +99,7 @@ ATTENTION_MODULES = {
 }
 
 ADAPTER_MAPPING = {
-    # QKV-style attentions
+    # QKV Compatible - tested and working
     "self": AdapterType.QKV,
     "simplified_self": AdapterType.QKV,
     "muse": AdapterType.QKV,
@@ -107,86 +107,94 @@ ADAPTER_MAPPING = {
     "relative": AdapterType.QKV,
     "sparse": AdapterType.QKV,
     "lsh": AdapterType.QKV,
-    "emsa": AdapterType.QKV,
-    "mobilevit": AdapterType.QKV,
-    "mobilevitv2": AdapterType.QKV,
-    "dat": AdapterType.QKV,
-    "crossformer": AdapterType.QKV,
-    "moa": AdapterType.QKV,
-    "crisscross": AdapterType.QKV,
-    "axial": AdapterType.QKV,
-    "gfnet": AdapterType.QKV,
-
-    # CNN-style attentions
+    
+    # CNN Compatible - tested and working
     "se": AdapterType.CNN,
     "sk": AdapterType.CNN,
     "cbam": AdapterType.CNN,
     "bam": AdapterType.CNN,
     "eca": AdapterType.CNN,
     "shuffle": AdapterType.CNN,
-
     "residual": AdapterType.CNN,
-    "s2": AdapterType.CNN,
-    "triplet": AdapterType.CNN,
-    "coord": AdapterType.CNN,
     "psa": AdapterType.CNN,
-    "danet": AdapterType.CNN,
     "cot": AdapterType.CNN,
     "polarized": AdapterType.CNN,
-    "outlook": AdapterType.CNN,
-    "vip": AdapterType.CNN,
-    "coatnet": AdapterType.CNN,
     "halo": AdapterType.CNN,
-    "a2": AdapterType.CNN,
+    "a2": AdapterType.CNN,  # Actually works with CNN format
     "parnet": AdapterType.CNN,
-
-    # Single-input attentions
+    
+    # Single Input Compatible - tested and working
     "external": AdapterType.SINGLE_INPUT,
     "aft": AdapterType.SINGLE_INPUT,
+    
+    # Incompatible or require special handling - commented out for now
+    # "emsa": AdapterType.QKV,  # Missing required parameters
+    # "danet": AdapterType.CNN,  # Channel mismatch issues
+    # "outlook": AdapterType.SINGLE_INPUT,  # Matrix multiplication issues
+    # "vip": AdapterType.SINGLE_INPUT,  # Matrix multiplication issues
+    # "coatnet": AdapterType.CNN,  # Output size too small
+    # "gfnet": AdapterType.SINGLE_INPUT,  # Forward method signature issues
+    # "mobilevit": AdapterType.SINGLE_INPUT,  # Parameter issues
+    # "mobilevitv2": AdapterType.SINGLE_INPUT,  # Forward method signature issues
+    # "dat": AdapterType.SINGLE_INPUT,  # Groups parameter issues
+    # "crossformer": AdapterType.QKV,  # Subscriptable issues
+    # "moa": AdapterType.SINGLE_INPUT,  # Incompatible with sequence data
+    # "crisscross": AdapterType.SINGLE_INPUT,  # Forward method signature issues
+    # "axial": AdapterType.SINGLE_INPUT,  # Missing required parameters
+    # "s2": AdapterType.CNN,  # Parameter name issues
+    # "triplet": AdapterType.CNN,  # Parameter name issues
+    # "coord": AdapterType.CNN,  # Parameter name issues
 }
 
 
-OLD_ATTENTION_MODULES = {
-    "external": ExternalAttention,
+# Only include tested and compatible attention mechanisms
+ATTENTION_MODULES = {
+    # QKV Compatible - tested and working
     "self": ScaledDotProductAttention,
     "simplified_self": SimplifiedScaledDotProductAttention,
+    "muse": MUSEAttention,
+    "ufo": UFOAttention,
+    "relative": RelativePositionSelfAttention,
+    "sparse": SparseSelfAttention,
+    "lsh": LSHSelfAttention,
+    
+    # CNN Compatible - tested and working
     "se": SEAttention,
     "sk": SKAttention,
     "cbam": CBAMBlock,
     "bam": BAMBlock,
     "eca": ECAAttention,
-    "danet": DAModule,
-    "psa": PSA,
-    "emsa": EMSA,
     "shuffle": ShuffleAttention,
-    "muse": MUSEAttention,
-    "sge": SpatialGroupEnhance,
-    "a2": DoubleAttention,
-    "aft": AFT_FULL,
-    "outlook": OutlookAttention,
-    "vip": WeightedPermuteMLP,
-    "coatnet": CoAtNet,
-    "halo": HaloAttention,
-    "polarized": SequentialPolarizedSelfAttention,
-    "cot": CoTAttention,
     "residual": ResidualAttention,
-    "s2": S2Attention,
-    "gfnet": GFNet,
-    "triplet": TripletAttention,
-    "coord": CoordAtt,
-    "mobilevit": MobileViTAttention,
+    "psa": PSA,
+    "cot": CoTAttention,
+    "polarized": SequentialPolarizedSelfAttention,
+    "halo": HaloAttention,
+    "a2": DoubleAttention,
     "parnet": ParNetAttention,
-    "ufo": UFOAttention,
-    # "acmix": ACmix,
-    "mobilevitv2": MobileViTv2Attention,
-    "dat": DAT,
-    "crossformer": CrossFormer,
-    "moa": MOATransformer,
-    "crisscross": CrissCrossAttention,
-    "axial": AxialImageTransformer,
-    "relative": RelativePositionSelfAttention,
-    "sparse": SparseSelfAttention,
-    "lsh": LSHSelfAttention,
+    
+    # Single Input Compatible - tested and working
+    "external": ExternalAttention,
+    "aft": AFT_FULL,
+    
+    # Incompatible modules - commented out to prevent errors
+    # "emsa": EMSA,  # Missing required parameters
+    # "danet": DAModule,  # Channel mismatch issues
+    # "outlook": OutlookAttention,  # Matrix multiplication issues
+    # "vip": WeightedPermuteMLP,  # Matrix multiplication issues
+    # "coatnet": CoAtNet,  # Output size too small
+    # "gfnet": GFNet,  # Forward method signature issues
+    # "mobilevit": MobileViTAttention,  # Parameter issues
+    # "mobilevitv2": MobileViTv2Attention,  # Forward method signature issues
+    # "dat": DAT,  # Groups parameter issues
+    # "crossformer": CrossFormer,  # Subscriptable issues
+    # "moa": MOATransformer,  # Incompatible with sequence data
+    # "crisscross": CrissCrossAttention,  # Forward method signature issues
+    # "axial": AxialImageTransformer,  # Missing required parameters
+    # "s2": S2Attention,  # Parameter name issues
+    # "triplet": TripletAttention,  # Parameter name issues
+    # "coord": CoordAtt,  # Parameter name issues
+    # "acmix": ACmix,  # Not imported
 }
 
 def get_attention_module(

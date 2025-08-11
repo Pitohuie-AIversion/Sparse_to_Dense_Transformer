@@ -36,7 +36,7 @@ common:
   table_of_contents: "Table of Contents"
   search_placeholder: "Search documentation..."
   language_switch: "Switch Language"
-  chinese: "中文"
+  chinese: "Chinese"
   english: "English"
 
 features:

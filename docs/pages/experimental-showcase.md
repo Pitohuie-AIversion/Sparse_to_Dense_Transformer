@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 实验结果展示
+title: Experimental Showcase
 nav_order: 4
 permalink: /pages/experimental-showcase/
 description: "VIVTransformer实验结果、性能对比和案例分析"

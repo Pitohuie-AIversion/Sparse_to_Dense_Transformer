@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: doc
 title: Examples
 nav_order: 5
 parent: Getting Started

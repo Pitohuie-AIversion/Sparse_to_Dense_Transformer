@@ -97,8 +97,9 @@ attention_types:
 #  - "mobilevit"
 #  - "mobilevitv2"
 
-device: "cuda:0"              # 强烈建议明确指定主卡
-use_dataparallel: true        # 新增，双卡/多卡训练控制
+global:
+  device: "cuda:0"              # 强烈建议明确指定主卡
+  use_dataparallel: true        # 新增，双卡/多卡训练控制
 seed: 42                      # 新增，训练可重复性
 deterministic: true           # 新增，训练可重复性
 max_memory_fraction: 0.8      # 新增，每进程最大显存占用比例

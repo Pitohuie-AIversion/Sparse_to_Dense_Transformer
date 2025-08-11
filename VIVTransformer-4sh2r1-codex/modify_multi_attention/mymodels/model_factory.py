@@ -14,7 +14,7 @@ def create_model(config, attention_type, device):
         seq_len=config['model'].get('seq_len', 49),
     )
 
-    if config.get('use_dataparallel', False) and torch.cuda.device_count() > 1:
+    if config.get('global', {}).get('use_dataparallel', False) and torch.cuda.device_count() > 1:
         print(f"Using DataParallel on {torch.cuda.device_count()} GPUs!")
         model = torch.nn.DataParallel(model)
     

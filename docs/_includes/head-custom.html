@@ -2,8 +2,19 @@
  
 <meta name="site-baseurl" content="{{ site.baseurl }}">
 
-<!-- Custom CSS for enhanced styling (temporarily disabled) -->
-<!-- <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}"> -->
+<!-- Enhanced meta tags for better SEO and social sharing -->
+<meta name="theme-color" content="#2563eb">
+<meta name="msapplication-TileColor" content="#2563eb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<!-- Preload critical fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Performance optimizations -->
+<link rel="dns-prefetch" href="//github.com">
+<link rel="dns-prefetch" href="//api.github.com">
 
 <!-- Auto dark mode support using CSS media queries -->
 <style>
@@ -112,75 +123,4 @@
     
     document.body.appendChild(toggleBtn);
   });
-</script>
-
-<!-- Enhanced meta tags for better SEO and social sharing -->
-<meta name="theme-color" content="#2563eb">
-<meta name="msapplication-TileColor" content="#2563eb">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-<!-- Preload critical fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<!-- Performance optimizations -->
-<link rel="dns-prefetch" href="//github.com">
-<link rel="dns-prefetch" href="//api.github.com">
-
-<!-- Default to English content only -->
-<style>
-  /* Prefer English: hide Chinese content blocks by default */
-  .lang-content[data-lang-zh],
-  .lang-content[data-lang="zh"] {
-    display: none !important;
-  }
-  .lang-content[data-lang-en],
-  .lang-content[data-lang="en"] {
-    display: block !important;
-  }
-</style>
-
-<!-- Runtime filter: hide DOM nodes containing CJK characters to enforce English-only UI -->
-<script>
-  (function() {
-    function containsCJK(text) {
-      if (!text) return false;
-      // Match common CJK ranges (CJK Unified Ideographs, Ext A, punctuation, etc.)
-      return /[\u2E80-\u2EFF\u3000-\u303F\u31C0-\u31EF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/.test(text);
-    }
-
-    function hideChineseInScope(root) {
-      if (!root) return;
-      const selectors = [
-        'h1','h2','h3','h4','h5','h6',
-        'p','li','blockquote','dt','dd',
-        'table','thead','tbody','tr','td','th',
-        'code','pre','span','a','div',
-        '.nav-list-link','.nav-list-item','.toc-entry'
-      ];
-      const nodes = root.querySelectorAll(selectors.join(','));
-      nodes.forEach(function(el) {
-        // Skip elements already hidden
-        if (el.offsetParent === null && el !== document.body) return;
-        const text = (el.innerText || el.textContent || '').trim();
-        if (text && containsCJK(text)) {
-          el.style.display = 'none';
-        }
-      });
-    }
-
-    function run() {
-      // Main content and sidebar
-      hideChineseInScope(document.querySelector('.main-content'));
-      hideChineseInScope(document.querySelector('.side-bar'));
-      hideChineseInScope(document.querySelector('.site-nav'));
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', run);
-    } else {
-      run();
-    }
-  })();
 </script>

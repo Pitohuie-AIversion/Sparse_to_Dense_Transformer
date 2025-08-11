@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Train and evaluate the VIVTransformer with various attention mechanisms.
 
 This script loads configuration from a YAML file and allows overriding the

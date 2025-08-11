@@ -13,16 +13,29 @@ data:
   use_augmentation: true
   crop_size: [128, 128]
 
+# Reynolds 4D dataset configuration
+reynolds_data:
+  enabled: true
+  path: X:/2025/Graduation_project/simulation_results/merged_all_pressures_separated_normalized.pt
+  use_time_sequence: false
+  input_size: 20      # 20x20 input grid
+  output_size: 200    # 200x200 output grid
+  sequence_length: 5
+
 # Model settings
 model:
   attention_type: relative
   d_model: 256
   num_heads: 4
   num_layers: 6
-  input_dim: 400
-  output_dim: 40000
-  seq_len: 49
+  input_dim: 1           # Each grid point has 1 pressure value
+  output_dim: 40000      # 200x200 = 40000 output points
+  seq_len: 400           # 20x20 = 400 input points
   max_time_steps: 100
+  # 2D spatial embedding settings for 20x20 grid
+  grid_height: 20
+  grid_width: 20
+  use_2d_embedding: true  # Enable 2D spatial embedding to preserve spatial neighborhood information
 
 # Training settings
 training:

@@ -9,24 +9,32 @@ global:
 # Data settings
 data:
   path: X:/2025/Graduation_project/simulation_results/merged_all_pressures_separated_normalized.pt
-  batch_size: 128
+  batch_size: 16
   use_augmentation: true
   crop_size: [128, 128]
+
+# Reynolds 4D dataset configuration
+reynolds_data:
+  enabled: true
+  path: X:/2025/Graduation_project/simulation_results/merged_all_pressures_separated_normalized.pt
+  use_time_sequence: false
+  input_size: 20
+  output_size: 200
+  sequence_length: 5
 
 # Model settings
 model:
   attention_type: relative
-  d_model: 256
+  d_model: 192
   num_heads: 4
   num_layers: 6
-  input_dim: 400
+  input_dim: 1
   output_dim: 40000
-  seq_len: 49
+  seq_len: 400
   max_time_steps: 100
-  # 2D spatial embedding settings
-  grid_height: 7
-  grid_width: 7
-  use_2d_embedding: true  # 启用2D空间嵌入以保留空间邻域信息
+  grid_height: 20
+  grid_width: 20
+  use_2d_embedding: true
 
 # Training settings
 training:
@@ -52,7 +60,6 @@ hardware_monitoring:
 # Attention mechanisms to test
 attention_test:
   types: 
-    # QKV Compatible - tested and working (7 mechanisms)
     - self
     - simplified_self
     - muse
@@ -60,8 +67,6 @@ attention_test:
     - relative
     - sparse
     - lsh
-    
-    # CNN Compatible - tested and working (13 mechanisms)
     - se
     - sk
     - cbam
@@ -75,8 +80,6 @@ attention_test:
     - halo
     - a2
     - parnet
-    
-    # Single Input Compatible - tested and working (2 mechanisms)
     - external
     - aft
     
@@ -85,7 +88,7 @@ attention_test:
     # - mobilevit (parameter issues)
     # - mobilevitv2 (forward method signature issues)
     # - dat (groups parameter issues)
-    # - crossformer (subscriptable issues)
+    # - crosstransformer (subscriptable issues)
     # - moa (incompatible with sequence data)
     # - crisscross (forward method signature issues)
     # - axial (missing required parameters)

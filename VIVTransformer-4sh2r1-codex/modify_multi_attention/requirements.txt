@@ -8,6 +8,6 @@ flake8
 tensorboard
 h5py
 scipy
-sklearn
+scikit-learn
 seaborn
 tqdm

@@ -18,253 +18,69 @@
 
 <!-- Auto dark mode support using CSS media queries -->
 <style>
-  /* Dark mode support */
+  /* 基础主题变量（浅色） */
+  :root {
+    --bg: #ffffff;
+    --text: #0f172a;
+    --muted-text: #334155;
+    --accent: #2563eb;
+    --border: #e5e7eb;
+    --sidebar: #f8fafc;
+    --search-bg: #f1f5f9;
+    --code-bg: #f6f8fa;
+  }
+
+  /* 深色主题（系统优先） */
   @media (prefers-color-scheme: dark) {
     :root {
-      --body-background-color: #0f172a;
-      --sidebar-color: #1e293b;
-      --search-background-color: #334155;
-      --table-background-color: #1e293b;
-      --code-background-color: #334155;
-      --border-color: #475569;
-      --body-text-color: #f1f5f9;
-      --body-heading-color: #ffffff;
-      --link-color: #60a5fa;
-    }
-    
-    body {
-      background-color: var(--body-background-color) !important;
-      color: var(--body-text-color) !important;
-    }
-    
-    .site-nav, .main-content {
-      background-color: var(--body-background-color) !important;
-      color: var(--body-text-color) !important;
-    }
-    
-    .side-bar {
-      background-color: var(--sidebar-color) !important;
-    }
-    
-    a {
-      color: var(--link-color) !important;
-    }
-    
-    h1, h2, h3, h4, h5, h6 {
-      color: var(--body-heading-color) !important;
-    }
-    
-    .search-input {
-      background-color: var(--search-background-color) !important;
-      color: var(--body-text-color) !important;
-      border-color: var(--border-color) !important;
-    }
-    
-    code, pre {
-      background-color: var(--code-background-color) !important;
-      color: var(--body-text-color) !important;
-    }
-    
-    table {
-      background-color: var(--table-background-color) !important;
-    }
-    
-    .btn {
-      background-color: var(--sidebar-color) !important;
-      color: var(--body-text-color) !important;
-      border-color: var(--border-color) !important;
+      --bg: #0f172a;
+      --text: #e5e7eb;
+      --muted-text: #94a3b8;
+      --accent: #7aa2ff;
+      --border: #334155;
+      --sidebar: #111827;
+      --search-bg: #1f2937;
+      --code-bg: #0b1220;
     }
   }
 
-  /* 炫酷特效样式 */
-  /* 平滑滚动 */
-  html {
-    scroll-behavior: smooth;
+  /* 深色主题（手动覆盖） */
+  body.manual-dark-mode {
+    --bg: #0f172a;
+    --text: #e5e7eb;
+    --muted-text: #94a3b8;
+    --accent: #7aa2ff;
+    --border: #334155;
+    --sidebar: #111827;
+    --search-bg: #1f2937;
+    --code-bg: #0b1220;
   }
 
-  /* 代码块增强效果 */
-  pre {
-    position: relative;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
-    overflow: hidden !important;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    padding: 20px !important;
-    margin: 15px 0 !important;
-  }
+  /* 全局基础样式（稳重科技感，轻动效） */
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg) !important; color: var(--text) !important; }
+  .side-bar { background: var(--sidebar) !important; }
+  .search-input { background: var(--search-bg) !important; border-color: var(--border) !important; color: var(--text) !important; }
+  code, pre { background: var(--code-bg) !important; color: var(--text) !important; }
+  table { background: var(--bg) !important; }
+  a { color: var(--accent) !important; text-decoration: none; transition: color .2s ease, text-shadow .2s ease; }
+  a:hover { text-decoration: underline; text-shadow: 0 0 0 rgba(0,0,0,0); }
+  .btn, button { transition: transform .15s ease, box-shadow .15s ease; }
+  .btn:hover, button:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
 
-  pre::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: rgba(255,255,255,0.1);
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-  }
+  /* 代码块（轻度增强） */
+  pre { border-radius: 8px !important; box-shadow: 0 2px 10px rgba(0,0,0,0.06) !important; padding: 16px !important; }
 
-  pre::after {
-    content: '● ● ●';
-    position: absolute;
-    top: 8px;
-    left: 12px;
-    color: #ff5f56, #ffbd2e, #27ca3f;
-    font-size: 12px;
-    line-height: 1;
-  }
+  /* 顶部滚动进度（细线，低调） */
+  .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: var(--accent); opacity: .85; z-index: 9999; transition: width .1s ease; }
 
-  /* 链接悬停效果 */
-  a {
-    transition: all 0.3s ease !important;
-    position: relative !important;
-  }
+  /* 返回顶部（简洁） */
+  .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; background: var(--accent); border: none; border-radius: 50%; color: #fff; font-size: 18px; cursor: pointer; box-shadow: 0 6px 18px rgba(37,99,235,.25); transition: transform .15s ease, opacity .2s ease; opacity: 0; visibility: hidden; z-index: 1000; }
+  .back-to-top.show { opacity: 1; visibility: visible; }
+  .back-to-top:hover { transform: translateY(-2px); }
 
-  a:hover {
-    transform: translateY(-2px) !important;
-    text-shadow: 0 2px 8px rgba(96, 165, 250, 0.3) !important;
-  }
-
-  /* 按钮增强效果 */
-  .btn, button {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-  }
-
-  .btn:hover, button:hover {
-    transform: translateY(-2px) scale(1.05) !important;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2) !important;
-  }
-
-  /* 页面加载动画 */
-  .page-load-animation {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease forwards;
-  }
-
-  @keyframes fadeInUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* 标题发光效果 */
-  h1, h2, h3 {
-    background: linear-gradient(45deg, #667eea, #764ba2, #667eea) !important;
-    background-size: 200% 200% !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
-    animation: gradientShift 3s ease infinite !important;
-  }
-
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* 卡片悬停效果 */
-  .main-content > div, .side-bar .nav-list-item {
-    transition: all 0.3s ease !important;
-  }
-
-  .main-content > div:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
-  }
-
-  /* 鼠标跟随粒子效果 */
-  .cursor-particle {
-    position: fixed;
-    width: 4px;
-    height: 4px;
-    background: radial-gradient(circle, #667eea, #764ba2);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    animation: particleFade 1s ease-out forwards;
-  }
-
-  @keyframes particleFade {
-    0% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(0);
-    }
-  }
-
-  /* 滚动进度条 */
-  .scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 4px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    z-index: 9999;
-    transition: width 0.1s ease;
-    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.5);
-  }
-
-  /* 返回顶部按钮 */
-  .back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    transition: all 0.3s ease;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 1000;
-  }
-
-  .back-to-top.show {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .back-to-top:hover {
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-  }
-
-  /* 主题切换按钮增强 */
-  .theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    background: linear-gradient(135deg, #667eea, #764ba2) !important;
-    border: none !important;
-    border-radius: 50% !important;
-    width: 55px !important;
-    height: 55px !important;
-    cursor: pointer !important;
-    font-size: 20px !important;
-    color: white !important;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3) !important;
-    backdrop-filter: blur(10px) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  }
-
-  .theme-toggle:hover {
-    transform: translateY(-3px) scale(1.1) rotate(180deg) !important;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5) !important;
-  }
+  /* 主题切换按钮（简洁科技感） */
+  .theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 9999; background: var(--sidebar); border: 1px solid var(--border); border-radius: 10px; width: 44px; height: 36px; cursor: pointer; font-size: 16px; color: var(--text); box-shadow: 0 2px 10px rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; }
 </style>
 
 <!-- 炫酷功能脚本 -->
@@ -289,154 +105,81 @@
     backToTop.title = 'Back to Top';
     document.body.appendChild(backToTop);
 
-    // 滚动事件处理
-    function updateScrollEffects() {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / scrollHeight) * 100;
-
-      // 更新进度条
-      progressBar.style.width = scrollPercent + '%';
-
-      // 显示/隐藏返回顶部按钮
-      if (scrollTop > 300) {
-        backToTop.classList.add('show');
-      } else {
-        backToTop.classList.remove('show');
-      }
-    }
-
-    // 返回顶部功能
-    backToTop.addEventListener('click', function() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-
-    // 滚动监听
-    window.addEventListener('scroll', updateScrollEffects);
-
-    // 鼠标跟随粒子效果
-    let particles = [];
-    
-    function createParticle(x, y) {
-      const particle = document.createElement('div');
-      particle.className = 'cursor-particle';
-      particle.style.left = x + 'px';
-      particle.style.top = y + 'px';
-      document.body.appendChild(particle);
-      
-      particles.push(particle);
-      
-      // 1秒后移除粒子
-      setTimeout(() => {
-        if (particle.parentNode) {
-          particle.parentNode.removeChild(particle);
-        }
-        particles = particles.filter(p => p !== particle);
-      }, 1000);
-    }
-
-    // 鼠标移动事件
-    let lastParticleTime = 0;
-    document.addEventListener('mousemove', function(e) {
-      const now = Date.now();
-      if (now - lastParticleTime > 50) { // 限制粒子生成频率
-        createParticle(e.clientX, e.clientY);
-        lastParticleTime = now;
-      }
-    });
-
-    // 增强的主题切换功能
-    function toggleManualTheme() {
-      const body = document.body;
-      const isDark = body.classList.contains('manual-dark-mode');
-      
-      if (isDark) {
-        body.classList.remove('manual-dark-mode');
-        localStorage.setItem('manual-theme', 'light');
-      } else {
-        body.classList.add('manual-dark-mode');
-        localStorage.setItem('manual-theme', 'dark');
-      }
-    }
-    
-    // 初始化主题
-    const savedTheme = localStorage.getItem('manual-theme');
-    if (savedTheme === 'dark') {
-      document.body.classList.add('manual-dark-mode');
-    }
-    
-    // 创建增强的主题切换按钮
-    const toggleBtn = document.createElement('button');
-    toggleBtn.innerHTML = '🌙';
-    toggleBtn.className = 'theme-toggle';
-    toggleBtn.onclick = function() {
-      toggleManualTheme();
-      // 切换图标
-      toggleBtn.innerHTML = document.body.classList.contains('manual-dark-mode') ? '☀️' : '🌙';
+    const updateScroll = () => {
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (h > 0 ? (st / h) * 100 : 0) + '%';
+      if (st > 300) backToTop.classList.add('show'); else backToTop.classList.remove('show');
     };
-    toggleBtn.title = 'Toggle Dark/Light Mode';
-    
+    window.addEventListener('scroll', updateScroll);
+    updateScroll();
+
+    // 主题切换（系统偏好 + 手动覆盖）
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const setThemeMeta = (isDark) => { if (metaTheme) metaTheme.setAttribute('content', isDark ? '#0f172a' : '#2563eb'); };
+
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    const applyTheme = (mode) => {
+      const isDark = mode === 'dark';
+      document.body.classList.toggle('manual-dark-mode', isDark);
+      setThemeMeta(isDark);
+      if (toggleBtn) toggleBtn.textContent = isDark ? '☀️' : '🌙';
+    };
+
+    let manual = localStorage.getItem('manual-theme');
+    if (!manual && prefersDark && prefersDark.matches) manual = 'dark';
+    applyTheme(manual === 'dark' ? 'dark' : 'light');
+
+    if (prefersDark) {
+      prefersDark.addEventListener('change', (e) => {
+        if (!localStorage.getItem('manual-theme')) {
+          applyTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    }
+
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'theme-toggle';
+    toggleBtn.title = 'Toggle Dark/Light Mode (T)';
+    toggleBtn.addEventListener('click', () => {
+      const dark = document.body.classList.contains('manual-dark-mode');
+      const next = dark ? 'light' : 'dark';
+      localStorage.setItem('manual-theme', next);
+      applyTheme(next);
+    });
     document.body.appendChild(toggleBtn);
 
-    // 代码块复制功能
-    document.querySelectorAll('pre').forEach(function(pre) {
-      const copyBtn = document.createElement('button');
-      copyBtn.innerHTML = '📋';
-      copyBtn.style.cssText = `
-        position: absolute;
-        top: 8px;
-        right: 12px;
-        background: rgba(255,255,255,0.2);
-        border: none;
-        border-radius: 4px;
-        color: white;
-        padding: 5px 8px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: all 0.3s ease;
-      `;
-      copyBtn.title = 'Copy code';
-      
-      copyBtn.addEventListener('click', function() {
+    // 代码复制（轻量）
+    document.querySelectorAll('pre').forEach((pre) => {
+      const btn = document.createElement('button');
+      btn.setAttribute('aria-label', 'Copy code');
+      btn.textContent = 'Copy';
+      btn.style.cssText = 'position:absolute;top:8px;right:8px;border:1px solid var(--border);background:var(--sidebar);color:var(--text);border-radius:6px;padding:2px 8px;font-size:12px;opacity:.8;';
+      btn.addEventListener('mouseenter', () => (btn.style.opacity = '1'));
+      btn.addEventListener('mouseleave', () => (btn.style.opacity = '.8'));
+      btn.addEventListener('click', () => {
         const code = pre.textContent;
-        navigator.clipboard.writeText(code).then(function() {
-          copyBtn.innerHTML = '✅';
-          setTimeout(() => {
-            copyBtn.innerHTML = '📋';
-          }, 2000);
+        navigator.clipboard.writeText(code).then(() => {
+          const old = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => (btn.textContent = old), 1500);
         });
       });
-      
       pre.style.position = 'relative';
-      pre.appendChild(copyBtn);
+      pre.appendChild(btn);
     });
 
-    // 添加键盘快捷键
-    document.addEventListener('keydown', function(e) {
-      // Ctrl/Cmd + K: 搜索
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        const searchInput = document.querySelector('.search-input');
-        if (searchInput) {
-          searchInput.focus();
-        }
+    // 快捷键：T 切换主题 / Ctrl+K 聚焦搜索
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        const si = document.querySelector('.search-input'); if (si) { e.preventDefault(); si.focus(); }
       }
-      
-      // T: 切换主题
-      if (e.key === 't' && !e.ctrlKey && !e.metaKey && !e.altKey) {
-        const activeElement = document.activeElement;
-        if (activeElement.tagName !== 'INPUT' && activeElement.tagName !== 'TEXTAREA') {
-          toggleManualTheme();
-          const toggleBtn = document.querySelector('.theme-toggle');
-          if (toggleBtn) {
-            toggleBtn.innerHTML = document.body.classList.contains('manual-dark-mode') ? '☀️' : '🌙';
-          }
-        }
+      if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase() === 't') {
+        const dark = document.body.classList.contains('manual-dark-mode');
+        const next = dark ? 'light' : 'dark';
+        localStorage.setItem('manual-theme', next);
+        applyTheme(next);
       }
     });
+  });
 
     console.log('🚀 VIVTransformer Documentation - Enhanced UI loaded!');
     console.log('💡 Press "T" to toggle theme, Ctrl+K to search');

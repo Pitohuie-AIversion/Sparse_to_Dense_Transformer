@@ -106,6 +106,15 @@ class SingleInputAttentionAdapter(AttentionAdapter):
     """Adapter for attention mechanisms that expect a single tensor input."""
 
     def forward(self, x, memory=None, return_attention=False):
+        # Warn if memory is provided but will be ignored
+        if memory is not None:
+            import warnings
+            warnings.warn(
+                f"{self.attention.__class__.__name__} is a single-input attention mechanism "
+                "that does not support cross-attention. The 'memory' parameter will be ignored.",
+                UserWarning
+            )
+        
         # Special handling for attentions that expect 4D input (B, H, W, C)
         if isinstance(self.attention, (OutlookAttention, WeightedPermuteMLP)):
             B, N, C = x.shape

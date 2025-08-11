@@ -1,0 +1,95 @@
+# Global settings
+global:
+  seed: 42
+  deterministic: true
+  device: cuda:0
+  max_memory_fraction: 0.8
+  use_dataparallel: true
+
+# Data settings
+data:
+  path: X:/2025/Graduation_project/simulation_results/merged_all_pressures_separated_normalized.pt
+  batch_size: 128
+  use_augmentation: true
+  crop_size: [128, 128]
+
+# Model settings
+model:
+  attention_type: relative
+  d_model: 256
+  num_heads: 4
+  num_layers: 6
+  input_dim: 400
+  output_dim: 40000
+  seq_len: 49
+  max_time_steps: 100
+
+# Training settings
+training:
+  epochs: 10
+  learning_rate: 0.0001
+  early_stop_patience: 10
+
+# Visualization settings
+visualization:
+  enabled: true
+  interval: 100
+  max_samples: 5
+
+# Hardware monitoring settings
+hardware_monitoring:
+  enable_gpu_monitoring: true
+  log_batch_metrics: true
+  batch_log_interval: 50
+  save_detailed_metrics: true
+  monitor_temperature: true
+  monitor_power_usage: true
+
+# Attention mechanisms to test
+attention_test:
+  types: 
+    # QKV Compatible - tested and working (7 mechanisms)
+    - self
+    - simplified_self
+    - muse
+    - ufo
+    - relative
+    - sparse
+    - lsh
+    
+    # CNN Compatible - tested and working (13 mechanisms)
+    - se
+    - sk
+    - cbam
+    - bam
+    - eca
+    - shuffle
+    - residual
+    - psa
+    - cot
+    - polarized
+    - halo
+    - a2
+    - parnet
+    
+    # Single Input Compatible - tested and working (2 mechanisms)
+    - external
+    - aft
+    
+    # Incompatible mechanisms removed:
+    # - emsa (missing required parameters)
+    # - mobilevit (parameter issues)
+    # - mobilevitv2 (forward method signature issues)
+    # - dat (groups parameter issues)
+    # - crossformer (subscriptable issues)
+    # - moa (incompatible with sequence data)
+    # - crisscross (forward method signature issues)
+    # - axial (missing required parameters)
+    # - gfnet (forward method signature issues)
+    # - s2 (parameter name issues)
+    # - triplet (parameter name issues)
+    # - coord (parameter name issues)
+    # - danet (channel mismatch issues)
+    # - outlook (matrix multiplication issues)
+    # - vip (matrix multiplication issues)
+    # - coatnet (output size too small)

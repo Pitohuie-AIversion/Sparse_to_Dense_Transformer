@@ -1,0 +1,1 @@
+Test Loss for coatnet: 0.045491430908441544

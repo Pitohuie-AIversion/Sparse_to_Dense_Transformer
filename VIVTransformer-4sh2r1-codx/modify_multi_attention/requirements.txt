@@ -1,0 +1,13 @@
+torch
+numpy
+pyyaml
+matplotlib
+fightingcv_attention
+black
+flake8
+tensorboard
+h5py
+scipy
+sklearn
+seaborn
+tqdm

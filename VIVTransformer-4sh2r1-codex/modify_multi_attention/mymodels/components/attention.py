@@ -97,14 +97,24 @@ class SparseSelfAttention(nn.Module):
 
         scores = torch.matmul(q, k.transpose(-2, -1)) / (self.d_k**0.5)
 
-        # 创建稀疏掩码
-        mask = torch.ones_like(
-            scores, dtype=torch.bool
-        )  # 使用 dtype=torch.bool 以适配 masked_fill
-        for i in range(query_len):
-            start = (i // self.block_size) * self.block_size
-            end = min(start + self.block_size, key_len)  # 确保 end 不超过 key_len
-            mask[:, :, i, start:end] = False  # 仅保留 block_size 内的注意力
+        # 创建稀疏掩码 - 向量化版本
+        mask = torch.ones((query_len, key_len), dtype=torch.bool, device=scores.device)
+        
+        # 计算每个查询位置对应的块起始和结束位置
+        query_indices = torch.arange(query_len, device=scores.device)
+        block_starts = (query_indices // self.block_size) * self.block_size
+        block_ends = torch.clamp(block_starts + self.block_size, max=key_len)
+        
+        # 为每个查询位置创建键位置的范围
+        key_indices = torch.arange(key_len, device=scores.device).unsqueeze(0)  # [1, key_len]
+        query_block_starts = block_starts.unsqueeze(1)  # [query_len, 1]
+        query_block_ends = block_ends.unsqueeze(1)  # [query_len, 1]
+        
+        # 向量化创建掩码：键位置在对应查询块范围内时为False
+        mask = ~((key_indices >= query_block_starts) & (key_indices < query_block_ends))
+        
+        # 扩展掩码维度以匹配scores的形状 [batch_size, num_heads, query_len, key_len]
+        mask = mask.unsqueeze(0).unsqueeze(0).expand_as(scores)
 
         scores = scores.masked_fill(
             mask, float("-inf")

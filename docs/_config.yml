@@ -18,10 +18,6 @@ plugins:
   - jekyll-seo-tag
   - jekyll-include-cache
 
-# Multi-language configuration (custom implementation)
-languages: ["en", "zh"]
-default_lang: "en"
-
 # Just The Docs theme configuration
 color_scheme: light
 search_enabled: true

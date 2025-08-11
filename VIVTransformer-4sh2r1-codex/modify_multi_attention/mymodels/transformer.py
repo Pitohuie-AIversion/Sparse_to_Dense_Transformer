@@ -57,6 +57,7 @@ from fightingcv_attention.attention.Axial_attention import AxialImageTransformer
 
 from utils.model_utils import clones
 from mymodels.embedding import EmbeddingAndEncoding
+from mymodels.embedding_2d import EmbeddingAndEncoding2D
 
 def _create_attention_layer(attention_type, d_model, num_heads):
     """Helper function to create an attention layer."""
@@ -317,6 +318,9 @@ class TransformerFlowReconstructionModel(nn.Module):
         max_time_steps: int = 100,
         attention_type: str = "relative",
         seq_len: int = 49,
+        grid_height: int = 7,
+        grid_width: int = 7,
+        use_2d_embedding: bool = True,
     ):
         """Initializes the TransformerFlowReconstructionModel.
 
@@ -329,18 +333,35 @@ class TransformerFlowReconstructionModel(nn.Module):
             max_time_steps: The maximum number of time steps for time embedding.
             attention_type: The type of attention mechanism to use.
             seq_len: The length of the input sequence.
+            grid_height: The height of the 2D grid (for 2D spatial embedding).
+            grid_width: The width of the 2D grid (for 2D spatial embedding).
+            use_2d_embedding: Whether to use 2D spatial embedding or original embedding.
         """
         super().__init__()
 
         self.attention_type = attention_type
         self.seq_len = seq_len
-
-        self.embedding_encoding = EmbeddingAndEncoding(
-            input_dim=input_dim,
-            d_model=d_model,
-            max_time_steps=max_time_steps,
-            seq_len=seq_len
-        )
+        self.use_2d_embedding = use_2d_embedding
+        
+        # 选择嵌入模块
+        if use_2d_embedding:
+            # 使用2D空间嵌入，保留空间邻域信息
+            self.embedding_encoding = EmbeddingAndEncoding2D(
+                input_dim=1,  # 每个网格点一个压力值
+                d_model=d_model,
+                max_time_steps=max_time_steps,
+                seq_len=seq_len,
+                grid_height=grid_height,
+                grid_width=grid_width
+            )
+        else:
+            # 使用原始嵌入方法
+            self.embedding_encoding = EmbeddingAndEncoding(
+                input_dim=input_dim,
+                d_model=d_model,
+                max_time_steps=max_time_steps,
+                seq_len=seq_len
+            )
 
         encoder_layer = CustomEncoderLayer(
             d_model=d_model,
@@ -373,7 +394,15 @@ class TransformerFlowReconstructionModel(nn.Module):
         """
         x_embedded = self.embedding_encoding(x_in_pressures_flat, x_time_steps)
         encoder_output = self.encoder(x_embedded)
-        decoder_raw_output = self.decoder(encoder_output, encoder_output, return_attention=return_attention)
+        
+        # Create a separate target sequence for decoder (learnable or zero-initialized)
+        # This prevents cross-attention from degenerating into self-attention
+        batch_size, seq_len, d_model = encoder_output.shape
+        decoder_target = torch.zeros_like(encoder_output)  # Initialize with zeros
+        # Alternative: use a learnable parameter
+        # decoder_target = self.decoder_start_token.expand(batch_size, seq_len, -1)
+        
+        decoder_raw_output = self.decoder(decoder_target, encoder_output, return_attention=return_attention)
 
         attention_weights = None
         if return_attention:

@@ -1,61 +1,60 @@
 ---
 layout: default
-title: Evaluation & Results
-nav_order: 5
-has_children: true
+title: Evaluation Results
+description: Comprehensive evaluation results and performance analysis
 permalink: /pages/evaluation-results/
 ---
 
-# Evaluation & Results
+# Evaluation Results
 
-本节包含了 VIVTransformer 模型的评估方法、实验结果和性能分析。
+This section contains evaluation methods, experimental results, and performance analysis for the VIVTransformer model.
 
-## 📊 评估文档
+## 📊 Evaluation Documentation
 
-### 🎯 评估方法
-- **[评估指标]({{ site.baseurl }}/pages/evaluation-metrics/)** - 模型评估方法和指标
-- **[性能对比]({{ site.baseurl }}/pages/performance-comparison/)** - 与其他方法的对比分析
-- **[收敛性分析]({{ site.baseurl }}/pages/convergence-analysis/)** - 训练收敛性监控
+### 🎯 Evaluation Methods
+- **[Evaluation Metrics]({{ site.baseurl }}/pages/evaluation-metrics/)** - Model evaluation methods and metrics
+- **[Performance Comparison]({{ site.baseurl }}/pages/performance-comparison/)** - Comparative analysis with other methods
+- **[Convergence Analysis]({{ site.baseurl }}/pages/convergence-analysis/)** - Training convergence monitoring
 
-### 📊 实验数据
-- **[实验结果]({{ site.baseurl }}/pages/experimental-results/)** - 详细的实验数据和分析
-- **[基准测试]({{ site.baseurl }}/pages/benchmark-results/)** - 标准数据集上的性能
-- **[消融研究]({{ site.baseurl }}/pages/ablation-study/)** - 组件重要性分析
+### 📊 Experimental Data
+- **[Experimental Results]({{ site.baseurl }}/pages/experimental-results/)** - Detailed experimental data and analysis
+- **[Benchmark Results]({{ site.baseurl }}/pages/benchmark-results/)** - Performance on standard datasets
+- **[Ablation Study]({{ site.baseurl }}/pages/ablation-study/)** - Component importance analysis
 
-## 🎯 关键发现
+## 🎯 Key Findings
 
-### 🏆 性能亮点
-- **预测精度提升 6.7%**：相比基线模型显著改善
-- **推理速度提升 46%**：优化的注意力机制带来的加速
-- **内存使用减少 45%**：高效的模型设计
+### 🏆 Performance Highlights
+- **6.7% Accuracy Improvement**: Significant improvement over baseline models
+- **46% Inference Speed Boost**: Acceleration from optimized attention mechanisms
+- **45% Memory Usage Reduction**: Efficient model design
 
-### 🔬 技术洞察
-- **多损失策略**：组合损失函数显著提升性能
-- **注意力机制**：不同注意力类型适用于不同场景
-- **SVD正则化**：有效防止过拟合，提升泛化能力
+### 🔬 Technical Insights
+- **Multi-loss Strategy**: Combined loss functions significantly improve performance
+- **Attention Mechanisms**: Different attention types suit different scenarios
+- **SVD Regularization**: Effectively prevents overfitting and improves generalization
 
-## 📋 评估流程
+## 📋 Evaluation Process
 
-### 🔄 标准评估
-1. **数据准备**：标准化测试集
-2. **模型加载**：加载训练好的模型
-3. **指标计算**：计算各项评估指标
-4. **结果分析**：统计分析和可视化
+### 🔄 Standard Evaluation
+1. **Data Preparation**: Standardized test sets
+2. **Model Loading**: Load trained models
+3. **Metric Calculation**: Compute evaluation metrics
+4. **Result Analysis**: Statistical analysis and visualization
 
-### 🎯 对比评估
-1. **基线模型**：与经典方法对比
-2. **消融研究**：分析各组件贡献
-3. **参数敏感性**：分析超参数影响
-4. **泛化能力**：跨数据集评估
+### 🎯 Comparative Evaluation
+1. **Baseline Models**: Compare with classical methods
+2. **Ablation Study**: Analyze component contributions
+3. **Parameter Sensitivity**: Analyze hyperparameter effects
+4. **Generalization**: Cross-dataset evaluation
 
-## 💡 使用建议
+## 💡 Usage Recommendations
 
-- **研究人员**：重点关注实验结果和性能对比
-- **开发者**：参考评估指标进行模型优化
-- **用户**：了解模型在不同场景下的表现
+- **Researchers**: Focus on experimental results and performance comparisons
+- **Developers**: Reference evaluation metrics for model optimization
+- **Users**: Understand model performance in different scenarios
 
-## 🔗 相关资源
+## 🔗 Related Resources
 
-- [训练指南]({{ site.baseurl }}/pages/training-guide/) - 了解如何训练模型
-- [部署指南]({{ site.baseurl }}/pages/deployment-guide/) - 学习模型部署
-- [故障排除]({{ site.baseurl }}/pages/troubleshooting/) - 解决评估中的问题
+- [Training Guide]({{ site.baseurl }}/pages/training-guide/) - Learn how to train models
+- [Deployment Guide]({{ site.baseurl }}/pages/deployment-guide/) - Learn model deployment
+- [Troubleshooting]({{ site.baseurl }}/pages/troubleshooting/) - Solve evaluation issues

@@ -12,6 +12,9 @@ def create_model(config, attention_type, device):
         max_time_steps=config['model']['max_time_steps'],
         attention_type=attention_type,
         seq_len=config['model'].get('seq_len', 49),
+        grid_height=config['model'].get('grid_height', 7),
+        grid_width=config['model'].get('grid_width', 7),
+        use_2d_embedding=config['model'].get('use_2d_embedding', True),
     )
 
     if config.get('global', {}).get('use_dataparallel', False) and torch.cuda.device_count() > 1:

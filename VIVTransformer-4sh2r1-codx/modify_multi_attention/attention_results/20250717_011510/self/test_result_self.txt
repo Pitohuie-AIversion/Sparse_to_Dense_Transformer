@@ -1,0 +1,1 @@
+Test Loss for self: 0.04562927410006523

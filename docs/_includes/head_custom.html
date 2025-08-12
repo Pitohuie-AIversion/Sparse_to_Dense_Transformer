@@ -18,18 +18,8 @@
 
 <!-- Auto dark mode support using CSS media queries -->
 <style>
-  /* 基础主题变量（浅色） */
-  :root {
-    --bg: #ffffff;
-    --text: #0f172a;
-    --muted-text: #334155;
-    --accent: #2563eb;
-    --border: #e5e7eb;
-    --sidebar: #f8fafc;
-    --search-bg: #f1f5f9;
-    --code-bg: #f6f8fa;
-  }
-
+  /* 不覆盖 Just the Docs 原始浅色变量，保持默认外观 */
+  
   /* 深色主题（系统优先） */
   @media (prefers-color-scheme: dark) {
     :root {
@@ -56,14 +46,61 @@
     --code-bg: #0b1220;
   }
 
-  /* 全局基础样式（稳重科技感，轻动效） */
+  /* 深色主题（通过 html 属性统一覆盖，针对 Just the Docs 主题变量强制覆盖） */
+  html[data-theme='dark'] {
+    --bg: #0f172a !important;
+    --text: #e5e7eb !important;
+    --muted-text: #94a3b8 !important;
+    --accent: #7aa2ff !important;
+    --border: #334155 !important;
+    --sidebar: #111827 !important;
+    --search-bg: #1f2937 !important;
+    --code-bg: #0b1220 !important;
+    
+    /* Just the Docs 主题专用变量覆盖 */
+    --body-background-color: #0f172a !important;
+    --sidebar-color: #1e293b !important;
+    --search-background-color: #334155 !important;
+    --table-background-color: #1e293b !important;
+    --code-background-color: #334155 !important;
+    --btn-primary-color: #3b82f6 !important;
+    --link-color: #60a5fa !important;
+    --nav-child-link-color: #cbd5e1 !important;
+    --border-color: #475569 !important;
+    --body-text-color: #f1f5f9 !important;
+    --body-heading-color: #ffffff !important;
+    --search-result-preview-color: #cbd5e1 !important;
+  }
+
+  /* 全局基础样式（轻动效，不影响浅色模式） */
   html { scroll-behavior: smooth; }
-  body { background: var(--bg) !important; color: var(--text) !important; }
-  .side-bar { background: var(--sidebar) !important; }
-  .search-input { background: var(--search-bg) !important; border-color: var(--border) !important; color: var(--text) !important; }
-  code, pre { background: var(--code-bg) !important; color: var(--text) !important; }
-  table { background: var(--bg) !important; }
-  a { color: var(--accent) !important; text-decoration: none; transition: color .2s ease, text-shadow .2s ease; }
+  
+  /* 深色模式专用全局样式 */
+  html[data-theme='dark'] body { 
+    background: #0f172a !important; 
+    color: #e5e7eb !important; 
+    background-color: #0f172a !important;
+  }
+  html[data-theme='dark'] .side-bar { 
+    background: #1e293b !important; 
+    background-color: #1e293b !important;
+  }
+  html[data-theme='dark'] .search-input { 
+    background: #334155 !important; 
+    border-color: #475569 !important; 
+    color: #f1f5f9 !important; 
+  }
+  html[data-theme='dark'] code, 
+  html[data-theme='dark'] pre { 
+    background: #334155 !important; 
+    color: #f1f5f9 !important; 
+  }
+  html[data-theme='dark'] table { 
+    background: #1e293b !important; 
+  }
+  
+  /* 浅色和深色模式通用样式（轻度增强） */
+  a { transition: color .2s ease, text-shadow .2s ease; }
   a:hover { text-decoration: underline; text-shadow: 0 0 0 rgba(0,0,0,0); }
   .btn, button { transition: transform .15s ease, box-shadow .15s ease; }
   .btn:hover, button:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
@@ -72,15 +109,213 @@
   pre { border-radius: 8px !important; box-shadow: 0 2px 10px rgba(0,0,0,0.06) !important; padding: 16px !important; }
 
   /* 顶部滚动进度（细线，低调） */
-  .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: var(--accent); opacity: .85; z-index: 9999; transition: width .1s ease; }
+  .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: var(--accent, #2563eb); opacity: .85; z-index: 9999; transition: width .1s ease; }
 
   /* 返回顶部（简洁） */
-  .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; background: var(--accent); border: none; border-radius: 50%; color: #fff; font-size: 18px; cursor: pointer; box-shadow: 0 6px 18px rgba(37,99,235,.25); transition: transform .15s ease, opacity .2s ease; opacity: 0; visibility: hidden; z-index: 1000; }
+  .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; background: var(--accent, #2563eb); border: none; border-radius: 50%; color: #fff; font-size: 18px; cursor: pointer; box-shadow: 0 6px 18px rgba(37,99,235,.25); transition: transform .15s ease, opacity .2s ease; opacity: 0; visibility: hidden; z-index: 1000; }
   .back-to-top.show { opacity: 1; visibility: visible; }
   .back-to-top:hover { transform: translateY(-2px); }
 
-  /* 主题切换按钮（简洁科技感） */
-  .theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 9999; background: var(--sidebar); border: 1px solid var(--border); border-radius: 10px; width: 44px; height: 36px; cursor: pointer; font-size: 16px; color: var(--text); box-shadow: 0 2px 10px rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; }
+  /* 主题切换按钮（优化可用性） */
+  .theme-toggle { 
+    position: fixed; 
+    bottom: 80px; 
+    right: 24px; 
+    z-index: 2147483647; /* 提升层级，确保可点 */
+    pointer-events: auto;
+    background: var(--accent, #2563eb); 
+    border: 2px solid var(--accent, #2563eb); 
+    border-radius: 50%; 
+    width: 52px; 
+    height: 52px; 
+    cursor: pointer; 
+    font-size: 20px; 
+    color: #ffffff; 
+    box-shadow: 0 4px 16px rgba(37,99,235,.3); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .theme-toggle:hover { 
+    transform: translateY(-2px) scale(1.05); 
+    box-shadow: 0 6px 20px rgba(37,99,235,.4); 
+  }
+  .theme-toggle:active { 
+    transform: translateY(0) scale(0.95); 
+  }
+  .theme-toggle:focus {
+    outline: 2px solid var(--accent, #2563eb);
+    outline-offset: 2px;
+  }
+
+  /* 脉冲动画提示用户注意 */
+  @keyframes pulse-hint {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  .theme-toggle.hint {
+    animation: pulse-hint 1.5s ease-in-out 2;
+  }
+
+  /* 最强力度的深色模式覆盖，使用多层选择器确保优先级超越 Just the Docs */
+  html[data-theme='dark'] body,
+  html[data-theme='dark'].dark body,
+  html[data-theme='dark'] .main,
+  html[data-theme='dark'].dark .main,
+  html[data-theme='dark'] .main-content,
+  html[data-theme='dark'].dark .main-content,
+  html[data-theme='dark'] .page,
+  html[data-theme='dark'].dark .page,
+  html[data-theme='dark'] .page-content,
+  html[data-theme='dark'].dark .page-content,
+  html[data-theme='dark'] .search-results,
+  html[data-theme='dark'].dark .search-results,
+  html[data-theme='dark'] .search-overlay,
+  html[data-theme='dark'].dark .search-overlay,
+  html[data-theme='dark'] .main-content-wrap,
+  html[data-theme='dark'].dark .main-content-wrap,
+  html[data-theme='dark'] .content-wrapper,
+  html[data-theme='dark'].dark .content-wrapper {
+    background: #0f172a !important;
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+  }
+  
+  /* 确保侧边栏、导航等区域的深色样式 */
+  html[data-theme='dark'] .side-bar,
+  html[data-theme='dark'].dark .side-bar,
+  html[data-theme='dark'] .site-header,
+  html[data-theme='dark'].dark .site-header,
+  html[data-theme='dark'] .site-footer,
+  html[data-theme='dark'].dark .site-footer,
+  html[data-theme='dark'] .navigation,
+  html[data-theme='dark'].dark .navigation,
+  html[data-theme='dark'] .navigation-list-child-list,
+  html[data-theme='dark'].dark .navigation-list-child-list,
+  html[data-theme='dark'] .nav-list,
+  html[data-theme='dark'].dark .nav-list {
+    background: #1e293b !important;
+    background-color: #1e293b !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+  }
+  
+  /* 搜索框样式 */
+  html[data-theme='dark'] .search-input,
+  html[data-theme='dark'].dark .search-input,
+  html[data-theme='dark'] .search-input-wrap .search-input,
+  html[data-theme='dark'].dark .search-input-wrap .search-input,
+  html[data-theme='dark'] input.search-input,
+  html[data-theme='dark'].dark input.search-input {
+    background: #334155 !important;
+    background-color: #334155 !important;
+    border-color: #475569 !important;
+    color: #f1f5f9 !important;
+  }
+  
+  /* 链接颜色 */
+  html[data-theme='dark'] a,
+  html[data-theme='dark'].dark a,
+  html[data-theme='dark'] .navigation-list-link,
+  html[data-theme='dark'].dark .navigation-list-link,
+  html[data-theme='dark'] .navigation-list-child-list .navigation-list-link,
+  html[data-theme='dark'].dark .navigation-list-child-list .navigation-list-link,
+  html[data-theme='dark'] .nav-list-link,
+  html[data-theme='dark'].dark .nav-list-link { 
+    color: #60a5fa !important; 
+  }
+  
+  /* 代码和预格式化文本 */
+  html[data-theme='dark'] code, 
+  html[data-theme='dark'].dark code,
+  html[data-theme='dark'] pre,
+  html[data-theme='dark'].dark pre,
+  html[data-theme='dark'] .highlight,
+  html[data-theme='dark'].dark .highlight,
+  html[data-theme='dark'] .highlighter-rouge,
+  html[data-theme='dark'].dark .highlighter-rouge {
+    background: #334155 !important; 
+    background-color: #334155 !important;
+    color: #f1f5f9 !important; 
+  }
+  
+  /* 表格样式 */
+  html[data-theme='dark'] table,
+  html[data-theme='dark'].dark table,
+  html[data-theme='dark'] .table-wrapper,
+  html[data-theme='dark'].dark .table-wrapper,
+  html[data-theme='dark'] tbody,
+  html[data-theme='dark'].dark tbody,
+  html[data-theme='dark'] td,
+  html[data-theme='dark'].dark td,
+  html[data-theme='dark'] th,
+  html[data-theme='dark'].dark th { 
+    background: #1e293b !important;
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+  }
+  
+  /* 标题样式 */
+  html[data-theme='dark'] h1,
+  html[data-theme='dark'].dark h1,
+  html[data-theme='dark'] h2,
+  html[data-theme='dark'].dark h2,
+  html[data-theme='dark'] h3,
+  html[data-theme='dark'].dark h3,
+  html[data-theme='dark'] h4,
+  html[data-theme='dark'].dark h4,
+  html[data-theme='dark'] h5,
+  html[data-theme='dark'].dark h5,
+  html[data-theme='dark'] h6,
+  html[data-theme='dark'].dark h6,
+  html[data-theme='dark'] .site-title,
+  html[data-theme='dark'].dark .site-title {
+    color: #ffffff !important;
+  }
+  
+  /* 文本样式 */
+  html[data-theme='dark'] p,
+  html[data-theme='dark'].dark p,
+  html[data-theme='dark'] li,
+  html[data-theme='dark'].dark li,
+  html[data-theme='dark'] .text-body,
+  html[data-theme='dark'].dark .text-body,
+  html[data-theme='dark'] span,
+  html[data-theme='dark'].dark span,
+  html[data-theme='dark'] div,
+  html[data-theme='dark'].dark div {
+    color: #f1f5f9 !important;
+  }
+  
+  /* 其它容器的兼容性覆盖 */
+  html[data-theme='dark'] .page-wrap,
+  html[data-theme='dark'].dark .page-wrap,
+  html[data-theme='dark'] .content,
+  html[data-theme='dark'].dark .content,
+  html[data-theme='dark'] .search-result,
+  html[data-theme='dark'].dark .search-result,
+  html[data-theme='dark'] .breadcrumb-nav,
+  html[data-theme='dark'].dark .breadcrumb-nav,
+  html[data-theme='dark'] .site-wrap,
+  html[data-theme='dark'].dark .site-wrap {
+    background: transparent !important;
+    color: #f1f5f9 !important;
+  }
+  
+  /* 确保页面根容器为深色背景 */
+  html[data-theme='dark'],
+  html[data-theme='dark'].dark {
+    background: #0f172a !important;
+    background-color: #0f172a !important;
+  }
+  
+  /* 强制应用深色背景到所有可能的根容器 */
+  html[data-theme='dark'] *:not(.theme-toggle):not(.back-to-top):not(.jtd-toast):not(.scroll-progress),
+  html[data-theme='dark'].dark *:not(.theme-toggle):not(.back-to-top):not(.jtd-toast):not(.scroll-progress) {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 </style>
 
 <!-- 炫酷功能脚本 -->
@@ -103,7 +338,27 @@
     backToTop.className = 'back-to-top';
     backToTop.innerHTML = '↑';
     backToTop.title = 'Back to Top';
+    backToTop.setAttribute('aria-label', 'Back to Top');
+    backToTop.setAttribute('role', 'button');
+    backToTop.setAttribute('tabindex', '0');
     document.body.appendChild(backToTop);
+
+    // 返回顶部：平滑滚动（带回退）
+    const scrollToTop = () => {
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (e) {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }
+    };
+    backToTop.addEventListener('click', scrollToTop);
+    backToTop.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToTop();
+      }
+    });
 
     const updateScroll = () => {
       const st = window.pageYOffset || document.documentElement.scrollTop;
@@ -114,16 +369,53 @@
     window.addEventListener('scroll', updateScroll);
     updateScroll();
 
+    // 轻量 toast 提示
+    const showToast = (text) => {
+      let toast = document.querySelector('.jtd-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.className = 'jtd-toast';
+        toast.style.cssText = 'position:fixed;right:24px;bottom:24px;z-index:10000;background:rgba(17,24,39,.95);color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;transform:translateY(6px);transition:all .18s ease;';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = text;
+      requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; });
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateY(6px)'; }, 1200);
+    };
+
     // 主题切换（系统偏好 + 手动覆盖）
     const metaTheme = document.querySelector('meta[name="theme-color"]');
     const setThemeMeta = (isDark) => { if (metaTheme) metaTheme.setAttribute('content', isDark ? '#0f172a' : '#2563eb'); };
 
+    // 在定义 applyTheme 之前声明按钮变量，避免引用错误
+    let toggleBtn;
+
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
     const applyTheme = (mode) => {
       const isDark = mode === 'dark';
+      // class + attribute 双通道，增强兼容性
       document.body.classList.toggle('manual-dark-mode', isDark);
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', isDark);
       setThemeMeta(isDark);
-      if (toggleBtn) toggleBtn.textContent = isDark ? '☀️' : '🌙';
+      
+      // 强制刷新样式
+      document.body.style.backgroundColor = isDark ? '#0f172a' : '';
+      document.documentElement.style.backgroundColor = isDark ? '#0f172a' : '';
+      
+      if (toggleBtn) {
+        toggleBtn.textContent = isDark ? '☀️' : '🌙';
+        toggleBtn.setAttribute('aria-label', isDark ? '切换到浅色' : '切换到深色');
+        toggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      }
+      
+      // 调试信息
+      console.log('Theme applied:', mode, {
+        htmlDataTheme: document.documentElement.getAttribute('data-theme'),
+        htmlClass: document.documentElement.className,
+        bodyClass: document.body.className
+      });
     };
 
     let manual = localStorage.getItem('manual-theme');
@@ -138,16 +430,49 @@
       });
     }
 
-    const toggleBtn = document.createElement('button');
+    // 创建主题切换按钮
+    toggleBtn = document.createElement('button');
     toggleBtn.className = 'theme-toggle';
-    toggleBtn.title = 'Toggle Dark/Light Mode (T)';
-    toggleBtn.addEventListener('click', () => {
+    toggleBtn.title = '切换主题 (T)';
+    toggleBtn.setAttribute('aria-label', '切换主题');
+    toggleBtn.setAttribute('role', 'switch');
+    toggleBtn.setAttribute('aria-pressed', document.body.classList.contains('manual-dark-mode') ? 'true' : 'false');
+    toggleBtn.setAttribute('tabindex', '0');
+    
+    // 屏幕阅读器文本
+    const srText = document.createElement('span');
+    srText.style.cssText = 'position:absolute;left:-9999px;';
+    srText.textContent = '切换主题';
+    toggleBtn.appendChild(srText);
+
+    const toggleTheme = () => {
       const dark = document.body.classList.contains('manual-dark-mode');
       const next = dark ? 'light' : 'dark';
       localStorage.setItem('manual-theme', next);
       applyTheme(next);
+      showToast(next === 'dark' ? '已切换到深色模式' : '已切换到浅色模式');
+      toggleBtn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
+    };
+
+    toggleBtn.addEventListener('click', toggleTheme);
+    toggleBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleTheme();
+      }
     });
+
     document.body.appendChild(toggleBtn);
+
+    // 初次加载给按钮一个轻微的提示动画（2次脉冲），提升可发现性
+    setTimeout(() => { toggleBtn.classList.add('hint'); setTimeout(() => toggleBtn.classList.remove('hint'), 3000); }, 800);
+
+    // 创建后同步按钮图标
+    applyTheme(document.body.classList.contains('manual-dark-mode') ? 'dark' : 'light');
+
+    // 返回顶部按钮避让：如果按钮会重叠，则下移返回顶部
+    const btt = document.querySelector('.back-to-top');
+    if (btt) { btt.style.bottom = '24px'; }
 
     // 代码复制（轻量）
     document.querySelectorAll('pre').forEach((pre) => {
@@ -169,18 +494,24 @@
 
     // 快捷键：T 切换主题 / Ctrl+K 聚焦搜索
     document.addEventListener('keydown', (e) => {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const isEditable = e.target && (e.target.isContentEditable || tag === 'input' || tag === 'textarea' || tag === 'select');
+      // 在可编辑区域输入时不触发主题切换，避免误触
+      if (isEditable) return;
+
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         const si = document.querySelector('.search-input'); if (si) { e.preventDefault(); si.focus(); }
       }
-      if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase() === 't') {
+      if (!e.ctrlKey && !e.metaKey && !e.altKey && e.code === 'KeyT') {
         const dark = document.body.classList.contains('manual-dark-mode');
         const next = dark ? 'light' : 'dark';
         localStorage.setItem('manual-theme', next);
         applyTheme(next);
+        showToast(next === 'dark' ? '已切换到深色模式' : '已切换到浅色模式');
       }
     });
-  });
 
+    // 调试日志
     console.log('🚀 VIVTransformer Documentation - Enhanced UI loaded!');
     console.log('💡 Press "T" to toggle theme, Ctrl+K to search');
   });
@@ -205,18 +536,4 @@
       imageObserver.observe(img);
     });
   }
-
-  // 预加载关键页面
-  const criticalPages = [
-    '{{ site.baseurl }}/pages/getting-started/',
-    '{{ site.baseurl }}/pages/api-reference/',
-    '{{ site.baseurl }}/pages/examples/'
-  ];
-
-  criticalPages.forEach(url => {
-    const link = document.createElement('link');
-    link.rel = 'prefetch';
-    link.href = url;
-    document.head.appendChild(link);
-  });
 </script>

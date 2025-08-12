@@ -7,14 +7,19 @@ def set_seed(seed, deterministic=False):
     torch.manual_seed(seed)
     np.random.seed(seed)
     random.seed(seed)
-    torch.cuda.manual_seed_all(seed)
+    # 仅在 CUDA 可用时设置 GPU 相关随机种子
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
     if deterministic:
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
 
 def set_cuda_memory_limit(fraction, device_idx=0):
-    """Set CUDA memory limit for the current process."""
-    torch.cuda.set_per_process_memory_fraction(fraction, device=device_idx)
+    """Set CUDA memory limit for the current process.
+    在无 CUDA 支持时直接跳过。
+    """
+    if torch.cuda.is_available():
+        torch.cuda.set_per_process_memory_fraction(fraction, device=device_idx)
 
 
 from datetime import datetime

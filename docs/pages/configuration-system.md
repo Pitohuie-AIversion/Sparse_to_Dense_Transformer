@@ -1,204 +1,204 @@
 ---
 layout: default
 title: Configuration System
-description: 配置文件系统的使用和管理
+description: Configuration file system usage and management
 permalink: /pages/configuration-system/
 ---
 
-# 配置系统 {#配置系统}
+# Configuration System
 
-本文档详细介绍VIVTransformer项目的配置系统设计，包括配置文件结构、参数管理和动态配置功能。
+This document provides detailed introduction to the VIVTransformer project's configuration system design, including configuration file structure, parameter management, and dynamic configuration features.
 
-## 📋 目录 {#目录}
+## 📋 Table of Contents
 
-- [配置系统概览](#配置系统概览)
-- [主配置文件](#主配置文件)
-- [损失配置管理](#损失配置管理)
-- [动态配置](#动态配置)
-- [配置验证](#配置验证)
-- [环境配置](#环境配置)
-- [最佳实践](#最佳实践)
+- [Configuration System Overview](#configuration-system-overview)
+- [Main Configuration File](#main-configuration-file)
+- [Loss Configuration Management](#loss-configuration-management)
+- [Dynamic Configuration](#dynamic-configuration)
+- [Configuration Validation](#configuration-validation)
+- [Environment Configuration](#environment-configuration)
+- [Best Practices](#best-practices)
 
-## 配置系统概览 {#配置系统概览}
+## Configuration System Overview
 
-### 🏗️ 配置架构 {#配置架构}
+### 🏗️ Configuration Architecture
 
 ```
-配置系统
+Configuration System
 ├── 📁 configs/
-│   ├── config.yaml              # 主配置文件
-│   ├── 📁 loss_configs/         # 损失函数配置
+│   ├── config.yaml              # Main configuration file
+│   ├── 📁 loss_configs/         # Loss function configurations
 │   │   ├── loss_config_0.yaml
 │   │   ├── loss_config_1.yaml
 │   │   └── ...
-│   ├── 📁 model_configs/        # 模型配置
-│   ├── 📁 data_configs/         # 数据配置
-│   └── 📁 experiment_configs/   # 实验配置
-├── utils/config.py              # 配置管理工具
-└── generate_loss_configs.py     # 配置生成脚本
+│   ├── 📁 model_configs/        # Model configurations
+│   ├── 📁 data_configs/         # Data configurations
+│   └── 📁 experiment_configs/   # Experiment configurations
+├── utils/config.py              # Configuration management tools
+└── generate_loss_configs.py     # Configuration generation script
 ```
 
-### 🎯 设计原则 {#设计原则}
+### 🎯 Design Principles
 
-1. **层次化结构**: 配置按功能模块分层组织
-2. **可扩展性**: 支持新配置项的动态添加
-3. **类型安全**: 严格的类型检查和验证
-4. **环境适配**: 支持不同环境的配置覆盖
-5. **版本控制**: 配置变更的版本管理
+1. **Hierarchical Structure**: Configurations are organized hierarchically by functional modules
+2. **Extensibility**: Support for dynamic addition of new configuration items
+3. **Type Safety**: Strict type checking and validation
+4. **Environment Adaptation**: Support for configuration overrides in different environments
+5. **Version Control**: Version management for configuration changes
 
-## 主配置文件 {#主配置文件}
+## Main Configuration File
 
-### 📝 config.yaml 结构 {#config-yaml-结构}
+### 📝 config.yaml Structure
 
 ```yaml
-# ==================== 全局配置 ==================== {#全局配置}
+# ==================== Global Configuration ====================
 global:
-  # 基础设置
-  seed: 42                        # 随机种子
-  deterministic: true             # 确定性训练
-  device: "cuda:0"                # 计算设备
-  mixed_precision: false          # 混合精度训练
+  # Basic settings
+  seed: 42                        # Random seed
+  deterministic: true             # Deterministic training
+  device: "cuda:0"                # Computing device
+  mixed_precision: false          # Mixed precision training
   
-  # 内存管理
-  max_memory_fraction: 0.8        # GPU内存使用限制
-  memory_growth: true             # 动态内存增长
+  # Memory management
+  max_memory_fraction: 0.8        # GPU memory usage limit
+  memory_growth: true             # Dynamic memory growth
   
-  # 调试设置
-  debug: false                    # 调试模式
-  verbose: true                   # 详细输出
-  log_level: "INFO"               # 日志级别
+  # Debug settings
+  debug: false                    # Debug mode
+  verbose: true                   # Verbose output
+  log_level: "INFO"               # Log level
 
-# ==================== 数据配置 ==================== {#数据配置}
+# ==================== Data Configuration ====================
 data:
-  # 数据路径
-  path: "data/viv_dataset.pt"     # 数据文件路径
-  cache_dir: "cache/"             # 缓存目录
+  # Data paths
+  path: "data/viv_dataset.pt"     # Data file path
+  cache_dir: "cache/"             # Cache directory
   
-  # 数据加载
-  batch_size: 128                 # 批大小
-  num_workers: 4                  # 数据加载进程数
-  pin_memory: true                # 内存锁定
-  prefetch_factor: 2              # 预取因子
+  # Data loading
+  batch_size: 128                 # Batch size
+  num_workers: 4                  # Number of data loading processes
+  pin_memory: true                # Memory pinning
+  prefetch_factor: 2              # Prefetch factor
   
-  # 数据预处理
-  normalize: true                 # 数据标准化
-  crop_size: [400]                # 裁剪尺寸
-  use_augmentation: true          # 数据增强
+  # Data preprocessing
+  normalize: true                 # Data normalization
+  crop_size: [400]                # Crop size
+  use_augmentation: true          # Data augmentation
   
-  # 数据分割
-  train_ratio: 0.7                # 训练集比例
-  valid_ratio: 0.15               # 验证集比例
-  test_ratio: 0.15                # 测试集比例
+  # Data splitting
+  train_ratio: 0.7                # Training set ratio
+  valid_ratio: 0.15               # Validation set ratio
+  test_ratio: 0.15                # Test set ratio
 
-# ==================== 模型配置 ==================== {#模型配置}
+# ==================== Model Configuration ====================
 model:
-  # 基础架构
-  attention_type: "self"          # 注意力机制类型
-  d_model: 256                    # 模型维度
-  num_heads: 4                    # 注意力头数
-  num_layers: 6                   # 层数
+  # Basic architecture
+  attention_type: "self"          # Attention mechanism type
+  d_model: 256                    # Model dimension
+  num_heads: 4                    # Number of attention heads
+  num_layers: 6                   # Number of layers
   
-  # 输入输出
-  input_dim: 400                  # 输入维度
-  output_dim: 40000               # 输出维度
-  seq_len: 49                     # 序列长度
+  # Input/Output
+  input_dim: 400                  # Input dimension
+  output_dim: 40000               # Output dimension
+  seq_len: 49                     # Sequence length
   
-  # 正则化
-  dropout: 0.1                    # Dropout率
-  layer_norm_eps: 1e-6            # 层归一化epsilon
+  # Regularization
+  dropout: 0.1                    # Dropout rate
+  layer_norm_eps: 1e-6            # Layer normalization epsilon
   
-  # 初始化
-  init_method: "xavier_uniform"   # 权重初始化方法
-  bias_init: 0.0                  # 偏置初始化值
+  # Initialization
+  init_method: "xavier_uniform"   # Weight initialization method
+  bias_init: 0.0                  # Bias initialization value
 
-# ==================== 训练配置 ==================== {#训练配置}
+# ==================== Training Configuration ====================
 training:
-  # 基础设置
-  epochs: 10                      # 训练轮数
-  learning_rate: 0.0001           # 学习率
-  weight_decay: 0.01              # 权重衰减
+  # Basic settings
+  epochs: 10                      # Number of training epochs
+  learning_rate: 0.0001           # Learning rate
+  weight_decay: 0.01              # Weight decay
   
-  # 优化器
-  optimizer: "adamw"              # 优化器类型
+  # Optimizer
+  optimizer: "adamw"              # Optimizer type
   beta1: 0.9                      # Adam beta1
   beta2: 0.999                    # Adam beta2
   eps: 1e-8                       # Adam epsilon
   
-  # 学习率调度
-  lr_scheduler: "cosine"          # 学习率调度器
-  warmup_epochs: 2                # 预热轮数
-  min_lr: 1e-6                    # 最小学习率
+  # Learning rate scheduling
+  lr_scheduler: "cosine"          # Learning rate scheduler
+  warmup_epochs: 2                # Warmup epochs
+  min_lr: 1e-6                    # Minimum learning rate
   
-  # 早停
-  early_stop: true                # 启用早停
-  early_stop_patience: 10         # 早停耐心值
-  early_stop_delta: 1e-4          # 早停阈值
+  # Early stopping
+  early_stop: true                # Enable early stopping
+  early_stop_patience: 10         # Early stopping patience
+  early_stop_delta: 1e-4          # Early stopping threshold
   
-  # 梯度处理
-  gradient_clip_norm: 1.0         # 梯度裁剪
-  gradient_accumulation_steps: 1  # 梯度累积步数
+  # Gradient processing
+  gradient_clip_norm: 1.0         # Gradient clipping
+  gradient_accumulation_steps: 1  # Gradient accumulation steps
 
-# ==================== 损失配置 ==================== {#损失配置}
+# ==================== Loss Configuration ====================
 loss:
-  # 基础损失
-  base_loss: "mse"                # 基础损失函数
-  base_weight: 0.5                # 基础损失权重
+  # Basic loss
+  base_loss: "mse"                # Base loss function
+  base_weight: 0.5                # Base loss weight
   
-  # SVD正则化
-  use_svd_regularization: true    # 启用SVD正则化
+  # SVD regularization
+  use_svd_regularization: true    # Enable SVD regularization
   svd_weights: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
   
-  # 其他损失
-  auxiliary_losses: []            # 辅助损失函数
+  # Other losses
+  auxiliary_losses: []            # Auxiliary loss functions
 
-# ==================== 评估配置 ==================== {#评估配置}
+# ==================== Evaluation Configuration ====================
 evaluation:
-  # 评估频率
-  eval_frequency: 1               # 评估频率（每N个epoch）
-  save_frequency: 5               # 模型保存频率
+  # Evaluation frequency
+  eval_frequency: 1               # Evaluation frequency (every N epochs)
+  save_frequency: 5               # Model save frequency
   
-  # 评估指标
-  metrics: ["mse", "mae", "r2"]   # 评估指标
+  # Evaluation metrics
+  metrics: ["mse", "mae", "r2"]   # Evaluation metrics
   
-  # 可视化
-  visualize_attention: true       # 可视化注意力
-  save_predictions: false         # 保存预测结果
+  # Visualization
+  visualize_attention: true       # Visualize attention
+  save_predictions: false         # Save predictions
 
-# ==================== 日志配置 ==================== {#日志配置}
+# ==================== Logging Configuration ====================
 logging:
-  # 基础设置
-  log_dir: "logs/"                # 日志目录
-  experiment_name: "vivtransformer" # 实验名称
+  # Basic settings
+  log_dir: "logs/"                # Log directory
+  experiment_name: "vivtransformer" # Experiment name
   
   # TensorBoard
-  use_tensorboard: true           # 启用TensorBoard
-  tensorboard_port: 6006          # TensorBoard端口
+  use_tensorboard: true           # Enable TensorBoard
+  tensorboard_port: 6006          # TensorBoard port
   
-  # 日志内容
-  log_model_summary: true         # 记录模型摘要
-  log_gradients: false            # 记录梯度
-  log_weights: false              # 记录权重
+  # Log content
+  log_model_summary: true         # Log model summary
+  log_gradients: false            # Log gradients
+  log_weights: false              # Log weights
   
-  # 保存设置
-  save_config: true               # 保存配置文件
-  save_code: true                 # 保存代码快照
+  # Save settings
+  save_config: true               # Save configuration file
+  save_code: true                 # Save code snapshot
 
-# ==================== 注意力测试配置 ==================== {#注意力测试配置}
+# ==================== Attention Test Configuration ====================
 attention_test:
-  # 测试设置
-  enabled: true                   # 启用注意力测试
-  types: ["self", "muse", "ufo", "eca", "se"]  # 测试的注意力类型
+  # Test settings
+  enabled: true                   # Enable attention testing
+  types: ["self", "muse", "ufo", "eca", "se"]  # Attention types to test
   
-  # 并行设置
-  parallel: false                 # 并行测试
-  max_workers: 4                  # 最大工作进程数
+  # Parallel settings
+  parallel: false                 # Parallel testing
+  max_workers: 4                  # Maximum worker processes
   
-  # 结果保存
-  save_results: true              # 保存测试结果
-  results_dir: "attention_results/" # 结果保存目录
+  # Result saving
+  save_results: true              # Save test results
+  results_dir: "attention_results/" # Results save directory
 ```
 
-### 🔧 配置加载器 {#配置加载器}
+### 🔧 Configuration Loader
 
 ```python
 import yaml
@@ -207,30 +207,30 @@ from typing import Dict, Any, Optional
 from pathlib import Path
 
 class ConfigLoader:
-    """配置加载器"""
+    """Configuration loader"""
     
     def __init__(self, config_path: str):
         self.config_path = Path(config_path)
         self.config = None
         
     def load(self) -> Dict[str, Any]:
-        """加载配置文件"""
+        """Load configuration file"""
         if not self.config_path.exists():
-            raise FileNotFoundError(f"配置文件不存在: {self.config_path}")
+            raise FileNotFoundError(f"Configuration file not found: {self.config_path}")
         
         with open(self.config_path, 'r', encoding='utf-8') as f:
             self.config = yaml.safe_load(f)
         
-        # 应用环境变量覆盖
+        # Apply environment variable overrides
         self._apply_env_overrides()
         
-        # 验证配置
+        # Validate configuration
         self._validate_config()
         
         return self.config
     
     def _apply_env_overrides(self):
-        """应用环境变量覆盖"""
+        """Apply environment variable overrides"""
         env_prefix = "VIV_"
         
         for key, value in os.environ.items():
@@ -239,7 +239,7 @@ class ConfigLoader:
                 self._set_nested_value(self.config, config_key, value)
     
     def _set_nested_value(self, config: dict, key_path: str, value: str):
-        """设置嵌套配置值"""
+        """Set nested configuration value"""
         keys = key_path.split('.')
         current = config
         
@@ -248,7 +248,7 @@ class ConfigLoader:
                 current[key] = {}
             current = current[key]
         
-        # 类型转换
+        # Type conversion
         final_key = keys[-1]
         if final_key in current:
             original_type = type(current[final_key])
@@ -262,9 +262,9 @@ class ConfigLoader:
                 current[final_key] = value
 ```
 
-## 损失配置管理 {#损失配置管理}
+## Loss Configuration Management
 
-### 📊 损失配置生成 {#损失配置生成}
+### 📊 Loss Configuration Generation
 
 ```python
 import numpy as np
@@ -272,35 +272,35 @@ import yaml
 from pathlib import Path
 
 class LossConfigGenerator:
-    """损失配置生成器"""
+    """Loss configuration generator"""
     
     def __init__(self, output_dir: str = "configs/loss_configs"):
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
     
     def generate_configs(self, num_configs: int = 50):
-        """生成多个损失配置"""
+        """Generate multiple loss configurations"""
         configs = []
         
         for i in range(num_configs):
             config = self._generate_single_config(i)
             configs.append(config)
             
-            # 保存单个配置文件
+            # Save individual config file
             config_path = self.output_dir / f"loss_config_{i}.yaml"
             with open(config_path, 'w', encoding='utf-8') as f:
                 yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
         
-        print(f"✅ 生成了 {num_configs} 个损失配置文件")
+        print(f"✅ Generated {num_configs} loss configuration files")
         return configs
     
     def _generate_single_config(self, config_id: int) -> Dict[str, Any]:
-        """生成单个损失配置"""
+        """Generate single loss configuration"""
         
-        # 基础权重范围
+        # Base weight range
         base_weight = np.random.uniform(0.1, 1.0)
         
-        # SVD权重生成策略
+        # SVD weight generation strategies
         svd_strategies = [
             self._uniform_weights,
             self._decreasing_weights,
@@ -323,30 +323,30 @@ class LossConfigGenerator:
         return config
     
     def _uniform_weights(self) -> List[float]:
-        """均匀权重策略"""
+        """Uniform weight strategy"""
         weight = np.random.uniform(0.01, 0.2)
         return [weight] * 10
     
     def _decreasing_weights(self) -> List[float]:
-        """递减权重策略"""
+        """Decreasing weight strategy"""
         start_weight = np.random.uniform(0.1, 0.3)
         decay_factor = np.random.uniform(0.7, 0.9)
         weights = [start_weight * (decay_factor ** i) for i in range(10)]
         return weights
     
     def _increasing_weights(self) -> List[float]:
-        """递增权重策略"""
+        """Increasing weight strategy"""
         start_weight = np.random.uniform(0.01, 0.05)
         growth_factor = np.random.uniform(1.1, 1.3)
         weights = [start_weight * (growth_factor ** i) for i in range(10)]
         return weights
     
     def _random_weights(self) -> List[float]:
-        """随机权重策略"""
+        """Random weight strategy"""
         return np.random.uniform(0.01, 0.2, 10).tolist()
     
     def _sparse_weights(self) -> List[float]:
-        """稀疏权重策略"""
+        """Sparse weight strategy"""
         weights = np.zeros(10)
         num_nonzero = np.random.randint(2, 6)
         indices = np.random.choice(10, num_nonzero, replace=False)
@@ -354,47 +354,47 @@ class LossConfigGenerator:
         return weights.tolist()
 ```
 
-### 📋 损失配置模板 {#损失配置模板}
+### 📋 Loss Configuration Template
 
 ```yaml
-# loss_config_template.yaml {#loss-config-template-yaml}
+# loss_config_template.yaml
 config_id: 0
-description: "基础损失配置模板"
+description: "Base loss configuration template"
 
-# 基础损失设置 {#基础损失设置}
+# Base loss settings
 base_weight: 0.5
 base_loss_type: "mse"
 
-# SVD正则化设置 {#svd正则化设置}
+# SVD regularization settings
 use_svd_regularization: true
 svd_weights: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
 svd_components: 10
 
-# 高级设置 {#高级设置}
+# Advanced settings
 weight_decay: 0.01
 label_smoothing: 0.0
 focal_loss_gamma: 2.0
 
-# 动态权重 {#动态权重}
+# Dynamic weighting
 dynamic_weighting: false
 weight_schedule: "constant"  # constant, linear, cosine
 
-# 损失组合 {#损失组合}
+# Loss combination
 loss_combination: "weighted_sum"  # weighted_sum, adaptive, uncertainty
 
-# 元数据 {#元数据}
+# Metadata
 created_by: "auto_generator"
 creation_time: "2024-01-01T00:00:00"
 version: "1.0"
 ```
 
-## 动态配置 {#动态配置}
+## Dynamic Configuration
 
-### 🔄 运行时配置修改 {#运行时配置修改}
+### 🔄 Runtime Configuration Modification
 
 ```python
 class DynamicConfig:
-    """动态配置管理器"""
+    """Dynamic configuration manager"""
     
     def __init__(self, base_config: Dict[str, Any]):
         self.base_config = base_config.copy()
@@ -402,40 +402,40 @@ class DynamicConfig:
         self.config_history = [base_config.copy()]
     
     def update(self, updates: Dict[str, Any]):
-        """更新配置"""
+        """Update configuration"""
         self._deep_update(self.current_config, updates)
         self.config_history.append(self.current_config.copy())
     
     def rollback(self, steps: int = 1):
-        """回滚配置"""
+        """Rollback configuration"""
         if len(self.config_history) > steps:
             self.current_config = self.config_history[-(steps + 1)].copy()
             self.config_history = self.config_history[:-(steps)]
     
     def reset(self):
-        """重置到基础配置"""
+        """Reset to base configuration"""
         self.current_config = self.base_config.copy()
         self.config_history = [self.base_config.copy()]
     
     def _deep_update(self, base_dict: dict, update_dict: dict):
-        """深度更新字典"""
+        """Deep update dictionary"""
         for key, value in update_dict.items():
             if key in base_dict and isinstance(base_dict[key], dict) and isinstance(value, dict):
                 self._deep_update(base_dict[key], value)
             else:
                 base_dict[key] = value
 
-# 使用示例 {#使用示例}
+# Usage example
 config_manager = DynamicConfig(base_config)
 
-# 动态调整学习率 {#动态调整学习率}
+# Dynamically adjust learning rate
 config_manager.update({
     'training': {
         'learning_rate': 0.0005
     }
 })
 
-# 动态调整批大小 {#动态调整批大小}
+# Dynamically adjust batch size
 config_manager.update({
     'data': {
         'batch_size': 64
@@ -443,11 +443,11 @@ config_manager.update({
 })
 ```
 
-### 🎛️ 自适应配置 {#自适应配置}
+### 🎛️ Adaptive Configuration
 
 ```python
 class AdaptiveConfig:
-    """自适应配置管理器"""
+    """Adaptive configuration manager"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -455,18 +455,18 @@ class AdaptiveConfig:
         self.adaptation_rules = self._setup_adaptation_rules()
     
     def adapt_based_on_performance(self, metrics: Dict[str, float]):
-        """基于性能指标自适应调整配置"""
+        """Adaptively adjust configuration based on performance metrics"""
         self.performance_history.append(metrics)
         
-        # 应用适应规则
+        # Apply adaptation rules
         for rule in self.adaptation_rules:
             if rule.should_apply(metrics, self.performance_history):
                 updates = rule.get_updates(metrics, self.config)
                 self._apply_updates(updates)
-                print(f"🔄 应用适应规则: {rule.name}")
+                print(f"🔄 Applied adaptation rule: {rule.name}")
     
     def _setup_adaptation_rules(self):
-        """设置适应规则"""
+        """Setup adaptation rules"""
         return [
             LearningRateAdaptationRule(),
             BatchSizeAdaptationRule(),
@@ -475,7 +475,7 @@ class AdaptiveConfig:
         ]
 
 class AdaptationRule:
-    """适应规则基类"""
+    """Base adaptation rule class"""
     
     def __init__(self, name: str):
         self.name = name
@@ -489,10 +489,10 @@ class AdaptationRule:
         raise NotImplementedError
 
 class LearningRateAdaptationRule(AdaptationRule):
-    """学习率自适应规则"""
+    """Learning rate adaptation rule"""
     
     def __init__(self):
-        super().__init__("学习率自适应")
+        super().__init__("Learning Rate Adaptation")
         self.patience = 3
         self.factor = 0.5
     
@@ -500,7 +500,7 @@ class LearningRateAdaptationRule(AdaptationRule):
         if len(history) < self.patience + 1:
             return False
         
-        # 检查最近几次的损失是否没有改善
+        # Check if recent losses haven't improved
         recent_losses = [m.get('loss', float('inf')) for m in history[-self.patience:]]
         return all(recent_losses[i] >= recent_losses[i-1] for i in range(1, len(recent_losses)))
     
@@ -514,32 +514,32 @@ class LearningRateAdaptationRule(AdaptationRule):
         }
 ```
 
-## 配置验证 {#配置验证}
+## Configuration Validation
 
-### ✅ 配置验证器 {#配置验证器}
+### ✅ Configuration Validator
 
 ```python
 from typing import List, Tuple
 import jsonschema
 
 class ConfigValidator:
-    """配置验证器"""
+    """Configuration validator"""
     
     def __init__(self):
         self.schema = self._load_schema()
         self.custom_validators = self._setup_custom_validators()
     
     def validate(self, config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """验证配置"""
+        """Validate configuration"""
         errors = []
         
-        # JSON Schema验证
+        # JSON Schema validation
         try:
             jsonschema.validate(config, self.schema)
         except jsonschema.ValidationError as e:
-            errors.append(f"Schema验证错误: {e.message}")
+            errors.append(f"Schema validation error: {e.message}")
         
-        # 自定义验证
+        # Custom validation
         for validator in self.custom_validators:
             validator_errors = validator.validate(config)
             errors.extend(validator_errors)
@@ -547,7 +547,7 @@ class ConfigValidator:
         return len(errors) == 0, errors
     
     def _load_schema(self) -> Dict[str, Any]:
-        """加载配置Schema"""
+        """Load configuration schema"""
         return {
             "type": "object",
             "properties": {
@@ -590,7 +590,7 @@ class ConfigValidator:
         }
     
     def _setup_custom_validators(self) -> List['CustomValidator']:
-        """设置自定义验证器"""
+        """Setup custom validators"""
         return [
             DeviceValidator(),
             AttentionTypeValidator(),
@@ -599,13 +599,13 @@ class ConfigValidator:
         ]
 
 class CustomValidator:
-    """自定义验证器基类"""
+    """Base custom validator class"""
     
     def validate(self, config: Dict[str, Any]) -> List[str]:
         raise NotImplementedError
 
 class DeviceValidator(CustomValidator):
-    """设备验证器"""
+    """Device validator"""
     
     def validate(self, config: Dict[str, Any]) -> List[str]:
         errors = []
@@ -615,18 +615,18 @@ class DeviceValidator(CustomValidator):
             try:
                 gpu_id = int(device.split(':')[1])
                 if not torch.cuda.is_available():
-                    errors.append("CUDA不可用，但配置了CUDA设备")
+                    errors.append("CUDA not available but CUDA device configured")
                 elif gpu_id >= torch.cuda.device_count():
-                    errors.append(f"GPU {gpu_id} 不存在")
+                    errors.append(f"GPU {gpu_id} does not exist")
             except (ValueError, IndexError):
-                errors.append(f"无效的设备格式: {device}")
+                errors.append(f"Invalid device format: {device}")
         elif device != 'cpu':
-            errors.append(f"不支持的设备类型: {device}")
+            errors.append(f"Unsupported device type: {device}")
         
         return errors
 
 class AttentionTypeValidator(CustomValidator):
-    """注意力类型验证器"""
+    """Attention type validator"""
     
     def validate(self, config: Dict[str, Any]) -> List[str]:
         errors = []
@@ -640,48 +640,48 @@ class AttentionTypeValidator(CustomValidator):
         ]
         
         if attention_type not in valid_types:
-            errors.append(f"不支持的注意力类型: {attention_type}")
+            errors.append(f"Unsupported attention type: {attention_type}")
         
         return errors
 ```
 
-## 环境配置 {#环境配置}
+## Environment Configuration
 
-### 🌍 环境变量支持 {#环境变量支持}
+### 🌍 Environment Variable Support
 
 ```bash
-# 环境变量配置示例 {#环境变量配置示例}
+# Environment variable configuration example
 export VIV_GLOBAL_DEVICE="cuda:1"
 export VIV_DATA_BATCH_SIZE="64"
 export VIV_TRAINING_LEARNING_RATE="0.0005"
 export VIV_GLOBAL_DEBUG="true"
 ```
 
-### 🔧 环境特定配置 {#环境特定配置}
+### 🔧 Environment-Specific Configuration
 
 ```python
 class EnvironmentConfig:
-    """环境特定配置管理"""
+    """Environment-specific configuration management"""
     
     def __init__(self, base_config_path: str):
         self.base_config_path = base_config_path
         self.environment = self._detect_environment()
     
     def load_config(self) -> Dict[str, Any]:
-        """加载环境特定配置"""
-        # 加载基础配置
+        """Load environment-specific configuration"""
+        # Load base configuration
         base_config = self._load_base_config()
         
-        # 加载环境特定覆盖
+        # Load environment-specific overrides
         env_overrides = self._load_environment_overrides()
         
-        # 合并配置
+        # Merge configurations
         final_config = self._merge_configs(base_config, env_overrides)
         
         return final_config
     
     def _detect_environment(self) -> str:
-        """检测运行环境"""
+        """Detect runtime environment"""
         if os.getenv('VIV_ENV'):
             return os.getenv('VIV_ENV')
         elif os.getenv('CUDA_VISIBLE_DEVICES'):
@@ -690,7 +690,7 @@ class EnvironmentConfig:
             return 'cpu'
     
     def _load_environment_overrides(self) -> Dict[str, Any]:
-        """加载环境特定覆盖配置"""
+        """Load environment-specific override configuration"""
         env_configs = {
             'development': {
                 'global': {'debug': True, 'verbose': True},
@@ -712,30 +712,30 @@ class EnvironmentConfig:
         return env_configs.get(self.environment, {})
 ```
 
-## 最佳实践 {#最佳实践}
+## Best Practices
 
-### 📚 配置管理最佳实践 {#配置管理最佳实践}
+### 📚 Configuration Management Best Practices
 
-1. **版本控制**
+1. **Version Control**
    ```yaml
-   # 在配置文件中包含版本信息
+   # Include version information in config files
    version: "1.2.0"
    config_format_version: "2.0"
    last_modified: "2024-01-01T12:00:00Z"
    ```
 
-2. **文档化**
+2. **Documentation**
    ```yaml
-   # 为每个配置项添加注释
+   # Add comments for each configuration item
    training:
-     learning_rate: 0.0001  # 初始学习率，建议范围: [1e-5, 1e-2]
-     epochs: 10             # 训练轮数，根据数据集大小调整
+     learning_rate: 0.0001  # Initial learning rate, recommended range: [1e-5, 1e-2]
+     epochs: 10             # Number of training epochs, adjust based on dataset size
    ```
 
-3. **默认值**
+3. **Default Values**
    ```python
    def get_config_value(config, key_path, default=None):
-       """安全获取配置值，支持默认值"""
+       """Safely get configuration value with default support"""
        keys = key_path.split('.')
        current = config
        
@@ -748,14 +748,14 @@ class EnvironmentConfig:
        return current
    ```
 
-4. **配置模板**
+4. **Configuration Templates**
    ```python
    class ConfigTemplate:
-       """配置模板生成器"""
+       """Configuration template generator"""
        
        @staticmethod
        def generate_quick_start():
-           """生成快速开始配置"""
+           """Generate quick start configuration"""
            return {
                'global': {'device': 'cpu', 'seed': 42},
                'data': {'batch_size': 32},
@@ -765,7 +765,7 @@ class EnvironmentConfig:
        
        @staticmethod
        def generate_high_performance():
-           """生成高性能配置"""
+           """Generate high performance configuration"""
            return {
                'global': {'device': 'cuda:0', 'mixed_precision': True},
                'data': {'batch_size': 256, 'num_workers': 8},
@@ -774,47 +774,47 @@ class EnvironmentConfig:
            }
    ```
 
-### 🔍 配置调试 {#配置调试}
+### 🔍 Configuration Debugging
 
 ```python
 class ConfigDebugger:
-    """配置调试工具"""
+    """Configuration debugging tool"""
     
     @staticmethod
     def print_config_summary(config: Dict[str, Any]):
-        """打印配置摘要"""
-        print("📋 配置摘要:")
-        print(f"   设备: {config.get('global', {}).get('device', 'unknown')}")
-        print(f"   批大小: {config.get('data', {}).get('batch_size', 'unknown')}")
-        print(f"   注意力类型: {config.get('model', {}).get('attention_type', 'unknown')}")
-        print(f"   训练轮数: {config.get('training', {}).get('epochs', 'unknown')}")
+        """Print configuration summary"""
+        print("📋 Configuration Summary:")
+        print(f"   Device: {config.get('global', {}).get('device', 'unknown')}")
+        print(f"   Batch Size: {config.get('data', {}).get('batch_size', 'unknown')}")
+        print(f"   Attention Type: {config.get('model', {}).get('attention_type', 'unknown')}")
+        print(f"   Training Epochs: {config.get('training', {}).get('epochs', 'unknown')}")
     
     @staticmethod
     def validate_config_compatibility(config: Dict[str, Any]):
-        """验证配置兼容性"""
+        """Validate configuration compatibility"""
         warnings = []
         
-        # 检查设备和批大小兼容性
+        # Check device and batch size compatibility
         device = config.get('global', {}).get('device', 'cpu')
         batch_size = config.get('data', {}).get('batch_size', 32)
         
         if device == 'cpu' and batch_size > 128:
-            warnings.append("CPU模式下建议使用较小的批大小")
+            warnings.append("Recommend using smaller batch size in CPU mode")
         
-        # 检查注意力类型和模型维度
+        # Check attention type and model dimension
         attention_type = config.get('model', {}).get('attention_type', 'self')
         d_model = config.get('model', {}).get('d_model', 256)
         
         if attention_type in ['muse', 'ufo'] and d_model < 128:
-            warnings.append("高效注意力机制建议使用较大的模型维度")
+            warnings.append("Efficient attention mechanisms recommend using larger model dimensions")
         
         return warnings
 ```
 
 ---
 
-**💡 提示**: 良好的配置系统是项目成功的关键，它不仅提高了实验的可重现性，还大大简化了参数调优和实验管理的复杂度。
+**💡 Tip**: A good configuration system is key to project success. It not only improves experiment reproducibility but also greatly simplifies the complexity of parameter tuning and experiment management.
 
 ---
 
-*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*
+*Need help? Check the [FAQ](faq) or [Troubleshooting](troubleshooting) pages.*

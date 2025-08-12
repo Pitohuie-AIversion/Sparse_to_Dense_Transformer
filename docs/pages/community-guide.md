@@ -1,420 +1,435 @@
-# 🤝 社区贡献指南
+#!/usr/bin/env python3
+"""
+Example: VIVTransformer Basic Usage
 
-> 欢迎加入VIVTransformer开源社区！本指南将帮助您了解如何参与项目贡献
+This example demonstrates how to use VIVTransformer for vortex-induced vibration prediction.
+Includes a complete workflow from data preparation, model training to result visualization.
 
----
-
-## 📋 目录
-
-- [🌟 欢迎加入](#-欢迎加入)
-- [🎯 贡献方式](#-贡献方式)
-- [📝 代码贡献](#-代码贡献)
-- [📚 文档贡献](#-文档贡献)
-- [🐛 问题报告](#-问题报告)
-- [💡 功能建议](#-功能建议)
-- [🧪 测试贡献](#-测试贡献)
-- [🎨 设计贡献](#-设计贡献)
-- [📊 数据贡献](#-数据贡献)
-- [🏆 贡献者认可](#-贡献者认可)
-- [📞 联系我们](#-联系我们)
-
----
-
-## 🌟 欢迎加入
-
-### 项目愿景
-
-VIVTransformer致力于成为**涡激振动分析领域的开源标杆**，通过结合深度学习与物理建模，为科研和工程应用提供强大的工具。
-
-### 社区价值观
-
-- **🔬 科学严谨**: 基于扎实的理论基础和实验验证
-- **🤝 开放合作**: 欢迎不同背景的贡献者
-- **📈 持续改进**: 不断优化性能和用户体验
-- **🎓 知识共享**: 促进学术交流和技术传播
-- **🌍 包容多元**: 尊重不同观点和文化背景
-
-### 贡献者类型
-
-| 贡献者类型 | 技能要求 | 贡献内容 | 时间投入 |
-|------------|----------|----------|----------|
-| **核心开发者** | 深度学习、流体力学 | 核心算法、架构设计 | 20+ 小时/周 |
-| **功能开发者** | Python、机器学习 | 新功能、工具开发 | 10-20 小时/周 |
-| **文档维护者** | 技术写作、教学 | 文档、教程编写 | 5-15 小时/周 |
-| **测试工程师** | 软件测试、质量保证 | 测试用例、性能测试 | 5-10 小时/周 |
-| **社区管理者** | 沟通协调、项目管理 | 社区运营、活动组织 | 5-10 小时/周 |
-| **偶尔贡献者** | 任意技能 | 问题报告、小修复 | 1-5 小时/周 |
-
----
-
-## 🎯 贡献方式
-
-### 快速开始
-
-#### 1. 环境准备
-
-```bash
-# 1. Fork项目到您的GitHub账户
-# 2. 克隆您的Fork
-git clone https://github.com/YOUR_USERNAME/VIVTransformer.git
-cd VIVTransformer
-
-# 3. 添加上游仓库
-git remote add upstream https://github.com/ORIGINAL_OWNER/VIVTransformer.git
-
-# 4. 创建开发环境
-conda create -n vivtransformer-dev python=3.9
-conda activate vivtransformer-dev
-
-# 5. 安装开发依赖
-pip install -e ".[dev]"
-pip install pre-commit
-pre-commit install
-```
-
-#### 2. 开发流程
-
-```bash
-# 1. 同步最新代码
-git checkout main
-git pull upstream main
-
-# 2. 创建功能分支
-git checkout -b feature/your-feature-name
-
-# 3. 进行开发
-# ... 编写代码 ...
-
-# 4. 运行测试
-pytest tests/
-python -m pytest tests/ --cov=vivtransformer
-
-# 5. 代码格式化
-black vivtransformer/
-isort vivtransformer/
-flake8 vivtransformer/
-
-# 6. 提交更改
-git add .
-git commit -m "feat: add your feature description"
-
-# 7. 推送到您的Fork
-git push origin feature/your-feature-name
-
-# 8. 创建Pull Request
-```
-
-### 贡献指南
-
-#### 代码风格
-
-**Python代码规范**:
-```python
-# 使用类型注解
-def calculate_attention_weights(
-    query: torch.Tensor,
-    key: torch.Tensor,
-    mask: Optional[torch.Tensor] = None
-) -> torch.Tensor:
-    """计算注意力权重
-    
-    Args:
-        query: 查询张量 [batch_size, seq_len, d_model]
-        key: 键张量 [batch_size, seq_len, d_model]
-        mask: 可选的掩码张量 [batch_size, seq_len, seq_len]
-    
-    Returns:
-        注意力权重张量 [batch_size, seq_len, seq_len]
-    """
-    # 计算注意力分数
-    scores = torch.matmul(query, key.transpose(-2, -1))
-    
-    # 应用掩码
-    if mask is not None:
-        scores = scores.masked_fill(mask == 0, -1e9)
-    
-    # 应用softmax
-    attention_weights = torch.softmax(scores, dim=-1)
-    
-    return attention_weights
-```
-
-**文档字符串规范**:
-```python
-class VIVTransformer(nn.Module):
-    """VIV Transformer模型
-    
-    这是一个专门用于涡激振动分析的Transformer模型，集成了
-    多种注意力机制和物理约束损失函数。
-    
-    Args:
-        d_model: 模型维度
-        n_heads: 注意力头数
-        n_layers: 层数
-        attention_type: 注意力机制类型
-        loss_config: 损失函数配置
-    
-    Example:
-        >>> model = VIVTransformer(
-        ...     d_model=512,
-        ...     n_heads=8,
-        ...     n_layers=6,
-        ...     attention_type='external'
-        ... )
-        >>> output = model(input_tensor)
-    
-    Note:
-        模型支持多种注意力机制，详见attention_mechanisms模块。
-    """
-```
-
-#### 提交信息规范
-
-**提交信息格式**:
-```
-<type>(<scope>): <subject>
-
-<body>
-
-<footer>
-```
-
-**类型说明**:
-- `feat`: 新功能
-- `fix`: 错误修复
-- `docs`: 文档更新
-- `style`: 代码格式化
-- `refactor`: 代码重构
-- `test`: 测试相关
-- `chore`: 构建过程或辅助工具的变动
-
-**示例**:
-```
-feat(attention): add external attention mechanism
-
-- Implement external attention as described in paper
-- Add configuration options for external attention
-- Include unit tests for new attention mechanism
-- Update documentation with usage examples
-
-Closes #123
-```
-
----
-
-## 📝 代码贡献
-
-### 核心模块开发
-
-#### 1. 注意力机制开发
-
-**新注意力机制模板**:
-```python
-# vivtransformer/attention_mechanisms/your_attention.py
+Author: [Your Name]
+Date: 2024-01-01
+Version: 1.0.0
+"""
 
 import torch
 import torch.nn as nn
-from typing import Optional, Tuple
-from .base_attention import BaseAttention
-
-class YourAttention(BaseAttention):
-    """您的注意力机制实现
-    
-    基于论文: [Paper Title] (Author et al., Year)
-    论文链接: https://arxiv.org/abs/XXXX.XXXXX
-    
-    Args:
-        d_model: 模型维度
-        n_heads: 注意力头数
-        dropout: Dropout概率
-        **kwargs: 其他参数
-    """
-    
-    def __init__(
-        self,
-        d_model: int,
-        n_heads: int = 8,
-        dropout: float = 0.1,
-        **kwargs
-    ):
-        super().__init__(d_model, n_heads, dropout)
-        
-        # 您的特定参数
-        self.your_param = kwargs.get('your_param', default_value)
-        
-        # 您的网络层
-        self.your_layer = nn.Linear(d_model, d_model)
-    
-    def forward(
-        self,
-        query: torch.Tensor,
-        key: torch.Tensor,
-        value: torch.Tensor,
-        mask: Optional[torch.Tensor] = None
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
-        """前向传播
-        
-        Args:
-            query: 查询张量 [batch_size, seq_len, d_model]
-            key: 键张量 [batch_size, seq_len, d_model]
-            value: 值张量 [batch_size, seq_len, d_model]
-            mask: 掩码张量 [batch_size, seq_len, seq_len]
-        
-        Returns:
-            output: 输出张量 [batch_size, seq_len, d_model]
-            attention_weights: 注意力权重 [batch_size, n_heads, seq_len, seq_len]
-        """
-        batch_size, seq_len, d_model = query.shape
-        
-        # 您的注意力计算逻辑
-        # ...
-        
-        return output, attention_weights
-    
-    @staticmethod
-    def get_config_template() -> dict:
-        """返回配置模板"""
-        return {
-            'type': 'your_attention',
-            'n_heads': 8,
-            'dropout': 0.1,
-            'your_param': 'default_value'
-        }
-```
-
-**注册新注意力机制**:
-```python
-# vivtransformer/attention_mechanisms/__init__.py
-
-from .your_attention import YourAttention
-
-# 注册到工厂
-ATTENTION_REGISTRY['your_attention'] = YourAttention
-```
-
-#### 2. 损失函数开发
-
-**新损失函数模板**:
-```python
-# vivtransformer/losses/your_loss.py
-
-import torch
-import torch.nn as nn
-from typing import Dict, Any
-from .base_loss import BaseLoss
-
-class YourLoss(BaseLoss):
-    """您的损失函数实现
-    
-    Args:
-        weight: 损失权重
-        **kwargs: 其他参数
-    """
-    
-    def __init__(self, weight: float = 1.0, **kwargs):
-        super().__init__(weight)
-        self.your_param = kwargs.get('your_param', default_value)
-    
-    def forward(
-        self,
-        predictions: torch.Tensor,
-        targets: torch.Tensor,
-        **kwargs
-    ) -> torch.Tensor:
-        """计算损失
-        
-        Args:
-            predictions: 预测值
-            targets: 目标值
-            **kwargs: 其他输入
-        
-        Returns:
-            损失值
-        """
-        # 您的损失计算逻辑
-        loss = your_loss_calculation(predictions, targets)
-        
-        return self.weight * loss
-    
-    def get_metrics(self) -> Dict[str, float]:
-        """返回相关指标"""
-        return {
-            'your_loss': self.last_loss_value,
-            'your_metric': self.calculate_your_metric()
-        }
-```
-
-#### 3. 数据处理模块
-
-**新数据处理器模板**:
-```python
-# vivtransformer/data/processors/your_processor.py
-
 import numpy as np
-from typing import Dict, Any, Tuple
-from .base_processor import BaseProcessor
+import matplotlib.pyplot as plt
+from pathlib import Path
+from typing import Dict, List, Tuple
 
-class YourDataProcessor(BaseProcessor):
-    """您的数据处理器
+# VIVTransformer related imports
+from vivtransformer import VIVTransformer
+from vivtransformer.data import VIVDataset, VIVDataLoader
+from vivtransformer.losses import SVDEnhancedLoss
+from vivtransformer.utils import set_seed, get_device
+from vivtransformer.visualization import plot_attention_weights, plot_predictions
+
+
+def main():
+    """Main function"""
+    # Set random seed
+    set_seed(42)
     
-    Args:
-        config: 处理器配置
-    """
+    # Get device
+    device = get_device()
+    print(f"Using device: {device}")
     
-    def __init__(self, config: Dict[str, Any]):
-        super().__init__(config)
-        self.your_param = config.get('your_param', default_value)
+    # 1. Data preparation
+    print("\n=== Data Preparation ===")
+    train_dataset, val_dataset = prepare_data()
     
-    def process(
-        self,
-        data: np.ndarray
-    ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """处理数据
+    train_loader = VIVDataLoader(
+        train_dataset,
+        batch_size=32,
+        shuffle=True,
+        num_workers=4
+    )
+    
+    val_loader = VIVDataLoader(
+        val_dataset,
+        batch_size=32,
+        shuffle=False,
+        num_workers=4
+    )
+    
+    print(f"Training set size: {len(train_dataset)}")
+    print(f"Validation set size: {len(val_dataset)}")
+    
+    # 2. Model creation
+    print("\n=== Model Creation ===")
+    model = create_model(device)
+    print(f"Model parameters: {count_parameters(model):,}")
+    
+    # 3. Training configuration
+    print("\n=== Training Configuration ===")
+    criterion = SVDEnhancedLoss(
+        reconstruction_weight=1.0,
+        singular_value_weight=0.5,
+        orthogonality_weight=0.3
+    )
+    
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=1e-4,
+        weight_decay=1e-5
+    )
+    
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer,
+        T_max=100,
+        eta_min=1e-6
+    )
+    
+    # 4. Model training
+    print("\n=== Starting Training ===")
+    train_losses, val_losses = train_model(
+        model=model,
+        train_loader=train_loader,
+        val_loader=val_loader,
+        criterion=criterion,
+        optimizer=optimizer,
+        scheduler=scheduler,
+        epochs=100,
+        device=device
+    )
+    
+    # 5. Result evaluation
+    print("\n=== Result Evaluation ===")
+    evaluate_model(model, val_loader, device)
+    
+    # 6. Visualization
+    print("\n=== Result Visualization ===")
+    visualize_results(model, val_loader, device)
+    
+    # 7. Model saving
+    print("\n=== Saving Model ===")
+    save_model(model, 'vivtransformer_trained.pth')
+    
+    print("\nTraining completed!")
+
+
+def prepare_data() -> Tuple[VIVDataset, VIVDataset]:
+    """Prepare training and validation data"""
+    # Generate sample data (replace with real data in actual use)
+    np.random.seed(42)
+    
+    # Simulate cylinder flow data
+    n_samples = 1000
+    seq_len = 128
+    n_features = 64
+    
+    # Input features: velocity field, pressure field, etc.
+    X = np.random.randn(n_samples, seq_len, n_features).astype(np.float32)
+    
+    # Targets: displacement, velocity, etc.
+    y = np.random.randn(n_samples, seq_len, 2).astype(np.float32)
+    
+    # Add some physical correlation
+    for i in range(n_samples):
+        # Simulate periodic vibration
+        t = np.linspace(0, 10, seq_len)
+        frequency = np.random.uniform(0.1, 2.0)
+        amplitude = np.random.uniform(0.5, 2.0)
         
-        Args:
-            data: 输入数据
+        y[i, :, 0] = amplitude * np.sin(2 * np.pi * frequency * t)
+        y[i, :, 1] = amplitude * np.cos(2 * np.pi * frequency * t)
+    
+    # Split dataset
+    split_idx = int(0.8 * n_samples)
+    
+    train_dataset = VIVDataset(
+        X[:split_idx],
+        y[:split_idx],
+        transform=None
+    )
+    
+    val_dataset = VIVDataset(
+        X[split_idx:],
+        y[split_idx:],
+        transform=None
+    )
+    
+    return train_dataset, val_dataset
+
+
+def create_model(device: torch.device) -> VIVTransformer:
+    """Create VIVTransformer model"""
+    model = VIVTransformer(
+        input_dim=64,
+        output_dim=2,
+        d_model=512,
+        n_heads=8,
+        n_layers=6,
+        attention_type='external',
+        dropout=0.1,
+        max_seq_len=128
+    )
+    
+    return model.to(device)
+
+
+def count_parameters(model: nn.Module) -> int:
+    """Count model parameters"""
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+
+def train_model(
+    model: nn.Module,
+    train_loader: VIVDataLoader,
+    val_loader: VIVDataLoader,
+    criterion: nn.Module,
+    optimizer: torch.optim.Optimizer,
+    scheduler: torch.optim.lr_scheduler._LRScheduler,
+    epochs: int,
+    device: torch.device
+) -> Tuple[List[float], List[float]]:
+    """Train model"""
+    train_losses = []
+    val_losses = []
+    
+    best_val_loss = float('inf')
+    patience = 10
+    patience_counter = 0
+    
+    for epoch in range(epochs):
+        # Training phase
+        model.train()
+        train_loss = 0.0
         
-        Returns:
-            processed_data: 处理后的数据
-            metadata: 处理元数据
-        """
-        # 您的数据处理逻辑
-        processed_data = your_processing_function(data)
+        for batch_idx, batch in enumerate(train_loader):
+            inputs = batch['input'].to(device)
+            targets = batch['target'].to(device)
+            
+            optimizer.zero_grad()
+            
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
+            
+            loss.backward()
+            
+            # Gradient clipping
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            
+            optimizer.step()
+            
+            train_loss += loss.item()
+            
+            if batch_idx % 10 == 0:
+                print(f"Epoch {epoch+1}/{epochs}, Batch {batch_idx}/{len(train_loader)}, Loss: {loss.item():.6f}")
         
-        metadata = {
-            'original_shape': data.shape,
-            'processed_shape': processed_data.shape,
-            'processing_time': self.processing_time
-        }
+        # Validation phase
+        model.eval()
+        val_loss = 0.0
         
-        return processed_data, metadata
-```
+        with torch.no_grad():
+            for batch in val_loader:
+                inputs = batch['input'].to(device)
+                targets = batch['target'].to(device)
+                
+                outputs = model(inputs)
+                loss = criterion(outputs, targets)
+                
+                val_loss += loss.item()
+        
+        # Calculate average losses
+        avg_train_loss = train_loss / len(train_loader)
+        avg_val_loss = val_loss / len(val_loader)
+        
+        train_losses.append(avg_train_loss)
+        val_losses.append(avg_val_loss)
+        
+        # Learning rate scheduling
+        scheduler.step()
+        
+        print(f"Epoch {epoch+1}/{epochs}:")
+        print(f"  Training loss: {avg_train_loss:.6f}")
+        print(f"  Validation loss: {avg_val_loss:.6f}")
+        print(f"  Learning rate: {scheduler.get_last_lr()[0]:.8f}")
+        
+        # Early stopping check
+        if avg_val_loss < best_val_loss:
+            best_val_loss = avg_val_loss
+            patience_counter = 0
+            # Save best model
+            torch.save(model.state_dict(), 'best_model.pth')
+        else:
+            patience_counter += 1
+            
+        if patience_counter >= patience:
+            print(f"Early stopping triggered at epoch {epoch+1}")
+            break
+    
+    return train_losses, val_losses
 
-### 性能优化贡献
 
-#### 1. CUDA核函数优化
+def evaluate_model(
+    model: nn.Module,
+    val_loader: VIVDataLoader,
+    device: torch.device
+) -> Dict[str, float]:
+    """Evaluate model performance"""
+    model.eval()
+    
+    total_mse = 0.0
+    total_mae = 0.0
+    total_samples = 0
+    
+    predictions = []
+    targets = []
+    
+    with torch.no_grad():
+        for batch in val_loader:
+            inputs = batch['input'].to(device)
+            batch_targets = batch['target'].to(device)
+            
+            outputs = model(inputs)
+            
+            # Calculate metrics
+            mse = torch.mean((outputs - batch_targets) ** 2)
+            mae = torch.mean(torch.abs(outputs - batch_targets))
+            
+            total_mse += mse.item() * inputs.size(0)
+            total_mae += mae.item() * inputs.size(0)
+            total_samples += inputs.size(0)
+            
+            # Collect predictions
+            predictions.append(outputs.cpu().numpy())
+            targets.append(batch_targets.cpu().numpy())
+    
+    # Calculate average metrics
+    avg_mse = total_mse / total_samples
+    avg_mae = total_mae / total_samples
+    avg_rmse = np.sqrt(avg_mse)
+    
+    # Calculate R²
+    predictions = np.concatenate(predictions, axis=0)
+    targets = np.concatenate(targets, axis=0)
+    
+    ss_res = np.sum((targets - predictions) ** 2)
+    ss_tot = np.sum((targets - np.mean(targets)) ** 2)
+    r2_score = 1 - (ss_res / ss_tot)
+    
+    metrics = {
+        'MSE': avg_mse,
+        'MAE': avg_mae,
+        'RMSE': avg_rmse,
+        'R²': r2_score
+    }
+    
+    print("Evaluation results:")
+    for metric, value in metrics.items():
+        print(f"  {metric}: {value:.6f}")
+    
+    return metrics
 
-```cpp
-// vivtransformer/csrc/attention_cuda.cu
 
-#include <torch/extension.h>
-#include <cuda.h>
-#include <cuda_runtime.h>
+def visualize_results(
+    model: nn.Module,
+    val_loader: VIVDataLoader,
+    device: torch.device
+) -> None:
+    """Visualize results"""
+    model.eval()
+    
+    # Get a batch of data
+    batch = next(iter(val_loader))
+    inputs = batch['input'].to(device)
+    targets = batch['target'].to(device)
+    
+    with torch.no_grad():
+        outputs = model(inputs)
+        
+        # If model returns attention weights
+        if hasattr(model, 'get_attention_weights'):
+            attention_weights = model.get_attention_weights()
+    
+    # Convert to numpy
+    inputs_np = inputs.cpu().numpy()
+    outputs_np = outputs.cpu().numpy()
+    targets_np = targets.cpu().numpy()
+    
+    # Create figures
+    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+    
+    # Plot predictions vs true values
+    sample_idx = 0
+    time_steps = np.arange(outputs_np.shape[1])
+    
+    # X direction displacement
+    axes[0, 0].plot(time_steps, targets_np[sample_idx, :, 0], 'b-', label='True values', linewidth=2)
+    axes[0, 0].plot(time_steps, outputs_np[sample_idx, :, 0], 'r--', label='Predictions', linewidth=2)
+    axes[0, 0].set_title('X Direction Displacement Prediction')
+    axes[0, 0].set_xlabel('Time Step')
+    axes[0, 0].set_ylabel('Displacement')
+    axes[0, 0].legend()
+    axes[0, 0].grid(True)
+    
+    # Y direction displacement
+    axes[0, 1].plot(time_steps, targets_np[sample_idx, :, 1], 'b-', label='True values', linewidth=2)
+    axes[0, 1].plot(time_steps, outputs_np[sample_idx, :, 1], 'r--', label='Predictions', linewidth=2)
+    axes[0, 1].set_title('Y Direction Displacement Prediction')
+    axes[0, 1].set_xlabel('Time Step')
+    axes[0, 1].set_ylabel('Displacement')
+    axes[0, 1].legend()
+    axes[0, 1].grid(True)
+    
+    # Error analysis
+    error_x = np.abs(targets_np[sample_idx, :, 0] - outputs_np[sample_idx, :, 0])
+    error_y = np.abs(targets_np[sample_idx, :, 1] - outputs_np[sample_idx, :, 1])
+    
+    axes[1, 0].plot(time_steps, error_x, 'g-', label='X Direction Error', linewidth=2)
+    axes[1, 0].plot(time_steps, error_y, 'm-', label='Y Direction Error', linewidth=2)
+    axes[1, 0].set_title('Prediction Error')
+    axes[1, 0].set_xlabel('Time Step')
+    axes[1, 0].set_ylabel('Absolute Error')
+    axes[1, 0].legend()
+    axes[1, 0].grid(True)
+    
+    # Phase diagram
+    axes[1, 1].plot(targets_np[sample_idx, :, 0], targets_np[sample_idx, :, 1], 'b-', label='True Trajectory', linewidth=2)
+    axes[1, 1].plot(outputs_np[sample_idx, :, 0], outputs_np[sample_idx, :, 1], 'r--', label='Predicted Trajectory', linewidth=2)
+    axes[1, 1].set_title('Vibration Trajectory')
+    axes[1, 1].set_xlabel('X Displacement')
+    axes[1, 1].set_ylabel('Y Displacement')
+    axes[1, 1].legend()
+    axes[1, 1].grid(True)
+    axes[1, 1].axis('equal')
+    
+    plt.tight_layout()
+    plt.savefig('prediction_results.png', dpi=300, bbox_inches='tight')
+    plt.show()
+    
+    # If attention weights are available, plot attention map
+    if 'attention_weights' in locals():
+        plot_attention_weights(attention_weights, save_path='attention_weights.png')
 
-__global__ void optimized_attention_kernel(
-    const float* query,
-    const float* key,
-    const float* value,
+
+def save_model(model: nn.Module, path: str) -> None:
+    """Save model"""
+    torch.save({
+        'model_state_dict': model.state_dict(),
+        'model_config': model.get_config(),
+        'timestamp': torch.tensor(time.time())
+    }, path)
+    
+    print(f"Model saved to: {path}")
+
+
+if __name__ == '__main__':
+    main()
+
+
+
     float* output,
     int batch_size,
     int seq_len,
     int d_model
 ) {
-    // 您的优化CUDA核函数
+    // Your optimized CUDA kernel function
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     
     if (idx < batch_size * seq_len * d_model) {
-        // 计算逻辑
+        // Computation logic
     }
 }
 
@@ -423,7 +438,7 @@ torch::Tensor optimized_attention_cuda(
     torch::Tensor key,
     torch::Tensor value
 ) {
-    // CUDA函数包装
+    // CUDA function wrapper
     auto output = torch::zeros_like(query);
     
     const int threads = 256;
@@ -443,7 +458,7 @@ torch::Tensor optimized_attention_cuda(
 }
 ```
 
-#### 2. 内存优化
+#### 2. Memory Optimization
 
 ```python
 # vivtransformer/utils/memory_optimization.py
@@ -452,7 +467,7 @@ import torch
 from typing import Iterator, Tuple
 
 class GradientCheckpointing:
-    """梯度检查点优化"""
+    """Gradient checkpointing optimization"""
     
     @staticmethod
     def checkpoint_sequential(
@@ -460,7 +475,7 @@ class GradientCheckpointing:
         segments: int,
         input: torch.Tensor
     ) -> torch.Tensor:
-        """序列化梯度检查点"""
+        """Sequential gradient checkpointing"""
         def run_function(start, end, functions):
             def forward(input):
                 for j in range(start, end + 1):
@@ -474,7 +489,7 @@ class GradientCheckpointing:
                 input
             )
         
-        # 分段检查点
+        # Segmented checkpointing
         segment_size = len(functions) // segments
         for i in range(segments):
             start_idx = i * segment_size
@@ -492,59 +507,59 @@ class GradientCheckpointing:
 
 ---
 
-## 📚 文档贡献
+## 📚 Documentation Contribution
 
-### 文档类型
+### Documentation Types
 
-#### 1. API文档
+#### 1. API Documentation
 
-**函数文档模板**:
+**Function Documentation Template**:
 ```python
 def complex_function(
     param1: torch.Tensor,
     param2: Optional[str] = None,
     param3: Dict[str, Any] = None
 ) -> Tuple[torch.Tensor, Dict[str, float]]:
-    """复杂函数的详细文档
+    """Detailed documentation for complex functions
     
-    这个函数执行复杂的计算，包括多个步骤和条件判断。
-    适用于需要精确控制计算过程的场景。
+    This function performs complex computations including multiple steps and conditional logic.
+    Suitable for scenarios requiring precise control over the computation process.
     
     Args:
-        param1: 输入张量，形状为 [batch_size, seq_len, d_model]
-            - batch_size: 批次大小，通常为32-512
-            - seq_len: 序列长度，支持可变长度
-            - d_model: 模型维度，必须是8的倍数
-        param2: 可选的字符串参数，支持以下值:
-            - 'mode1': 使用标准计算模式
-            - 'mode2': 使用优化计算模式
-            - None: 自动选择模式
-        param3: 配置字典，包含以下键值:
-            - 'threshold': float, 阈值参数 (默认: 0.5)
-            - 'iterations': int, 迭代次数 (默认: 10)
-            - 'verbose': bool, 是否输出详细信息 (默认: False)
+        param1: Input tensor with shape [batch_size, seq_len, d_model]
+            - batch_size: Batch size, typically 32-512
+            - seq_len: Sequence length, supports variable length
+            - d_model: Model dimension, must be multiple of 8
+        param2: Optional string parameter, supports the following values:
+            - 'mode1': Use standard computation mode
+            - 'mode2': Use optimized computation mode
+            - None: Automatically select mode
+        param3: Configuration dictionary containing the following keys:
+            - 'threshold': float, threshold parameter (default: 0.5)
+            - 'iterations': int, number of iterations (default: 10)
+            - 'verbose': bool, whether to output detailed information (default: False)
     
     Returns:
-        result: 计算结果张量，形状与param1相同
-        metrics: 计算指标字典，包含:
-            - 'computation_time': 计算时间(秒)
-            - 'memory_usage': 内存使用量(MB)
-            - 'convergence_score': 收敛分数(0-1)
+        result: Result tensor with the same shape as param1
+        metrics: Computation metrics dictionary containing:
+            - 'computation_time': Computation time (seconds)
+            - 'memory_usage': Memory usage (MB)
+            - 'convergence_score': Convergence score (0-1)
     
     Raises:
-        ValueError: 当param1的维度不正确时
-        RuntimeError: 当计算过程中出现数值不稳定时
-        MemoryError: 当内存不足时
+        ValueError: When param1 has incorrect dimensions
+        RuntimeError: When numerical instability occurs during computation
+        MemoryError: When memory is insufficient
     
     Example:
-        基本使用:
+        Basic usage:
         
         >>> import torch
         >>> input_tensor = torch.randn(32, 128, 512)
         >>> result, metrics = complex_function(input_tensor)
-        >>> print(f"计算时间: {metrics['computation_time']:.3f}s")
+        >>> print(f"Computation time: {metrics['computation_time']:.3f}s")
         
-        高级配置:
+        Advanced configuration:
         
         >>> config = {
         ...     'threshold': 0.8,
@@ -558,14 +573,14 @@ def complex_function(
         ... )
     
     Note:
-        - 该函数在GPU上运行时性能最佳
-        - 对于大型输入，建议使用梯度检查点
-        - 支持混合精度训练
+        - This function performs best when running on GPU
+        - For large inputs, gradient checkpointing is recommended
+        - Supports mixed precision training
     
     See Also:
-        - :func:`related_function`: 相关函数
-        - :class:`RelatedClass`: 相关类
-        - :doc:`../tutorials/advanced_usage`: 高级使用教程
+        - :func:`related_function`: Related function
+        - :class:`RelatedClass`: Related class
+        - :doc:`../tutorials/advanced_usage`: Advanced usage tutorial
     
     References:
         [1] Author et al. "Paper Title". Journal Name, 2024.
@@ -573,82 +588,82 @@ def complex_function(
     """
 ```
 
-#### 2. 教程文档
+#### 2. Tutorial Documentation
 
-**教程结构模板**:
+**Tutorial Structure Template**:
 ```markdown
-# 教程标题
+# Tutorial Title
 
-> 简短描述教程内容和目标读者
+> Brief description of tutorial content and target audience
 
-## 学习目标
+## Learning Objectives
 
-完成本教程后，您将能够:
-- [ ] 目标1
-- [ ] 目标2
-- [ ] 目标3
+After completing this tutorial, you will be able to:
+- [ ] Objective 1
+- [ ] Objective 2
+- [ ] Objective 3
 
-## 前置要求
+## Prerequisites
 
 - Python 3.8+
 - PyTorch 1.9+
-- 基础的深度学习知识
+- Basic knowledge of deep learning
 
-## 步骤1: 环境准备
+## Step 1: Environment Setup
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
 pip install vivtransformer
 ```
 
-### 验证安装
+### Verify Installation
 
 ```python
 import vivtransformer
-print(f"VIVTransformer版本: {vivtransformer.__version__}")
+print(f"VIVTransformer version: {vivtransformer.__version__}")
 ```
 
-## 步骤2: 数据准备
+## Step 2: Data Preparation
 
-### 数据格式
+### Data Format
 
 ```python
-# 数据应该是以下格式
+# Data should be in the following format
 data = {
     'input': torch.tensor(...),  # [batch_size, seq_len, features]
     'target': torch.tensor(...), # [batch_size, seq_len, targets]
-    'metadata': {...}            # 元数据字典
+    'metadata': {...}            # Metadata dictionary
 }
 ```
 
-### 数据加载
+### Data Loading
 
 ```python
 from vivtransformer.data import VIVDataLoader
 
-# 创建数据加载器
+# Create data loader
 loader = VIVDataLoader(
     data_path='path/to/data',
     batch_size=32,
     shuffle=True
 )
 
-# 迭代数据
+# Iterate over data
 for batch in loader:
     input_data = batch['input']
     target_data = batch['target']
-    # 处理数据...
+    # Process data...
 ```
 
-## 步骤3: 模型配置
+## Step 3: Model Configuration
 
-### 基础配置
+### Basic Configuration
 
 ```python
 from vivtransformer import VIVTransformer
 
-# 创建模型
+# Create model
 model = VIVTransformer(
     d_model=512,
     n_heads=8,
@@ -657,7 +672,7 @@ model = VIVTransformer(
 )
 ```
 
-### 高级配置
+### Advanced Configuration
 
 ```yaml
 # config.yaml
@@ -683,22 +698,22 @@ training:
 ```python
 from vivtransformer.config import load_config
 
-# 从配置文件加载
+# Load from configuration file
 config = load_config('config.yaml')
 model = VIVTransformer.from_config(config.model)
 ```
 
-## 常见问题
+## Common Issues
 
-### Q: 如何处理内存不足？
+### Q: How to handle memory issues?
 
-A: 可以尝试以下方法:
-1. 减小batch_size
-2. 使用梯度累积
-3. 启用梯度检查点
+A: You can try the following methods:
+1. Reduce batch_size
+2. Use gradient accumulation
+3. Enable gradient checkpointing
 
 ```python
-# 梯度累积示例
+# Gradient accumulation example
 accumulation_steps = 4
 for i, batch in enumerate(dataloader):
     loss = model(batch)
@@ -710,38 +725,38 @@ for i, batch in enumerate(dataloader):
         optimizer.zero_grad()
 ```
 
-### Q: 如何选择注意力机制？
+### Q: How to choose attention mechanism?
 
-A: 不同注意力机制的特点:
-- `scaled_dot_product`: 标准注意力，计算效率高
-- `external`: 外部注意力，适合长序列
-- `se_attention`: 通道注意力，适合特征选择
+A: Characteristics of different attention mechanisms:
+- `scaled_dot_product`: Standard attention, computationally efficient
+- `external`: External attention, suitable for long sequences
+- `se_attention`: Channel attention, suitable for feature selection
 
-## 总结
+## Summary
 
-本教程介绍了...
+This tutorial introduced...
 
-## 下一步
+## Next Steps
 
-- [ ] 阅读高级配置教程
-- [ ] 尝试自定义注意力机制
-- [ ] 参与社区讨论
+- [ ] Read advanced configuration tutorial
+- [ ] Try custom attention mechanisms
+- [ ] Participate in community discussions
 ```
 
-#### 3. 示例代码
+#### 3. Example Code
 
-**完整示例模板**:
+**Complete Example Template**:
 ```python
 #!/usr/bin/env python3
 """
-示例: VIVTransformer基础使用
+Example: VIVTransformer Basic Usage
 
-这个示例展示了如何使用VIVTransformer进行涡激振动预测。
-包括数据准备、模型训练和结果可视化的完整流程。
+This example demonstrates how to use VIVTransformer for vortex-induced vibration prediction.
+Includes a complete workflow from data preparation, model training to result visualization.
 
-作者: [Your Name]
-日期: 2024-01-01
-版本: 1.0.0
+Author: [Your Name]
+Date: 2024-01-01
+Version: 1.0.0
 """
 
 import torch
@@ -751,7 +766,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-# VIVTransformer相关导入
+# VIVTransformer related imports
 from vivtransformer import VIVTransformer
 from vivtransformer.data import VIVDataset, VIVDataLoader
 from vivtransformer.losses import SVDEnhancedLoss
@@ -760,16 +775,16 @@ from vivtransformer.visualization import plot_attention_weights, plot_prediction
 
 
 def main():
-    """主函数"""
-    # 设置随机种子
+    """Main function"""
+    # Set random seed
     set_seed(42)
     
-    # 获取设备
+    # Get device
     device = get_device()
-    print(f"使用设备: {device}")
+    print(f"Using device: {device}")
     
-    # 1. 数据准备
-    print("\n=== 数据准备 ===")
+    # 1. Data preparation
+    print("\n=== Data Preparation ===")
     train_dataset, val_dataset = prepare_data()
     
     train_loader = VIVDataLoader(
@@ -786,16 +801,16 @@ def main():
         num_workers=4
     )
     
-    print(f"训练集大小: {len(train_dataset)}")
-    print(f"验证集大小: {len(val_dataset)}")
+    print(f"Training set size: {len(train_dataset)}")
+    print(f"Validation set size: {len(val_dataset)}")
     
-    # 2. 模型创建
-    print("\n=== 模型创建 ===")
+    # 2. Model creation
+    print("\n=== Model Creation ===")
     model = create_model(device)
-    print(f"模型参数量: {count_parameters(model):,}")
+    print(f"Model parameters: {count_parameters(model):,}")
     
-    # 3. 训练配置
-    print("\n=== 训练配置 ===")
+    # 3. Training configuration
+    print("\n=== Training Configuration ===")
     criterion = SVDEnhancedLoss(
         reconstruction_weight=1.0,
         singular_value_weight=0.5,
@@ -814,8 +829,8 @@ def main():
         eta_min=1e-6
     )
     
-    # 4. 模型训练
-    print("\n=== 开始训练 ===")
+    # 4. Model training
+    print("\n=== Starting Training ===")
     train_losses, val_losses = train_model(
         model=model,
         train_loader=train_loader,
@@ -827,40 +842,40 @@ def main():
         device=device
     )
     
-    # 5. 结果评估
-    print("\n=== 结果评估 ===")
+    # 5. Result evaluation
+    print("\n=== Result Evaluation ===")
     evaluate_model(model, val_loader, device)
     
-    # 6. 可视化
-    print("\n=== 结果可视化 ===")
+    # 6. Visualization
+    print("\n=== Result Visualization ===")
     visualize_results(model, val_loader, device)
     
-    # 7. 模型保存
-    print("\n=== 保存模型 ===")
+    # 7. Model saving
+    print("\n=== Saving Model ===")
     save_model(model, 'vivtransformer_trained.pth')
     
-    print("\n训练完成！")
+    print("\nTraining completed!")
 
 
 def prepare_data() -> Tuple[VIVDataset, VIVDataset]:
-    """准备训练和验证数据"""
-    # 生成示例数据（实际使用时替换为真实数据）
+    """Prepare training and validation data"""
+    # Generate sample data (replace with real data in actual use)
     np.random.seed(42)
     
-    # 模拟圆柱绕流数据
+    # Simulate cylinder flow data
     n_samples = 1000
     seq_len = 128
     n_features = 64
     
-    # 输入特征：速度场、压力场等
+    # Input features: velocity field, pressure field, etc.
     X = np.random.randn(n_samples, seq_len, n_features).astype(np.float32)
     
-    # 目标：位移、速度等
+    # Targets: displacement, velocity, etc.
     y = np.random.randn(n_samples, seq_len, 2).astype(np.float32)
     
-    # 添加一些物理相关性
+    # Add some physical correlation
     for i in range(n_samples):
-        # 模拟周期性振动
+        # Simulate periodic vibration
         t = np.linspace(0, 10, seq_len)
         frequency = np.random.uniform(0.1, 2.0)
         amplitude = np.random.uniform(0.5, 2.0)
@@ -868,7 +883,7 @@ def prepare_data() -> Tuple[VIVDataset, VIVDataset]:
         y[i, :, 0] = amplitude * np.sin(2 * np.pi * frequency * t)
         y[i, :, 1] = amplitude * np.cos(2 * np.pi * frequency * t)
     
-    # 分割数据集
+    # Split dataset
     split_idx = int(0.8 * n_samples)
     
     train_dataset = VIVDataset(
@@ -887,7 +902,7 @@ def prepare_data() -> Tuple[VIVDataset, VIVDataset]:
 
 
 def create_model(device: torch.device) -> VIVTransformer:
-    """创建VIVTransformer模型"""
+    """Create VIVTransformer model"""
     model = VIVTransformer(
         input_dim=64,
         output_dim=2,
@@ -903,7 +918,7 @@ def create_model(device: torch.device) -> VIVTransformer:
 
 
 def count_parameters(model: nn.Module) -> int:
-    """计算模型参数量"""
+    """Count model parameters"""
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
@@ -917,7 +932,7 @@ def train_model(
     epochs: int,
     device: torch.device
 ) -> Tuple[List[float], List[float]]:
-    """训练模型"""
+    """Train model"""
     train_losses = []
     val_losses = []
     
@@ -926,7 +941,7 @@ def train_model(
     patience_counter = 0
     
     for epoch in range(epochs):
-        # 训练阶段
+        # Training phase
         model.train()
         train_loss = 0.0
         
@@ -941,7 +956,7 @@ def train_model(
             
             loss.backward()
             
-            # 梯度裁剪
+            # Gradient clipping
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             
             optimizer.step()
@@ -951,7 +966,7 @@ def train_model(
             if batch_idx % 10 == 0:
                 print(f"Epoch {epoch+1}/{epochs}, Batch {batch_idx}/{len(train_loader)}, Loss: {loss.item():.6f}")
         
-        # 验证阶段
+        # Validation phase
         model.eval()
         val_loss = 0.0
         
@@ -965,32 +980,32 @@ def train_model(
                 
                 val_loss += loss.item()
         
-        # 计算平均损失
+        # Calculate average losses
         avg_train_loss = train_loss / len(train_loader)
         avg_val_loss = val_loss / len(val_loader)
         
         train_losses.append(avg_train_loss)
         val_losses.append(avg_val_loss)
         
-        # 学习率调度
+        # Learning rate scheduling
         scheduler.step()
         
         print(f"Epoch {epoch+1}/{epochs}:")
-        print(f"  训练损失: {avg_train_loss:.6f}")
-        print(f"  验证损失: {avg_val_loss:.6f}")
-        print(f"  学习率: {scheduler.get_last_lr()[0]:.8f}")
+        print(f"  Training loss: {avg_train_loss:.6f}")
+        print(f"  Validation loss: {avg_val_loss:.6f}")
+        print(f"  Learning rate: {scheduler.get_last_lr()[0]:.8f}")
         
-        # 早停检查
+        # Early stopping check
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
             patience_counter = 0
-            # 保存最佳模型
+            # Save best model
             torch.save(model.state_dict(), 'best_model.pth')
         else:
             patience_counter += 1
             
         if patience_counter >= patience:
-            print(f"早停触发，在第{epoch+1}轮停止训练")
+            print(f"Early stopping triggered at epoch {epoch+1}")
             break
     
     return train_losses, val_losses
@@ -1001,7 +1016,7 @@ def evaluate_model(
     val_loader: VIVDataLoader,
     device: torch.device
 ) -> Dict[str, float]:
-    """评估模型性能"""
+    """Evaluate model performance"""
     model.eval()
     
     total_mse = 0.0
@@ -1018,7 +1033,7 @@ def evaluate_model(
             
             outputs = model(inputs)
             
-            # 计算指标
+            # Calculate metrics
             mse = torch.mean((outputs - batch_targets) ** 2)
             mae = torch.mean(torch.abs(outputs - batch_targets))
             
@@ -1026,16 +1041,16 @@ def evaluate_model(
             total_mae += mae.item() * inputs.size(0)
             total_samples += inputs.size(0)
             
-            # 收集预测结果
+            # Collect predictions
             predictions.append(outputs.cpu().numpy())
             targets.append(batch_targets.cpu().numpy())
     
-    # 计算平均指标
+    # Calculate average metrics
     avg_mse = total_mse / total_samples
     avg_mae = total_mae / total_samples
     avg_rmse = np.sqrt(avg_mse)
     
-    # 计算R²
+    # Calculate R²
     predictions = np.concatenate(predictions, axis=0)
     targets = np.concatenate(targets, axis=0)
     
@@ -1050,7 +1065,7 @@ def evaluate_model(
         'R²': r2_score
     }
     
-    print("评估结果:")
+    print("Evaluation results:")
     for metric, value in metrics.items():
         print(f"  {metric}: {value:.6f}")
     
@@ -1062,10 +1077,10 @@ def visualize_results(
     val_loader: VIVDataLoader,
     device: torch.device
 ) -> None:
-    """可视化结果"""
+    """Visualize results"""
     model.eval()
     
-    # 获取一个批次的数据
+    # Get a batch of data
     batch = next(iter(val_loader))
     inputs = batch['input'].to(device)
     targets = batch['target'].to(device)
@@ -1073,58 +1088,58 @@ def visualize_results(
     with torch.no_grad():
         outputs = model(inputs)
         
-        # 如果模型返回注意力权重
+        # If model returns attention weights
         if hasattr(model, 'get_attention_weights'):
             attention_weights = model.get_attention_weights()
     
-    # 转换为numpy
+    # Convert to numpy
     inputs_np = inputs.cpu().numpy()
     outputs_np = outputs.cpu().numpy()
     targets_np = targets.cpu().numpy()
     
-    # 创建图形
+    # Create figures
     fig, axes = plt.subplots(2, 2, figsize=(15, 10))
     
-    # 绘制预测vs真实值
+    # Plot predictions vs true values
     sample_idx = 0
     time_steps = np.arange(outputs_np.shape[1])
     
-    # X方向位移
-    axes[0, 0].plot(time_steps, targets_np[sample_idx, :, 0], 'b-', label='真实值', linewidth=2)
-    axes[0, 0].plot(time_steps, outputs_np[sample_idx, :, 0], 'r--', label='预测值', linewidth=2)
-    axes[0, 0].set_title('X方向位移预测')
-    axes[0, 0].set_xlabel('时间步')
-    axes[0, 0].set_ylabel('位移')
+    # X direction displacement
+    axes[0, 0].plot(time_steps, targets_np[sample_idx, :, 0], 'b-', label='True values', linewidth=2)
+    axes[0, 0].plot(time_steps, outputs_np[sample_idx, :, 0], 'r--', label='Predictions', linewidth=2)
+    axes[0, 0].set_title('X Direction Displacement Prediction')
+    axes[0, 0].set_xlabel('Time Step')
+    axes[0, 0].set_ylabel('Displacement')
     axes[0, 0].legend()
     axes[0, 0].grid(True)
     
-    # Y方向位移
-    axes[0, 1].plot(time_steps, targets_np[sample_idx, :, 1], 'b-', label='真实值', linewidth=2)
-    axes[0, 1].plot(time_steps, outputs_np[sample_idx, :, 1], 'r--', label='预测值', linewidth=2)
-    axes[0, 1].set_title('Y方向位移预测')
-    axes[0, 1].set_xlabel('时间步')
-    axes[0, 1].set_ylabel('位移')
+    # Y direction displacement
+    axes[0, 1].plot(time_steps, targets_np[sample_idx, :, 1], 'b-', label='True values', linewidth=2)
+    axes[0, 1].plot(time_steps, outputs_np[sample_idx, :, 1], 'r--', label='Predictions', linewidth=2)
+    axes[0, 1].set_title('Y Direction Displacement Prediction')
+    axes[0, 1].set_xlabel('Time Step')
+    axes[0, 1].set_ylabel('Displacement')
     axes[0, 1].legend()
     axes[0, 1].grid(True)
     
-    # 误差分析
+    # Error analysis
     error_x = np.abs(targets_np[sample_idx, :, 0] - outputs_np[sample_idx, :, 0])
     error_y = np.abs(targets_np[sample_idx, :, 1] - outputs_np[sample_idx, :, 1])
     
-    axes[1, 0].plot(time_steps, error_x, 'g-', label='X方向误差', linewidth=2)
-    axes[1, 0].plot(time_steps, error_y, 'm-', label='Y方向误差', linewidth=2)
-    axes[1, 0].set_title('预测误差')
-    axes[1, 0].set_xlabel('时间步')
-    axes[1, 0].set_ylabel('绝对误差')
+    axes[1, 0].plot(time_steps, error_x, 'g-', label='X Direction Error', linewidth=2)
+    axes[1, 0].plot(time_steps, error_y, 'm-', label='Y Direction Error', linewidth=2)
+    axes[1, 0].set_title('Prediction Error')
+    axes[1, 0].set_xlabel('Time Step')
+    axes[1, 0].set_ylabel('Absolute Error')
     axes[1, 0].legend()
     axes[1, 0].grid(True)
     
-    # 相位图
-    axes[1, 1].plot(targets_np[sample_idx, :, 0], targets_np[sample_idx, :, 1], 'b-', label='真实轨迹', linewidth=2)
-    axes[1, 1].plot(outputs_np[sample_idx, :, 0], outputs_np[sample_idx, :, 1], 'r--', label='预测轨迹', linewidth=2)
-    axes[1, 1].set_title('振动轨迹')
-    axes[1, 1].set_xlabel('X位移')
-    axes[1, 1].set_ylabel('Y位移')
+    # Phase diagram
+    axes[1, 1].plot(targets_np[sample_idx, :, 0], targets_np[sample_idx, :, 1], 'b-', label='True Trajectory', linewidth=2)
+    axes[1, 1].plot(outputs_np[sample_idx, :, 0], outputs_np[sample_idx, :, 1], 'r--', label='Predicted Trajectory', linewidth=2)
+    axes[1, 1].set_title('Vibration Trajectory')
+    axes[1, 1].set_xlabel('X Displacement')
+    axes[1, 1].set_ylabel('Y Displacement')
     axes[1, 1].legend()
     axes[1, 1].grid(True)
     axes[1, 1].axis('equal')
@@ -1133,557 +1148,838 @@ def visualize_results(
     plt.savefig('prediction_results.png', dpi=300, bbox_inches='tight')
     plt.show()
     
-    # 如果有注意力权重，绘制注意力图
+    # If attention weights are available, plot attention map
     if 'attention_weights' in locals():
         plot_attention_weights(attention_weights, save_path='attention_weights.png')
 
 
 def save_model(model: nn.Module, path: str) -> None:
-    """保存模型"""
+    """Save model"""
     torch.save({
         'model_state_dict': model.state_dict(),
         'model_config': model.get_config(),
         'timestamp': torch.tensor(time.time())
     }, path)
     
-    print(f"模型已保存到: {path}")
+    print(f"Model saved to: {path}")
 
 
 if __name__ == '__main__':
     main()
-```
+
+
+# 🤝 Community Contribution Guide
+
+> Welcome to the VIVTransformer open source community! This guide will help you understand how to participate in project contributions
 
 ---
 
-## 🐛 问题报告
+## 📋 Table of Contents
 
-### 报告流程
+- [🌟 Welcome to Join](#-welcome-to-join)
+- [🎯 Contribution Types](#-contribution-types)
+- [📝 Code Contribution](#-code-contribution)
+- [📚 Documentation Contribution](#-documentation-contribution)
+- [🐛 Issue Reporting](#-issue-reporting)
+- [💡 Feature Suggestions](#-feature-suggestions)
+- [🧪 Testing Contribution](#-testing-contribution)
+- [🎨 Design Contribution](#-design-contribution)
+- [📊 Data Contribution](#-data-contribution)
+- [🏆 Contributor Recognition](#-contributor-recognition)
+- [📞 Contact Us](#-contact-us)
 
-#### 1. 搜索现有问题
-
-在报告新问题前，请先搜索[GitHub Issues](https://github.com/your-repo/VIVTransformer/issues)确认问题是否已存在。
-
-#### 2. 问题模板
-
-```markdown
----
-name: Bug报告
-about: 报告软件缺陷
-title: '[BUG] Bug report'
-labels: bug
-assignees: ''
 ---
 
-## 问题描述
+## 🌟 Welcome to Join
 
-简洁清晰地描述遇到的问题。
+### Project Vision
 
-## 复现步骤
+VIVTransformer is committed to becoming **the open source benchmark in the field of vortex-induced vibration analysis**, providing powerful tools for scientific research and engineering applications by combining deep learning with physical modeling.
 
-详细描述如何复现这个问题：
+### Community Values
 
-1. 执行 '...'
-2. 点击 '....'
-3. 滚动到 '....'
-4. 看到错误
+- **🔬 Scientific Rigor**: Based on solid theoretical foundations and experimental validation
+- **🤝 Open Collaboration**: Welcome contributors from different backgrounds
+- **📈 Continuous Improvement**: Continuously optimize performance and user experience
+- **🎓 Knowledge Sharing**: Promote academic exchange and technology dissemination
+- **🌍 Inclusive Diversity**: Respect different viewpoints and cultural backgrounds
 
-## 期望行为
+### Contributor Types
 
-描述您期望发生的行为。
+| Contributor Type | Skill Requirements | Contribution Content | Time Investment |
+|------------------|-------------------|---------------------|------------------|
+| **Core Developer** | Deep learning, fluid mechanics | Core algorithms, architecture design | 20+ hours/week |
+| **Feature Developer** | Python, machine learning | New features, tool development | 10-20 hours/week |
+| **Documentation Maintainer** | Technical writing, teaching | Documentation, tutorial writing | 5-15 hours/week |
+| **Test Engineer** | Software testing, quality assurance | Test cases, performance testing | 5-10 hours/week |
+| **Community Manager** | Communication coordination, project management | Community operations, event organization | 5-10 hours/week |
+| **Occasional Contributor** | Any skills | Issue reporting, small fixes | 1-5 hours/week |
 
-## 实际行为
+---
 
-描述实际发生的行为。
+## 🎯 Contribution Types
 
-## 截图
+### Quick Start
 
-如果适用，添加截图来帮助解释您的问题。
+#### 1. Environment Setup
 
-## 环境信息
+```bash
+# 1. Fork the project to your GitHub account
+# 2. Clone your fork
+git clone https://github.com/your-username/VIVTransformer.git
+cd VIVTransformer
 
-- 操作系统: [例如 Ubuntu 20.04]
-- Python版本: [例如 3.9.7]
-- PyTorch版本: [例如 1.12.0]
-- VIVTransformer版本: [例如 1.0.0]
-- GPU信息: [例如 NVIDIA RTX 3080]
-- CUDA版本: [例如 11.6]
+# 3. Add upstream repository
+git remote add upstream https://github.com/original-repo/VIVTransformer.git
 
-## 错误日志
+# 4. Create development environment
+conda create -n vivtransformer-dev python=3.9
+conda activate vivtransformer-dev
 
+# 5. Install development dependencies
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
-粘贴完整的错误信息和堆栈跟踪
+
+#### 2. Development Workflow
+
+```bash
+# 1. Sync latest code
+git fetch upstream
+git checkout main
+git merge upstream/main
+
+# 2. Create feature branch
+git checkout -b feature/your-feature-name
+
+# 3. Develop
+# ... write code ...
+
+# 4. Run tests
+python -m pytest tests/
+python -m pytest tests/ --cov=vivtransformer
+
+# 5. Code formatting
+black vivtransformer/
+isort vivtransformer/
+flake8 vivtransformer/
+
+# 6. Commit changes
+git add .
+git commit -m "feat: add your feature description"
+
+# 7. Push to your fork
+git push origin feature/your-feature-name
+
+# 8. Create Pull Request
+# Go to GitHub and create a Pull Request
 ```
 
-## 最小复现代码
+### Contribution Guidelines
+
+#### Code Style
+
+**Python Code Standards**:
 
 ```python
-# 提供能够复现问题的最小代码示例
-import vivtransformer
-
-# 您的代码...
-```
-
-## 额外信息
-
-添加任何其他有助于解决问题的信息。
-```
-
-#### 3. 问题分类
-
-**优先级标签**:
-- `critical`: 严重问题，影响核心功能
-- `high`: 高优先级，影响重要功能
-- `medium`: 中等优先级
-- `low`: 低优先级，改进建议
-
-**类型标签**:
-- `bug`: 软件缺陷
-- `performance`: 性能问题
-- `documentation`: 文档问题
-- `compatibility`: 兼容性问题
-
-### 问题调试指南
-
-#### 1. 收集信息
-
-```python
-# 系统信息收集脚本
-import sys
+# Use type annotations
+from typing import Optional, Tuple, Dict, Any
 import torch
-import vivtransformer
-import platform
+from torch import nn, Tensor
 
-def collect_system_info():
-    """收集系统信息用于问题报告"""
-    info = {
-        'platform': platform.platform(),
-        'python_version': sys.version,
-        'pytorch_version': torch.__version__,
-        'vivtransformer_version': vivtransformer.__version__,
-        'cuda_available': torch.cuda.is_available(),
-        'cuda_version': torch.version.cuda if torch.cuda.is_available() else 'N/A',
-        'gpu_count': torch.cuda.device_count() if torch.cuda.is_available() else 0
+def compute_attention(
+    query: Tensor, 
+    key: Tensor, 
+    mask: Optional[Tensor] = None
+) -> Tensor:
+    """Compute attention weights
+    
+    Args:
+        query: Query tensor [batch_size, seq_len, d_model]
+        key: Key tensor [batch_size, seq_len, d_model]
+        mask: Optional mask tensor [batch_size, seq_len, seq_len]
+    
+    Returns:
+        Attention weight tensor [batch_size, seq_len, seq_len]
+    """
+    # Compute attention scores
+    scores = torch.matmul(query, key.transpose(-2, -1))
+    
+    # Apply mask
+    if mask is not None:
+        scores = scores.masked_fill(mask == 0, float('-inf'))
+    
+    # Apply softmax
+    attention_weights = torch.softmax(scores, dim=-1)
+    
+    return attention_weights
+```
+
+**Docstring Standards**:
+
+```python
+class VIVTransformer(nn.Module):
+    """VIV Transformer model
+    
+    This is a Transformer model specifically designed for vortex-induced 
+    vibration analysis, integrating multiple attention mechanisms and 
+    physics-constrained loss functions.
+    
+    Args:
+        d_model: Model dimension
+        n_heads: Number of attention heads
+        n_layers: Number of layers
+        attention_type: Type of attention mechanism
+        loss_config: Loss function configuration
+    
+    Example:
+        >>> model = VIVTransformer(
+        ...     d_model=512,
+        ...     n_heads=8,
+        ...     n_layers=6,
+        ...     attention_type='scaled_dot_product'
+        ... )
+        >>> output = model(input_tensor)
+    
+    Note:
+        The model supports multiple attention mechanisms, see attention_mechanisms module.
+    """
+    pass
+```
+
+#### Commit Message Standards
+
+**Commit Message Format**:
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+**Type Description**:
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation update
+- `style`: Code formatting
+- `refactor`: Code refactoring
+- `test`: Test related
+- `chore`: Build process or auxiliary tool changes
+
+**Examples**:
+```
+feat(attention): add external attention mechanism
+
+- Implement external attention based on paper XYZ
+- Add configuration options for external attention
+- Update factory registration
+
+Closes #123
+```
+
+---
+
+## 📝 Code Contribution
+
+### Core Module Development
+
+#### 1. Attention Mechanism Development
+
+**New Attention Mechanism Template**:
+```python
+# vivtransformer/attention_mechanisms/your_attention.py
+
+import torch
+import torch.nn as nn
+from typing import Optional, Tuple
+from .base_attention import BaseAttention
+
+class YourAttention(BaseAttention):
+    """Your attention mechanism implementation
+    
+    Based on paper: [Paper Title] (Author et al., Year)
+    Paper link: https://arxiv.org/abs/XXXX.XXXXX
+    
+    Args:
+        d_model: Model dimension
+        n_heads: Number of attention heads
+        dropout: Dropout probability
+        **kwargs: Other parameters
+    """
+    
+    def __init__(
+        self,
+        d_model: int,
+        n_heads: int = 8,
+        dropout: float = 0.1,
+        **kwargs
+    ):
+        super().__init__(d_model, n_heads, dropout)
+        
+        # Your specific parameters
+        self.your_param = kwargs.get('your_param', default_value)
+        
+        # Your network layers
+        self.your_layer = nn.Linear(d_model, d_model)
+    
+    def forward(
+        self,
+        query: torch.Tensor,
+        key: torch.Tensor,
+        value: torch.Tensor,
+        mask: Optional[torch.Tensor] = None
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        """Forward pass
+        
+        Args:
+            query: Query tensor [batch_size, seq_len, d_model]
+            key: Key tensor [batch_size, seq_len, d_model]
+            value: Value tensor [batch_size, seq_len, d_model]
+            mask: Mask tensor [batch_size, seq_len, seq_len]
+        
+        Returns:
+            output: Output tensor [batch_size, seq_len, d_model]
+            attention_weights: Attention weights [batch_size, n_heads, seq_len, seq_len]
+        """
+        batch_size, seq_len, d_model = query.shape
+        
+        # Your attention computation logic
+        # ...
+        
+        return output, attention_weights
+    
+    @staticmethod
+    def get_config_template() -> dict:
+        """Return configuration template"""
+        return {
+            'type': 'your_attention',
+            'n_heads': 8,
+            'dropout': 0.1,
+            'your_param': 'default_value'
+        }
+```
+
+**Register New Attention Mechanism**:
+```python
+# vivtransformer/attention_mechanisms/__init__.py
+
+from .your_attention import YourAttention
+
+# Register to factory
+ATTENTION_REGISTRY['your_attention'] = YourAttention
+```
+
+#### 2. Loss Function Development
+
+**New Loss Function Template**:
+```python
+# vivtransformer/losses/your_loss.py
+
+import torch
+import torch.nn as nn
+from typing import Dict, Any
+from .base_loss import BaseLoss
+
+class YourLoss(BaseLoss):
+    """Your loss function implementation
+    
+    Args:
+        weight: Loss weight
+        **kwargs: Other parameters
+    """
+    
+    def __init__(self, weight: float = 1.0, **kwargs):
+        super().__init__(weight)
+        self.your_param = kwargs.get('your_param', default_value)
+    
+    def forward(
+        self,
+        predictions: torch.Tensor,
+        targets: torch.Tensor,
+        **kwargs
+    ) -> torch.Tensor:
+        """Compute loss
+        
+        Args:
+            predictions: Predicted values
+            targets: Target values
+            **kwargs: Other inputs
+        
+        Returns:
+            Loss value
+        """
+        # Your loss computation logic
+        loss = your_loss_calculation(predictions, targets)
+        
+        return self.weight * loss
+    
+    def get_metrics(self) -> Dict[str, float]:
+        """Return related metrics"""
+        return {
+            'your_loss': self.last_loss_value,
+            'your_metric': self.calculate_your_metric()
+        }
+```
+
+#### 3. Data Processing Module
+
+**New Data Processor Template**:
+```python
+# vivtransformer/data/processors/your_processor.py
+
+import numpy as np
+from typing import Dict, Any, Tuple
+from .base_processor import BaseProcessor
+
+class YourDataProcessor(BaseProcessor):
+    """Your data processor
+    
+    Args:
+        config: Processor configuration
+    """
+    
+    def __init__(self, config: Dict[str, Any]):
+        super().__init__(config)
+        self.your_param = config.get('your_param', default_value)
+    
+    def process(
+        self,
+        data: np.ndarray
+    ) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Process data
+        
+        Args:
+            data: Input data
+        
+        Returns:
+            processed_data: Processed data
+            metadata: Processing metadata
+        """
+        # Your data processing logic
+        processed_data = your_processing_function(data)
+        
+        metadata = {
+            'original_shape': data.shape,
+            'processed_shape': processed_data.shape,
+            'processing_time': self.processing_time
+        }
+        
+        return processed_data, metadata
+```
+
+### Performance Optimization Contribution
+
+#### 1. CUDA Kernel Optimization
+
+```cpp
+// vivtransformer/csrc/attention_cuda.cu
+
+#include <torch/extension.h>
+#include <cuda.h>
+#include <cuda_runtime.h>
+
+__global__ void optimized_attention_kernel(
+    const float* query,
+    const float* key,
+    const float* value,
+    float* output,
+    int batch_size,
+    int seq_len,
+    int d_model
+) {
+    // Your optimized CUDA kernel function
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    
+    if (idx < batch_size * seq_len * d_model) {
+        // Computation logic
     }
-    
-    if torch.cuda.is_available():
-        for i in range(torch.cuda.device_count()):
-            gpu_name = torch.cuda.get_device_name(i)
-            gpu_memory = torch.cuda.get_device_properties(i).total_memory
-            info[f'gpu_{i}'] = f'{gpu_name} ({gpu_memory // 1024**3} GB)'
-    
-    return info
+}
 
-# 使用示例
-if __name__ == '__main__':
-    system_info = collect_system_info()
-    for key, value in system_info.items():
-        print(f'{key}: {value}')
+torch::Tensor optimized_attention_cuda(
+    torch::Tensor query,
+    torch::Tensor key,
+    torch::Tensor value
+) {
+    // CUDA function wrapper
+    auto output = torch::zeros_like(query);
+    
+    const int threads = 256;
+    const int blocks = (query.numel() + threads - 1) / threads;
+    
+    optimized_attention_kernel<<<blocks, threads>>>(
+        query.data_ptr<float>(),
+        key.data_ptr<float>(),
+        value.data_ptr<float>(),
+        output.data_ptr<float>(),
+        query.size(0),
+        query.size(1),
+        query.size(2)
+    );
+    
+    return output;
+}
 ```
 
-#### 2. 日志配置
+#### 2. Memory Optimization
 
 ```python
-# 启用详细日志
-import logging
-from vivtransformer.utils import setup_logging
+# vivtransformer/utils/memory_optimization.py
 
-# 设置日志级别
-setup_logging(level=logging.DEBUG, log_file='vivtransformer_debug.log')
+import torch
+from typing import Iterator, Tuple
 
-# 在代码中添加日志
-logger = logging.getLogger(__name__)
-logger.debug("调试信息")
-logger.info("一般信息")
-logger.warning("警告信息")
-logger.error("错误信息")
+class GradientCheckpointing:
+    """Gradient checkpointing optimization"""
+    
+    @staticmethod
+    def checkpoint_sequential(
+        functions: Iterator[torch.nn.Module],
+        segments: int,
+        input: torch.Tensor
+    ) -> torch.Tensor:
+        """Sequential gradient checkpointing"""
+        def run_function(start, end, functions):
+            def forward(input):
+                for j in range(start, end + 1):
+                    input = functions[j](input)
+                return input
+            return forward
+        
+        if segments == 1:
+            return torch.utils.checkpoint.checkpoint(
+                run_function(0, len(functions) - 1, functions),
+                input
+            )
+        
+        # Segmented checkpointing
+        segment_size = len(functions) // segments
+        for i in range(segments):
+            start_idx = i * segment_size
+            end_idx = (i + 1) * segment_size - 1
+            if i == segments - 1:
+                end_idx = len(functions) - 1
+            
+            input = torch.utils.checkpoint.checkpoint(
+                run_function(start_idx, end_idx, functions),
+                input
+            )
+        
+        return input
 ```
 
 ---
 
-## 💡 功能建议
+## 📚 Documentation Contribution
 
-### 建议流程
+### Documentation Types
 
-#### 1. 功能请求模板
+#### 1. API Documentation
 
+**Function Documentation Template**:
+```python
+def complex_function(
+    param1: torch.Tensor,
+    param2: Optional[str] = None,
+    param3: Dict[str, Any] = None
+) -> Tuple[torch.Tensor, Dict[str, float]]:
+    """Detailed documentation for complex functions
+    
+    This function performs complex computations including multiple steps and conditional logic.
+    Suitable for scenarios requiring precise control over the computation process.
+    
+    Args:
+        param1: Input tensor with shape [batch_size, seq_len, d_model]
+            - batch_size: Batch size, typically 32-512
+            - seq_len: Sequence length, supports variable length
+            - d_model: Model dimension, must be multiple of 8
+        param2: Optional string parameter, supports the following values:
+            - 'mode1': Use standard computation mode
+            - 'mode2': Use optimized computation mode
+            - None: Automatically select mode
+        param3: Configuration dictionary containing the following keys:
+            - 'threshold': float, threshold parameter (default: 0.5)
+            - 'iterations': int, number of iterations (default: 10)
+            - 'verbose': bool, whether to output detailed information (default: False)
+    
+    Returns:
+        result: Result tensor with the same shape as param1
+        metrics: Computation metrics dictionary containing:
+            - 'computation_time': Computation time (seconds)
+            - 'memory_usage': Memory usage (MB)
+            - 'convergence_score': Convergence score (0-1)
+    
+    Raises:
+        ValueError: When param1 has incorrect dimensions
+        RuntimeError: When numerical instability occurs during computation
+        MemoryError: When memory is insufficient
+    
+    Example:
+        Basic usage:
+        
+        >>> import torch
+        >>> input_tensor = torch.randn(32, 128, 512)
+        >>> result, metrics = complex_function(input_tensor)
+        >>> print(f"Computation time: {metrics['computation_time']:.3f}s")
+        
+        Advanced configuration:
+        
+        >>> config = {
+        ...     'threshold': 0.8,
+        ...     'iterations': 20,
+        ...     'verbose': True
+        ... }
+        >>> result, metrics = complex_function(
+        ...     input_tensor,
+        ...     param2='mode2',
+        ...     param3=config
+        ... )
+    
+    Note:
+        - This function performs best when running on GPU
+        - For large inputs, gradient checkpointing is recommended
+        - Supports mixed precision training
+    
+    See Also:
+        - :func:`related_function`: Related function
+        - :class:`RelatedClass`: Related class
+        - :doc:`../tutorials/advanced_usage`: Advanced usage tutorial
+    
+    References:
+        [1] Author et al. "Paper Title". Journal Name, 2024.
+        [2] https://example.com/documentation
+    """
+```
+
+#### 2. Tutorial Documentation
+
+**Tutorial Structure Template**:
 ```markdown
----
-name: 功能请求
-about: 建议新功能或改进
-title: '[FEATURE] Feature request'
-labels: enhancement
-assignees: ''
----
+# Tutorial Title
 
-## 功能描述
+> Brief description of tutorial content and target audience
 
-清晰简洁地描述您希望添加的功能。
+## Learning Objectives
 
-## 问题背景
+After completing this tutorial, you will be able to:
+- [ ] Objective 1
+- [ ] Objective 2
+- [ ] Objective 3
 
-描述这个功能要解决的问题。例如：我总是感到沫丧当[...]
+## Prerequisites
 
-## 解决方案
+- Python 3.8+
+- PyTorch 1.9+
+- Basic knowledge of deep learning
 
-描述您希望实现的解决方案。
+## Step 1: Environment Setup
 
-## 替代方案
+### Install Dependencies
 
-描述您考虑过的任何替代解决方案或功能。
-
-## 使用场景
-
-描述这个功能的具体使用场景：
-
-1. 场景1: ...
-2. 场景2: ...
-3. 场景3: ...
-
-## 预期API设计
-
-```python
-# 提供您期望的API设计示例
-from vivtransformer import YourNewFeature
-
-# 使用示例
-feature = YourNewFeature(param1=value1, param2=value2)
-result = feature.process(input_data)
+```bash
+pip install vivtransformer
 ```
 
-## 实现复杂度
-
-- [ ] 简单 (1-2天)
-- [ ] 中等 (1-2周)
-- [ ] 复杂 (1个月+)
-
-## 相关资源
-
-- 相关论文: [链接]
-- 参考实现: [链接]
-- 相关讨论: [链接]
-
-## 额外信息
-
-添加任何其他相关信息或截图。
-```
-
-#### 2. 功能评估标准
-
-**评估维度**:
-- **需求强度**: 社区需求程度
-- **技术可行性**: 实现难度和技术风险
-- **维护成本**: 长期维护的复杂度
-- **兼容性**: 与现有功能的兼容性
-- **性能影响**: 对整体性能的影响
-
-**优先级矩阵**:
-
-| 需求强度 | 实现难度 | 优先级 |
-|----------|----------|--------|
-| 高 | 低 | P0 (立即实现) |
-| 高 | 中 | P1 (下个版本) |
-| 高 | 高 | P2 (规划中) |
-| 中 | 低 | P1 (下个版本) |
-| 中 | 中 | P2 (规划中) |
-| 中 | 高 | P3 (考虑中) |
-| 低 | 低 | P2 (规划中) |
-| 低 | 中/高 | P3 (考虑中) |
-
----
-
-## 🧪 测试贡献
-
-### 测试类型
-
-#### 1. 单元测试
+### Verify Installation
 
 ```python
-# tests/test_attention_mechanisms.py
-
-import pytest
-import torch
-from vivtransformer.attention_mechanisms import ExternalAttention
-
-class TestExternalAttention:
-    """外部注意力机制测试"""
-    
-    @pytest.fixture
-    def attention_module(self):
-        """创建测试用的注意力模块"""
-        return ExternalAttention(
-            d_model=512,
-            n_heads=8,
-            dropout=0.1
-        )
-    
-    @pytest.fixture
-    def sample_input(self):
-        """创建测试输入"""
-        batch_size, seq_len, d_model = 2, 10, 512
-        return {
-            'query': torch.randn(batch_size, seq_len, d_model),
-            'key': torch.randn(batch_size, seq_len, d_model),
-            'value': torch.randn(batch_size, seq_len, d_model)
-        }
-    
-    def test_forward_pass(self, attention_module, sample_input):
-        """测试前向传播"""
-        output, attention_weights = attention_module(
-            sample_input['query'],
-            sample_input['key'],
-            sample_input['value']
-        )
-        
-        # 检查输出形状
-        assert output.shape == sample_input['query'].shape
-        assert attention_weights.shape == (2, 8, 10, 10)  # [batch, heads, seq, seq]
-        
-        # 检查注意力权重和为1
-        assert torch.allclose(
-            attention_weights.sum(dim=-1),
-            torch.ones_like(attention_weights.sum(dim=-1)),
-            atol=1e-6
-        )
-    
-    def test_with_mask(self, attention_module, sample_input):
-        """测试带掩码的注意力"""
-        batch_size, seq_len = 2, 10
-        mask = torch.tril(torch.ones(seq_len, seq_len)).unsqueeze(0).repeat(batch_size, 1, 1)
-        
-        output, attention_weights = attention_module(
-            sample_input['query'],
-            sample_input['key'],
-            sample_input['value'],
-            mask=mask
-        )
-        
-        # 检查掩码位置的注意力权重为0
-        masked_positions = (mask == 0)
-        assert torch.allclose(
-            attention_weights[masked_positions.unsqueeze(1).expand_as(attention_weights)],
-            torch.zeros_like(attention_weights[masked_positions.unsqueeze(1).expand_as(attention_weights)]),
-            atol=1e-6
-        )
-    
-    def test_gradient_flow(self, attention_module, sample_input):
-        """测试梯度流"""
-        # 启用梯度计算
-        for tensor in sample_input.values():
-            tensor.requires_grad_(True)
-        
-        output, _ = attention_module(
-            sample_input['query'],
-            sample_input['key'],
-            sample_input['value']
-        )
-        
-        # 计算损失并反向传播
-        loss = output.sum()
-        loss.backward()
-        
-        # 检查梯度存在
-        for tensor in sample_input.values():
-            assert tensor.grad is not None
-            assert not torch.allclose(tensor.grad, torch.zeros_like(tensor.grad))
-    
-    @pytest.mark.parametrize("d_model,n_heads", [
-        (256, 4),
-        (512, 8),
-        (1024, 16)
-    ])
-    def test_different_configurations(self, d_model, n_heads):
-        """测试不同配置"""
-        attention = ExternalAttention(d_model=d_model, n_heads=n_heads)
-        
-        batch_size, seq_len = 2, 10
-        query = torch.randn(batch_size, seq_len, d_model)
-        key = torch.randn(batch_size, seq_len, d_model)
-        value = torch.randn(batch_size, seq_len, d_model)
-        
-        output, attention_weights = attention(query, key, value)
-        
-        assert output.shape == (batch_size, seq_len, d_model)
-        assert attention_weights.shape == (batch_size, n_heads, seq_len, seq_len)
+import vivtransformer
+print(f"VIVTransformer version: {vivtransformer.__version__}")
 ```
 
-#### 2. 集成测试
+## Step 2: Data Preparation
+
+### Data Format
 
 ```python
-# tests/test_integration.py
+# Data should be in the following format
+data = {
+    'input': torch.tensor(...),  # [batch_size, seq_len, features]
+    'target': torch.tensor(...), # [batch_size, seq_len, targets]
+    'metadata': {...}            # Metadata dictionary
+}
+```
 
-import pytest
-import torch
+### Data Loading
+
+```python
+from vivtransformer.data import VIVDataLoader
+
+# Create data loader
+loader = VIVDataLoader(
+    data_path='path/to/data',
+    batch_size=32,
+    shuffle=True
+)
+
+# Iterate over data
+for batch in loader:
+    input_data = batch['input']
+    target_data = batch['target']
+    # Process data...
+```
+
+## Step 3: Model Configuration
+
+### Basic Configuration
+
+```python
 from vivtransformer import VIVTransformer
-from vivtransformer.data import VIVDataset
-from vivtransformer.losses import SVDEnhancedLoss
 
-class TestVIVTransformerIntegration:
-    """VIVTransformer集成测试"""
-    
-    @pytest.fixture
-    def model_config(self):
-        """模型配置"""
-        return {
-            'input_dim': 64,
-            'output_dim': 2,
-            'd_model': 256,
-            'n_heads': 4,
-            'n_layers': 2,
-            'attention_type': 'external',
-            'max_seq_len': 32
-        }
-    
-    @pytest.fixture
-    def sample_data(self):
-        """样本数据"""
-        batch_size, seq_len, input_dim = 4, 32, 64
-        output_dim = 2
-        
-        return {
-            'input': torch.randn(batch_size, seq_len, input_dim),
-            'target': torch.randn(batch_size, seq_len, output_dim)
-        }
-    
-    def test_end_to_end_training(self, model_config, sample_data):
-        """端到端训练测试"""
-        # 创建模型
-        model = VIVTransformer(**model_config)
-        
-        # 创建损失函数和优化器
-        criterion = SVDEnhancedLoss()
-        optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-        
-        # 训练几个步骤
-        model.train()
-        initial_loss = None
-        
-        for step in range(5):
-            optimizer.zero_grad()
-            
-            output = model(sample_data['input'])
-            loss = criterion(output, sample_data['target'])
-            
-            if initial_loss is None:
-                initial_loss = loss.item()
-            
-            loss.backward()
-            optimizer.step()
-        
-        # 检查损失是否下降
-        final_loss = loss.item()
-        assert final_loss < initial_loss, "训练过程中损失应该下降"
-    
-    def test_inference_mode(self, model_config, sample_data):
-        """推理模式测试"""
-        model = VIVTransformer(**model_config)
-        model.eval()
-        
-        with torch.no_grad():
-            output = model(sample_data['input'])
-        
-        # 检查输出形状
-        expected_shape = (sample_data['input'].shape[0], sample_data['input'].shape[1], model_config['output_dim'])
-        assert output.shape == expected_shape
-        
-        # 检查输出是否为有限值
-        assert torch.isfinite(output).all(), "输出应该是有限值"
-        
-        # 检查输出不包含NaN
-        assert not torch.isnan(output).any(), "输出不应包含NaN"
-    
-    def test_model_serialization(self, model_config):
-        """模型序列化测试"""
-        model = VIVTransformer(**model_config)
-        
-        # 保存模型
-        torch.save(model.state_dict(), 'test_model.pth')
-        
-        # 加载模型
-        new_model = VIVTransformer(**model_config)
-        new_model.load_state_dict(torch.load('test_model.pth'))
-        
-        # 比较参数
-        for p1, p2 in zip(model.parameters(), new_model.parameters()):
-            assert torch.allclose(p1, p2), "加载的模型参数应该与原模型相同"
+# Create model
+model = VIVTransformer(
+    d_model=512,
+    n_heads=8,
+    n_layers=6,
+    attention_type='external'
+)
 ```
 
----
+### Advanced Configuration
 
-## 🏆 贡献者认可
+```yaml
+# config.yaml
+model:
+  d_model: 512
+  n_heads: 8
+  n_layers: 6
+  attention_type: 'external'
+  
+loss:
+  type: 'svd_enhanced'
+  weights:
+    reconstruction: 1.0
+    singular_value: 0.5
+    orthogonality: 0.3
 
-### 贡献者等级
+training:
+  learning_rate: 1e-4
+  batch_size: 32
+  epochs: 100
+```
 
-#### 1. 贡献者分类
+```python
+from vivtransformer.config import load_config
 
-| 等级 | 要求 | 权限 | 徽章 |
-|------|------|------|------|
-| **新手贡献者** | 1-5个PR | 提交PR、参与讨论 | 🌱 |
-| **活跃贡献者** | 10+个PR，持续3个月 | 审查PR、标记Issues | 🌟 |
-| **核心贡献者** | 50+个PR，重要功能开发 | 合并PR、发布管理 | 💎 |
-| **维护者** | 长期贡献，技术领导 | 完全权限、项目决策 | 👑 |
+# Load from configuration file
+config = load_config('config.yaml')
+model = VIVTransformer.from_config(config.model)
+```
 
-### 认可机制
+## Common Issues
 
-#### 1. 月度贡献者
+### Q: How to handle memory issues?
 
-每月评选优秀贡献者，标准包括：
-- 代码质量和创新性
-- 文档贡献
-- 社区参与度
-- 帮助其他贡献者
+A: You can try the following methods:
+1. Reduce batch_size
+2. Use gradient accumulation
+3. Enable gradient checkpointing
 
-#### 2. 年度奖项
+```python
+# Gradient accumulation example
+accumulation_steps = 4
+for i, batch in enumerate(dataloader):
+    loss = model(batch)
+    loss = loss / accumulation_steps
+    loss.backward()
+    
+    if (i + 1) % accumulation_steps == 0:
+        optimizer.step()
+        optimizer.zero_grad()
+```
 
-- **最佳新人奖**: 新加入的优秀贡献者
-- **技术创新奖**: 重要技术突破
-- **社区建设奖**: 社区发展贡献
-- **文档贡献奖**: 文档质量提升
+### Q: How to choose attention mechanism?
 
----
+A: Characteristics of different attention mechanisms:
+- `scaled_dot_product`: Standard attention, computationally efficient
+- `external`: External attention, suitable for long sequences
+- `se_attention`: Channel attention, suitable for feature selection
 
-## 📞 联系我们
+## Summary
 
-### 沟通渠道
+This tutorial introduced...
 
-#### 1. 官方渠道
+## Next Steps
 
-- **GitHub Issues**: [项目问题和功能请求](https://github.com/your-repo/VIVTransformer/issues)
-- **GitHub Discussions**: [社区讨论](https://github.com/your-repo/VIVTransformer/discussions)
-- **Pull Requests**: [代码贡献](https://github.com/your-repo/VIVTransformer/pulls)
+- [ ] Read advanced configuration tutorial
+- [ ] Try custom attention mechanisms
+- [ ] Participate in community discussions
+```
 
-#### 2. 社交媒体
+#### 3. Example Code
 
-- **Twitter**: [@VIVTransformer](https://twitter.com/VIVTransformer)
-- **LinkedIn**: [VIVTransformer项目](https://linkedin.com/company/vivtransformer)
-- **知乎**: [VIVTransformer专栏](https://zhuanlan.zhihu.com/vivtransformer)
+**Complete Example Template**:
+```python
+#!/usr/bin/env python3
+"""
+Example: VIVTransformer Basic Usage
 
-### 行为准则
+This example demonstrates how to use VIVTransformer for vortex-induced vibration prediction.
+Includes a complete workflow from data preparation, model training to result visualization.
 
-我们致力于为所有人提供友好、安全和欢迎的环境。请遵守以下准则：
+Author: [Your Name]
+Date: 2024-01-01
+Version: 1.0.0
+"""
 
-#### 积极行为
-- ✅ 使用友好和包容的语言
-- ✅ 尊重不同的观点和经验
-- ✅ 优雅地接受建设性批评
-- ✅ 关注对社区最有利的事情
-- ✅ 对其他社区成员表现出同理心
+import torch
+import torch.nn as nn
+import numpy as np
+import matplotlib.pyplot as plt
+from pathlib import Path
+from typing import Dict, List, Tuple
 
-#### 不当行为
-- ❌ 使用性化的语言或图像
-- ❌ 恶意评论、人身攻击或政治攻击
-- ❌ 公开或私下骚扰
-- ❌ 未经明确许可发布他人的私人信息
-- ❌ 在专业环境中被认为不当的其他行为
+# VIVTransformer related imports
+from vivtransformer import VIVTransformer
+from vivtransformer.data import VIVDataset, VIVDataLoader
+from vivtransformer.losses import SVDEnhancedLoss
+from vivtransformer.utils import set_seed, get_device
+from vivtransformer.visualization import plot_attention_weights, plot_predictions
 
-### 获得帮助
 
-如果您需要帮助或有任何问题，请通过以下方式联系我们：
-
-1. **技术问题**: 在GitHub Issues中创建问题
-2. **使用疑问**: 查看文档或在Discussions中提问
-3. **合作机会**: 发送邮件至 collaboration@vivtransformer.org
-4. **媒体咨询**: 发送邮件至 media@vivtransformer.org
-
----
-
-*感谢您对VIVTransformer项目的关注和贡献！让我们一起构建更好的涡激振动分析工具。* 🚀
+def main():
+    """Main function"""
+    # Set random seed
+    set_seed(42)
+    
+    # Get device
+    device = get_device()
+    print(f"Using device: {device}")
+    
+    # 1. Data preparation
+    print("\n=== Data Preparation ===")
+    train_dataset, val_dataset = prepare_data()
+    
+    train_loader = VIVDataLoader(
+        train_dataset,
+        batch_size=32,
+        shuffle=True,
+        num_workers=4
+    )
+    
+    val_loader = VIVDataLoader(
+        val_dataset,
+        batch_size=32,
+        shuffle=False,
+        num_workers=4
+    )
+    
+    print(f"Training set size: {len(train_dataset)}")
+    print(f"Validation set size: {len(val_dataset)}")
+    
+    # 2. Model creation
+    print("\n=== Model Creation ===")
+    model = create_model(device)
+    print(f"Model parameters: {count_parameters(model):,}")
+    
+    # 3. Training configuration
+    print("\n=== Training Configuration ===")
+    criterion = SVDEnhancedLoss(
+        reconstruction_weight=1.0,
+        singular_value_weight=0.5,
+        orthogonality_weight=0.3
+    )
+    
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=1e-4

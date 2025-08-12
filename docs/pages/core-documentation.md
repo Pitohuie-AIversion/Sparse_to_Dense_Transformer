@@ -8,31 +8,31 @@ permalink: /core-documentation/
 
 # Core Documentation
 
-核心文档包含了 VIVTransformer 项目的详细技术文档，涵盖架构设计、模型实现、训练流程等关键内容。
+Core documentation contains detailed technical documentation for the VIVTransformer project, covering architecture design, model implementation, training processes, and other key content.
 
-## 📚 文档结构
+## 📚 Documentation Structure
 
-### 🏗️ 架构与设计
-- **[架构概览]({{ site.baseurl }}/pages/architecture-overview/)** - 整体架构设计
-- **[模型设计]({{ site.baseurl }}/pages/model-design/)** - 详细模型结构
-- **[实现细节]({{ site.baseurl }}/pages/implementation-details/)** - 核心实现说明
+### 🏗️ Architecture & Design
+- **[Architecture Overview]({{ site.baseurl }}/pages/architecture-overview/)** - Overall architecture design
+- **[Model Design]({{ site.baseurl }}/pages/model-design/)** - Detailed model structure
+- **[Implementation Details]({{ site.baseurl }}/pages/implementation-details/)** - Core implementation explanation
 
-### 🧠 注意力机制
-- **[注意力机制指南]({{ site.baseurl }}/pages/attention-mechanisms-guide/)** - 多头注意力实现
-- **[自定义注意力]({{ site.baseurl }}/pages/custom-attention/)** - 扩展注意力机制
+### 🧠 Attention Mechanisms
+- **[Attention Mechanisms Guide]({{ site.baseurl }}/pages/attention-mechanisms-guide/)** - Multi-head attention implementation
+- **[Custom Attention]({{ site.baseurl }}/pages/custom-attention/)** - Extended attention mechanisms
 
-### 📊 数据与配置
-- **[数据管道]({{ site.baseurl }}/pages/data-pipeline/)** - 数据处理流程
-- **[配置系统]({{ site.baseurl }}/pages/configuration-system/)** - 配置文件管理
+### 📊 Data & Configuration
+- **[Data Pipeline]({{ site.baseurl }}/pages/data-pipeline/)** - Data processing workflow
+- **[Configuration System]({{ site.baseurl }}/pages/configuration-system/)** - Configuration file management
 
-## 🎯 阅读建议
+## 🎯 Reading Recommendations
 
-1. **初学者**：建议按顺序阅读，从架构概览开始
-2. **开发者**：重点关注实现细节和自定义注意力
-3. **研究者**：深入了解注意力机制和模型设计
+1. **Beginners**: Recommended to read in order, starting with architecture overview
+2. **Developers**: Focus on implementation details and custom attention
+3. **Researchers**: Deep dive into attention mechanisms and model design
 
-## 💡 相关资源
+## 💡 Related Resources
 
-- [训练指南]({{ site.baseurl }}/pages/training-guide/) - 了解如何训练模型
-- [API 参考]({{ site.baseurl }}/pages/api-reference/) - 查看详细的 API 文档
-- [示例代码]({{ site.baseurl }}/pages/examples/) - 查看实际使用示例
+- [Training Guide]({{ site.baseurl }}/pages/training-guide/) - Learn how to train models
+- [API Reference]({{ site.baseurl }}/pages/api-reference/) - View detailed API documentation
+- [Example Code]({{ site.baseurl }}/pages/examples/) - View practical usage examples

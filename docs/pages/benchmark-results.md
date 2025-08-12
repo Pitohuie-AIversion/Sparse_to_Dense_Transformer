@@ -6,13 +6,13 @@ parent: Evaluation & Results
 permalink: /pages/benchmark-results/
 ---
 
-# 基准测试结果
+# Benchmark Results
 {: .no_toc }
 
-本页面展示 VIVTransformer 在标准数据集上的基准测试结果，包括与其他方法的详细对比分析。
+This page presents the benchmark results of VIVTransformer on standard datasets, including detailed comparative analysis with other methods.
 {: .fs-6 .fw-300 }
 
-## 目录
+## Table of Contents
 {: .no_toc .text-delta }
 
 1. TOC
@@ -20,22 +20,22 @@ permalink: /pages/benchmark-results/
 
 ---
 
-## 测试环境
+## Test Environment
 
-### 硬件配置
+### Hardware Configuration
 
-| 组件 | 规格 |
+| Component | Specification |
 |------|------|
 | **CPU** | Intel Xeon E5-2690 v4 (14 cores, 2.6GHz) |
 | **GPU** | NVIDIA Tesla V100 (32GB VRAM) |
-| **内存** | 128GB DDR4 |
-| **存储** | NVMe SSD 1TB |
+| **Memory** | 128GB DDR4 |
+| **Storage** | NVMe SSD 1TB |
 
-### 软件环境
+### Software Environment
 
-| 软件 | 版本 |
+| Software | Version |
 |------|------|
-| **操作系统** | Ubuntu 20.04 LTS |
+| **Operating System** | Ubuntu 20.04 LTS |
 | **Python** | 3.8.10 |
 | **PyTorch** | 1.12.1 |
 | **CUDA** | 11.6 |
@@ -43,81 +43,81 @@ permalink: /pages/benchmark-results/
 
 ---
 
-## 标准数据集
+## Standard Datasets
 
-### 1. VIV-Cylinder 数据集
+### 1. VIV-Cylinder Dataset
 
-**数据集描述**:
-- 圆柱体涡激振动标准数据集
-- 包含不同雷诺数下的流体-结构耦合数据
-- 训练集: 8,000 个序列
-- 验证集: 1,000 个序列
-- 测试集: 1,000 个序列
+**Dataset Description**:
+- Standard dataset for vortex-induced vibration of cylinders
+- Includes fluid-structure coupling data under different Reynolds numbers
+- Training set: 8,000 sequences
+- Validation set: 1,000 sequences
+- Test set: 1,000 sequences
 
-**数据特征**:
-- 序列长度: 1000 时间步
-- 流体特征维度: 64 (速度场、压力场、涡量场)
-- 结构特征维度: 32 (位移、速度、加速度、应力)
-- 目标变量: 3D 位移、速度、力
+**Data Characteristics**:
+- Sequence length: 1000 time steps
+- Fluid feature dimensions: 64 (velocity field, pressure field, vorticity field)
+- Structural feature dimensions: 32 (displacement, velocity, acceleration, stress)
+- Target variables: 3D displacement, velocity, force
 
-### 2. VIV-Bridge 数据集
+### 2. VIV-Bridge Dataset
 
-**数据集描述**:
-- 桥梁结构涡激振动数据集
-- 包含不同风速和攻角条件
-- 训练集: 6,000 个序列
-- 验证集: 800 个序列
-- 测试集: 800 个序列
+**Dataset Description**:
+- Bridge structure vortex-induced vibration dataset
+- Includes different wind speeds and angles of attack
+- Training set: 6,000 sequences
+- Validation set: 800 sequences
+- Test set: 800 sequences
 
-**数据特征**:
-- 序列长度: 2000 时间步
-- 流体特征维度: 96 (3D 流场数据)
-- 结构特征维度: 48 (多点位移和应力)
-- 目标变量: 多点 3D 响应
+**Data Characteristics**:
+- Sequence length: 2000 time steps
+- Fluid feature dimensions: 96 (3D flow field data)
+- Structural feature dimensions: 48 (multi-point displacement and stress)
+- Target variables: Multi-point 3D responses
 
-### 3. VIV-Marine 数据集
+### 3. VIV-Marine Dataset
 
-**数据集描述**:
-- 海洋结构物涡激振动数据集
-- 包含海流和波浪耦合作用
-- 训练集: 5,000 个序列
-- 验证集: 600 个序列
-- 测试集: 600 个序列
+**Dataset Description**:
+- Marine structure vortex-induced vibration dataset
+- Includes coupling of ocean currents and waves
+- Training set: 5,000 sequences
+- Validation set: 600 sequences
+- Test set: 600 sequences
 
 ---
 
-## 基准方法对比
+## Baseline Method Comparison
 
-### 对比方法
+### Compared Methods
 
-我们将 VIVTransformer 与以下方法进行对比：
+We compare VIVTransformer with the following methods:
 
-1. **传统方法**:
-   - CFD-FEM 耦合求解
-   - 经验公式方法
-   - 频域分析方法
+1. **Traditional Methods**:
+   - CFD-FEM coupled solver
+   - Empirical formula methods
+   - Frequency-domain analysis methods
 
-2. **机器学习方法**:
+2. **Machine Learning Methods**:
    - LSTM
    - GRU
    - CNN-LSTM
    - Attention-LSTM
 
-3. **深度学习方法**:
+3. **Deep Learning Methods**:
    - Vanilla Transformer
-   - BERT-like 模型
+   - BERT-like models
    - Graph Neural Networks
 
 ---
 
-## VIV-Cylinder 数据集结果
+## VIV-Cylinder Dataset Results
 
-### 定量指标对比
+### Quantitative Metrics Comparison
 
-| 方法 | RMSE ↓ | MAE ↓ | R² ↑ | 物理一致性 ↑ | 推理时间 (ms) ↓ |
+| Method | RMSE ↓ | MAE ↓ | R² ↑ | Physical Consistency ↑ | Inference Time (ms) ↓ |
 |------|--------|-------|------|-------------|------------------|
 | **CFD-FEM** | 0.0234 | 0.0187 | 0.9876 | **0.9950** | 15,000 |
-| **经验公式** | 0.1456 | 0.1123 | 0.7234 | 0.8234 | **0.1** |
+| **Empirical Formula** | 0.1456 | 0.1123 | 0.7234 | 0.8234 | **0.1** |
 | **LSTM** | 0.0876 | 0.0654 | 0.8765 | 0.8456 | 2.3 |
 | **GRU** | 0.0823 | 0.0612 | 0.8834 | 0.8523 | 2.1 |
 | **CNN-LSTM** | 0.0745 | 0.0567 | 0.9012 | 0.8678 | 3.8 |
@@ -127,46 +127,46 @@ permalink: /pages/benchmark-results/
 | **Graph NN** | 0.0534 | 0.0398 | 0.9445 | 0.9156 | 8.9 |
 | **VIVTransformer** | **0.0312** | **0.0234** | **0.9723** | 0.9834 | 3.2 |
 
-### 详细性能分析
+### Detailed Performance Analysis
 
-#### 精度表现
+#### Accuracy
 
-**VIVTransformer 优势**:
-- RMSE 比最佳基线方法降低 **41.6%**
-- MAE 比最佳基线方法降低 **41.2%**
-- R² 分数达到 **0.9723**，接近 CFD-FEM 的精度
+**VIVTransformer Advantages**:
+- RMSE reduced by **41.6%** compared to the best baseline
+- MAE reduced by **41.2%** compared to the best baseline
+- R² score reaches **0.9723**, approaching CFD-FEM accuracy
 
-**不同雷诺数下的表现**:
+**Performance under Different Reynolds Numbers**:
 
-| 雷诺数范围 | VIVTransformer RMSE | 最佳基线 RMSE | 改进幅度 |
+| Reynolds Range | VIVTransformer RMSE | Best Baseline RMSE | Improvement |
 |------------|---------------------|---------------|----------|
 | Re < 1000 | 0.0287 | 0.0489 | 41.3% |
 | 1000 ≤ Re < 5000 | 0.0298 | 0.0512 | 41.8% |
 | 5000 ≤ Re < 10000 | 0.0334 | 0.0567 | 41.1% |
 | Re ≥ 10000 | 0.0356 | 0.0623 | 42.9% |
 
-#### 计算效率
+#### Computational Efficiency
 
-**推理速度对比**:
-- 比 CFD-FEM 快 **4,687 倍**
-- 比 Graph NN 快 **2.8 倍**
-- 与传统机器学习方法相当
+**Inference Speed Comparison**:
+- **4,687x** faster than CFD-FEM
+- **2.8x** faster than Graph NN
+- Comparable to traditional ML methods
 
-**内存使用**:
-- 峰值内存: 2.3GB
-- 比 Vanilla Transformer 节省 **35%** 内存
-- 支持更长序列处理
+**Memory Usage**:
+- Peak memory: 2.3GB
+- **35%** less than Vanilla Transformer
+- Supports longer sequences
 
 ---
 
-## VIV-Bridge 数据集结果
+## VIV-Bridge Dataset Results
 
-### 定量指标对比
+### Quantitative Metrics Comparison
 
-| 方法 | RMSE ↓ | MAE ↓ | R² ↑ | 频域相关性 ↑ | 训练时间 (h) ↓ |
+| Method | RMSE ↓ | MAE ↓ | R² ↑ | Frequency-domain Correlation ↑ | Training Time (h) ↓ |
 |------|--------|-------|------|-------------|------------------|
 | **CFD-FEM** | 0.0198 | 0.0156 | 0.9912 | **0.9967** | 120.0 |
-| **经验公式** | 0.1789 | 0.1345 | 0.6789 | 0.7456 | **0.0** |
+| **Empirical Formula** | 0.1789 | 0.1345 | 0.6789 | 0.7456 | **0.0** |
 | **LSTM** | 0.1023 | 0.0789 | 0.8234 | 0.8123 | 2.5 |
 | **CNN-LSTM** | 0.0867 | 0.0656 | 0.8567 | 0.8345 | 3.8 |
 | **Attention-LSTM** | 0.0756 | 0.0578 | 0.8834 | 0.8567 | 4.2 |
@@ -174,90 +174,90 @@ permalink: /pages/benchmark-results/
 | **Graph NN** | 0.0612 | 0.0467 | 0.9234 | 0.8934 | 12.3 |
 | **VIVTransformer** | **0.0387** | **0.0289** | **0.9634** | 0.9756 | 4.8 |
 
-### 多点响应预测
+### Multi-point Response Prediction
 
-**不同测点的预测精度**:
+**Accuracy at Different Measurement Points**:
 
-| 测点位置 | VIVTransformer RMSE | 最佳基线 RMSE | 改进幅度 |
+| Point Location | VIVTransformer RMSE | Best Baseline RMSE | Improvement |
 |----------|---------------------|---------------|----------|
-| 跨中点 | 0.0298 | 0.0523 | 43.0% |
-| 1/4 跨点 | 0.0334 | 0.0578 | 42.2% |
-| 3/4 跨点 | 0.0356 | 0.0612 | 41.8% |
-| 支座附近 | 0.0423 | 0.0689 | 38.6% |
+| Mid-span | 0.0298 | 0.0523 | 43.0% |
+| 1/4 span | 0.0334 | 0.0578 | 42.2% |
+| 3/4 span | 0.0356 | 0.0612 | 41.8% |
+| Near support | 0.0423 | 0.0689 | 38.6% |
 
-**频域特性保持**:
-- 主频预测误差: < 2%
-- 高次谐波保持度: 94.3%
-- 频谱相关系数: 0.9756
+**Frequency-domain Property Preservation**:
+- Main frequency prediction error: < 2%
+- High-order harmonics preservation: 94.3%
+- Spectrum correlation coefficient: 0.9756
 
 ---
 
-## VIV-Marine 数据集结果
+## VIV-Marine Dataset Results
 
-### 复杂环境下的表现
+### Performance in Complex Environments
 
-| 环境条件 | VIVTransformer RMSE | 最佳基线 RMSE | 改进幅度 |
+| Environment | VIVTransformer RMSE | Best Baseline RMSE | Improvement |
 |----------|---------------------|---------------|----------|
-| 纯海流 | 0.0345 | 0.0589 | 41.4% |
-| 纯波浪 | 0.0367 | 0.0634 | 42.1% |
-| 海流+波浪 | 0.0423 | 0.0723 | 41.5% |
-| 极端海况 | 0.0567 | 0.0934 | 39.3% |
+| Pure current | 0.0345 | 0.0589 | 41.4% |
+| Pure waves | 0.0367 | 0.0634 | 42.1% |
+| Current + waves | 0.0423 | 0.0723 | 41.5% |
+| Extreme sea state | 0.0567 | 0.0934 | 39.3% |
 
-### 长期预测能力
+### Long-term Prediction Capability
 
-**不同预测时长的精度**:
+**Accuracy for Different Prediction Horizons**:
 
-| 预测时长 | VIVTransformer RMSE | 最佳基线 RMSE | 改进幅度 |
+| Prediction Horizon | VIVTransformer RMSE | Best Baseline RMSE | Improvement |
 |----------|---------------------|---------------|----------|
-| 短期 (< 100 步) | 0.0234 | 0.0398 | 41.2% |
-| 中期 (100-500 步) | 0.0345 | 0.0567 | 39.2% |
-| 长期 (500-1000 步) | 0.0456 | 0.0723 | 36.9% |
-| 超长期 (> 1000 步) | 0.0623 | 0.0934 | 33.3% |
+| Short-term (< 100 steps) | 0.0234 | 0.0398 | 41.2% |
+| Mid-term (100-500 steps) | 0.0345 | 0.0567 | 39.2% |
+| Long-term (500-1000 steps) | 0.0456 | 0.0723 | 36.9% |
+| Ultra-long (> 1000 steps) | 0.0623 | 0.0934 | 33.3% |
 
 ---
 
-## 消融研究
+## Ablation Studies
 
-### 关键组件贡献分析
+### Contribution of Key Components
 
-| 配置 | RMSE | 相对基线改进 | 说明 |
+| Configuration | RMSE | Improvement vs Baseline | Notes |
 |------|------|-------------|------|
-| **完整 VIVTransformer** | **0.0312** | **基线** | 所有组件 |
-| 移除跨模态注意力 | 0.0423 | -35.6% | 只使用自注意力 |
-| 移除物理约束 | 0.0389 | -24.7% | 纯数据驱动 |
-| 移除位置编码 | 0.0367 | -17.6% | 无位置信息 |
-| 移除多尺度特征 | 0.0345 | -10.6% | 单尺度处理 |
-| 使用标准 Transformer | 0.0534 | -71.2% | 无 VIV 特化 |
+| **Full VIVTransformer** | **0.0312** | **Baseline** | All components |
+| Remove cross-modal attention | 0.0423 | -35.6% | Use self-attention only |
+| Remove physics constraints | 0.0389 | -24.7% | Purely data-driven |
+| Remove positional encoding | 0.0367 | -17.6% | No positional info |
+| Remove multi-scale features | 0.0345 | -10.6% | Single-scale processing |
+| Use standard Transformer | 0.0534 | -71.2% | No VIV specialization |
 
-### 超参数敏感性分析
+### Hyperparameter Sensitivity Analysis
 
-#### 模型深度影响
+#### Effect of Model Depth
 
-| 层数 | RMSE | 参数量 (M) | 训练时间 (h) | 推理时间 (ms) |
+| Layers | RMSE | Params (M) | Training Time (h) | Inference Time (ms) |
 |------|------|------------|-------------|---------------|
 | 4 | 0.0423 | 12.3 | 2.8 | 2.1 |
 | 6 | **0.0312** | 18.7 | 4.8 | 3.2 |
 | 8 | 0.0298 | 25.1 | 7.2 | 4.6 |
 | 12 | 0.0289 | 37.9 | 12.5 | 7.8 |
 
-#### 注意力头数影响
+#### Effect of Number of Attention Heads
 
-| 头数 | RMSE | 注意力质量 | 计算复杂度 |
+| Heads | RMSE | Attention Quality | Computational Complexity |
 |------|------|-----------|----------|
-| 4 | 0.0367 | 0.8234 | 低 |
-| 8 | **0.0312** | **0.9156** | 中 |
-| 12 | 0.0298 | 0.9234 | 高 |
-| 16 | 0.0295 | 0.9267 | 很高 |
+| 4 | 0.0367 | 0.8234 | Low |
+| 8 | **0.0312** | **0.9156** | Medium |
+| 12 | 0.0298 | 0.9234 | High |
+| 16 | 0.0295 | 0.9267 | Very High |
 
 ---
 
-## 泛化能力测试
+## Generalization Tests
 
-### 跨数据集泛化
+### Cross-dataset Generalization
 
-**训练数据集 → 测试数据集**:
+**Training Dataset → Test Dataset**:
 
-| 训练集 | 测试集 | VIVTransformer RMSE | 基线 RMSE | 改进幅度 |
+| Training | Test | VIVTransformer RMSE | Baseline RMSE | Improvement |
 |--------|--------|---------------------|-----------|----------|
 | Cylinder | Bridge | 0.0567 | 0.0834 | 32.0% |
 | Cylinder | Marine | 0.0623 | 0.0923 | 32.5% |
@@ -266,11 +266,11 @@ permalink: /pages/benchmark-results/
 | Marine | Cylinder | 0.0512 | 0.0756 | 32.3% |
 | Marine | Bridge | 0.0578 | 0.0867 | 33.3% |
 
-### 域适应能力
+### Domain Adaptation Capability
 
-**少样本学习表现**:
+**Few-shot Learning Performance**:
 
-| 目标域样本数 | 微调后 RMSE | 零样本 RMSE | 改进幅度 |
+| Target Domain Samples | RMSE after Fine-tuning | Zero-shot RMSE | Improvement |
 |-------------|-------------|-------------|----------|
 | 10 | 0.0756 | 0.0923 | 18.1% |
 | 50 | 0.0634 | 0.0923 | 31.3% |
@@ -279,11 +279,11 @@ permalink: /pages/benchmark-results/
 
 ---
 
-## 实时性能测试
+## Real-time Performance Tests
 
-### 不同批次大小的性能
+### Performance with Different Batch Sizes
 
-| 批次大小 | 推理时间 (ms) | 内存使用 (GB) | 吞吐量 (samples/s) |
+| Batch Size | Inference Time (ms) | Memory Usage (GB) | Throughput (samples/s) |
 |----------|---------------|---------------|-------------------|
 | 1 | 3.2 | 0.8 | 312 |
 | 4 | 8.9 | 1.4 | 449 |
@@ -291,9 +291,9 @@ permalink: /pages/benchmark-results/
 | 16 | 28.7 | 3.2 | 558 |
 | 32 | 52.3 | 5.8 | 612 |
 
-### 序列长度扩展性
+### Scalability with Sequence Length
 
-| 序列长度 | 推理时间 (ms) | 内存使用 (GB) | RMSE |
+| Sequence Length | Inference Time (ms) | Memory Usage (GB) | RMSE |
 |----------|---------------|---------------|------|
 | 100 | 3.2 | 0.8 | 0.0298 |
 | 500 | 12.8 | 2.1 | 0.0312 |
@@ -303,23 +303,23 @@ permalink: /pages/benchmark-results/
 
 ---
 
-## 稳定性测试
+## Stability Tests
 
-### 多次运行一致性
+### Consistency across Multiple Runs
 
-**10 次独立运行统计**:
+**Statistics from 10 independent runs**:
 
-| 指标 | 均值 | 标准差 | 最小值 | 最大值 | 变异系数 |
+| Metric | Mean | Std | Min | Max | CoV |
 |------|------|--------|--------|--------|---------|
 | RMSE | 0.0312 | 0.0008 | 0.0304 | 0.0321 | 2.56% |
 | MAE | 0.0234 | 0.0006 | 0.0227 | 0.0242 | 2.64% |
 | R² | 0.9723 | 0.0012 | 0.9708 | 0.9738 | 0.12% |
 
-### 数值稳定性
+### Numerical Stability
 
-**不同精度下的表现**:
+**Performance under different precisions**:
 
-| 数值精度 | RMSE | 推理时间 (ms) | 内存使用 (GB) |
+| Numerical Precision | RMSE | Inference Time (ms) | Memory Usage (GB) |
 |----------|------|---------------|---------------|
 | FP32 | 0.0312 | 3.2 | 2.3 |
 | FP16 | 0.0315 | 2.1 | 1.2 |
@@ -327,57 +327,57 @@ permalink: /pages/benchmark-results/
 
 ---
 
-## 对比分析总结
+## Summary of Comparative Analysis
 
-### 主要优势
+### Key Advantages
 
-1. **精度优势**:
-   - 在所有测试数据集上均达到最佳精度
-   - 平均 RMSE 改进 **40%** 以上
-   - 接近 CFD-FEM 的精度水平
+1. **Accuracy Advantages**:
+   - Achieves the best accuracy across all datasets
+   - Average RMSE improvement of over **40%**
+   - Approaches CFD-FEM accuracy
 
-2. **效率优势**:
-   - 推理速度比 CFD-FEM 快 **4,000+ 倍**
-   - 内存使用比标准 Transformer 节省 **35%**
-   - 支持实时预测应用
+2. **Efficiency Advantages**:
+   - Inference speed is **4,000x+** faster than CFD-FEM
+   - Memory usage is **35%** lower than standard Transformer
+   - Supports real-time prediction applications
 
-3. **泛化优势**:
-   - 跨数据集泛化能力强
-   - 少样本学习效果好
-   - 域适应能力突出
+3. **Generalization Advantages**:
+   - Strong cross-dataset generalization
+   - Good few-shot learning performance
+   - Outstanding domain adaptation capability
 
-4. **稳定性优势**:
-   - 多次运行结果一致
-   - 数值计算稳定
-   - 支持不同精度部署
+4. **Stability Advantages**:
+   - Consistent results across multiple runs
+   - Numerically stable computations
+   - Supports deployment with different precisions
 
-### 适用场景
+### Recommended Application Scenarios
 
-| 应用场景 | 推荐指数 | 主要优势 |
+| Scenario | Recommendation | Key Advantages |
 |----------|----------|----------|
-| **实时监控** | ⭐⭐⭐⭐⭐ | 高精度 + 快速推理 |
-| **工程设计** | ⭐⭐⭐⭐⭐ | 接近 CFD 精度 + 高效率 |
-| **科学研究** | ⭐⭐⭐⭐⭐ | 物理一致性 + 可解释性 |
-| **教育培训** | ⭐⭐⭐⭐ | 易于理解 + 可视化 |
-| **原型验证** | ⭐⭐⭐⭐⭐ | 快速迭代 + 高精度 |
+| **Real-time Monitoring** | ⭐⭐⭐⭐⭐ | High accuracy + fast inference |
+| **Engineering Design** | ⭐⭐⭐⭐⭐ | Near-CFD accuracy + high efficiency |
+| **Scientific Research** | ⭐⭐⭐⭐⭐ | Physical consistency + interpretability |
+| **Education & Training** | ⭐⭐⭐⭐ | Easy to understand + visualization |
+| **Prototype Validation** | ⭐⭐⭐⭐⭐ | Rapid iteration + high accuracy |
 
 ---
 
-## 基准测试代码
+## Benchmark Code
 
-### 复现测试结果
+### Reproduce Benchmark Results
 
 ```python
-# 基准测试脚本
+# Benchmark script
 from vivtransformer.benchmark import BenchmarkSuite
 from vivtransformer.datasets import load_benchmark_datasets
 
-# 加载基准数据集
+# Load benchmark datasets
 datasets = load_benchmark_datasets([
     'viv_cylinder', 'viv_bridge', 'viv_marine'
 ])
 
-# 创建基准测试套件
+# Create benchmark suite
 benchmark = BenchmarkSuite(
     datasets=datasets,
     methods=['vivtransformer', 'lstm', 'gru', 'transformer'],
@@ -385,20 +385,20 @@ benchmark = BenchmarkSuite(
     num_runs=10
 )
 
-# 运行基准测试
+# Run benchmark
 results = benchmark.run()
 
-# 生成报告
+# Generate report
 benchmark.generate_report(results, 'benchmark_report.html')
 ```
 
 ---
 
-## 相关链接
+## Related Links
 
-- [性能对比](performance-comparison) - 详细性能分析
-- [消融研究](ablation-study) - 组件重要性分析
-- [实验结果](experimental-results) - 完整实验数据
-- [评估指标](evaluation-metrics) - 评估方法说明
+- [Performance Comparison](performance-comparison) - Detailed performance analysis
+- [Ablation Study](ablation-study) - Component importance analysis
+- [Experimental Results](experimental-results) - Complete experiment data
+- [Evaluation Metrics](evaluation-metrics) - Explanation of evaluation methods
 
-*需要帮助？查看 [FAQ](faq) 或 [故障排除](troubleshooting) 页面。*
+*Need help? Check out the [FAQ](faq) or [Troubleshooting](troubleshooting) pages.*

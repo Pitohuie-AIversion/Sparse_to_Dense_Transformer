@@ -74,11 +74,16 @@ def main(config_path=None):
 
     cfg = load_config(config_path)
 
+    # 初始化随机种子
     set_seed(cfg["global"].get("seed", 42), cfg["global"].get("deterministic", False))
-    if "max_memory_fraction" in cfg["global"]:
-        device_idx = int(str(cfg["global"]["device"]).split(":")[-1])
+
+    # 设置设备与显存限制（仅在 CUDA 可用且选择了 CUDA 设备时）
+    device_str = str(cfg["global"]["device"]) if "device" in cfg["global"] else ("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device(device_str if (device_str.startswith("cuda") and torch.cuda.is_available()) else "cpu")
+    if cfg["global"].get("max_memory_fraction") is not None and device.type == "cuda" and torch.cuda.is_available():
+        device_idx = device.index if device.index is not None else 0
         set_cuda_memory_limit(cfg["global"]["max_memory_fraction"], device_idx)
-    device = torch.device(cfg["global"]["device"])
+
     logger.info("Using device: %s", device)
     logger.info("Available GPUs: %s", torch.cuda.device_count())
 
@@ -109,13 +114,13 @@ def main(config_path=None):
         if loss_idx < len(all_loss_configs):
             logger.info("只运行 loss_config_%s", loss_idx)
             loss_configs = [all_loss_configs[loss_idx]]
-            loss_config_ids = [f"loss_config_{loss_idx}"]
+            loss_config_ids = ["loss_config_{}".format(loss_idx)]
         else:
             logger.error("Error: loss_idx %d is out of range. Found %d configs.", loss_idx, len(all_loss_configs))
             sys.exit(1)
     else:
         loss_configs = all_loss_configs
-        loss_config_ids = [f"loss_config_{i}" for i in range(len(loss_configs))]
+        loss_config_ids = ["loss_config_{}".format(i) for i in range(len(loss_configs))]
 
     ATTENTION_TYPES = cfg["attention_test"]["types"]
     failed_attention_types = []
@@ -150,7 +155,7 @@ def main(config_path=None):
     if failed_attention_types:
         with open(parent_dir / "failed_attention_log.txt", "w") as f:
             for info in failed_attention_types:
-                f.write(f"{info}\n")
+                f.write(str(info) + "\n")
         logger.warning(
             "\n⚠️ 以下loss+注意力机制训练失败，并已记录在 failed_attention_log.txt："
         )

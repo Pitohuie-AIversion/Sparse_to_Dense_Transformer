@@ -49,6 +49,10 @@ class TotalLossWithSVD(nn.Module):
     def forward(self, pred, target):
         # pred/target: [B, N] 或 [B, H, W]
         loss_base = self.base_loss(pred, target)
+        # Fast path: if SVD is effectively disabled (all svd weights are 0) or topk<=0,
+        # skip any SVD computation to save compute and memory on training.
+        if self.topk <= 0 or not any(self.svd_weights):
+            return self.base_weight * loss_base
         loss_svds = svd_topk_losses(pred, target, topk=self.topk)
         total_loss = self.base_weight * loss_base
         for w, l in zip(self.svd_weights, loss_svds):

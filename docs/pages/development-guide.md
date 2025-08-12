@@ -30,21 +30,21 @@ This document provides detailed development guidance for VIVTransformer project 
 #### 1. Basic Environment {#1-basic-environment}
 
 ```bash
-# 1. 克隆项目 {#1-克隆项目}
+# 1. Clone project
 git clone https://github.com/your-username/VIVTransformer.git
 cd VIVTransformer
 
-# 2. 创建虚拟环境 {#2-创建虚拟环境}
+# 2. Create virtual environment
 conda create -n vivtransformer-dev python=3.9
 conda activate vivtransformer-dev
 
-# 3. 安装开发依赖 {#3-安装开发依赖}
+# 3. Install development dependencies
 pip install -r requirements-dev.txt
 
-# 4. 安装项目（开发模式） {#4-安装项目-开发模式}
+# 4. Install project (development mode)
 pip install -e .
 
-# 5. 安装预提交钩子 {#5-安装预提交钩子}
+# 5. Install pre-commit hooks
 pre-commit install
 ```
 
@@ -80,14 +80,14 @@ pre-commit install
 #### 3. Git Configuration {#3-git-configuration}
 
 ```bash
-# 设置用户信息 {#设置用户信息}
+# Set user information
 git config user.name "Your Name"
 git config user.email "your.email@example.com"
 
-# 设置默认分支 {#设置默认分支}
+# Set default branch
 git config init.defaultBranch main
 
-# 设置自动换行 {#设置自动换行}
+# Set line endings
 git config core.autocrlf input  # Linux/Mac
 git config core.autocrlf true   # Windows
 ```
@@ -96,14 +96,14 @@ git config core.autocrlf true   # Windows
 
 #### requirements-dev.txt {#requirements-dev-txt}
 ```txt
-# 基础依赖 {#基础依赖}
+# Basic dependencies
 torch>=1.12.0
 torchvision>=0.13.0
 numpy>=1.21.0
 pandas>=1.3.0
 scipy>=1.7.0
 
-# 开发工具 {#开发工具}
+# Development tools
 black>=22.0.0
 isort>=5.10.0
 flake8>=4.0.0
@@ -111,30 +111,30 @@ mypy>=0.950
 pylint>=2.13.0
 pre-commit>=2.17.0
 
-# 测试工具 {#测试工具}
+# Testing tools
 pytest>=7.0.0
 pytest-cov>=3.0.0
 pytest-mock>=3.7.0
 pytest-xdist>=2.5.0
 hypothesis>=6.40.0
 
-# 文档工具 {#文档工具}
+# Documentation tools
 sphinx>=4.5.0
 sphinx-rtd-theme>=1.0.0
 myst-parser>=0.17.0
 
-# 性能分析 {#性能分析}
+# Performance analysis
 line-profiler>=3.5.0
 memory-profiler>=0.60.0
 py-spy>=0.3.0
 
-# 可视化 {#可视化}
+# Visualization
 matplotlib>=3.5.0
 seaborn>=0.11.0
 tensorboard>=2.8.0
 wandb>=0.12.0
 
-# 其他工具 {#其他工具}
+# Other tools
 tqdm>=4.62.0
 click>=8.0.0
 rich>=12.0.0
@@ -155,24 +155,24 @@ typer>=0.4.0
 
 **Naming Conventions**:
 ```python
-# 类名：大驼峰命名法 {#类名-大驼峰命名法}
+# Class names: PascalCase
 class AttentionMechanism:
     pass
 
-# 函数和变量：小写+下划线 {#函数和变量-小写-下划线}
+# Functions and variables: lowercase with underscores
 def calculate_attention_weights():
     attention_scores = None
     return attention_scores
 
-# 常量：全大写+下划线 {#常量-全大写-下划线}
+# Constants: uppercase with underscores
 MAX_SEQUENCE_LENGTH = 512
 DEFAULT_HIDDEN_SIZE = 768
 
-# 私有方法：前缀下划线 {#私有方法-前缀下划线}
+# Private methods: prefix underscore
 def _internal_helper_function():
     pass
 
-# 特殊方法：双下划线包围 {#特殊方法-双下划线包围}
+# Special methods: double underscores
 def __init__(self):
     pass
 ```
@@ -189,19 +189,19 @@ def process_attention(
     mask: Optional[torch.Tensor] = None,
     dropout_rate: float = 0.1
 ) -> Tuple[torch.Tensor, torch.Tensor]:
-    """处理注意力计算
+    """Process attention computation
     
     Args:
-        query: 查询张量 [batch_size, seq_len, d_model]
-        key: 键张量 [batch_size, seq_len, d_model]
-        value: 值张量 [batch_size, seq_len, d_model]
-        mask: 可选的掩码张量
-        dropout_rate: Dropout比率
+        query: Query tensor [batch_size, seq_len, d_model]
+        key: Key tensor [batch_size, seq_len, d_model]
+        value: Value tensor [batch_size, seq_len, d_model]
+        mask: Optional mask tensor
+        dropout_rate: Dropout ratio
     
     Returns:
-        输出张量和注意力权重的元组
+        Tuple of output tensor and attention weights
     """
-    # 实现代码...
+    # Implementation code...
     pass
 ```
 
@@ -210,14 +210,15 @@ def process_attention(
 **Google Style Docstrings**:
 ```python
 class MultiHeadAttention(torch.nn.Module):
-    """多头注意力机制实现
+    """Multi-head attention mechanism implementation
     
-    这个类实现了Transformer中的多头注意力机制，支持自注意力和交叉注意力。
+    This class implements the multi-head attention mechanism in Transformer,
+    supporting both self-attention and cross-attention.
     
     Attributes:
-        d_model: 模型维度
-        num_heads: 注意力头数量
-        dropout_rate: Dropout比率
+        d_model: Model dimension
+        num_heads: Number of attention heads
+        dropout_rate: Dropout ratio
     
     Example:
         >>> attention = MultiHeadAttention(d_model=512, num_heads=8)
@@ -230,26 +231,26 @@ class MultiHeadAttention(torch.nn.Module):
         num_heads: int,
         dropout_rate: float = 0.1
     ):
-        """初始化多头注意力层
+        """Initialize multi-head attention layer
         
         Args:
-            d_model: 模型维度，必须能被num_heads整除
-            num_heads: 注意力头的数量
-            dropout_rate: Dropout比率，范围[0, 1]
+            d_model: Model dimension, must be divisible by num_heads
+            num_heads: Number of attention heads
+            dropout_rate: Dropout ratio in range [0, 1]
         
         Raises:
-            ValueError: 当d_model不能被num_heads整除时
+            ValueError: When d_model is not divisible by num_heads
         """
         super().__init__()
         
         if d_model % num_heads != 0:
-            raise ValueError(f"d_model ({d_model}) 必须能被 num_heads ({num_heads}) 整除")
+            raise ValueError(f"d_model ({d_model}) must be divisible by num_heads ({num_heads})")
         
         self.d_model = d_model
         self.num_heads = num_heads
         self.d_k = d_model // num_heads
         
-        # 线性变换层
+        # Linear transformation layers
         self.w_q = torch.nn.Linear(d_model, d_model)
         self.w_k = torch.nn.Linear(d_model, d_model)
         self.w_v = torch.nn.Linear(d_model, d_model)
@@ -264,72 +265,72 @@ class MultiHeadAttention(torch.nn.Module):
         value: torch.Tensor,
         mask: Optional[torch.Tensor] = None
     ) -> Tuple[torch.Tensor, torch.Tensor]:
-        """前向传播
+        """Forward pass
         
         Args:
-            query: 查询张量 [batch_size, seq_len, d_model]
-            key: 键张量 [batch_size, seq_len, d_model]
-            value: 值张量 [batch_size, seq_len, d_model]
-            mask: 可选的注意力掩码 [batch_size, seq_len, seq_len]
+            query: Query tensor [batch_size, seq_len, d_model]
+            key: Key tensor [batch_size, seq_len, d_model]
+            value: Value tensor [batch_size, seq_len, d_model]
+            mask: Optional attention mask [batch_size, seq_len, seq_len]
         
         Returns:
-            包含以下元素的元组:
-            - output: 输出张量 [batch_size, seq_len, d_model]
-            - attention_weights: 注意力权重 [batch_size, num_heads, seq_len, seq_len]
+            Tuple containing:
+            - output: Output tensor [batch_size, seq_len, d_model]
+            - attention_weights: Attention weights [batch_size, num_heads, seq_len, seq_len]
         
         Note:
-            所有输入张量必须在同一设备上
+            All input tensors must be on the same device
         """
-        # 实现代码...
+        # Implementation code...
         pass
 ```
 
 #### 3. Error Handling Standards {#3-error-handling-standards}
 ```python
 class VIVTransformerError(Exception):
-    """VIVTransformer基础异常类"""
+    """VIVTransformer base exception class"""
     pass
 
 class ConfigurationError(VIVTransformerError):
-    """配置错误异常"""
+    """Configuration error exception"""
     pass
 
 class ModelError(VIVTransformerError):
-    """模型相关错误异常"""
+    """Model related error exception"""
     pass
 
 class DataError(VIVTransformerError):
-    """数据相关错误异常"""
+    """Data related error exception"""
     pass
 
-# 使用示例 {#使用示例}
+# Usage Example
 def load_config(config_path: str) -> Dict:
-    """加载配置文件
+    """Load configuration file
     
     Args:
-        config_path: 配置文件路径
+        config_path: Configuration file path
     
     Returns:
-        配置字典
+        Configuration dictionary
     
     Raises:
-        ConfigurationError: 配置文件格式错误或缺少必要字段
-        FileNotFoundError: 配置文件不存在
+        ConfigurationError: Configuration file format error or missing required fields
+        FileNotFoundError: Configuration file not found
     """
     try:
         with open(config_path, 'r', encoding='utf-8') as f:
             config = yaml.safe_load(f)
     except FileNotFoundError:
-        raise FileNotFoundError(f"配置文件不存在: {config_path}")
+        raise FileNotFoundError(f"Configuration file not found: {config_path}")
     except yaml.YAMLError as e:
-        raise ConfigurationError(f"配置文件格式错误: {e}")
+        raise ConfigurationError(f"Configuration file format error: {e}")
     
-    # 验证必要字段
+    # Validate required fields
     required_fields = ['model', 'training', 'data']
     missing_fields = [field for field in required_fields if field not in config]
     
     if missing_fields:
-        raise ConfigurationError(f"配置文件缺少必要字段: {missing_fields}")
+        raise ConfigurationError(f"Configuration file missing required fields: {missing_fields}")
     
     return config
 ```
@@ -486,98 +487,98 @@ max-line-length = "88"
 
 ```
 VIVTransformer/
-├── vivtransformer/              # 主要源代码
+├── vivtransformer/              # Main source code
 │   ├── __init__.py
-│   ├── models/                  # 模型定义
+│   ├── models/                  # Model definitions
 │   │   ├── __init__.py
-│   │   ├── base.py             # 基础模型类
-│   │   ├── transformer.py      # Transformer实现
-│   │   └── attention/          # 注意力机制
+│   │   ├── base.py             # Base model class
+│   │   ├── transformer.py      # Transformer implementation
+│   │   └── attention/          # Attention mechanisms
 │   │       ├── __init__.py
 │   │       ├── multi_head.py
 │   │       ├── sparse.py
 │   │       └── linear.py
-│   ├── data/                   # 数据处理
+│   ├── data/                   # Data processing
 │   │   ├── __init__.py
 │   │   ├── datasets.py
 │   │   ├── loaders.py
 │   │   └── transforms.py
-│   ├── training/               # 训练相关
+│   ├── training/               # Training related
 │   │   ├── __init__.py
 │   │   ├── trainer.py
 │   │   ├── losses.py
 │   │   └── optimizers.py
-│   ├── utils/                  # 工具函数
+│   ├── utils/                  # Utility functions
 │   │   ├── __init__.py
 │   │   ├── config.py
 │   │   ├── logging.py
 │   │   └── metrics.py
-│   └── cli/                    # 命令行接口
+│   └── cli/                    # Command line interface
 │       ├── __init__.py
 │       ├── train.py
 │       └── evaluate.py
-├── tests/                      # 测试代码
+├── tests/                      # Test code
 │   ├── __init__.py
-│   ├── conftest.py            # pytest配置
-│   ├── unit/                  # 单元测试
+│   ├── conftest.py            # pytest configuration
+│   ├── unit/                  # Unit tests
 │   │   ├── test_models.py
 │   │   ├── test_attention.py
 │   │   └── test_data.py
-│   ├── integration/           # 集成测试
+│   ├── integration/           # Integration tests
 │   │   ├── test_training.py
 │   │   └── test_pipeline.py
-│   └── fixtures/              # 测试数据
+│   └── fixtures/              # Test fixtures
 │       ├── sample_data.pt
 │       └── test_config.yaml
-├── docs/                      # 文档
+├── docs/                      # Documentation
 │   ├── source/
 │   │   ├── conf.py
 │   │   ├── index.rst
 │   │   └── api/
 │   └── build/
-├── scripts/                   # 脚本文件
+├── scripts/                   # Scripts
 │   ├── setup_env.sh
 │   ├── run_tests.sh
 │   └── benchmark.py
-├── config/                    # 配置文件
+├── config/                    # Configuration files
 │   ├── default_config.yaml
 │   ├── training_config.yaml
 │   └── model_configs/
-├── examples/                  # 示例代码
+├── examples/                  # Example code
 │   ├── basic_usage.py
 │   ├── custom_attention.py
 │   └── fine_tuning.py
-├── requirements.txt           # 生产依赖
-├── requirements-dev.txt       # 开发依赖
-├── setup.py                   # 安装脚本
-├── pyproject.toml            # 项目配置
-├── README.md                 # 项目说明
-├── CHANGELOG.md              # 变更日志
-├── LICENSE                   # 许可证
-└── .gitignore               # Git忽略文件
+├── requirements.txt           # Production dependencies
+├── requirements-dev.txt       # Development dependencies
+├── setup.py                   # Installation script
+├── pyproject.toml            # Project configuration
+├── README.md                 # Project description
+├── CHANGELOG.md              # Changelog
+├── LICENSE                   # License
+└── .gitignore               # Git ignore file
 ```
 
 ### 🏗️ Module Architecture {#module-architecture}
 
 #### 1. Single Responsibility Principle {#1-single-responsibility-principle}
-每个模块应该只有一个改变的理由：
+Each module should have only one reason to change:
 
 ```python
-# ❌ 错误：一个类承担多个职责 {#错误-一个类承担多个职责}
+# ❌ Bad: A class takes on multiple responsibilities {#bad-multiple-responsibilities}
 class ModelTrainer:
     def __init__(self):
         pass
     
-    def load_data(self):  # 数据加载职责
+    def load_data(self):  # Data loading responsibility
         pass
     
-    def train_model(self):  # 训练职责
+    def train_model(self):  # Training responsibility
         pass
     
-    def save_results(self):  # 结果保存职责
+    def save_results(self):  # Result saving responsibility
         pass
 
-# ✅ 正确：职责分离 {#正确-职责分离}
+# ✅ Good: Separated responsibilities {#good-separated-responsibilities}
 class DataLoader:
     def load_data(self):
         pass
@@ -592,14 +593,14 @@ class ResultSaver:
 ```
 
 #### 2. Open-Closed Principle {#2-open-closed-principle}
-对扩展开放，对修改关闭：
+Open for extension, closed for modification:
 
 ```python
-# 基础注意力接口 {#基础注意力接口}
+# Base attention interface {#base-attention-interface}
 from abc import ABC, abstractmethod
 
 class AttentionMechanism(ABC):
-    """注意力机制基类"""
+    """Base class for attention mechanisms"""
     
     @abstractmethod
     def forward(
@@ -609,21 +610,21 @@ class AttentionMechanism(ABC):
         value: torch.Tensor,
         mask: Optional[torch.Tensor] = None
     ) -> Tuple[torch.Tensor, torch.Tensor]:
-        """前向传播"""
+        """Forward pass"""
         pass
 
-# 具体实现 {#具体实现}
+# Concrete implementations {#concrete-implementations}
 class MultiHeadAttention(AttentionMechanism):
     def forward(self, query, key, value, mask=None):
-        # 多头注意力实现
+        # Multi-head attention implementation
         pass
 
 class SparseAttention(AttentionMechanism):
     def forward(self, query, key, value, mask=None):
-        # 稀疏注意力实现
+        # Sparse attention implementation
         pass
 
-# 注意力工厂 {#注意力工厂}
+# Attention factory {#attention-factory}
 class AttentionFactory:
     _registry = {
         'multi_head': MultiHeadAttention,
@@ -633,21 +634,17 @@ class AttentionFactory:
     @classmethod
     def create(cls, attention_type: str, **kwargs) -> AttentionMechanism:
         if attention_type not in cls._registry:
-            raise ValueError(f"未知的注意力类型: {attention_type}")
+            raise ValueError(f"Unknown attention type: {attention_type}")
         
         return cls._registry[attention_type](**kwargs)
     
     @classmethod
     def register(cls, name: str, attention_class: type):
-        """注册新的注意力机制"""
+        """Register a new attention mechanism"""
         cls._registry[name] = attention_class
-```
 
-#### 3. Dependency Injection {#3-dependency-injection}
-
-```python
 class VIVTransformer(torch.nn.Module):
-    """VIVTransformer主模型"""
+    """VIVTransformer main model"""
     
     def __init__(
         self,
@@ -663,11 +660,11 @@ class VIVTransformer(torch.nn.Module):
         self.optimizer_factory = optimizer_factory
         self.config = config
         
-        # 构建模型层
+        # Build model layers
         self._build_layers()
     
     def _build_layers(self):
-        """构建模型层"""
+        """Build model layers"""
         self.embedding = torch.nn.Embedding(
             self.config['vocab_size'],
             self.config['d_model']
@@ -686,112 +683,52 @@ class VIVTransformer(torch.nn.Module):
             self.config['d_model'],
             self.config['output_size']
         )
-```
 
-## Development Workflow {#development-workflow}
+class VIVTransformer(torch.nn.Module):
+    """VIVTransformer main model"""
+    
+    def __init__(
+        self,
+        attention_mechanism: AttentionMechanism,
+        loss_function: torch.nn.Module,
+        optimizer_factory: Callable,
+        config: Dict[str, Any]
+    ):
+        super().__init__()
+        
+        self.attention = attention_mechanism
+        self.loss_fn = loss_function
+        self.optimizer_factory = optimizer_factory
+        self.config = config
+        
+        # Build model layers
+        self._build_layers()
+    
+    def _build_layers(self):
+        """Build model layers"""
+        self.embedding = torch.nn.Embedding(
+            self.config['vocab_size'],
+            self.config['d_model']
+        )
+        
+        self.encoder_layers = torch.nn.ModuleList([
+            TransformerEncoderLayer(
+                d_model=self.config['d_model'],
+                attention=self.attention,
+                dropout=self.config['dropout']
+            )
+            for _ in range(self.config['num_layers'])
+        ])
+        
+        self.output_projection = torch.nn.Linear(
+            self.config['d_model'],
+            self.config['output_size']
+        )
 
-### 🔄 Git Workflow {#git-workflow}
-
-#### 1. Branch Strategy {#1-branch-strategy}
-
-```
-main                    # 主分支，稳定版本
-├── develop            # 开发分支，集成最新功能
-├── feature/xxx        # 功能分支
-├── bugfix/xxx         # 错误修复分支
-├── hotfix/xxx         # 热修复分支
-└── release/vx.x.x     # 发布分支
-```
-
-#### 2. Development Process {#2-development-process}
-
-```bash
-# 1. 从develop创建功能分支 {#1-从develop创建功能分支}
-git checkout develop
-git pull origin develop
-git checkout -b feature/new-attention-mechanism
-
-# 2. 开发功能 {#2-开发功能}
-# 编写代码... {#编写代码}
-# 编写测试... {#编写测试}
-# 更新文档... {#更新文档}
-
-# 3. 提交代码 {#3-提交代码}
-git add .
-git commit -m "feat: add new attention mechanism
-
-- Implement sparse attention algorithm
-- Add corresponding unit tests
-- Update API documentation
-
-Closes #123"
-
-# 4. 推送分支 {#4-推送分支}
-git push origin feature/new-attention-mechanism
-
-# 5. 创建Pull Request {#5-创建pull-request}
-# Create PR on GitHub, request merge to develop branch {#create-pr-on-github-request-merge-to-develop-branch}
-
-# 6. 代码 review and merge {#6-code-review-and-merge}
-# After code review, merge to develop branch {#after-code-review-merge-to-develop-branch}
-
-# 7. Clean up branch {#7-clean-up-branch}
-git checkout develop
-git pull origin develop
-git branch -d feature/new-attention-mechanism
-```
-
-#### 3. Commit Message Convention {#3-commit-message-convention}
-
-**Commit message format**:
-```xml
-<type>(<scope>): <subject>
-
-<body>
-
-<footer>
-```
-
-**Type descriptions**:
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation update
-- `style`: Code formatting
-- `refactor`: Code refactoring
-- `test`: Test related
-- `chore`: Build process or auxiliary tool changes
-
-**Examples**:
-
-# New feature {#new-feature}
-git commit -m "feat(attention): add linear attention mechanism
-
-Implemented O(n) complexity linear attention algorithm, significantly improving long sequence processing efficiency.
-
-- Add LinearAttention class
-- Implement efficient matrix operations
-- Add performance benchmark tests
-
-Closes #456"
-
-# Bug fix {#bug-fix}
-git commit -m "fix(training): fix gradient accumulation bug
-
-Fixed loss calculation error when using gradient accumulation.
-
-Closes #789"
-
-# Documentation update {#documentation-update}
-git commit -m "docs: update API documentation
-
-- Add usage examples for new attention mechanisms
-- Fix errors in parameter descriptions
-- Update performance comparison tables"
-
-# Integration tests: Test component interactions {#integration-tests-test-component-interactions}
+# Integration tests: Test component interactions
 class TestVIVTransformerIntegration:
     def test_end_to_end_training(self):
-        """测试端到端训练"""
+        """Test end-to-end training"""
         config = {
             'd_model': 256,
             'num_heads': 4,
@@ -804,30 +741,29 @@ class TestVIVTransformerIntegration:
         optimizer = torch.optim.Adam(model.parameters())
         criterion = torch.nn.CrossEntropyLoss()
         
-        # 模拟训练数据
+        # Simulate training data
         batch_size, seq_len = 4, 20
         input_ids = torch.randint(0, config['vocab_size'], (batch_size, seq_len))
         labels = torch.randint(0, config['output_size'], (batch_size,))
         
-        # 前向传播
+        # Forward pass
         output = model(input_ids)
         loss = criterion(output, labels)
         
-        # 反向传播
+        # Backward pass
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
         
-        # 验证训练步骤完成
+        # Verify training step completion
         assert loss.item() > 0
         assert all(p.grad is not None for p in model.parameters() if p.requires_grad)
-```
 
-## 测试指南 {#测试指南}
+## Testing Guidelines {#testing-guidelines}
 
-### 🧪 测试框架 {#测试框架}
+### 🧪 Testing Framework {#testing-framework}
 
-#### 1. pytest配置 {#1-pytest配置}
+#### 1. pytest Configuration {#1-pytest-configuration}
 
 **conftest.py**:
 ```python
@@ -888,7 +824,7 @@ def mock_model(sample_config, device):
     return model
 ```
 
-#### 2. 测试工具函数 {#2-测试工具函数}
+#### 2. Testing Utility Functions {#2-testing-utility-functions}
 ```python
 # tests/utils.py
 import torch
@@ -978,7 +914,7 @@ class ModelTestHelper:
             assert tensor.device == self.device, f"{key} not on correct device"
 ```
 
-#### 3. 性能测试 {#3-性能测试}
+#### 3. Performance Testing {#3-performance-testing}
 ```python
 # tests/test_performance.py
 import time
@@ -1078,25 +1014,25 @@ class TestPerformance:
         assert output.shape == expected_shape
 ```
 
-### 📊 测试覆盖率 {#测试覆盖率}
+### 📊 Test Coverage {#test-coverage}
 ```bash
-# Run tests and generate coverage report {#run-tests-and-generate-coverage-report}
+# Run tests and generate coverage report
 pytest --cov=vivtransformer --cov-report=html tests/
 
-# View coverage report {#view-coverage-report}
+# View coverage report
 open htmlcov/index.html
 
-# Set coverage threshold {#set-coverage-threshold}
+# Set coverage threshold
 pytest --cov=vivtransformer --cov-fail-under=80 tests/
 ```
 
-## 性能优化 {#性能优化}
+## Performance Optimization {#performance-optimization}
 
-### ⚡ 性能分析工具 {#性能分析工具}
+### ⚡ Performance Analysis Tools {#performance-analysis-tools}
 
-#### 1. 代码性能分析 {#1-代码性能分析}
+#### 1. Code Performance Analysis {#1-code-performance-analysis}
 ```python
-# Using line_profiler {#using-line-profiler}
+# Using line_profiler
 @profile
 def compute_attention(query, key, value, mask=None):
     """Attention computation function"""
@@ -1116,13 +1052,13 @@ def compute_attention(query, key, value, mask=None):
     
     return output, attention_weights
 
-# Run analysis {#run-analysis}
+# Run analysis
 kernprof -l -v script_with_attention.py
 ```
 
 #### 2. Memory Analysis {#2-memory-analysis}
 ```python
-# Using memory_profiler {#using-memory-profiler}
+# Using memory_profiler
 from memory_profiler import profile
 
 @profile
@@ -1142,7 +1078,7 @@ def training_step(model, data_loader, optimizer):
         if batch_idx % 100 == 0:
             print(f'Batch {batch_idx}, Loss: {loss.item():.6f}')
 
-# Run analysis {#run-analysis}
+# Run analysis
 python -m memory_profiler training_script.py
 ```
 
@@ -1178,12 +1114,12 @@ def profile_model(model, input_data):
     # Export trace for visualization
     prof.export_chrome_trace("trace.json")
 
-# Usage example {#usage-example}
+# Usage example
 model = VIVTransformer(config)
 input_data = torch.randn(4, 128, 256)
 profile_model(model, input_data)
 
-# View results in TensorBoard {#view-results-in-tensorboard}
+# View results in TensorBoard
 # tensorboard --logdir=./log
 ```
 
@@ -1191,7 +1127,7 @@ profile_model(model, input_data)
 
 #### 1. Computational Optimization {#1-computational-optimization}
 ```python
-# Use torch.jit.script optimization {#use-torch-jit-script-optimization}
+# Use torch.jit.script optimization
 @torch.jit.script
 def optimized_attention(query, key, value):
     """Optimized attention computation"""
@@ -1207,7 +1143,7 @@ def optimized_attention(query, key, value):
     
     return output
 
-# Use mixed precision training {#use-mixed-precision-training}
+# Use mixed precision training
 from torch.cuda.amp import autocast, GradScaler
 
 scaler = GradScaler()
@@ -1227,7 +1163,7 @@ for epoch in range(num_epochs):
 
 #### 2. Memory Optimization {#2-memory-optimization}
 ```python
-# Gradient checkpointing {#gradient-checkpointing}
+# Gradient checkpointing
 import torch.utils.checkpoint as checkpoint
 
 class MemoryEfficientTransformerLayer(nn.Module):
@@ -1242,7 +1178,7 @@ class MemoryEfficientTransformerLayer(nn.Module):
         x = checkpoint.checkpoint(self.ffn, x)
         return x
 
-# Dynamic batch size {#dynamic-batch-size}
+# Dynamic batch size
 class DynamicBatchSampler:
     def __init__(self, dataset, max_tokens=4096):
         self.dataset = dataset
@@ -1265,25 +1201,11 @@ class DynamicBatchSampler:
         
         if batch:
             yield batch
-```
-
----
-
-**💡 Development Tips**:
-1. Always write tests before implementing code
-2. Keep code simple and readable
-3. Conduct regular code reviews
-4. Use type annotations to improve code quality
-5. Focus on performance but don't optimize prematurely
-6. Update documentation and comments timely
-
-**🔧 Recommended Tools**:
-
 - IDE: VS Code, PyCharm
-- 调试: pdb, ipdb
-- 性能分析: line_profiler, py-spy
-- 可视化: TensorBoard, Weights & Biases
-- 协作: GitHub, GitLab
+- Debugging: pdb, ipdb
+- Profiling: line_profiler, py-spy
+- Visualization: TensorBoard, Weights & Biases
+- Collaboration: GitHub, GitLab
 
 ---
 

@@ -406,7 +406,7 @@
       
       if (toggleBtn) {
         toggleBtn.textContent = isDark ? '☀️' : '🌙';
-        toggleBtn.setAttribute('aria-label', isDark ? '切换到浅色' : '切换到深色');
+        toggleBtn.setAttribute('aria-label', isDark ? 'Switch to light' : 'Switch to dark');
         toggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
       }
       
@@ -433,8 +433,8 @@
     // 创建主题切换按钮
     toggleBtn = document.createElement('button');
     toggleBtn.className = 'theme-toggle';
-    toggleBtn.title = '切换主题 (T)';
-    toggleBtn.setAttribute('aria-label', '切换主题');
+    toggleBtn.title = 'Toggle theme (T)';
+    toggleBtn.setAttribute('aria-label', 'Toggle theme');
     toggleBtn.setAttribute('role', 'switch');
     toggleBtn.setAttribute('aria-pressed', document.body.classList.contains('manual-dark-mode') ? 'true' : 'false');
     toggleBtn.setAttribute('tabindex', '0');
@@ -442,7 +442,7 @@
     // 屏幕阅读器文本
     const srText = document.createElement('span');
     srText.style.cssText = 'position:absolute;left:-9999px;';
-    srText.textContent = '切换主题';
+    srText.textContent = 'Toggle theme';
     toggleBtn.appendChild(srText);
 
     const toggleTheme = () => {
@@ -450,7 +450,7 @@
       const next = dark ? 'light' : 'dark';
       localStorage.setItem('manual-theme', next);
       applyTheme(next);
-      showToast(next === 'dark' ? '已切换到深色模式' : '已切换到浅色模式');
+      showToast(next === 'dark' ? 'Switched to dark mode' : 'Switched to light mode');
       toggleBtn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
     };
 
@@ -507,7 +507,7 @@
         const next = dark ? 'light' : 'dark';
         localStorage.setItem('manual-theme', next);
         applyTheme(next);
-        showToast(next === 'dark' ? '已切换到深色模式' : '已切换到浅色模式');
+        showToast(next === 'dark' ? 'Switched to dark mode' : 'Switched to light mode');
       }
     });
 

@@ -7,6 +7,7 @@ from utils.svd10_loss import TotalLossWithSVD
 from training.trainer import train_model, test_model
 from utils.visualization import plot_losses
 
+
 def run_experiment(cfg, loss_cfg, loss_config_id, attn_type, parent_dir, train_loader, valid_loader, test_loader, device, logger, debug=False):
     """Run a single experiment with a given configuration."""
     logger.info(
@@ -20,11 +21,16 @@ def run_experiment(cfg, loss_cfg, loss_config_id, attn_type, parent_dir, train_l
 
         model = create_model(cfg, attn_type, device)
 
-        criterion = TotalLossWithSVD(
-            base_weight=loss_cfg.get("base_weight", 0.5),
-            svd_weights=loss_cfg.get("svd_weights", None),
-            topk=loss_cfg.get("topk", 10)
-        )
+        # Determine whether to enable SVD-based loss from config
+        use_svd_loss = cfg.get("loss", {}).get("svd_enabled", True)
+        if not use_svd_loss:
+            criterion = torch.nn.MSELoss()
+        else:
+            criterion = TotalLossWithSVD(
+                base_weight=loss_cfg.get("base_weight", 0.5),
+                svd_weights=loss_cfg.get("svd_weights", None),
+                topk=loss_cfg.get("topk", 10)
+            )
 
         optimizer = torch.optim.Adam(
             model.parameters(), lr=cfg["training"]["learning_rate"]

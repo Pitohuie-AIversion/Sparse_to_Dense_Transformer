@@ -278,8 +278,6 @@ attention_test_results.txt
 
 # Attention results directory
 attention_results/
-# Attention results generated from configs
-attention_results_from_config/
 
 # Training logs
 train.log

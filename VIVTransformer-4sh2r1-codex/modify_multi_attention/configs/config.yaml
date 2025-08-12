@@ -2,16 +2,20 @@
 global:
   seed: 42
   deterministic: true
-  device: cuda:0
+  device: cuda:0  # 切回 CUDA
   max_memory_fraction: 0.8
-  use_dataparallel: true
+  use_dataparallel: true  # 如有多卡自动启用
 
 # Data settings
 data:
   path: X:/2025/Graduation_project/simulation_results/merged_all_pressures_separated_normalized.pt
-  batch_size: 16
+  batch_size: 16  # 恢复较大的 batch 以利用 GPU
   use_augmentation: true
   crop_size: [128, 128]
+  normalize: true
+  num_workers: 4
+  pin_memory: true
+  use_pdebench: false
 
 # Reynolds 4D dataset configuration
 reynolds_data:
@@ -21,6 +25,22 @@ reynolds_data:
   input_size: 20
   output_size: 200
   sequence_length: 5
+
+# PDEBench dataset configuration (if enabled)
+pdebench:
+  data_root: ./data/pdebench
+  pde_configs:
+    ns_incom:
+      data_file: ns_incom_test.h5
+      sequence_length: 49
+      spatial_resolution: [128, 128]
+    wave:
+      data_file: wave_test.h5
+      sequence_length: 49
+      spatial_resolution: [128, 128]
+
+# Current PDE type (when using PDEBench)
+current_pde: ns_incom
 
 # Model settings
 model:
@@ -38,19 +58,32 @@ model:
 
 # Training settings
 training:
-  epochs: 10
+  epochs: 100
   learning_rate: 0.0001
-  early_stop_patience: 10
+  early_stop_patience: 500
+
+# Loss settings
+loss:
+  svd_enabled: false
+  base_weight: 1.0
+  svd_weights: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  topk: 10
+
+# Loss configurations for multiple loss configurations (optional fallback)
+loss_configs:
+  - base_weight: 1.0
+    svd_weights: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    topk: 10
 
 # Visualization settings
 visualization:
   enabled: true
-  interval: 100
+  interval: 10
   max_samples: 5
 
 # Hardware monitoring settings
 hardware_monitoring:
-  enable_gpu_monitoring: true
+  enable_gpu_monitoring: true  # 开启 GPU 监控
   log_batch_metrics: true
   batch_log_interval: 50
   save_detailed_metrics: true
@@ -59,29 +92,27 @@ hardware_monitoring:
 
 # Attention mechanisms to test
 attention_test:
-  types: 
+  types:
     - self
-    - simplified_self
-    - muse
-    - ufo
-    - relative
-    - sparse
-    - lsh
-    - se
-    - sk
-    - cbam
-    - bam
-    - eca
-    - shuffle
-    - residual
-    - psa
-    - cot
-    - polarized
-    - halo
-    - a2
-    - parnet
-    - external
-    - aft
+    # 其他候选注意力机制见注释
+    # - relative
+    # - sparse
+    # - lsh
+    # - se
+    # - sk
+    # - cbam
+    # - bam
+    # - eca
+    # - shuffle
+    # - residual
+    # - psa
+    # - cot
+    # - polarized
+    # - halo
+    # - a2
+    # - parnet
+    # - external
+    # - aft
     
     # Incompatible mechanisms removed:
     # - emsa (missing required parameters)

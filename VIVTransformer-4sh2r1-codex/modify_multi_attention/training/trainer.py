@@ -60,7 +60,9 @@ def _train_epoch(
         
         if (i + 1) % 50 == 0 or i == 0:
             logger.info(
-                f"    🔄 Epoch [{epoch + 1}], Batch [{i + 1}/{len(loader)}], Loss: {loss.item():.6f}"
+                "    🔄 Epoch [%d], Batch [%d/%d], Loss: %.6f" % (
+                    epoch + 1, i + 1, len(loader), loss.item()
+                )
             )
     return total_loss / len(loader)
 
@@ -230,14 +232,14 @@ def train_model(
     loss_log_dir = result_dir / "loss_logs"
     loss_log_dir.mkdir(exist_ok=True)
     loss_log_path = loss_log_dir / "loss_log.txt"
-    checkpoint_path = result_dir / f"checkpoint_{attention_type}.pth"
+    checkpoint_path = result_dir / "checkpoint_{}.pth".format(attention_type)
 
-    logger.info(f"写入loss_log.txt到：{loss_log_path}")
+    logger.info("写入loss_log.txt到：{}".format(loss_log_path))
 
     # ========== 恢复断点 ==========
     start_epoch = 0
     if os.path.exists(checkpoint_path):
-        logger.info(f"检测到断点文件，自动恢复：{checkpoint_path}")
+        logger.info("检测到断点文件，自动恢复：{}".format(checkpoint_path))
         checkpoint = torch.load(checkpoint_path, map_location=device)
         model.load_state_dict(checkpoint["model_state_dict"])
         optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
@@ -247,7 +249,7 @@ def train_model(
         best_valid_loss = checkpoint.get("best_valid_loss", float("inf"))
         patience_counter = checkpoint.get("patience_counter", 0)
         start_epoch = checkpoint.get("epoch", 0) + 1
-        logger.info(f"已恢复到 epoch {start_epoch}，best_valid_loss={best_valid_loss}")
+        logger.info("已恢复到 epoch {}，best_valid_loss={}".format(start_epoch, best_valid_loss))
     else:
         with open(loss_log_path, "w") as log_file:
             log_file.write("Epoch, Train Loss, Valid Loss, Test Loss\n")
@@ -277,12 +279,16 @@ def train_model(
         hardware_monitor.end_epoch(epoch + 1, avg_train_loss, avg_valid_loss, avg_test_loss)
 
         logger.info(
-            f"🎯 Epoch [{epoch + 1}/{num_epochs}], Train Loss: {avg_train_loss:.6f}, Valid Loss: {avg_valid_loss:.6f}, Test Loss: {avg_test_loss:.6f}"
+            "🎯 Epoch [{}/{}], Train Loss: {:.6f}, Valid Loss: {:.6f}, Test Loss: {:.6f}".format(
+                epoch + 1, num_epochs, avg_train_loss, avg_valid_loss, avg_test_loss
+            )
         )
 
         with open(loss_log_path, "a") as log_file:
             log_file.write(
-                f"{epoch + 1}, {avg_train_loss:.6f}, {avg_valid_loss:.6f}, {avg_test_loss:.6f}\n"
+                "{}, {:.6f}, {:.6f}, {:.6f}\n".format(
+                    epoch + 1, avg_train_loss, avg_valid_loss, avg_test_loss
+                )
             )
 
         _save_checkpoint(
@@ -301,7 +307,7 @@ def train_model(
             logger.info("✅ 模型已保存 (Best Model Updated)")
         else:
             patience_counter += 1
-            logger.warning(f"⚠️ 早停计数: {patience_counter}/{early_stop_patience}")
+            logger.warning("⚠️ 早停计数: {}/{}".format(patience_counter, early_stop_patience))
 
         if patience_counter >= early_stop_patience:
             logger.info("⏹️ 触发 Early Stopping!")
@@ -315,7 +321,7 @@ def train_model(
         if (epoch + 1) % vis_interval == 0:
             plot_dir = save_dir / "loss_plots"
             plot_dir.mkdir(exist_ok=True)
-            loss_fig_path = plot_dir / f"loss_curve_epoch_{epoch + 1}.png"
+            loss_fig_path = plot_dir / "loss_curve_epoch_{}.png".format(epoch + 1)
             plot_losses(
                 train_loss_history,
                 valid_loss_history,

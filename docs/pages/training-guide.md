@@ -502,6 +502,64 @@ class SystemMonitor:
         return {'gpu_memory': 0, 'gpu_load': 0}
 ```
 
+### 🧰 Integrated Training Monitoring Utilities {#integrated-training-monitoring}
+
+Leverage built-in utilities to monitor hardware, record enhanced logs, and generate visual reports.
+
+```python
+# Integrated monitoring with project utilities
+from utils.hardware_monitor import HardwareMonitor
+from utils.enhanced_logger import EnhancedTrainingLogger
+from utils.training_visualizer import TrainingVisualizer
+
+# Initialize monitors
+hardware_monitor = HardwareMonitor(
+    log_dir="./logs/hardware",
+    enable_gpu_monitoring=True,
+    enable_cpu_monitoring=True,
+)
+
+logger = EnhancedTrainingLogger(log_dir="./logs/training")
+visualizer = TrainingVisualizer(log_dir="./logs/hardware")
+
+# Start training session
+hardware_monitor.start_training()
+
+for epoch in range(num_epochs):
+    hardware_monitor.start_epoch(epoch + 1)
+
+    for batch_idx, (inputs, targets) in enumerate(train_loader):
+        hardware_monitor.start_batch(batch_idx + 1)
+
+        outputs = model(inputs)
+        loss = criterion(outputs, targets)
+        loss.backward()
+        optimizer.step()
+        optimizer.zero_grad()
+
+        # Log detailed batch metrics
+        logger.log_batch_metrics({
+            'loss/train': loss.item(),
+            'lr': optimizer.param_groups[0]['lr'],
+        }, step=global_step)
+
+        hardware_monitor.end_batch()
+
+    # Epoch end
+    epoch_summary = hardware_monitor.end_epoch()
+    logger.log_epoch_summary(epoch_summary)
+
+# Finish training
+hardware_monitor.end_training()
+
+# Generate complete visual report
+visualizer.generate_complete_report()
+```
+
+Tip: You can run the demonstration script directly: `python examples/training_with_monitoring.py`.
+
+See also: [PDEBench Integration]({{ site.baseurl }}/pages/pdebench-integration/) for end-to-end experiments with monitoring enabled.
+
 ## Troubleshooting {#troubleshooting}
 
 ### 🚨 Common Issues {#common-issues}

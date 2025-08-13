@@ -5,6 +5,7 @@ parent: Core Documentation
 nav_order: 1
 permalink: /pages/architecture-overview/
 description: "VIVTransformer overall architecture design and core components"
+---
 
 # Project Architecture Overview {#project-architecture-overview}
 

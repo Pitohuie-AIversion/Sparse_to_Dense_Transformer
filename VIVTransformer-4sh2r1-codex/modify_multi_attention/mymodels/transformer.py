@@ -56,7 +56,7 @@ from fightingcv_attention.attention.MOATransformer import MOATransformer
 from fightingcv_attention.attention.CrissCrossAttention import CrissCrossAttention
 from fightingcv_attention.attention.Axial_attention import AxialImageTransformer
 
-from ..utils.model_utils import clones
+from utils.model_utils import clones
 from .embedding import EmbeddingAndEncoding
 from .embedding_2d import EmbeddingAndEncoding2D
 

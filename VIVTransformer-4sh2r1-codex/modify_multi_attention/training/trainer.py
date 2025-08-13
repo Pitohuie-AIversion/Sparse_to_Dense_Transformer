@@ -10,14 +10,14 @@ from torch.optim import Optimizer
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-from ..utils.visualization import (
+from utils.visualization import (
     plot_attention_maps,  # 导入新的可视化函数
     plot_comparison_figure,
     plot_difference_figure,
     plot_losses,
 )
-from ..utils.hardware_monitor import HardwareMonitor
-from ..utils.training_visualizer import TrainingVisualizer
+from utils.hardware_monitor import HardwareMonitor
+from utils.training_visualizer import TrainingVisualizer
 
 
 def _train_epoch(

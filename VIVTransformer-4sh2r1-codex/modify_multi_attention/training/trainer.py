@@ -1,5 +1,6 @@
 import logging
 import os
+from contextlib import nullcontext
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -9,49 +10,65 @@ from torch.optim import Optimizer
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-from utils.visualization import (
+from ..utils.visualization import (
     plot_attention_maps,  # 导入新的可视化函数
     plot_comparison_figure,
     plot_difference_figure,
     plot_losses,
 )
-from utils.hardware_monitor import HardwareMonitor
-from utils.training_visualizer import TrainingVisualizer
+from ..utils.hardware_monitor import HardwareMonitor
+from ..utils.training_visualizer import TrainingVisualizer
 
 
 def _train_epoch(
-    model, loader, criterion, optimizer, device, debug, epoch, attention_type, result_dir, hardware_monitor=None
+    model, loader, criterion, optimizer, device, debug, epoch, attention_type, result_dir, hardware_monitor=None, max_batches=None, use_amp: bool = False, scaler: Optional[torch.cuda.amp.GradScaler] = None
 ):
     model.train()
     total_loss = 0
     logger = logging.getLogger(__name__)
-    for i, (in_press, out_pressure, time_steps) in enumerate(loader):
+    autocast_ctx = (lambda: torch.amp.autocast('cuda')) if use_amp else nullcontext
+    
+    for i, batch in enumerate(loader):
+        if batch is None:
+            continue
+        in_press, out_pressure, time_steps = batch
+        # Early exit if max_batches limit reached
+        if max_batches is not None and i >= max_batches:
+            break
+            
         # 开始batch监控
         if hardware_monitor:
             hardware_monitor.start_batch(epoch, i)
         
         in_press, out_pressure, time_steps = (
-            in_press.to(device),
-            out_pressure.to(device),
-            time_steps.to(device),
+            in_press.to(device, non_blocking=True),
+            out_pressure.to(device, non_blocking=True),
+            time_steps.to(device, non_blocking=True),
         )
-        optimizer.zero_grad()
-        if debug:
-            model_out, attention_weights = model(
-                in_press, time_steps, return_attention=True
-            )
-            if i == 0:
-                plot_attention_maps(
-                    attention_weights,
-                    epoch=epoch,
-                    attention_type=attention_type,
-                    parent_dir=result_dir,
+        optimizer.zero_grad(set_to_none=True)
+        with autocast_ctx():
+            if debug:
+                model_out, attention_weights = model(
+                    in_press, time_steps, return_attention=True
                 )
+                if i == 0:
+                    plot_attention_maps(
+                        attention_weights,
+                        epoch=epoch,
+                        attention_type=attention_type,
+                        parent_dir=result_dir,
+                    )
+            else:
+                model_out = model(in_press, time_steps)
+            loss = criterion(model_out, out_pressure)
+        
+        if use_amp and scaler is not None:
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
         else:
-            model_out = model(in_press, time_steps)
-        loss = criterion(model_out, out_pressure)
-        loss.backward()
-        optimizer.step()
+            loss.backward()
+            optimizer.step()
         total_loss += loss.item()
         
         # 结束batch监控
@@ -64,34 +81,49 @@ def _train_epoch(
                     epoch + 1, i + 1, len(loader), loss.item()
                 )
             )
-    return total_loss / len(loader)
+    
+    # Adjust total_loss calculation for early exit
+    batch_count = min(i + 1, max_batches if max_batches else len(loader))
+    return total_loss / batch_count
 
-def _evaluate_model(model, loader, criterion, device, debug, epoch, attention_type, save_dir):
+def _evaluate_model(model, loader, criterion, device, debug, epoch, attention_type, save_dir, max_batches=None, use_amp: bool = False):
     model.eval()
     total_loss = 0
+    autocast_ctx = (lambda: torch.amp.autocast('cuda')) if use_amp else nullcontext
     with torch.no_grad():
-        for i, (in_press, out_pressure, time_steps) in enumerate(loader):
+        for i, batch in enumerate(loader):
+            if batch is None:
+                continue
+            in_press, out_pressure, time_steps = batch
+            # Early exit if max_batches limit reached
+            if max_batches is not None and i >= max_batches:
+                break
+                
             in_press, out_pressure, time_steps = (
-                in_press.to(device),
-                out_pressure.to(device),
-                time_steps.to(device),
+                in_press.to(device, non_blocking=True),
+                out_pressure.to(device, non_blocking=True),
+                time_steps.to(device, non_blocking=True),
             )
-            if debug:
-                model_out, attention_weights = model(
-                    in_press, time_steps, return_attention=True
-                )
-                if i == 0 and (epoch + 1) % 100 == 0:
-                    plot_attention_maps(
-                        attention_weights,
-                        epoch=epoch + 1,
-                        attention_type=attention_type,
-                        parent_dir=save_dir,
+            with autocast_ctx():
+                if debug:
+                    model_out, attention_weights = model(
+                        in_press, time_steps, return_attention=True
                     )
-            else:
-                model_out = model(in_press, time_steps)
-            loss = criterion(model_out, out_pressure)
+                    if i == 0 and (epoch + 1) % 100 == 0:
+                        plot_attention_maps(
+                            attention_weights,
+                            epoch=epoch + 1,
+                            attention_type=attention_type,
+                            parent_dir=save_dir,
+                        )
+                else:
+                    model_out = model(in_press, time_steps)
+                loss = criterion(model_out, out_pressure)
             total_loss += loss.item()
-    return total_loss / len(loader)
+            
+    # Adjust total_loss calculation for early exit
+    batch_count = min(i + 1, max_batches if max_batches else len(loader))
+    return total_loss / batch_count
 
 def _save_checkpoint(epoch, model, optimizer, losses, best_loss, patience, path):
     train_loss, valid_loss, test_loss = losses
@@ -164,6 +196,7 @@ def train_model(
     cfg: Dict[str, Any],
     attention_type: str,
     debug: bool = False,
+    collector=None,  # 可选的研究数据收集器，轻量级集成
 ) -> Tuple[torch.nn.Module, List[float], List[float], List[float]]:
     """Trains a model, evaluates it, and saves checkpoints, with support for TensorBoard logging and debug visualization.
 
@@ -217,6 +250,16 @@ def train_model(
     vis_enabled = vis_config.get("enabled", False)
     vis_interval = vis_config.get("interval", 100)
     max_samples = vis_config.get("max_samples", 5)
+    
+    # Add max_batches parameter for fast mode
+    training_config = cfg.get("training", {})
+    max_batches_per_epoch = training_config.get("max_batches_per_epoch", None)
+    use_amp = bool(training_config.get("use_amp", False)) and str(device).startswith("cuda")
+    try:
+        scaler = torch.amp.GradScaler('cuda', enabled=use_amp)
+    except Exception:
+        # Fallback for environments where torch.amp.GradScaler signature/device arg is unsupported
+        scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
 
     model.to(device)
 
@@ -254,26 +297,54 @@ def train_model(
         with open(loss_log_path, "w") as log_file:
             log_file.write("Epoch, Train Loss, Valid Loss, Test Loss\n")
 
+    # 训练前轻量收集模型复杂度（基于配置控制）
+    try:
+        if collector is not None:
+            research_config = cfg.get("research_data_collection", {})
+            if research_config.get("collect_model_complexity", True):
+                sample_batch = next(iter(train_loader))
+                sample_input = sample_batch[0].to(device) if isinstance(sample_batch, (list, tuple)) else sample_batch.to(device)
+                # 仅使用数据形状，避免多余前向开销
+                collector.collect_model_complexity(model, sample_input, attention_type)
+    except Exception:
+        pass
+
     # ========== 主训练循环 ==========
     for epoch in range(start_epoch, num_epochs):
         # 开始epoch监控
         hardware_monitor.start_epoch(epoch + 1)
         
         avg_train_loss = _train_epoch(
-            model, train_loader, criterion, optimizer, device, debug, epoch, attention_type, result_dir, hardware_monitor
+            model, train_loader, criterion, optimizer, device, debug, epoch, attention_type, result_dir, hardware_monitor, max_batches_per_epoch, use_amp, scaler
         )
         train_loss_history.append(avg_train_loss)
         writer.add_scalar('Loss/train', avg_train_loss, epoch)
-
+        
         avg_valid_loss = _evaluate_model(
-            model, valid_loader, mse_loss, device, debug, epoch, attention_type, save_dir
+            model, valid_loader, mse_loss, device, debug, epoch, attention_type, save_dir, max_batches_per_epoch, use_amp
         )
         valid_loss_history.append(avg_valid_loss)
         writer.add_scalar('Loss/valid', avg_valid_loss, epoch)
 
-        avg_test_loss = _evaluate_model(model, test_loader, mse_loss, device, False, 0, '', '')
+        avg_test_loss = _evaluate_model(model, test_loader, mse_loss, device, False, 0, '', '', max_batches_per_epoch, use_amp)
         test_loss_history.append(avg_test_loss)
         writer.add_scalar('Loss/test', avg_test_loss, epoch)
+
+        # 记录训练指标（在评估完成后，避免频繁IO；基于配置控制频率）
+        try:
+            if collector is not None:
+                research_config = cfg.get("research_data_collection", {})
+                log_every_n = max(1, int(research_config.get("log_every_n_epochs", 1)))
+                if (epoch + 1) % log_every_n == 0 and research_config.get("collect_training_metrics", True):
+                    current_lr = None
+                    try:
+                        # 获取当前学习率
+                        current_lr = optimizer.param_groups[0].get('lr', None)
+                    except Exception:
+                        current_lr = None
+                    collector.log_training_metrics(epoch + 1, avg_train_loss, avg_valid_loss, avg_test_loss, current_lr)
+        except Exception:
+            pass
 
         # 结束epoch监控
         hardware_monitor.end_epoch(epoch + 1, avg_train_loss, avg_valid_loss, avg_test_loss)

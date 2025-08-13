@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+attention_results_100_epochs/          
 # C extensions
 *.so
 
@@ -254,7 +254,7 @@ training_logs/
 monitoring_logs/
 visualization_reports/
 prediction_visualizations/
-
+attention_results_100_epochs*/
 # Multiscale training results
 multiscale_training_results*/
 configurable_multiscale_results*/

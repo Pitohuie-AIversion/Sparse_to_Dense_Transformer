@@ -1,0 +1,224 @@
+# 服务器批量运行专用配置文件
+# 已针对生产环境进行优化：
+# - 增加训练轮数到 50，启用早停机制
+# - 设置相对路径，便于服务器部署
+# - 开启低内存模式和智能设备选择
+# - 启用完整的监控和数据收集功能
+
+# 全局设置
+global:
+  seed: 42                    # 随机种子，保证实验可复现
+  deterministic: false        # 服务器环境下关闭确定性模式以提升性能
+  device: cuda:0              # 训练设备：自动检测可用设备
+  max_memory_fraction: 0.85   # 服务器环境显存占用比例
+  use_dataparallel: true      # 多卡自动并行
+
+# 性能优化配置
+performance:
+  low_memory_mode: true       # 启用低内存模式，支持重量级注意力机制
+
+# 数据设置（使用相对路径，适配服务器环境）
+data:
+  path: ./data/merged_all_pressures_separated_normalized.pt  # 相对路径，需将数据文件放在项目根目录/data/下
+  batch_size: 8               # 服务器环境可适当增大批量
+  use_augmentation: false     # 生产训练建议关闭数据增强以确保结果稳定
+  crop_size: [128, 128]       
+  normalize: true             
+  num_workers: 8              # 服务器CPU核心数多，可增加工作线程
+  pin_memory: true            
+  use_pdebench: false         
+
+# 雷诺数数据集配置
+reynolds_data:
+  enabled: true               
+  path: ./data/merged_all_pressures_separated_normalized.pt  # 相对路径
+  use_time_sequence: false    
+  input_size: 20              
+  output_size: 200            
+  sequence_length: 5          
+
+# PDEBench 配置（预留）
+pdebench:
+  data_root: ./data/pdebench   
+  pde_configs:                 
+    ns_incom:                  
+      data_file: ns_incom_test.h5  
+      sequence_length: 49          
+      spatial_resolution: [128, 128]  
+    wave:                      
+      data_file: wave_test.h5
+      sequence_length: 49
+      spatial_resolution: [128, 128]
+
+current_pde: ns_incom
+
+# 模型设置
+model:
+  attention_type: relative    # 默认注意力类型，实际由命令行参数控制
+  d_model: 192                
+  num_heads: 4                
+  num_layers: 6               
+  input_dim: 1                
+  output_dim: 40000           
+  seq_len: 400                
+  max_time_steps: 100         
+  grid_height: 20             
+  grid_width: 20              
+  use_2d_embedding: true      
+
+# 训练设置（生产环境优化）
+training:
+  epochs: 50                  # 服务器环境增加训练轮数
+  learning_rate: 0.0001       
+  early_stop_patience: 10     # 增加早停耐心，避免过早停止
+  # max_batches_per_epoch 已移除，进行完整训练
+  use_amp: true               # 启用混合精度加速
+
+# 损失设置
+loss:
+  svd_enabled: false          
+  base_weight: 1.0            
+  svd_weights: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]  
+  topk: 10                    
+
+# 备选损失配置
+loss_configs:
+  - base_weight: 1.0
+    svd_weights: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    topk: 10
+
+# 可视化设置（服务器环境建议关闭以节省计算）
+visualization:
+  enabled: false              
+  interval: 100               
+  max_samples: 1              
+
+# 硬件监控（服务器环境全面启用）
+hardware_monitoring:
+  enable_gpu_monitoring: true   
+  log_batch_metrics: true       
+  batch_log_interval: 100       # 降低日志频率，减少IO开销
+  save_detailed_metrics: true   
+  monitor_temperature: true     
+  monitor_power_usage: true     
+
+# 研究数据收集（完整启用，支持论文撰写）
+research_data_collection:
+  enabled: true                 
+  experiment_name: null         # 自动生成实验名称
+  result_base_dir: ./results    # 使用相对路径
+  
+  # 数据收集范围
+  collect_system_info: true     
+  collect_model_complexity: true  
+  collect_dataset_info: true    
+  collect_training_metrics: true  
+  
+  # 性能优化
+  log_every_n_epochs: 5         # 降低记录频率，提升性能
+  buffered_writes: true         
+  lightweight_mode: false      
+  
+  # 收敛性分析
+  convergence_analysis:
+    enabled: true               
+    smoothing_window: 10        # 增大平滑窗口
+    detect_plateaus: true       
+    plateau_patience: 5         
+    generate_plots: true        
+  
+  # 模型复杂度分析
+  model_analysis:
+    compute_flops: true         
+    sample_batch_size: 4        
+    measure_memory: true        
+    profile_attention: true     
+  
+  # 数据集统计
+  dataset_analysis:
+    compute_statistics: true    
+    max_samples_for_stats: 2000 # 服务器环境可增加样本数
+    save_sample_visualization: false  
+  
+  # 系统信息收集
+  system_monitoring:
+    collect_env_variables: true 
+    collect_git_info: true      
+    collect_hardware_specs: true 
+    collect_library_versions: true 
+  
+  # 输出格式
+  output_formats:
+    save_json: true             
+    save_csv: true              
+    save_plots: true            
+    save_summary_report: true   
+  
+  # 多实验对比
+  comparison_analysis:
+    enabled: true               
+    auto_generate_comparison: true  
+    include_baseline: true      
+    comparison_metrics:         
+      - final_test_loss
+      - convergence_epochs
+      - training_time
+      - model_parameters
+      - memory_usage
+  
+  # 可复现性支持
+  reproducibility:
+    save_random_states: true    
+    save_model_checkpoints: true 
+    save_optimizer_states: true  
+    create_reproduction_script: true 
+
+# 注意力机制批量测试（生产级配置）
+attention_test:
+  types:
+    # 高优先级：稳定且性能优异的注意力机制
+    - self
+    - simplified_self
+    - relative
+    - cbam
+    - se
+    - eca
+    - residual
+    
+    # 中优先级：功能性注意力机制
+    - muse
+    - ufo
+    - sparse
+    - lsh
+    - shuffle
+    - sge
+    - coord
+    - external
+    - aft
+    
+    # 重量级注意力机制（已启用低内存模式和CPU回退）
+    - emsa
+    - crisscross
+    - psa
+    - danet
+    - mobilevit
+    - mobilevitv2
+    - dat
+    - crossformer
+    - moa
+    - axial
+    - gfnet
+    - s2
+    - triplet
+    - cot
+    - polarized
+    - outlook
+    - vip
+    - coatnet
+    - halo
+    - a2
+    - parnet
+    
+    # 特殊注意力机制
+    - sk
+    - bam

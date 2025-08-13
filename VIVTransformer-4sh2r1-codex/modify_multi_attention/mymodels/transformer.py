@@ -5,10 +5,10 @@ import torch.nn as nn
 import copy
 import math
 
-from mymodels.components.attention_adapter import (
+from .components.attention_adapter import (
     get_attention_adapter,
 )
-from mymodels.components.attention_factory import (
+from .components.attention_factory import (
     get_attention_module,
 )
 
@@ -56,14 +56,15 @@ from fightingcv_attention.attention.MOATransformer import MOATransformer
 from fightingcv_attention.attention.CrissCrossAttention import CrissCrossAttention
 from fightingcv_attention.attention.Axial_attention import AxialImageTransformer
 
-from utils.model_utils import clones
-from mymodels.embedding import EmbeddingAndEncoding
-from mymodels.embedding_2d import EmbeddingAndEncoding2D
+from ..utils.model_utils import clones
+from .embedding import EmbeddingAndEncoding
+from .embedding_2d import EmbeddingAndEncoding2D
 
-def _create_attention_layer(attention_type, d_model, num_heads):
+def _create_attention_layer(attention_type, d_model, num_heads, seq_len=49, low_memory=False):
     """Helper function to create an attention layer."""
+    spatial_dim = int(seq_len**0.5)
     module, adapter_type = get_attention_module(
-        attention_type, d_model=d_model, num_heads=num_heads
+        attention_type, d_model=d_model, num_heads=num_heads, spatial_dim=spatial_dim, low_memory=low_memory
     )
     return get_attention_adapter(module, adapter_type)
 
@@ -78,22 +79,14 @@ class CustomEncoderLayer(nn.Module):
         self,
         d_model: int,
         num_heads: int,
-        dim_feedforward: int = 2048,
+        dim_feedforward: int,
+        attention_type: str = "self",
         dropout: float = 0.1,
-        attention_type: str = "relative",
+        seq_len: int = 49,
+        low_memory: bool = False,
     ):
-        """Initializes the CustomEncoderLayer.
-
-        Args:
-            d_model: The number of expected features in the input.
-            num_heads: The number of heads in the multiheadattention models.
-            dim_feedforward: The dimension of the feedforward network model.
-            dropout: The dropout value.
-            attention_type: The type of attention mechanism to use.
-        """
         super().__init__()
-
-        self.self_attn = _create_attention_layer(attention_type, d_model, num_heads)
+        self.self_attn = _create_attention_layer(attention_type, d_model, num_heads, seq_len=seq_len, low_memory=low_memory)
 
         # 前馈网络
         self.linear1 = nn.Linear(d_model, dim_feedforward)
@@ -164,6 +157,8 @@ class CustomDecoderLayer(nn.Module):
         dim_feedforward: int = 2048,
         dropout: float = 0.1,
         attention_type: str = "relative",
+        seq_len: int = 49,
+        low_memory: bool = False,
     ):
         """Initializes the CustomDecoderLayer.
 
@@ -173,12 +168,17 @@ class CustomDecoderLayer(nn.Module):
             dim_feedforward: The dimension of the feedforward network model.
             dropout: The dropout value.
             attention_type: The type of attention mechanism to use.
+            
+            提示：dim_feedforward 与 dropout 当前在此处使用默认值（硬编码默认）。
+            如果需要可配置化，建议在 config.yaml 中新增：
+              model.dim_feedforward, model.dropout
+            然后在模型构造时传入。
         """
         super().__init__()
 
-        self.self_attn = _create_attention_layer(attention_type, d_model, num_heads)
+        self.self_attn = _create_attention_layer(attention_type, d_model, num_heads, seq_len=seq_len, low_memory=low_memory)
         self.multihead_attn = _create_attention_layer(
-            attention_type, d_model, num_heads
+            attention_type, d_model, num_heads, seq_len=seq_len, low_memory=low_memory
         )
 
         # 前馈网络
@@ -348,6 +348,10 @@ class TransformerFlowReconstructionModel(nn.Module):
         grid_height: int = 7,
         grid_width: int = 7,
         use_2d_embedding: bool = True,
+        low_memory: bool = False,
+        # 可选：以下两项目前在子层中默认（硬编码默认），如需开放配置，可透传
+        # dim_feedforward: int = 2048,
+        # dropout: float = 0.1,
     ):
         """Initializes the TransformerFlowReconstructionModel.
 
@@ -363,12 +367,17 @@ class TransformerFlowReconstructionModel(nn.Module):
             grid_height: The height of the 2D grid (for 2D spatial embedding).
             grid_width: The width of the 2D grid (for 2D spatial embedding).
             use_2d_embedding: Whether to use 2D spatial embedding or original embedding.
+            low_memory: Enable low-memory mode for heavy attention modules.
+            
+            提示：如需让 dim_feedforward 与 dropout 也可由配置控制，
+                 可将其加入 config.yaml 的 model 字段，并在下方 encoder_layer/decoder_layer 构造时传入。
         """
         super().__init__()
 
         self.attention_type = attention_type
         self.seq_len = seq_len
         self.use_2d_embedding = use_2d_embedding
+        self.low_memory = low_memory
         
         # 选择嵌入模块
         if use_2d_embedding:
@@ -393,14 +402,18 @@ class TransformerFlowReconstructionModel(nn.Module):
         encoder_layer = CustomEncoderLayer(
             d_model=d_model,
             num_heads=num_heads,
-            dim_feedforward=2048,
+            dim_feedforward=2048,  # 硬编码默认，如需可配置化请参考上方注释
             attention_type=self.attention_type,  # 使用实例变量
+            seq_len=seq_len,
+            low_memory=self.low_memory,
         )
         decoder_layer = CustomDecoderLayer(
             d_model=d_model,
             num_heads=num_heads,
-            dim_feedforward=2048,
+            dim_feedforward=2048,  # 硬编码默认，如需可配置化请参考上方注释
             attention_type=self.attention_type,  # 使用实例变量
+            seq_len=seq_len,
+            low_memory=self.low_memory,
         )
 
         self.encoder = CustomEncoder(encoder_layer, num_layers)

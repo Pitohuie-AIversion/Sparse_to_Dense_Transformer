@@ -26,7 +26,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import yaml
-from utils.loss import TotalLossWithSVD
+from utils.svd10_loss import TotalLossWithSVD
 from utils.visualization import plot_attention_maps, plot_gradient_flow
 
 # 添加项目路径
@@ -198,12 +198,21 @@ class ConfigurableMultiScaleTrainer:
             svd_weights = svd_config.get('svd_weights', [0.15, 0.12, 0.08, 0.05, 0.03])
             topk = len(svd_weights)
             
+            # 从模型配置读取grid参数
+            model_cfg = self.config.get('model', {})
+            grid_height = model_cfg.get('grid_height', None)
+            grid_width = model_cfg.get('grid_width', None)
+            svd_enabled = self.config.get('loss', {}).get('svd_enabled', True)
+            
             criterion = TotalLossWithSVD(
                 base_weight=base_weight,
                 svd_weights=svd_weights,
-                topk=topk
+                topk=topk,
+                grid_height=grid_height,
+                grid_width=grid_width,
+                svd_enabled=svd_enabled
             )
-            self.logger.info(f"使用TotalLossWithSVD损失函数: base_weight={base_weight}, svd_weights={svd_weights}")
+            self.logger.info(f"使用TotalLossWithSVD损失函数: base_weight={base_weight}, svd_weights={svd_weights}, grid=({grid_height},{grid_width}), svd_enabled={svd_enabled}")
         else:
             criterion = nn.MSELoss()
             self.logger.info("使用MSELoss损失函数")

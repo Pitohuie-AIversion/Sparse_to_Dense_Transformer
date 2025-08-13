@@ -20,11 +20,23 @@ def run_experiment(cfg, loss_cfg, loss_config_id, attn_type, parent_dir, train_l
 
         model = create_model(cfg, attn_type, device)
 
-        criterion = TotalLossWithSVD(
-            base_weight=loss_cfg.get("base_weight", 0.5),
-            svd_weights=loss_cfg.get("svd_weights", None),
-            topk=loss_cfg.get("topk", 10)
-        )
+        # Determine whether to enable SVD-based loss from config (default True)
+        use_svd_loss = cfg.get("loss", {}).get("svd_enabled", True)
+        if not use_svd_loss:
+            criterion = torch.nn.MSELoss()
+        else:
+            model_cfg = cfg.get("model", {})
+            grid_height = model_cfg.get("grid_height", None)
+            grid_width = model_cfg.get("grid_width", None)
+            
+            criterion = TotalLossWithSVD(
+                base_weight=loss_cfg.get("base_weight", 0.5),
+                svd_weights=loss_cfg.get("svd_weights", None),
+                topk=loss_cfg.get("topk", 10),
+                grid_height=grid_height,
+                grid_width=grid_width,
+                svd_enabled=use_svd_loss
+            )
 
         optimizer = torch.optim.Adam(
             model.parameters(), lr=cfg["training"]["learning_rate"]

@@ -74,3 +74,6 @@ coverage.xml
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Personal materials (ignore entire report folder)
+/report/

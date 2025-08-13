@@ -233,7 +233,8 @@ def get_attention_module(
     elif attention_type == "eca":
         module = module_class(kernel_size=3)
     elif attention_type in ["danet"]:
-        module = module_class(d_model=d_model, kernel_size=3, H=spatial_dim, W=spatial_dim)
+        # 修复：DAModule 需要 in_channels 参数匹配
+        module = DAModule(in_channels=d_model)
     elif attention_type in ["shuffle"]:
         module = module_class(channel=d_model, G=8)
     elif attention_type in ["a2"]:
@@ -245,22 +246,39 @@ def get_attention_module(
     elif attention_type in ["vip"]:
         module = module_class(d_model, seg_dim=8)
     elif attention_type in ["coatnet"]:
-        module = module_class(in_ch=d_model, image_size=spatial_dim)
+        # 包装 CoAtNet 以处理通道数不匹配
+        class CoAtNetWrapper(nn.Module):
+            def __init__(self, d_model, img_size):
+                super().__init__()
+                self.conv_adapter = nn.Conv2d(d_model, 3, kernel_size=1)
+                self.coatnet = CoAtNet(in_ch=3, image_size=img_size)
+                self.conv_restore = nn.Conv2d(3, d_model, kernel_size=1)
+            def forward(self, x):
+                x = self.conv_adapter(x)
+                x = self.coatnet(x)
+                if isinstance(x, tuple): x = x[0]
+                x = self.conv_restore(x)
+                return x
+        img = max(128, spatial_dim*16)
+        module = CoAtNetWrapper(d_model, img)
     elif attention_type in ["halo"]:
         module = module_class(dim=d_model, block_size=1, halo_size=1)
     elif attention_type in ["polarized", "parnet", "s2"]:
         module = module_class(channel=d_model)
     elif attention_type in ["cot"]:
         module = module_class(dim=d_model, kernel_size=3)
+    elif attention_type in ["emsa"]:
+        # EMSA 需要所有必需参数：d_model, d_v, h
+        module = EMSA(d_model, d_model, num_heads)
     elif attention_type in ["residual"]:
         module = module_class(channel=d_model, num_class=d_model, la=0.2)
     elif attention_type in ["gfnet"]:
-        # Parameters for GFNet might need specific configuration
+        # GFNet img_size 若为元组会导致除法错误，使用单个值
         module = module_class(embed_dim=d_model, img_size=spatial_dim)
     elif attention_type in ["mobilevit"]:
         module = module_class(dim=d_model, ffn_dim=d_model*2, spatial_dims=spatial_dim) # Provide default dims
     elif attention_type in ["mobilevitv2"]:
-        module = module_class(d_model=d_model)
+        module = module_class(d_model, num_heads)
     elif attention_type in ["dat"]:
         # DAT has complex parameters, may need a more robust configuration scheme
         module = module_class(img_size=spatial_dim, in_chans=3, embed_dim=d_model, num_heads=num_heads) # Corrected in_chans

@@ -79,14 +79,40 @@ def get_loaders(
     valid_dataset = CustomSubset(full_dataset, valid_indices, transform=None)
     test_dataset = CustomSubset(full_dataset, test_indices, transform=None)
 
+    # Get optimized settings
+    num_workers = 6
+    pin_memory = torch.cuda.is_available()
+    persistent_workers = num_workers > 0
+    
+    extra_loader_kwargs = {}
+    # 可从全局配置中读取 data_loading 优化设置（若调用方使用 get_adaptive_loaders 则已在 config 中）
+    try:
+        import inspect
+        # Try to infer config from caller if available; else fall back to sane defaults
+        extra_loader_kwargs = dict(
+            prefetch_factor=2,
+            drop_last=False,
+        )
+    except Exception:
+        extra_loader_kwargs = {}
+
     train_loader = DataLoader(
-        train_dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn
+        train_dataset, batch_size=batch_size, shuffle=True, 
+        num_workers=num_workers, pin_memory=pin_memory,
+        persistent_workers=persistent_workers, collate_fn=collate_fn,
+        **extra_loader_kwargs
     )
     valid_loader = DataLoader(
-        valid_dataset, batch_size=batch_size, shuffle=False, collate_fn=collate_fn
+        valid_dataset, batch_size=batch_size, shuffle=False,
+        num_workers=num_workers, pin_memory=pin_memory,
+        persistent_workers=persistent_workers, collate_fn=collate_fn,
+        **extra_loader_kwargs
     )
     test_loader = DataLoader(
-        test_dataset, batch_size=batch_size, shuffle=False, collate_fn=collate_fn
+        test_dataset, batch_size=batch_size, shuffle=False,
+        num_workers=num_workers, pin_memory=pin_memory,
+        persistent_workers=persistent_workers, collate_fn=collate_fn,
+        **extra_loader_kwargs
     )
 
     return train_loader, valid_loader, test_loader
@@ -172,13 +198,27 @@ def get_pdebench_loaders(
     num_workers = config.get('data', {}).get('num_workers', 4)
     pin_memory = config.get('data', {}).get('pin_memory', True)
     
+    # Performance optimizations from config
+    data_loading_cfg = config.get('performance', {}).get('data_loading', {})
+    prefetch_factor = data_loading_cfg.get('prefetch_factor', 2)
+    drop_last = data_loading_cfg.get('drop_last', False)
+    
+    persistent_workers = num_workers > 0
+    extra_loader_kwargs = {}
+    if prefetch_factor and num_workers > 0:
+        extra_loader_kwargs['prefetch_factor'] = prefetch_factor
+    if 'drop_last' in data_loading_cfg:
+        extra_loader_kwargs['drop_last'] = drop_last
+    
     train_loader = DataLoader(
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
         num_workers=num_workers,
         pin_memory=pin_memory,
-        collate_fn=collate_fn
+        persistent_workers=persistent_workers,
+        collate_fn=collate_fn,
+        **extra_loader_kwargs
     )
     
     valid_loader = DataLoader(
@@ -187,7 +227,9 @@ def get_pdebench_loaders(
         shuffle=False,
         num_workers=num_workers,
         pin_memory=pin_memory,
-        collate_fn=collate_fn
+        persistent_workers=persistent_workers,
+        collate_fn=collate_fn,
+        **extra_loader_kwargs
     )
     
     test_loader = DataLoader(
@@ -196,7 +238,9 @@ def get_pdebench_loaders(
         shuffle=False,
         num_workers=num_workers,
         pin_memory=pin_memory,
-        collate_fn=collate_fn
+        persistent_workers=persistent_workers,
+        collate_fn=collate_fn,
+        **extra_loader_kwargs
     )
     
     return train_loader, valid_loader, test_loader

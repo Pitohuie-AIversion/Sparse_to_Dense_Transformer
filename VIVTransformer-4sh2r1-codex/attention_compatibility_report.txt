@@ -33,7 +33,7 @@ Compatible mechanisms (39):
   danet: cnn_compatible
   cot: cnn_compatible
   polarized: cnn_compatible
-  outlook: cnn_compatible
+  outlook: sequence_compatible
   vip: sequence_compatible
   coatnet: cnn_compatible
   halo: cnn_compatible

@@ -1,0 +1,67 @@
+# 最简推荐配置示例
+# 适用于：第一次运行、快速实验或性能敏感场景
+
+# 研究数据收集配置 - 最简推荐设置
+research_data_collection:
+  # === 总开关 ===
+  enabled: true                     # 是否启用研究数据收集
+  experiment_name: null             # 自动生成时间戳名称
+  
+  # === 输出控制 ===
+  result_directory: "attention_results"
+  lightweight_mode: true            # 启用轻量级模式（跳过复杂计算）
+  buffered_writes: true             # 缓冲写入（减少I/O频率）
+  
+  # === 数据收集范围（最小集） ===
+  collect_system_info: true         # 收集系统信息（一次性）
+  collect_model_complexity: false   # 跳过模型复杂度（节省时间）
+  collect_dataset_info: true        # 收集数据集基本信息
+  collect_training_metrics: true    # 收集训练指标
+  
+  # === 性能优化控制 ===
+  log_every_n_epochs: 5             # 每5个epoch记录一次（降低开销）
+  
+  # === 分析功能（最简） ===
+  convergence_analysis:
+    enabled: true
+    generate_plots: false           # 不生成图表（节省时间）
+    
+  model_analysis:
+    enabled: false                  # 跳过模型分析
+    compute_flops: false
+    
+  dataset_statistics:
+    enabled: false                  # 跳过数据集详细统计
+    
+  system_monitoring:
+    enabled: false                  # 跳过系统监控
+    
+  # === 输出格式（最简） ===
+  output_formats: ["json"]          # 仅JSON格式
+  
+  # === 多实验对比（关闭） ===
+  multi_experiment_comparison:
+    enabled: false
+    
+  # === 可复现性支持（基础） ===
+  reproducibility:
+    save_random_seeds: true
+    save_model_checkpoints: false   # 不自动保存检查点
+    save_optimizer_state: false     # 不保存优化器状态
+
+# 训练配置（保持原有设置）
+training:
+  epochs: 100
+  learning_rate: 0.001
+  early_stop_patience: 10
+  batch_size: 32
+
+# 模型配置（保持原有设置）
+model:
+  embed_dim: 64
+  num_heads: 8
+  num_layers: 4
+
+# 可视化配置（最简）
+visualization:
+  enabled: false                    # 关闭可视化（节省时间）

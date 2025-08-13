@@ -2,13 +2,10 @@
 
 from __future__ import annotations
 
+import yaml
 from pathlib import Path
 from typing import Any, Union
-
 import os
-
-import yaml
-
 
 _REQUIRED_KEYS: dict[str, Any] = {
     "global": ["device"],

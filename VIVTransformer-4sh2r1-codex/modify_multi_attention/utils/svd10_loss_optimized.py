@@ -73,11 +73,6 @@ def get_svd_modes_with_config_reshape(tensor, topk=10, grid_height=None, grid_wi
     return get_svd_modes_batched(tensor, topk)
 
 
-def get_svd_modes(tensor, topk=10):
-    """向后兼容的接口"""
-    return get_svd_modes_with_config_reshape(tensor, topk)
-
-
 def svd_topk_losses_optimized(pred, target, topk=10, grid_height=None, grid_width=None):
     """优化版本的 SVD top-k 损失计算"""
     pred_modes = get_svd_modes_with_config_reshape(pred, topk, grid_height, grid_width)
@@ -91,12 +86,7 @@ def svd_topk_losses_optimized(pred, target, topk=10, grid_height=None, grid_widt
     return losses  # [L_svd1, L_svd2, ..., L_svd_topk]
 
 
-def svd_topk_losses(pred, target, topk=10):
-    """向后兼容的接口"""
-    return svd_topk_losses_optimized(pred, target, topk)
-
-
-class TotalLossWithSVD(nn.Module):
+class TotalLossWithSVDOptimized(nn.Module):
     """
     优化版本的 SVD 损失函数
     
@@ -212,3 +202,7 @@ class TotalLossWithSVD(nn.Module):
             'effective_rank_pred': (pred_svd[1] > 1e-6).sum(dim=-1).float().mean().item(),
             'effective_rank_target': (target_svd[1] > 1e-6).sum(dim=-1).float().mean().item(),
         }
+
+
+# 向后兼容的别名
+TotalLossWithSVD = TotalLossWithSVDOptimized

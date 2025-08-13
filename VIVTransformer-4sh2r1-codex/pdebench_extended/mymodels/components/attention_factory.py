@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 from mymodels.components.attention_adapter import AdapterType
 from mymodels.components.attention import (
@@ -41,14 +42,35 @@ from fightingcv_attention.attention.CoordAttention import CoordAtt
 from fightingcv_attention.attention.MobileViTAttention import MobileViTAttention
 from fightingcv_attention.attention.ParNetAttention import ParNetAttention
 from fightingcv_attention.attention.UFOAttention import UFOAttention
-
-# from fightingcv_attention.attention.ACmix import ACmix
 from fightingcv_attention.attention.MobileViTv2Attention import MobileViTv2Attention
 from fightingcv_attention.attention.DAT import DAT
 from fightingcv_attention.attention.Crossformer import CrossFormer
 from fightingcv_attention.attention.MOATransformer import MOATransformer
 from fightingcv_attention.attention.CrissCrossAttention import CrissCrossAttention
 from fightingcv_attention.attention.Axial_attention import AxialImageTransformer
+
+
+class SimpleResidualAttention(nn.Module):
+    """简化的残差注意力模块，确保输入输出形状一致"""
+    
+    def __init__(self, channel, **kwargs):
+        super().__init__()
+        self.channel = channel
+        # 简单的1x1卷积来实现残差连接
+        self.conv = nn.Conv2d(channel, channel, 1)
+        self.sigmoid = nn.Sigmoid()
+        
+    def forward(self, x):
+        # x shape: (batch_size, channel, height, width)
+        residual = x
+        
+        # 应用注意力权重
+        attention = self.sigmoid(self.conv(x))
+        
+        # 残差连接
+        out = residual * attention + residual
+        return out
+
 
 # 创建一个字典来映射 attention_type 到实际的注意力类
 ATTENTION_MODULES = {
@@ -79,7 +101,7 @@ ATTENTION_MODULES = {
     "shuffle": ShuffleAttention,
     "sge": SpatialGroupEnhance,
 
-    "residual": ResidualAttention,
+    "residual": SimpleResidualAttention,  # 使用我们的简化版本
     "s2": S2Attention,
     "triplet": TripletAttention,
     "coord": CoordAtt,
@@ -148,62 +170,16 @@ ADAPTER_MAPPING = {
 }
 
 
-OLD_ATTENTION_MODULES = {
-    "external": ExternalAttention,
-    "self": ScaledDotProductAttention,
-    "simplified_self": SimplifiedScaledDotProductAttention,
-    "se": SEAttention,
-    "sk": SKAttention,
-    "cbam": CBAMBlock,
-    "bam": BAMBlock,
-    "eca": ECAAttention,
-    "danet": DAModule,
-    "psa": PSA,
-    "emsa": EMSA,
-    "shuffle": ShuffleAttention,
-    "muse": MUSEAttention,
-    "sge": SpatialGroupEnhance,
-    "a2": DoubleAttention,
-    "aft": AFT_FULL,
-    "outlook": OutlookAttention,
-    "vip": WeightedPermuteMLP,
-    "coatnet": CoAtNet,
-    "halo": HaloAttention,
-    "polarized": SequentialPolarizedSelfAttention,
-    "cot": CoTAttention,
-    "residual": ResidualAttention,
-    "s2": S2Attention,
-    "gfnet": GFNet,
-    "triplet": TripletAttention,
-    "coord": CoordAtt,
-    "mobilevit": MobileViTAttention,
-    "parnet": ParNetAttention,
-    "ufo": UFOAttention,
-    # "acmix": ACmix,
-    "mobilevitv2": MobileViTv2Attention,
-    "dat": DAT,
-    "crossformer": CrossFormer,
-    "moa": MOATransformer,
-    "crisscross": CrissCrossAttention,
-    "axial": AxialImageTransformer,
-    "relative": RelativePositionSelfAttention,
-    "sparse": SparseSelfAttention,
-    "lsh": LSHSelfAttention,
-}
-
 def get_attention_module(
     attention_type, d_model=512, num_heads=8, spatial_dim=7, **kwargs
 ):
     """
     根据 attention_type 返回对应的注意力模块和适配器类型
     """
-    """
-    根据 attention_type 返回对应的注意力模块，适配不同注意力模块的参数
-    """
     if attention_type not in ATTENTION_MODULES:
         raise ValueError(f"Unknown attention type: {attention_type}")
 
-    adapter_type = ADAPTER_MAPPING.get(attention_type, "qkv")  # Default to QKV
+    adapter_type = ADAPTER_MAPPING.get(attention_type, AdapterType.QKV)  # Default to QKV
     module_class = ATTENTION_MODULES[attention_type]
     module = None
 
@@ -220,8 +196,18 @@ def get_attention_module(
         module = module_class(d_model=d_model, d_k=d_model, d_v=d_model, h=num_heads)
     elif attention_type == "simplified_self":
         module = module_class(d_model=d_model, h=num_heads)
-    elif attention_type in ["se", "sk", "cbam", "bam", "triplet", "coord", "psa"]:
+    elif attention_type in ["se", "sk", "cbam", "triplet", "coord"]:
         module = module_class(channel=d_model, reduction=8)
+    elif attention_type == "bam":
+        module = module_class(channel=d_model, reduction=8)
+        # 确保BAM模块在正确的设备上
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        module = module.to(device)
+    elif attention_type == "psa":
+        module = module_class(channel=d_model, reduction=8)
+        # 确保PSA模块在正确的设备上
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        module = module.to(device)
     elif attention_type == "sge":
         module = module_class(groups=8)
     elif attention_type == "eca":
@@ -247,7 +233,8 @@ def get_attention_module(
     elif attention_type in ["cot"]:
         module = module_class(dim=d_model, kernel_size=3)
     elif attention_type in ["residual"]:
-        module = module_class(channel=d_model, num_class=d_model, la=0.2)
+        # 使用我们的简化版本
+        module = SimpleResidualAttention(channel=d_model)
     elif attention_type in ["gfnet"]:
         # Parameters for GFNet might need specific configuration
         module = module_class(embed_dim=d_model, img_size=spatial_dim)

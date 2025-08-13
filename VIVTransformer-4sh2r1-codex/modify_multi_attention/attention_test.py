@@ -9,18 +9,25 @@ import matplotlib
 import torch
 
 from .utils.config import load_config
-from .utils.system import create_timestamped_dir
+from .utils.system import create_timestamped_dir, set_cuda_memory_limit, apply_performance_optimizations
 
-from modify_multi_attention_svd10_results.data.dataloader import get_loaders
-from modify_multi_attention_svd10_results.mymodels.transformer import (
+from .data.dataloader import get_adaptive_loaders
+from .mymodels.transformer import (
     TransformerFlowReconstructionModel,
 )
-from modify_multi_attention_svd10_results.training.trainer import train_model, test_model
-from modify_multi_attention_svd10_results.mymodels.components.attention_factory import ATTENTION_MODULES
-from modify_multi_attention_svd10_results.utils.visualization import plot_losses
+from .training.trainer import train_model, test_model
+from .mymodels.components.attention_factory import ATTENTION_MODULES
+from .utils.visualization import plot_losses
 
 matplotlib.use("Agg")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+# 减少 CUDA allocator 分片导致的 OOM 概率（需在首次使用 CUDA 前设置）
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+# 使用更好的GPU内存管理策略，启用内存池回收
+os.environ.setdefault("CUDA_LAUNCH_BLOCKING", "0")  # 改为0提高性能
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "max_split_size_mb:64,expandable_segments:True,roundup_power2_divisions:16")
+# 启用GPU内存缓存释放策略
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "garbage_collection_threshold:0.6,max_split_size_mb:64")
 
 
 def parse_arguments():
@@ -56,11 +63,26 @@ def setup_environment(args):
 
     device = torch.device(cfg["global"]["device"])
     print(f"🖥️ Using device: {device}")
+    
+    # 优化GPU内存管理
+    if device.type == "cuda":
+        # 设置内存池的最大分配比例
+        try:
+            torch.cuda.set_per_process_memory_fraction(0.85)  # 留15%给系统和其他进程
+            torch.cuda.empty_cache()
+            print(f"✓ 设置GPU内存分配比例为85%")
+        except Exception as e:
+            print(f"⚠️ GPU内存设置失败: {e}")
+    
+    # 新增：显式打印本次使用的配置文件与 epochs 设置
+    print(f"✅ Loaded config file: {args.config}")
+    print(f"🗓️ Training epochs: {cfg['training']['epochs']}, early_stop_patience: {cfg['training']['early_stop_patience']}")
 
     return cfg, parent_dir, device
 
 def create_model(cfg, attention_type, device):
     """创建并返回模型"""
+    low_memory = cfg.get("performance", {}).get("low_memory_mode", True)
     return TransformerFlowReconstructionModel(
         input_dim=cfg["model"]["input_dim"],
         output_dim=cfg["model"]["output_dim"],
@@ -68,7 +90,12 @@ def create_model(cfg, attention_type, device):
         num_layers=cfg["model"]["num_layers"],
         d_model=cfg["model"]["d_model"],
         max_time_steps=cfg["model"]["max_time_steps"],
-        attention_type=attention_type
+        attention_type=attention_type,
+        seq_len=cfg["model"].get("seq_len", 49),
+        grid_height=cfg["model"].get("grid_height", 7),
+        grid_width=cfg["model"].get("grid_width", 7),
+        use_2d_embedding=cfg["model"].get("use_2d_embedding", True),
+        low_memory=low_memory,
     ).to(device)
 
 def save_model(model, path):
@@ -91,6 +118,22 @@ def run_attention_trial(attn_type, cfg, loaders, device, parent_dir):
     train_loader, valid_loader, test_loader = loaders
     vis_enabled = cfg.get("visualization", {}).get("enabled", False)
 
+    # 对于特定的重量级attention，启用强制低内存模式和CPU回退
+    heavy_attentions = ["emsa", "crisscross", "psa", "danet"]
+    force_cpu_fallback = attn_type in heavy_attentions
+    
+    if force_cpu_fallback:
+        print(f"⚠️ {attn_type} 被识别为重量级模块，启用强制CPU回退模式")
+        # 临时降低显存限制至50%，强制更激进的内存管理
+        if torch.cuda.is_available():
+            try:
+                torch.cuda.set_per_process_memory_fraction(0.5)
+                torch.cuda.empty_cache()
+                print(f"✓ 临时降低显存限制至50%")
+            except Exception as e:
+                print(f"⚠️ 显存限制调整失败: {e}")
+
+    model = None
     try:
         model = create_model(cfg, attn_type, device)
         criterion = torch.nn.MSELoss()
@@ -100,6 +143,8 @@ def run_attention_trial(attn_type, cfg, loaders, device, parent_dir):
 
         result_dir = parent_dir / attn_type
         result_dir.mkdir(exist_ok=True)
+        # 新增：在进入训练前打印关键信息，便于核对 epoch 与输出目录
+        print(f"➡️ Start training {attn_type} for {cfg['training']['epochs']} epochs, result_dir: {result_dir}")
 
         trained_model, train_loss, valid_loss, test_loss = train_model(
             model, train_loader, valid_loader, test_loader, criterion, optimizer,
@@ -129,14 +174,71 @@ def run_attention_trial(attn_type, cfg, loaders, device, parent_dir):
         return True
 
     except Exception as e:
-        print(f"❌ {attn_type} 出现错误，跳过")
-        # if "optimizer got an empty parameter list" in str(e):
-        #     print("--- Model Structure ---")
-        #     print(model)
-        #     print("--- Model Parameters ---")
-        #     print(list(model.parameters()))
-        print(f"⚠️ 错误详情: {str(e)}")
-        return False
+        # 若显存不足，尝试自动降批量重试一次
+        if isinstance(e, torch.cuda.OutOfMemoryError) or ("out of memory" in str(e).lower() and "cuda" in str(e).lower()):
+            print(f"⚠️ {attn_type} 触发 CUDA OOM，尝试使用更小批量重试 (batch_size=1)...")
+            try:
+                # 释放当前模型与显存
+                try:
+                    if model is not None:
+                        del model
+                except Exception:
+                    pass
+                if torch.cuda.is_available():
+                    try:
+                        torch.cuda.empty_cache()
+                    except Exception:
+                        pass
+                
+                # 构造降批量配置与数据加载器
+                cfg_small = dict(cfg)
+                cfg_small_data = dict(cfg_small.get("data", {}))
+                cfg_small_data["batch_size"] = 1
+                cfg_small["data"] = cfg_small_data
+                small_loaders = get_adaptive_loaders(cfg_small, batch_size=1)
+                small_train_loader, small_valid_loader, small_test_loader = small_loaders
+                
+                # 重新构建模型并训练
+                model = create_model(cfg_small, attn_type, device)
+                criterion = torch.nn.MSELoss()
+                optimizer = torch.optim.Adam(model.parameters(), lr=cfg_small["training"]["learning_rate"])
+                result_dir = Path(parent_dir) / (str(attn_type) + "_retry_bs1")
+                result_dir.mkdir(exist_ok=True)
+                print(f"🔁 Retry {attn_type} with batch_size=1, result_dir: {result_dir}")
+                
+                trained_model, train_loss, valid_loss, test_loss = train_model(
+                    model, small_train_loader, small_valid_loader, small_test_loader, criterion, optimizer,
+                    cfg_small["training"]["epochs"], device, cfg_small["training"]["early_stop_patience"],
+                    result_dir=result_dir, cfg=cfg_small, attention_type=attn_type
+                )
+                
+                save_model(trained_model, result_dir / f"best_model_{attn_type}.pt")
+                final_test_loss = test_model(
+                    trained_model, small_test_loader, criterion, device,
+                    attention_type=attn_type, parent_dir=parent_dir, cfg=cfg_small
+                )
+                save_test_results(attn_type, final_test_loss, result_dir / f"test_result_{attn_type}.txt")
+                print(f"✅ {attn_type} 降批量重试成功！")
+                return True
+            except Exception as e2:
+                print(f"❌ {attn_type} 降批量重试仍失败：{e2}")
+                return False
+        else:
+            print(f"❌ {attn_type} 出现错误，跳过")
+            print(f"⚠️ 错误详情: {str(e)}")
+            return False
+    finally:
+        # 清理显存，避免不同 trial 之间的内存累积
+        try:
+            if model is not None:
+                del model
+        except Exception:
+            pass
+        if torch.cuda.is_available():
+            try:
+                torch.cuda.empty_cache()
+            except Exception:
+                pass
 
 def log_failed_attentions(failed_list, log_path):
     """记录失败的 attention 类型"""
@@ -177,8 +279,37 @@ def main():
     cfg, parent_dir, device = setup_environment(args)
     if not cfg:
         return
+    
+    # 在设备初始化之后立即应用显存和性能优化
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    # 应用显存限制
+    memory_fraction = cfg["global"].get("max_memory_fraction", 0.8)
+    if torch.cuda.is_available():
+        try:
+            set_cuda_memory_limit(memory_fraction)
+            logger.info(f"✓ CUDA 显存限制设为 {memory_fraction*100:.0f}%")
+        except Exception as e:
+            logger.warning(f"⚠️ 显存限制设置失败: {e}")
+    
+    # 应用性能优化（如 TF32、AMP 等）
+    try:
+        perf_config = cfg.get("performance", {})
+        if not perf_config:
+            # 如果配置中没有 performance 节，使用基础优化
+            perf_config = {
+                "hardware": {
+                    "enable_tf32": True,
+                    "enable_cudnn_benchmark": True
+                }
+            }
+        apply_performance_optimizations(perf_config, device)
+        logger.info("✓ 性能优化已应用")
+    except Exception as e:
+        logger.warning(f"⚠️ 性能优化应用失败: {e}")
 
-    loaders = get_loaders(cfg["data"]["path"], cfg["data"]["batch_size"])
+    loaders = get_adaptive_loaders(cfg, batch_size=cfg["data"]["batch_size"])
     
     parent_dir = Path(parent_dir)
     failed_attention_types = run_all_trials(cfg, loaders, device, parent_dir)

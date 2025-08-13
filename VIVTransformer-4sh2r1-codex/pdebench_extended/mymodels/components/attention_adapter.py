@@ -93,6 +93,14 @@ class CNNStyleAttentionAdapter(AttentionAdapter):
             .view(batch_size, d_model, spatial_dim, spatial_dim)
         )
         
+        # Ensure attention module is on the same device as input
+        try:
+            if next(self.attention.parameters(), None) is not None:
+                self.attention = self.attention.to(x_reshaped.device)
+        except Exception:
+            # Some modules may not have parameters; ignore
+            pass
+        
         try:
             output = self.attention(x_reshaped)
             if isinstance(output, tuple):

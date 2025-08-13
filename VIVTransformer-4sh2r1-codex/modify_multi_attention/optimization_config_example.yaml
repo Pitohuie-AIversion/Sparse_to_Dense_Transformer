@@ -1,0 +1,107 @@
+# 性能优化配置示例
+# 将此配置合并到你的 config.yaml 中以启用各种性能优化
+
+# 性能优化配置
+optimization:
+  # PyTorch 编译优化 (PyTorch 2.0+)
+  torch_compile: true              # 启用 torch.compile，可带来 20-30% 性能提升
+  compile_mode: "default"          # 编译模式: default, reduce-overhead, max-autotune
+  compile_fullgraph: false         # 是否强制完整图编译
+  
+  # 优化器配置
+  optimizer: "fused_adamw"         # 优化器类型: adam, fused_adamw, lion
+  weight_decay: 0.01               # AdamW 权重衰减
+  beta1: 0.9                       # Adam beta1 参数
+  beta2: 0.999                     # Adam beta2 参数
+  eps: 1e-8                        # Adam epsilon 参数
+  
+  # 硬件优化 (GPU)
+  enable_tf32: true                # 启用 TF32 (Ampere GPU: RTX 30/40 系列)
+  cudnn_benchmark: true            # 启用 cuDNN benchmark (固定输入尺寸时有效)
+  cudnn_deterministic: false       # 与 benchmark 互斥
+  
+  # 内存格式优化
+  channels_last: false             # 启用 channels_last 内存格式 (2D卷积密集时有效)
+  
+  # 注意力机制优化
+  use_sdpa: true                   # 使用 PyTorch SDPA (Flash Attention)
+  sdpa_backend: "auto"             # SDPA 后端: auto, flash_attention, memory_efficient, math
+  
+  # 梯度优化
+  gradient_clipping: true          # 启用梯度裁剪
+  max_grad_norm: 1.0               # 梯度裁剪的最大范数
+  
+  # JIT 优化
+  jit_script: false                # 启用 TorchScript JIT (与 compile 二选一)
+  
+# 数据加载优化
+data:
+  batch_size: 16                   # 批次大小
+  num_workers: 8                   # 数据加载工作线程数 (建议设为 CPU 核心数)
+  pin_memory: true                 # 启用固定内存
+  persistent_workers: true         # 保持工作进程持续运行
+  prefetch_factor: 4               # 数据预取因子 (PyTorch 1.7+)
+  drop_last: true                  # 丢弃最后不完整的批次
+  multiprocessing_context: null    # 多进程上下文: null, fork, spawn, forkserver
+  
+  # 数据预处理优化
+  use_optimized_collate: true      # 使用优化的 collate_fn
+  preload_data: false              # 预加载所有数据到内存 (小数据集时有效)
+
+# 训练优化
+training:
+  epochs: 1
+  learning_rate: 0.0001
+  early_stop_patience: 3
+  max_batches_per_epoch: 4
+  
+  # AMP 优化
+  use_amp: true                    # 启用混合精度训练
+  amp_opt_level: "O1"              # AMP 优化级别: O0, O1, O2, O3
+  loss_scale: "dynamic"            # 损失缩放: dynamic, 固定数值
+  
+  # 检查点优化
+  save_checkpoint_every: 1         # 每隔几个 epoch 保存检查点
+  keep_checkpoints: 3              # 保留最近几个检查点
+  
+  # 验证优化
+  validate_every: 1                # 每隔几个 epoch 进行验证
+  validation_batches: null         # 验证时使用的批次数 (null 表示全部)
+
+# 内存优化
+memory:
+  empty_cache_every: 100           # 每隔多少 batch 清空 CUDA 缓存
+  max_memory_fraction: 0.8         # GPU 内存使用上限
+  memory_efficient_attention: true # 启用内存高效的注意力计算
+  
+# 监控和调试
+monitoring:
+  profile_training: false          # 启用训练性能分析
+  profile_memory: false            # 启用内存使用分析
+  log_gpu_memory: true            # 记录 GPU 内存使用
+  log_batch_time: true            # 记录每个批次的处理时间
+  
+# 实验性优化 (谨慎使用)
+experimental:
+  use_torch_dynamo: false          # 使用 TorchDynamo (实验性)
+  use_functorch: false             # 使用 functorch (实验性)
+  use_fx_optimization: false       # 使用 FX 图优化 (实验性)
+
+# 硬件特定优化
+hardware_specific:
+  # Intel CPU 优化
+  use_mkldnn: true                 # 启用 MKL-DNN (Intel CPU)
+  mkldnn_threads: null             # MKL-DNN 线程数
+  
+  # AMD GPU 优化
+  rocm_optimization: false         # ROCm 优化 (AMD GPU)
+  
+  # Apple Silicon 优化
+  mps_optimization: false          # Metal Performance Shaders (Apple Silicon)
+
+# 调试选项 (生产环境建议关闭)
+debug:
+  detect_anomaly: false            # 检测梯度异常
+  profile_cuda: false              # CUDA 性能分析
+  check_finite: false              # 检查有限性
+  warn_on_unused_params: true      # 警告未使用的参数

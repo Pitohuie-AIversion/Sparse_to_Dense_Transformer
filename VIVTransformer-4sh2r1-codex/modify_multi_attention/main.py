@@ -26,7 +26,7 @@ from training.experiment import run_experiment
 from utils.config import load_config
 from utils.logger import setup_logger
 from utils.svd10_loss import TotalLossWithSVD
-from utils.system import set_seed, set_cuda_memory_limit
+from utils.system import set_seed, set_cuda_memory_limit, apply_performance_optimizations
 
 matplotlib.use("Agg")
 
@@ -74,6 +74,20 @@ def main(config_path=None):
 
     cfg = load_config(config_path)
 
+    # 可选：加载性能优化配置文件（位于同目录 performance_config.yaml）
+    perf_cfg_path = config_path.parent / "performance_config.yaml"
+    if perf_cfg_path.exists():
+        import yaml
+        with perf_cfg_path.open("r", encoding="utf-8") as f:
+            perf_cfg = yaml.safe_load(f) or {}
+        if isinstance(perf_cfg, dict) and 'performance' in perf_cfg:
+            cfg['performance'] = perf_cfg['performance']
+            logger.info("已加载性能配置: %s", perf_cfg_path)
+        else:
+            logger.warning("性能配置文件存在但结构不包含 'performance' 键，已忽略: %s", perf_cfg_path)
+    else:
+        logger.info("未发现性能配置文件（可选）: %s", perf_cfg_path)
+
     # 初始化随机种子
     set_seed(cfg["global"].get("seed", 42), cfg["global"].get("deterministic", False))
 
@@ -83,6 +97,9 @@ def main(config_path=None):
     if cfg["global"].get("max_memory_fraction") is not None and device.type == "cuda" and torch.cuda.is_available():
         device_idx = device.index if device.index is not None else 0
         set_cuda_memory_limit(cfg["global"]["max_memory_fraction"], device_idx)
+
+    # 应用性能优化（TF32 / cuDNN benchmark / 等）
+    apply_performance_optimizations(cfg.get('performance', {}), device)
 
     logger.info("Using device: %s", device)
     logger.info("Available GPUs: %s", torch.cuda.device_count())

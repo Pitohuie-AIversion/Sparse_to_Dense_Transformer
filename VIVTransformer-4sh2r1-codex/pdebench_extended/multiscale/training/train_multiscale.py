@@ -30,7 +30,7 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from data.dataloader import get_multiscale_loaders
 from mymodels.model_factory import create_model
-from utils.loss import TotalLossWithSVD
+from utils.svd10_loss import TotalLossWithSVD
 from utils.visualization import create_prediction_visualization
 
 # 设置日志
@@ -190,8 +190,17 @@ class MultiScaleTrainer:
         elif primary_loss == 'L1Loss':
             criterion = nn.L1Loss()
         else:
-            # 使用TotalLossWithSVD作为默认
-            criterion = TotalLossWithSVD()
+            # 使用TotalLossWithSVD作为默认，传入 grid 和 svd_enabled 参数
+            model_cfg = self.config.get('model', {})
+            grid_height = model_cfg.get('grid_height', None)
+            grid_width = model_cfg.get('grid_width', None)
+            svd_enabled = loss_config.get('svd_enabled', True)
+            
+            criterion = TotalLossWithSVD(
+                grid_height=grid_height,
+                grid_width=grid_width,
+                svd_enabled=svd_enabled
+            )
         
         criterion = criterion.to(self.device)
         

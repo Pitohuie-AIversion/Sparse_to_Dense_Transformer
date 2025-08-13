@@ -1,7 +1,7 @@
 Attention Mechanism Compatibility Report
 ==================================================
 
-Compatible mechanisms (39):
+Compatible mechanisms (22):
   self: qkv_compatible
   simplified_self: qkv_compatible
   muse: qkv_compatible
@@ -9,33 +9,16 @@ Compatible mechanisms (39):
   relative: qkv_compatible
   sparse: qkv_compatible
   lsh: qkv_compatible
-  emsa: qkv_compatible
-  mobilevit: image_only
-  mobilevitv2: qkv_compatible
-  dat: sequence_compatible
-  crossformer: sequence_compatible
-  moa: qkv_compatible
-  crisscross: cnn_compatible
-  axial: sequence_compatible
-  gfnet: sequence_compatible
   se: cnn_compatible
   sk: cnn_compatible
   cbam: cnn_compatible
   bam: cnn_compatible
   eca: cnn_compatible
   shuffle: cnn_compatible
-  sge: cnn_compatible
   residual: cnn_compatible
-  s2: cnn_compatible
-  triplet: cnn_compatible
-  coord: cnn_compatible
   psa: cnn_compatible
-  danet: cnn_compatible
   cot: cnn_compatible
   polarized: cnn_compatible
-  outlook: cnn_compatible
-  vip: sequence_compatible
-  coatnet: cnn_compatible
   halo: cnn_compatible
   a2: cnn_compatible
   parnet: cnn_compatible
@@ -44,4 +27,4 @@ Compatible mechanisms (39):
 
 Incompatible mechanisms (0):
 
-Success rate: 39/39 (100.0%)
+Success rate: 22/22 (100.0%)

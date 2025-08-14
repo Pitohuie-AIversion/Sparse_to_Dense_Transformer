@@ -92,7 +92,10 @@ class HardwareMonitor:
             gpu_info = []
             for i in range(self.gpu_count):
                 handle = pynvml.nvmlDeviceGetHandleByIndex(i)
-                name = pynvml.nvmlDeviceGetName(handle).decode('utf-8')
+                name = pynvml.nvmlDeviceGetName(handle)
+                # Normalize to str for different pynvml versions (bytes on some, str on others)
+                if isinstance(name, bytes):
+                    name = name.decode('utf-8')
                 memory_info = pynvml.nvmlDeviceGetMemoryInfo(handle)
                 gpu_info.append({
                     "id": i,

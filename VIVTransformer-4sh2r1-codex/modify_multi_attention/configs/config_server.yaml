@@ -1,165 +1,166 @@
-# 服务器批量运行专用配置文件
-# 已针对生产环境进行优化：
-# - 增加训练轮数到 50，启用早停机制
-# - 设置相对路径，便于服务器部署
-# - 开启低内存模式和智能设备选择
-# - 启用完整的监控和数据收集功能
+# 服务器批量运行专用配置文件（基于本地 config.yaml 调整）
+# 适配点：
+# - 路径统一为 Linux 风格相对路径（避免反斜杠）
+# - 增加训练轮数，开启多卡并行与性能优化
+# - 结果目录与项目约定保持一致：attention_results
+# - 适当降低日志频率，减少 IO 开销
 
-# 全局设置
+# ==================== 全局设置 ====================
 global:
   seed: 42                    # 随机种子，保证实验可复现
   deterministic: false        # 服务器环境下关闭确定性模式以提升性能
-  device: cuda:0              # 训练设备：自动检测可用设备
-  max_memory_fraction: 0.85   # 服务器环境显存占用比例
-  use_dataparallel: true      # 多卡自动并行
+  device: cuda:0              # 训练设备：如 'cuda:0' / 'cpu'
+  max_memory_fraction: 0.85   # 服务器环境显存占用上限比例
+  use_dataparallel: true      # 若检测到多卡，自动启用 DataParallel 并行
 
-# 性能优化配置
+# ==================== 性能相关配置 ====================
 performance:
-  low_memory_mode: true       # 启用低内存模式，支持重量级注意力机制
+  low_memory_mode: true       # 启用低内存模式：为重量级注意力降参或 CPU 回退
 
-# 数据设置（使用相对路径，适配服务器环境）
+# ==================== 数据设置（自有数据/非 PDEBench） ====================
 data:
-  path: ./data/merged_all_pressures_separated_normalized.pt  # 相对路径，需将数据文件放在项目根目录/data/下
-  batch_size: 8               # 服务器环境可适当增大批量
-  use_augmentation: false     # 生产训练建议关闭数据增强以确保结果稳定
-  crop_size: [128, 128]       
-  normalize: true             
-  num_workers: 8              # 服务器CPU核心数多，可增加工作线程
-  pin_memory: true            
-  use_pdebench: false         
+  path: ./data/merged_all_pressures_separated_normalized.pt  # 相对路径，数据放在项目根目录/data/
+  batch_size: 8               # 服务器环境适当增大批大小
+  use_augmentation: false     # 生产训练建议关闭数据增强以确保稳定
+  crop_size: [128, 128]       # 可选：图像裁剪尺寸（H, W）
+  normalize: true             # 是否对输入做归一化处理
+  num_workers: 8              # 服务器 CPU 线程数较多，可增大以加速数据加载
+  pin_memory: true            # GPU 训练建议开启
+  use_pdebench: false         # 如需 PDEBench，请改为 true 并配置 pdebench
 
-# 雷诺数数据集配置
+# ==================== 雷诺数（4D）数据集配置（如需启用） ====================
 reynolds_data:
-  enabled: true               
+  enabled: true               # 是否启用此数据源
   path: ./data/merged_all_pressures_separated_normalized.pt  # 相对路径
-  use_time_sequence: false    
-  input_size: 20              
-  output_size: 200            
-  sequence_length: 5          
+  use_time_sequence: false    # 是否使用时间序列输入
+  input_size: 20              # 输入维度（与具体数据预处理相关）
+  output_size: 200            # 输出维度（与具体任务相关）
+  sequence_length: 5          # 时间序列长度
 
-# PDEBench 配置（预留）
+# ==================== PDEBench 数据集配置（当 data.use_pdebench=true 生效） ====================
 pdebench:
-  data_root: ./data/pdebench   
-  pde_configs:                 
-    ns_incom:                  
-      data_file: ns_incom_test.h5  
-      sequence_length: 49          
-      spatial_resolution: [128, 128]  
-    wave:                      
+  data_root: ./data/pdebench   # PDEBench 根目录
+  pde_configs:                 # 各 PDE 任务的子配置
+    ns_incom:                  # 不可压 Navier-Stokes 示例
+      data_file: ns_incom_test.h5  # 数据文件名
+      sequence_length: 49          # 时间序列长度
+      spatial_resolution: [128, 128]  # 空间分辨率（H, W）
+    wave:                      # 波动方程示例
       data_file: wave_test.h5
       sequence_length: 49
       spatial_resolution: [128, 128]
 
+# 使用的 PDE 类型（当走 PDEBench 流程时，用于选择 pde_configs 中的项）
 current_pde: ns_incom
 
-# 模型设置
+# ==================== 模型设置（与注意力最相关） ====================
 model:
-  attention_type: relative    # 默认注意力类型，实际由命令行参数控制
-  d_model: 192                
-  num_heads: 4                
-  num_layers: 6               
-  input_dim: 1                
-  output_dim: 40000           
-  seq_len: 400                
-  max_time_steps: 100         
-  grid_height: 20             
-  grid_width: 20              
-  use_2d_embedding: true      
+  attention_type: relative    # 注意力类型（可在 attention_test.types 中查看支持列表）
+  d_model: 192                # 通道/嵌入维度
+  num_heads: 4                # 多头注意力头数
+  num_layers: 6               # Transformer 层数
+  input_dim: 1                # 输入通道/特征数
+  output_dim: 40000           # 输出维度（展平长度）
+  seq_len: 400                # 序列长度（=H*W）
+  max_time_steps: 100         # 最大时间步（用于时间位置嵌入/调度等）
+  grid_height: 20             # 2D 网格高度
+  grid_width: 20              # 2D 网格宽度（grid_height*grid_width 必须等于 seq_len）
+  use_2d_embedding: true      # 是否启用 2D 空间位置嵌入
 
-# 训练设置（生产环境优化）
+# ==================== 训练设置（服务器环境优化） ====================
 training:
   epochs: 50                  # 服务器环境增加训练轮数
-  learning_rate: 0.0001       
+  learning_rate: 0.0001       # 学习率
   early_stop_patience: 10     # 增加早停耐心，避免过早停止
-  # max_batches_per_epoch 已移除，进行完整训练
-  use_amp: true               # 启用混合精度加速
+  # max_batches_per_epoch: 已移除，进行完整训练
+  use_amp: true               # 启用混合精度（GPU 上可加速并省显存）
 
-# 损失设置
+# ==================== 损失设置（SVD 类复合损失示例） ====================
 loss:
-  svd_enabled: false          
-  base_weight: 1.0            
-  svd_weights: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]  
-  topk: 10                    
+  svd_enabled: false          # 是否启用 SVD 辅助损失
+  base_weight: 1.0            # 主损失权重
+  svd_weights: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]  # 各阶 SVD 额外权重
+  topk: 10                    # 可选：Top-K 约束/评估所用 K 值
 
-# 备选损失配置
+# ==================== 备选损失配置列表（用于扫参/回退） ====================
 loss_configs:
   - base_weight: 1.0
     svd_weights: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     topk: 10
 
-# 可视化设置（服务器环境建议关闭以节省计算）
+# ==================== 可视化设置（服务器环境建议关闭以节省计算） ====================
 visualization:
-  enabled: false              
-  interval: 100               
-  max_samples: 1              
+  enabled: false              # 如需在线可视化可改为 true
+  interval: 100               # 可视化/日志记录间隔（步）
+  max_samples: 1              # 每次可视化的样本数上限
 
-# 硬件监控（服务器环境全面启用）
+# ==================== 硬件监控设置（服务器环境全面启用） ====================
 hardware_monitoring:
-  enable_gpu_monitoring: true   
-  log_batch_metrics: true       
-  batch_log_interval: 100       # 降低日志频率，减少IO开销
-  save_detailed_metrics: true   
-  monitor_temperature: true     
-  monitor_power_usage: true     
+  enable_gpu_monitoring: true   # 是否启用 GPU 监控
+  log_batch_metrics: true       # 是否按 batch 记录指标
+  batch_log_interval: 100       # 记录间隔（步），服务器适当降低频率
+  save_detailed_metrics: true   # 是否保存详细指标到文件
+  monitor_temperature: true     # 是否监控温度
+  monitor_power_usage: true     # 是否监控功耗
 
-# 研究数据收集（完整启用，支持论文撰写）
+# ==================== 研究数据收集设置（论文撰写与实验复现支持） ====================
 research_data_collection:
-  enabled: true                 
-  experiment_name: null         # 自动生成实验名称
-  result_base_dir: ./results    # 使用相对路径
+  enabled: true                 # 是否启用研究数据收集器
+  experiment_name: null         # 实验名称（null 时自动生成：attention_type_YYYYMMDD_HHMMSS）
+  result_base_dir: attention_results  # 结果基础目录（自动在其下创建子目录）
   
-  # 数据收集范围
-  collect_system_info: true     
-  collect_model_complexity: true  
-  collect_dataset_info: true    
-  collect_training_metrics: true  
+  # 数据收集范围控制
+  collect_system_info: true     # 是否收集系统与环境信息（CPU/GPU/PyTorch 版本等）
+  collect_model_complexity: true  # 是否收集模型复杂度（参数量、FLOPs、显存占用等）
+  collect_dataset_info: true    # 是否收集数据集信息（样本数、形状、统计信息等）
+  collect_training_metrics: true  # 是否收集训练指标（损失、学习率、验证指标等）
   
-  # 性能优化
-  log_every_n_epochs: 5         # 降低记录频率，提升性能
-  buffered_writes: true         
-  lightweight_mode: false      
+  # 性能优化控制
+  log_every_n_epochs: 5         # 每隔 N 个 epoch 记录指标（服务器降低频率）
+  buffered_writes: true         # 使用缓冲写入（减少 IO 次数）
+  lightweight_mode: false       # 轻量级模式（仅记录关键指标）
   
-  # 收敛性分析
+  # 收敛性分析设置
   convergence_analysis:
-    enabled: true               
-    smoothing_window: 10        # 增大平滑窗口
-    detect_plateaus: true       
-    plateau_patience: 5         
-    generate_plots: true        
+    enabled: true               # 是否启用收敛性分析与图表生成
+    smoothing_window: 10        # 损失曲线平滑窗口大小（服务器增大）
+    detect_plateaus: true       # 是否检测训练平台期
+    plateau_patience: 5         # 平台期检测的耐心值
+    generate_plots: true        # 是否生成收敛图表（PNG + 交互式 HTML）
   
-  # 模型复杂度分析
+  # 模型复杂度分析设置
   model_analysis:
-    compute_flops: true         
-    sample_batch_size: 4        
-    measure_memory: true        
-    profile_attention: true     
+    compute_flops: true         # 服务器计算 FLOPs
+    sample_batch_size: 4        # 复杂度分析用的样本批大小
+    measure_memory: true        # 是否测量显存占用
+    profile_attention: true     # 是否对注意力模块进行性能分析
   
-  # 数据集统计
+  # 数据集统计设置
   dataset_analysis:
-    compute_statistics: true    
-    max_samples_for_stats: 2000 # 服务器环境可增加样本数
-    save_sample_visualization: false  
+    compute_statistics: true    # 是否计算数据集统计信息
+    max_samples_for_stats: 2000 # 统计分析的最大样本数（服务器增大）
+    save_sample_visualization: false  # 是否保存数据样本可视化
   
-  # 系统信息收集
+  # 系统信息收集设置
   system_monitoring:
-    collect_env_variables: true 
-    collect_git_info: true      
-    collect_hardware_specs: true 
-    collect_library_versions: true 
+    collect_env_variables: true # 是否收集关键环境变量
+    collect_git_info: true      # 是否收集 Git 信息（分支、commit hash 等）
+    collect_hardware_specs: true # 是否收集详细硬件规格
+    collect_library_versions: true # 是否收集关键库版本信息
   
-  # 输出格式
+  # 输出格式设置
   output_formats:
-    save_json: true             
-    save_csv: true              
-    save_plots: true            
-    save_summary_report: true   
+    save_json: true             # 是否保存 JSON 格式的结构化数据
+    save_csv: true              # 是否保存 CSV 格式的训练日志
+    save_plots: true            # 是否保存图表文件
+    save_summary_report: true   # 是否生成综合总结报告
   
-  # 多实验对比
+  # 多实验对比支持
   comparison_analysis:
-    enabled: true               
-    auto_generate_comparison: true  
-    include_baseline: true      
-    comparison_metrics:         
+    enabled: true               # 是否启用多注意力机制对比分析
+    auto_generate_comparison: true  # 是否自动生成对比表格和图表
+    include_baseline: true      # 是否包含基线模型对比
+    comparison_metrics:         # 对比分析包含的指标
       - final_test_loss
       - convergence_epochs
       - training_time
@@ -168,12 +169,12 @@ research_data_collection:
   
   # 可复现性支持
   reproducibility:
-    save_random_states: true    
-    save_model_checkpoints: true 
-    save_optimizer_states: true  
-    create_reproduction_script: true 
+    save_random_states: true    # 是否保存随机数状态
+    save_model_checkpoints: true # 是否保存模型检查点
+    save_optimizer_states: true  # 是否保存优化器状态
+    create_reproduction_script: true # 是否创建实验复现脚本
 
-# 注意力机制批量测试（生产级配置）
+# ==================== 注意力机制批量测试设置（自动化验证不同注意力模块） ====================
 attention_test:
   types:
     # 高优先级：稳定且性能优异的注意力机制
@@ -196,7 +197,7 @@ attention_test:
     - external
     - aft
     
-    # 重量级注意力机制（已启用低内存模式和CPU回退）
+    # 重量级注意力机制（已启用低内存模式和 CPU 回退）
     - emsa
     - crisscross
     - psa

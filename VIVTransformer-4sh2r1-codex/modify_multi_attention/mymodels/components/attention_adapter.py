@@ -88,14 +88,23 @@ class QKVAttentionAdapter(AttentionAdapter):
                     return x.clone(), None
                 return x.clone()
         
-        # 若模块被标记为强制CPU执行，则直接走CPU路径
+        # 检查是否在DataParallel环境中 - 如果是，禁用动态CPU移动
+        is_dataparallel = hasattr(self, '_modules') and any(hasattr(mod, 'module') for mod in self._modules.values() if hasattr(mod, '_modules'))
+        
+        # 若模块被标记为强制CPU执行，但在DataParallel中则跳过CPU执行
         if getattr(self.attention, "_force_cpu", False):
-            cpu = torch.device("cpu")
-            try:
-                self.attention = self.attention.to(cpu)
-            except Exception:
-                pass
-            return _safe_cpu_fallback(self.attention, x.to(cpu), memory.to(cpu), return_attention)
+            if is_dataparallel:
+                print(f"[WARN] {self.attention.__class__.__name__} marked for CPU but in DataParallel context - using GPU fallback")
+                # 清除CPU标记以避免冲突
+                if hasattr(self.attention, "_force_cpu"):
+                    delattr(self.attention, "_force_cpu")
+            else:
+                cpu = torch.device("cpu")
+                try:
+                    self.attention = self.attention.to(cpu)
+                except Exception:
+                    pass
+                return _safe_cpu_fallback(self.attention, x.to(cpu), memory.to(cpu), return_attention)
         
         try:
             # 首先尝试在GPU上运行
@@ -107,7 +116,7 @@ class QKVAttentionAdapter(AttentionAdapter):
             else:
                 return self.attention(x, memory, memory)
         except (torch.cuda.OutOfMemoryError, RuntimeError) as e:
-            # 统一处理OOM和运行时错误
+            # 统一处理OOM和运行时错误 - 但在DataParallel中避免动态移动
             error_msg = str(e).lower()
             is_oom = "out of memory" in error_msg
             is_device_mismatch = (
@@ -115,7 +124,7 @@ class QKVAttentionAdapter(AttentionAdapter):
                 or "expected all tensors to be on the same device" in error_msg
             )
             
-            if is_oom or is_device_mismatch:
+            if (is_oom or is_device_mismatch) and not is_dataparallel:
                 att_cls = self.attention.__class__.__name__
                 print(f"[WARN] {att_cls} GPU execution failed ({'OOM' if is_oom else 'Device Mismatch'}), falling back to CPU")
                 
@@ -133,7 +142,9 @@ class QKVAttentionAdapter(AttentionAdapter):
                 # 在CPU上执行
                 return _safe_cpu_fallback(self.attention, x.to(cpu), memory.to(cpu), return_attention)
             else:
-                # 其他RuntimeError直接抛出
+                # 其他RuntimeError或在DataParallel中直接抛出
+                if is_dataparallel and (is_oom or is_device_mismatch):
+                    print(f"[ERROR] {self.attention.__class__.__name__} failed in DataParallel context - cannot fallback to CPU")
                 raise
 
 
@@ -169,18 +180,27 @@ class CNNStyleAttentionAdapter(AttentionAdapter):
                 # 返回零张量作为fallback
                 return torch.zeros_like(x_reshaped)
         
-        # 强制CPU执行路径：若模块被标记，则直接用CPU运行
+        # 检查是否在DataParallel环境中
+        is_dataparallel = hasattr(self, '_modules') and any(hasattr(mod, 'module') for mod in self._modules.values() if hasattr(mod, '_modules'))
+        
+        # 强制CPU执行路径：若模块被标记，则直接用CPU运行（除非在DataParallel中）
         if getattr(self.attention, "_force_cpu", False):
-            cpu = torch.device("cpu")
-            try:
-                self.attention = self.attention.to(cpu)
-            except Exception:
-                pass
-            output = _safe_cpu_fallback(self.attention, x_reshaped.to(cpu))
-            output = output.view(batch_size, d_model, seq_len).transpose(1, 2)
-            if return_attention:
-                return output, None
-            return output
+            if is_dataparallel:
+                print(f"[WARN] {self.attention.__class__.__name__} marked for CPU but in DataParallel context - using GPU fallback")
+                # 清除CPU标记以避免冲突
+                if hasattr(self.attention, "_force_cpu"):
+                    delattr(self.attention, "_force_cpu")
+            else:
+                cpu = torch.device("cpu")
+                try:
+                    self.attention = self.attention.to(cpu)
+                except Exception:
+                    pass
+                output = _safe_cpu_fallback(self.attention, x_reshaped.to(cpu))
+                output = output.view(batch_size, d_model, seq_len).transpose(1, 2)
+                if return_attention:
+                    return output, None
+                return output
         
         # 确保注意力模块在正确设备上
         try:
@@ -197,7 +217,7 @@ class CNNStyleAttentionAdapter(AttentionAdapter):
                 output = torch.zeros_like(x_reshaped)
                 
         except (torch.cuda.OutOfMemoryError, RuntimeError) as e:
-            # 统一处理OOM和运行时错误
+            # 统一处理OOM和运行时错误 - 但在DataParallel中避免动态移动
             error_msg = str(e).lower()
             is_oom = "out of memory" in error_msg
             is_device_mismatch = (
@@ -205,7 +225,7 @@ class CNNStyleAttentionAdapter(AttentionAdapter):
                 or "expected all tensors to be on the same device" in error_msg
             )
             
-            if is_oom or is_device_mismatch:
+            if (is_oom or is_device_mismatch) and not is_dataparallel:
                 att_cls = self.attention.__class__.__name__
                 print(f"[WARN] {att_cls} GPU execution failed ({'OOM' if is_oom else 'Device Mismatch'}), falling back to CPU")
                 
@@ -222,7 +242,9 @@ class CNNStyleAttentionAdapter(AttentionAdapter):
                 
                 output = _safe_cpu_fallback(self.attention, x_reshaped.to(cpu))
             else:
-                # 其他RuntimeError直接抛出
+                # 其他RuntimeError或在DataParallel中直接抛出
+                if is_dataparallel and (is_oom or is_device_mismatch):
+                    print(f"[ERROR] {self.attention.__class__.__name__} failed in DataParallel context - cannot fallback to CPU")
                 raise
         except Exception as e:
             # 其他异常的处理
@@ -252,6 +274,9 @@ class SingleInputAttentionAdapter(AttentionAdapter):
                 UserWarning
             )
         
+        # 检查是否在DataParallel环境中
+        is_dataparallel = hasattr(self, '_modules') and any(hasattr(mod, 'module') for mod in self._modules.values() if hasattr(mod, '_modules'))
+        
         # Special handling for attentions that expect 4D input (B, H, W, C)
         if isinstance(self.attention, (OutlookAttention, WeightedPermuteMLP)):
             B, N, C = x.shape
@@ -278,40 +303,46 @@ class SingleInputAttentionAdapter(AttentionAdapter):
                     N = H * W
             x_reshaped = x.view(B, H, W, C)
             
-            # 强制CPU执行路径
+            # 强制CPU执行路径 - 但在DataParallel中禁用
             if getattr(self.attention, "_force_cpu", False):
-                target_device = x_reshaped.device
-                cpu = torch.device("cpu")
-                try:
-                    self.attention = self.attention.to(cpu)
-                except Exception:
-                    pass
-                try:
-                    output = self.attention(x_reshaped.to(cpu))
-                    if isinstance(output, tuple):
-                        output = output[0]
-                except Exception as e:
-                    print(f"[ERROR] CPU forced path failed for {self.attention.__class__.__name__}: {e}")
-                    output = torch.zeros_like(x_reshaped.to(cpu))
-                output = output.to(target_device)
-                output = output.view(B, N, C)
-                if N != orig_N:
-                    output = output[:, :orig_N, :]
-                return (output, None) if return_attention else output
+                if is_dataparallel:
+                    print(f"[WARN] {self.attention.__class__.__name__} marked for CPU but in DataParallel context - using GPU fallback")
+                    # 清除CPU标记以避免冲突
+                    if hasattr(self.attention, "_force_cpu"):
+                        delattr(self.attention, "_force_cpu")
+                else:
+                    target_device = x_reshaped.device
+                    cpu = torch.device("cpu")
+                    try:
+                        self.attention = self.attention.to(cpu)
+                    except Exception:
+                        pass
+                    try:
+                        output = self.attention(x_reshaped.to(cpu))
+                        if isinstance(output, tuple):
+                            output = output[0]
+                    except Exception as e:
+                        print(f"[ERROR] CPU forced path failed for {self.attention.__class__.__name__}: {e}")
+                        output = torch.zeros_like(x_reshaped.to(cpu))
+                    output = output.to(target_device)
+                    output = output.view(B, N, C)
+                    if N != orig_N:
+                        output = output[:, :orig_N, :]
+                    return (output, None) if return_attention else output
             
             try:
                 output = self.attention(x_reshaped)
                 if isinstance(output, tuple):
                     output = output[0]
             except (torch.cuda.OutOfMemoryError, RuntimeError) as e:
-                # 如果GPU失败，回退到CPU
+                # 如果GPU失败，回退到CPU（但在DataParallel中禁用）
                 error_msg = str(e).lower()
                 is_oom = "out of memory" in error_msg
                 is_device_mismatch = (
                     "input type (torch.cuda.floattensor) and weight type (torch.floattensor)" in error_msg
                     or "expected all tensors to be on the same device" in error_msg
                 )
-                if is_oom or is_device_mismatch:
+                if (is_oom or is_device_mismatch) and not is_dataparallel:
                     if torch.cuda.is_available():
                         torch.cuda.empty_cache()
                     cpu = torch.device("cpu")
@@ -327,6 +358,8 @@ class SingleInputAttentionAdapter(AttentionAdapter):
                         output = torch.zeros_like(x_reshaped.to(cpu))
                     output = output.to(x_reshaped.device)
                 else:
+                    if is_dataparallel and (is_oom or is_device_mismatch):
+                        print(f"[ERROR] {self.attention.__class__.__name__} failed in DataParallel context - cannot fallback to CPU")
                     raise
             
             output = output.view(B, N, C)
@@ -337,19 +370,25 @@ class SingleInputAttentionAdapter(AttentionAdapter):
         # 非4D特殊模块
         target_device = x.device
         if getattr(self.attention, "_force_cpu", False):
-            cpu = torch.device("cpu")
-            try:
-                self.attention = self.attention.to(cpu)
-            except Exception:
-                pass
-            try:
-                y = self.attention(x.to(cpu))
-                if isinstance(y, tuple):
-                    y = y[0]
-            except Exception:
-                y = torch.zeros_like(x.to(cpu))
-            y = y.to(target_device)
-            return (y, None) if return_attention else y
+            if is_dataparallel:
+                print(f"[WARN] {self.attention.__class__.__name__} marked for CPU but in DataParallel context - using GPU fallback")
+                # 清除CPU标记以避免冲突
+                if hasattr(self.attention, "_force_cpu"):
+                    delattr(self.attention, "_force_cpu")
+            else:
+                cpu = torch.device("cpu")
+                try:
+                    self.attention = self.attention.to(cpu)
+                except Exception:
+                    pass
+                try:
+                    y = self.attention(x.to(cpu))
+                    if isinstance(y, tuple):
+                        y = y[0]
+                except Exception:
+                    y = torch.zeros_like(x.to(cpu))
+                y = y.to(target_device)
+                return (y, None) if return_attention else y
         
         try:
             y = self.attention(x)
@@ -362,7 +401,7 @@ class SingleInputAttentionAdapter(AttentionAdapter):
                 "input type (torch.cuda.floattensor) and weight type (torch.floattensor)" in error_msg
                 or "expected all tensors to be on the same device" in error_msg
             )
-            if is_oom or is_device_mismatch:
+            if (is_oom or is_device_mismatch) and not is_dataparallel:
                 if torch.cuda.is_available():
                     torch.cuda.empty_cache()
                 cpu = torch.device("cpu")
@@ -378,6 +417,8 @@ class SingleInputAttentionAdapter(AttentionAdapter):
                     y = torch.zeros_like(x.to(cpu))
                 y = y.to(target_device)
             else:
+                if is_dataparallel and (is_oom or is_device_mismatch):
+                    print(f"[ERROR] {self.attention.__class__.__name__} failed in DataParallel context - cannot fallback to CPU")
                 raise
         return (y, None) if return_attention else y
 

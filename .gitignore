@@ -77,3 +77,6 @@ dmypy.json
 
 # Personal materials (ignore entire report folder)
 /report/
+
+# Ignore experiment outputs
+attention_results/

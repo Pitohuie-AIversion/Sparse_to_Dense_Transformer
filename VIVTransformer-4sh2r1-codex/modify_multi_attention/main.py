@@ -145,6 +145,8 @@ def main(config_path=None):
         loss_config_ids = ["loss_config_{}".format(i) for i in range(len(loss_configs))]
 
     ATTENTION_TYPES = cfg["attention_test"]["types"]
+    # 去重，保持原有顺序，避免重复运行同一注意力机制
+    ATTENTION_TYPES = list(dict.fromkeys(ATTENTION_TYPES))
     failed_attention_types = []
 
     # 使用自适应数据加载器，支持PDEBench数据集

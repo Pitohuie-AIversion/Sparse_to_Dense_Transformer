@@ -1,3 +1,0 @@
-Batch, Test Loss
-1, 0.063555
-Average Test Loss: 0.063555

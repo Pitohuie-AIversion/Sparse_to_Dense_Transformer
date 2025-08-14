@@ -1,1 +1,0 @@
-Test Loss for cbam: 0.0425201952457428

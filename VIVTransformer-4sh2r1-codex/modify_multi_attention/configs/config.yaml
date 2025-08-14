@@ -129,7 +129,7 @@ research_data_collection:
   
   # 模型复杂度分析设置
   model_analysis:
-    compute_flops: true         # 是否计算 FLOPs（可能轻微影响启动时间）
+    compute_flops: false         # 是否计算 FLOPs（可能轻微影响启动时间）
     sample_batch_size: 2        # 复杂度分析用的样本批大小（越小越快）
     measure_memory: true        # 是否测量显存占用
     profile_attention: true     # 是否对注意力模块进行性能分析
@@ -176,39 +176,40 @@ research_data_collection:
 # 注意力机制批量测试设置（用于自动化验证不同注意力模块）
 attention_test:
   types:
+    # 高优先级：稳定且性能优异的注意力机制
+    - self
+    - simplified_self
+    - relative
+    - cbam
+    - se
+    - eca
+    - residual
+    
+    # 中优先级：功能性注意力机制
+    - muse
+    - ufo
+    - sparse
+    - lsh
+    - shuffle
+    - sge
+    - coord
+    - external
+    - aft
+    
+    # 重量级注意力机制（已启用低内存模式和CPU回退）
     - emsa
     - crisscross
     - psa
     - danet
-    - self
-    - simplified_self
-    - muse
-    - ufo
-    - relative
-    - sparse
-    - lsh
-    - emsa
     - mobilevit
     - mobilevitv2
     - dat
     - crossformer
     - moa
-    - crisscross
     - axial
     - gfnet
-    - se
-    - sk
-    - cbam
-    - bam
-    - eca
-    - shuffle
-    - sge
-    - residual
     - s2
     - triplet
-    - coord
-    - psa
-    - danet
     - cot
     - polarized
     - outlook
@@ -217,10 +218,7 @@ attention_test:
     - halo
     - a2
     - parnet
-    - external
-    - aft
-
-    # 以下机制暂不兼容/参数缺失，已移除：
-    # - emsa, mobilevit, mobilevitv2, dat, crossformer, moa,
-    #   crisscross, axial, gfnet, s2, triplet, coord, danet,
-    #   outlook, vip, coatnet
+    
+    # 特殊注意力机制
+    - sk
+    - bam

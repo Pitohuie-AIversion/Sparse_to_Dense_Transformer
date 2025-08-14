@@ -79,13 +79,16 @@ def run_experiment(cfg, loss_cfg, loss_config_id, attn_type, parent_dir, train_l
 
         try:
             if use_fused and torch.cuda.is_available():
+                # 当使用 fused=True 时，foreach 必须设为 False 以避免冲突
                 optimizer = torch.optim.AdamW(
-                    model.parameters(), lr=lr, fused=True, foreach=foreach,
+                    model.parameters(), lr=lr, fused=True, foreach=False,
                     differentiable=differentiable, capturable=capturable
                 )
             else:
-                optimizer = torch.optim.Adam(
-                    model.parameters(), lr=lr
+                # 当不使用 fused 时，可以使用 foreach
+                optimizer = torch.optim.AdamW(
+                    model.parameters(), lr=lr, foreach=foreach,
+                    differentiable=differentiable, capturable=capturable
                 )
         except TypeError:
             # Some PyTorch versions may not support fused=True or foreach

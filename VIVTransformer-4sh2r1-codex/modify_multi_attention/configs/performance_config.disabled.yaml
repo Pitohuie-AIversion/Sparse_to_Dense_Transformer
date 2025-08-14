@@ -1,0 +1,102 @@
+# 性能优化配置
+# 这个配置文件包含了各种性能优化开关，可以通过修改这些开关来启用或禁用特定的优化
+
+performance:
+  # PyTorch 编译优化 (torch.compile)
+  torch_compile:
+    enabled: true                 # 是否启用 torch.compile
+    mode: "default"              # 编译模式: "default", "reduce-overhead", "max-autotune"
+    dynamic: false               # 是否启用动态形状
+    fullgraph: false            # 是否强制完整图编译
+    backend: "inductor"         # 编译后端: "inductor", "aot_eager", "cudagraphs"
+  
+  # 优化器优化
+  optimizer:
+    use_fused: true             # 是否使用 Fused AdamW (需要 PyTorch 2.0+)
+    foreach: true               # 是否启用 foreach 参数更新
+    differentiable: false       # 是否需要优化器可微分
+    capturable: false           # 是否启用 CUDA graphs 兼容模式
+  
+  # 硬件优化
+  hardware:
+    enable_tf32: true           # 启用 TF32 精度 (A100/H100)
+    enable_cudnn_benchmark: true # 启用 cuDNN benchmark
+    set_float32_matmul_precision: "high"  # "highest", "high", "medium"
+  
+  # 内存格式优化
+  memory_format:
+    use_channels_last: false    # 启用 channels_last 内存格式 (需要4D张量)
+    apply_to_model: false       # 是否对模型权重应用 channels_last
+    apply_to_input: false       # 是否对输入张量应用 channels_last
+  
+  # 注意力机制优化
+  attention:
+    use_flash_attention: false  # 启用 Flash Attention (需要相应库)
+    use_pytorch_sdpa: true      # 启用 PyTorch SDPA
+    enable_math: true           # SDPA math backend
+    enable_flash: true          # SDPA flash backend
+    enable_mem_efficient: true  # SDPA memory efficient backend
+  
+  # 梯度优化
+  gradient:
+    set_to_none: true           # optimizer.zero_grad(set_to_none=True)
+    clip_grad_norm: false       # 是否启用梯度裁剪
+    max_grad_norm: 1.0         # 最大梯度范数
+  
+  # JIT 优化
+  jit:
+    enabled: false              # 启用 TorchScript JIT
+    optimize_for_inference: false # 优化推理性能
+  
+  # 数据加载优化
+  data_loading:
+    prefetch_factor: 2          # 预取因子
+    persistent_workers: true    # 持久化工作进程
+    drop_last: true            # 丢弃最后不完整的批次
+    multiprocessing_context: null  # "spawn", "fork", "forkserver" 或 null
+  
+  # 训练优化
+  training:
+    gradient_checkpointing: false  # 启用梯度检查点 (节省显存)
+    find_unused_parameters: false  # DDP 查找未使用参数
+    bucket_cap_mb: 25          # DDP bucket 容量 (MB)
+  
+  # 内存优化
+  memory:
+    empty_cache_frequency: 100  # 每N个batch清空缓存 (0=禁用)
+    max_split_size_mb: 512     # CUDA 内存分配器最大分割大小
+    garbage_collection_threshold: 1000  # 强制GC的batch间隔
+  
+  # 监控和调试
+  monitoring:
+    profile_memory: false       # 启用内存分析
+    profile_compute: false      # 启用计算分析
+    trace_function_calls: false # 跟踪函数调用
+    log_gpu_memory: true       # 记录GPU内存使用
+  
+  # 实验性优化
+  experimental:
+    use_deterministic_algorithms: false  # 使用确定性算法
+    warn_only_deterministic: true       # 仅警告非确定性
+    enable_anomaly_detection: false     # 启用异常检测
+  
+  # 硬件特定优化
+  hardware_specific:
+    # NVIDIA GPU 优化
+    nvidia:
+      enable_tensor_cores: true    # 启用 Tensor Cores
+      optimize_for_a100: false     # A100 特定优化
+      optimize_for_h100: false     # H100 特定优化
+    
+    # CPU 优化
+    cpu:
+      num_threads: null           # OpenMP 线程数 (null=自动)
+      enable_mkldnn: true         # 启用 MKL-DNN
+      enable_jemalloc: false      # 启用 jemalloc (如果可用)
+  
+  # 调试选项 (生产环境应禁用)
+  debug:
+    detect_anomaly: false        # 检测异常梯度
+    check_trace: false           # 检查 JIT 跟踪
+    profiler_enabled: false      # 启用性能分析器
+    benchmark_mode: false        # 基准测试模式

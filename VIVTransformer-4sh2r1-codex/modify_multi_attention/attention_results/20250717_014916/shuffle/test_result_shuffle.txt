@@ -1,1 +1,0 @@
-Test Loss for shuffle: 0.04870082810521126

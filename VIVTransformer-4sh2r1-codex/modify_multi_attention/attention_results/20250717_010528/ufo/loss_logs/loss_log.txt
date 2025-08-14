@@ -1,2 +1,0 @@
-Epoch, Train Loss, Valid Loss, Test Loss
-1, 0.479198, 0.355121, 0.360141

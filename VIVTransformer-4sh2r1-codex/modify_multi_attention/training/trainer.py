@@ -11,10 +11,10 @@ from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
 from utils.visualization import (
-    plot_attention_maps,  # 导入新的可视化函数
+    plot_losses,
+    plot_attention_maps,
     plot_comparison_figure,
     plot_difference_figure,
-    plot_losses,
 )
 from utils.hardware_monitor import HardwareMonitor
 from utils.training_visualizer import TrainingVisualizer
@@ -27,6 +27,7 @@ def _train_epoch(
     total_loss = 0
     logger = logging.getLogger(__name__)
     autocast_ctx = (lambda: torch.amp.autocast('cuda')) if use_amp else nullcontext
+    processed_batches = 0
     
     for i, batch in enumerate(loader):
         if batch is None:
@@ -51,7 +52,8 @@ def _train_epoch(
                 model_out, attention_weights = model(
                     in_press, time_steps, return_attention=True
                 )
-                if i == 0:
+                # 仅在处理到的首个有效batch进行一次可视化
+                if processed_batches == 0:
                     plot_attention_maps(
                         attention_weights,
                         epoch=epoch,
@@ -70,6 +72,7 @@ def _train_epoch(
             loss.backward()
             optimizer.step()
         total_loss += loss.item()
+        processed_batches += 1
         
         # 结束batch监控
         if hardware_monitor:
@@ -82,14 +85,14 @@ def _train_epoch(
                 )
             )
     
-    # Adjust total_loss calculation for early exit
-    batch_count = min(i + 1, max_batches if max_batches else len(loader))
-    return total_loss / batch_count
+    # 使用已处理的有效batch数计算平均损失；若为0则返回inf避免除零
+    return (total_loss / processed_batches) if processed_batches > 0 else float("inf")
 
 def _evaluate_model(model, loader, criterion, device, debug, epoch, attention_type, save_dir, max_batches=None, use_amp: bool = False):
     model.eval()
     total_loss = 0
     autocast_ctx = (lambda: torch.amp.autocast('cuda')) if use_amp else nullcontext
+    processed_batches = 0
     with torch.no_grad():
         for i, batch in enumerate(loader):
             if batch is None:
@@ -109,7 +112,8 @@ def _evaluate_model(model, loader, criterion, device, debug, epoch, attention_ty
                     model_out, attention_weights = model(
                         in_press, time_steps, return_attention=True
                     )
-                    if i == 0 and (epoch + 1) % 100 == 0:
+                    # 仅在处理到的首个有效batch（且满足可视化周期）进行一次可视化
+                    if processed_batches == 0 and (epoch + 1) % 100 == 0:
                         plot_attention_maps(
                             attention_weights,
                             epoch=epoch + 1,
@@ -120,10 +124,10 @@ def _evaluate_model(model, loader, criterion, device, debug, epoch, attention_ty
                     model_out = model(in_press, time_steps)
                 loss = criterion(model_out, out_pressure)
             total_loss += loss.item()
+            processed_batches += 1
             
-    # Adjust total_loss calculation for early exit
-    batch_count = min(i + 1, max_batches if max_batches else len(loader))
-    return total_loss / batch_count
+    # 使用已处理的有效batch数计算平均损失；若为0则返回inf避免除零
+    return (total_loss / processed_batches) if processed_batches > 0 else float("inf")
 
 def _save_checkpoint(epoch, model, optimizer, losses, best_loss, patience, path):
     train_loss, valid_loss, test_loss = losses

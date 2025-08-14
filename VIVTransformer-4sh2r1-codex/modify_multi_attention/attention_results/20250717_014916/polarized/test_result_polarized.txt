@@ -1,1 +1,0 @@
-Test Loss for polarized: 0.04238705337047577

@@ -1,1 +1,0 @@
-Test Loss for simplified_self: 0.04959356412291527

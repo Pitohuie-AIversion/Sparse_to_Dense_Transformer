@@ -13,7 +13,7 @@ performance:
   # 优化器优化
   optimizer:
     use_fused: true             # 是否使用 Fused AdamW (需要 PyTorch 2.0+)
-    foreach: true               # 是否启用 foreach 参数更新
+    foreach: false              # 与 fused 互斥；当 use_fused 为 true 时必须为 false
     differentiable: false       # 是否需要优化器可微分
     capturable: false           # 是否启用 CUDA graphs 兼容模式
   

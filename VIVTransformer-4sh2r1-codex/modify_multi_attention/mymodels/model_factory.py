@@ -61,7 +61,19 @@ def create_model(config, attention_type, device):
     
     # Apply DataParallel if enabled
     if config.get('global', {}).get('use_dataparallel', False) and torch.cuda.device_count() > 1:
-        logger.info(f"Using DataParallel on {torch.cuda.device_count()} GPUs!")
-        model = torch.nn.DataParallel(model)
+        # 检查模型是否包含强制CPU执行的子模块
+        has_force_cpu_modules = False
+        for name, module in model.named_modules():
+            if hasattr(module, '_force_cpu') and getattr(module, '_force_cpu', False):
+                has_force_cpu_modules = True
+                logger.warning(f"发现强制CPU模块: {name} ({type(module).__name__})")
+                break
+        
+        if has_force_cpu_modules:
+            logger.warning("模型包含强制CPU子模块，跳过DataParallel以避免设备不一致错误")
+            logger.info("建议在配置中设置 use_dataparallel: false 或选择GPU兼容的注意力类型")
+        else:
+            logger.info(f"Using DataParallel on {torch.cuda.device_count()} GPUs!")
+            model = torch.nn.DataParallel(model)
     
     return model

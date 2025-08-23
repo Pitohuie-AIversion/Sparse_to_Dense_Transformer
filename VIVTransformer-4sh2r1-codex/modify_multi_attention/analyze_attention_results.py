@@ -4,6 +4,7 @@ import csv
 import json
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
+import argparse
 
 try:
     import yaml  # Optional
@@ -133,21 +134,32 @@ def read_research_metrics(research_dir: Path, attn: str) -> Dict[str, Any]:
     return out
 
 
-def scan_runs(base_root: Path) -> List[Dict[str, Any]]:
+def scan_runs(base_root: Path, dated_root_override: Optional[Path] = None, loss_cfg_root_override: Optional[Path] = None) -> List[Dict[str, Any]]:
     entries: List[Dict[str, Any]] = []
 
     # Candidate roots
     codex_root = base_root / "VIVTransformer-4sh2r1-codex"
-    dated_root = codex_root / "modify_multi_attention" / "attention_results"
-    loss_cfg_root = codex_root / "attention_results"
+    dated_root = Path(dated_root_override) if dated_root_override else codex_root / "modify_multi_attention" / "attention_results"
+    loss_cfg_root = Path(loss_cfg_root_override) if loss_cfg_root_override else codex_root / "attention_results"
 
-    # 1) Dated runs under modify_multi_attention/attention_results/<datetime>/<attn>
+    # 1) Dated runs under modify_multi_attention/attention_results
+    # Support both nested layout: <dated_root>/<datetime>/<attn>
+    # and flat layout: <dated_root>/<attn>
     if dated_root.exists():
-        for run_dir in sorted([p for p in dated_root.iterdir() if p.is_dir()]):
-            for attn_dir in sorted([p for p in run_dir.iterdir() if p.is_dir()]):
-                attn = attn_dir.name
-                entry = collect_single_run(attn_dir, attn, source_group=f"dated:{run_dir.name}")
+        children = [p for p in dated_root.iterdir() if p.is_dir()]
+        for child in sorted(children):
+            # flat layout detection: the child itself looks like an attn_dir
+            has_logs = (child / "loss_logs").exists() or (child / "test_results").exists() or any(child.glob("test_result_*.txt"))
+            if has_logs:
+                attn = child.name
+                entry = collect_single_run(child, attn, source_group=f"dated:{dated_root.name}")
                 entries.append(entry)
+            else:
+                # nested layout: iterate its subdirs as attention dirs
+                for attn_dir in sorted([p for p in child.iterdir() if p.is_dir()]):
+                    attn = attn_dir.name
+                    entry = collect_single_run(attn_dir, attn, source_group=f"dated:{child.name}")
+                    entries.append(entry)
 
     # 2) loss_config_* runs under codex/attention_results/loss_config_X/<attn>
     if loss_cfg_root.exists():
@@ -288,17 +300,33 @@ def fmt(v: Any) -> str:
 def main():
     # repo root: .../Sparse_to_Dense_Transformer
     script_path = Path(__file__).resolve()
-    base_root = script_path.parents[2]
+    default_base_root = script_path.parents[2]
 
-    entries = scan_runs(base_root)
+    parser = argparse.ArgumentParser(description="Analyze attention experiment results and generate reports")
+    parser.add_argument("--base-root", type=str, default=str(default_base_root), help="Repository root directory (default: inferred)")
+    parser.add_argument("--dated-root", type=str, default=None, help="Override dated results root (e.g., modify_multi_attention/attention_results1)")
+    parser.add_argument("--loss-root", type=str, default=None, help="Override loss_config_* results root")
+    parser.add_argument("--output-dir", type=str, default=None, help="Directory to write outputs; default: <base-root>/report")
+    args = parser.parse_args()
 
-    report_dir = base_root / "report"
+    base_root = Path(args.base_root).resolve()
+    dated_root_override = Path(args.dated_root).resolve() if args.dated_root else None
+    loss_cfg_root_override = Path(args.loss_root).resolve() if args.loss_root else None
+
+    entries = scan_runs(base_root, dated_root_override=dated_root_override, loss_cfg_root_override=loss_cfg_root_override)
+
+    report_dir = Path(args.output_dir).resolve() if args.output_dir else base_root / "report"
     out_csv = report_dir / "attention_summary.csv"
     out_md = report_dir / "attention_report.md"
 
     write_csv_summary(entries, out_csv)
     generate_markdown(entries, out_md)
 
+    print(f"Scanning base_root: {base_root}")
+    if dated_root_override:
+        print(f"Using dated_root override: {dated_root_override}")
+    if loss_cfg_root_override:
+        print(f"Using loss_cfg_root override: {loss_cfg_root_override}")
     print(f"Summary CSV: {out_csv}")
     print(f"Markdown Report: {out_md}")
     print(f"Total entries: {len(entries)}")

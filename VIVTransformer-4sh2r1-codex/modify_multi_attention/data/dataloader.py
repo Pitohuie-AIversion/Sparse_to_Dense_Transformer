@@ -84,17 +84,11 @@ def get_loaders(
     pin_memory = torch.cuda.is_available()
     persistent_workers = num_workers > 0
     
-    extra_loader_kwargs = {}
-    # 可从全局配置中读取 data_loading 优化设置（若调用方使用 get_adaptive_loaders 则已在 config 中）
-    try:
-        import inspect
-        # Try to infer config from caller if available; else fall back to sane defaults
-        extra_loader_kwargs = dict(
-            prefetch_factor=2,
-            drop_last=False,
-        )
-    except Exception:
-        extra_loader_kwargs = {}
+    # 优化的DataLoader配置
+    extra_loader_kwargs = {
+        'prefetch_factor': 2,
+        'drop_last': True,  # 关键：固定batch_size，避免最后一个小批次
+    }
 
     train_loader = DataLoader(
         train_dataset, batch_size=batch_size, shuffle=True, 
@@ -102,17 +96,24 @@ def get_loaders(
         persistent_workers=persistent_workers, collate_fn=collate_fn,
         **extra_loader_kwargs
     )
+    
+    # 验证和测试集保持drop_last=False以使用全部数据
+    eval_loader_kwargs = {
+        'prefetch_factor': 2,
+        'drop_last': False,
+    }
+    
     valid_loader = DataLoader(
         valid_dataset, batch_size=batch_size, shuffle=False,
         num_workers=num_workers, pin_memory=pin_memory,
         persistent_workers=persistent_workers, collate_fn=collate_fn,
-        **extra_loader_kwargs
+        **eval_loader_kwargs
     )
     test_loader = DataLoader(
         test_dataset, batch_size=batch_size, shuffle=False,
         num_workers=num_workers, pin_memory=pin_memory,
         persistent_workers=persistent_workers, collate_fn=collate_fn,
-        **extra_loader_kwargs
+        **eval_loader_kwargs
     )
 
     return train_loader, valid_loader, test_loader

@@ -455,7 +455,9 @@ def create_pdebench_loaders(
         batch_size=batch_size,
         shuffle=True,
         num_workers=num_workers,
-        pin_memory=pin_memory
+        pin_memory=pin_memory,
+        drop_last=True,
+        prefetch_factor=2,
     )
     
     val_loader = PDEBenchDataLoader(
@@ -463,7 +465,9 @@ def create_pdebench_loaders(
         batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers,
-        pin_memory=pin_memory
+        pin_memory=pin_memory,
+        drop_last=False,
+        prefetch_factor=2,
     )
     
     test_loader = PDEBenchDataLoader(
@@ -471,7 +475,9 @@ def create_pdebench_loaders(
         batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers,
-        pin_memory=pin_memory
+        pin_memory=pin_memory,
+        drop_last=False,
+        prefetch_factor=2,
     )
     
     return train_loader, val_loader, test_loader

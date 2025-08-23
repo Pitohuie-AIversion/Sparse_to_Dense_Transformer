@@ -207,24 +207,32 @@ def create_reynolds_loaders(
         dataset, [train_size, val_size, test_size]
     )
     
-    # 创建数据加载器 (Windows兼容性：num_workers=0)
+    # 创建数据加载器 (Windows兼容性：默认num_workers=0；若需要可根据机器配置调大并设置 persistent_workers=True)
+    common_kwargs = dict(
+        num_workers=0,
+        pin_memory=torch.cuda.is_available(),
+        prefetch_factor=2,
+    )
     train_loader = DataLoader(
         train_dataset, 
         batch_size=batch_size, 
         shuffle=True, 
-        num_workers=0  # Windows兼容性，避免multiprocessing pickle错误
+        drop_last=True,
+        **common_kwargs
     )
     val_loader = DataLoader(
         val_dataset, 
         batch_size=batch_size, 
         shuffle=False, 
-        num_workers=0  # Windows兼容性，避免multiprocessing pickle错误
+        drop_last=False,
+        **common_kwargs
     )
     test_loader = DataLoader(
         test_dataset, 
         batch_size=batch_size, 
         shuffle=False, 
-        num_workers=0  # Windows兼容性，避免multiprocessing pickle错误
+        drop_last=False,
+        **common_kwargs
     )
     
     return train_loader, val_loader, test_loader, dataset

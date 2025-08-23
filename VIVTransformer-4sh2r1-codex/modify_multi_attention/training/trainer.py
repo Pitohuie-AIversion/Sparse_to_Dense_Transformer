@@ -29,10 +29,15 @@ def _train_epoch(
     autocast_ctx = (lambda: torch.amp.autocast('cuda')) if use_amp else nullcontext
     processed_batches = 0
     
+    data_start = time.time()
     for i, batch in enumerate(loader):
+        iter_start = time.time()
+        data_time = iter_start - data_start
         if batch is None:
+            data_start = time.time()
             continue
         in_press, out_pressure, time_steps = batch
+        current_bs = in_press.size(0) if hasattr(in_press, 'size') else None
         # Early exit if max_batches limit reached
         if max_batches is not None and i >= max_batches:
             break
@@ -41,12 +46,15 @@ def _train_epoch(
         if hardware_monitor:
             hardware_monitor.start_batch(epoch, i)
         
+        copy_start = time.time()
         in_press, out_pressure, time_steps = (
             in_press.to(device, non_blocking=True),
             out_pressure.to(device, non_blocking=True),
             time_steps.to(device, non_blocking=True),
         )
+        copy_time = time.time() - copy_start
         optimizer.zero_grad(set_to_none=True)
+        comp_start = time.time()
         with autocast_ctx():
             if debug:
                 model_out, attention_weights = model(
@@ -71,6 +79,8 @@ def _train_epoch(
         else:
             loss.backward()
             optimizer.step()
+        compute_time = time.time() - comp_start
+        total_iter_time = time.time() - iter_start
         total_loss += loss.item()
         processed_batches += 1
         
@@ -78,12 +88,19 @@ def _train_epoch(
         if hardware_monitor:
             hardware_monitor.end_batch(epoch, i, loss.item())
         
+        # 日志：每个batch显示BS、data_time、h2d(copy_time)、compute_time、total_time、samples/s
         if (i + 1) % 50 == 0 or i == 0:
+            samples_per_sec = (current_bs / total_iter_time) if current_bs else float('nan')
             logger.info(
-                "    🔄 Epoch [%d], Batch [%d/%d], Loss: %.6f" % (
-                    epoch + 1, i + 1, len(loader), loss.item()
-                )
+                f"    🔄 Epoch [{epoch + 1}], Batch [{i + 1}/{len(loader)}], "
+                f"BS: {current_bs}, Loss: {loss.item():.6f}, "
+                f"data: {data_time*1000:.1f} ms, h2d: {copy_time*1000:.1f} ms, "
+                f"compute: {compute_time*1000:.1f} ms, total: {total_iter_time*1000:.1f} ms, "
+                f"samples/s: {samples_per_sec:.1f}"
             )
+        
+        # 准备下一次迭代的data计时起点
+        data_start = time.time()
     
     # 使用已处理的有效batch数计算平均损失；若为0则返回inf避免除零
     return (total_loss / processed_batches) if processed_batches > 0 else float("inf")

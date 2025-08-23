@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 import argparse
+import ast
 
 try:
     import yaml  # Optional
@@ -134,6 +135,230 @@ def read_research_metrics(research_dir: Path, attn: str) -> Dict[str, Any]:
     return out
 
 
+# ============== New: Load loss config mapping and failure logs ==============
+
+def load_loss_config_mapping(config_file: Optional[Path]) -> Dict[str, Dict[str, Any]]:
+    """Load loss_configs from a YAML config, map to ids like loss_config_0 -> config dict.
+    If yaml is unavailable or file missing/invalid, return empty mapping.
+    """
+    mapping: Dict[str, Dict[str, Any]] = {}
+    if not config_file or not config_file.exists() or yaml is None:
+        return mapping
+    try:
+        data = yaml.safe_load(config_file.read_text(encoding="utf-8", errors="ignore")) or {}
+        loss_cfgs = data.get("loss_configs") or []
+        if isinstance(loss_cfgs, list):
+            for i, cfg in enumerate(loss_cfgs):
+                if isinstance(cfg, dict):
+                    mapping[f"loss_config_{i}"] = cfg
+    except Exception:
+        return {}
+    return mapping
+
+
+def annotate_with_loss_config(entries: List[Dict[str, Any]], mapping: Dict[str, Dict[str, Any]]) -> None:
+    """Annotate each entry with loss config details if available."""
+    if not mapping:
+        return
+    for e in entries:
+        loss_id = e.get("loss_config_id") or e.get("source_group")
+        cfg = mapping.get(loss_id)
+        if not cfg:
+            continue
+        e["config_base_weight"] = cfg.get("base_weight")
+        e["config_svd_weights"] = cfg.get("svd_weights")
+        e["config_topk"] = cfg.get("topk")
+
+
+def parse_failed_attention_log(loss_root: Path) -> List[Dict[str, Any]]:
+    """Parse failed_attention_log.txt at results root produced by main.py.
+    Each line expected like: ("attention_type", min_valid_loss)
+    """
+    out: List[Dict[str, Any]] = []
+    log_path = loss_root / "failed_attention_log.txt"
+    if not log_path.exists():
+        return out
+    for line in log_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        attn = None
+        min_v = None
+        try:
+            val = ast.literal_eval(line)
+            if isinstance(val, (list, tuple)) and len(val) >= 1:
+                attn = val[0]
+                if len(val) >= 2:
+                    min_v = safe_float(str(val[1]))
+        except Exception:
+            # fallback: simple split
+            m = re.match(r"\(\s*'([^']+)'\s*,\s*([^\)]+)\)", line)
+            if m:
+                attn = m.group(1)
+                min_v = safe_float(m.group(2))
+        if attn:
+            out.append({
+                "attention": attn,
+                "source_group": "failed_log",
+                "path": str(loss_root),
+                "epochs": None,
+                "final_train_loss": None,
+                "final_valid_loss": None,
+                "final_test_loss": None,
+                "best_valid_loss": None,
+                "best_valid_epoch": None,
+                "test_result_file_loss": None,
+                "avg_test_loss": None,
+                "min_test_loss": None,
+                "max_test_loss": None,
+                "total_duration_seconds": None,
+                "model_parameters": None,
+                "flops_human": None,
+                "params_profile": None,
+                "status": "failed",
+                "failed_min_valid_loss": min_v,
+            })
+    return out
+
+# ===========================================================================
+
+
+# ============== New: Parse per-run main_config.yaml and gather artifacts ==============
+
+def _dig(d: Dict[str, Any], keys: List[str], default=None):
+    cur = d
+    for k in keys:
+        if not isinstance(cur, dict):
+            return default
+        if k in cur:
+            cur = cur[k]
+        else:
+            return default
+    return cur
+
+
+def parse_main_config(main_cfg_path: Path) -> Dict[str, Any]:
+    """Parse research_data/configs/main_config.yaml if exists (best-effort, schema-agnostic)."""
+    out: Dict[str, Any] = {
+        "run_config_path": None,
+        "run_dataset": None,
+        "run_epochs": None,
+        "run_batch_size": None,
+        "run_lr": None,
+        "run_optimizer": None,
+        "run_scheduler": None,
+        "run_model": None,
+        "run_device": None,
+        "run_seed": None,
+        "run_loss_base_weight": None,
+        "run_loss_svd_weights": None,
+        "run_loss_topk": None,
+    }
+    if yaml is None or not main_cfg_path.exists():
+        return out
+    try:
+        data = yaml.safe_load(main_cfg_path.read_text(encoding="utf-8", errors="ignore")) or {}
+        out["run_config_path"] = str(main_cfg_path)
+        # dataset
+        out["run_dataset"] = (
+            _dig(data, ["dataset"]) or _dig(data, ["data", "dataset"]) or _dig(data, ["data", "name"]) or _dig(data, ["dataset_name"]) or _dig(data, ["data", "dataset_name"])
+        )
+        # epochs
+        out["run_epochs"] = _dig(data, ["epochs"]) or _dig(data, ["train", "epochs"]) or _dig(data, ["training", "epochs"]) or _dig(data, ["trainer", "epochs"])
+        # batch_size
+        out["run_batch_size"] = (
+            _dig(data, ["batch_size"]) or _dig(data, ["data", "batch_size"]) or _dig(data, ["train", "batch_size"]) or _dig(data, ["training", "batch_size"]) or _dig(data, ["loader", "batch_size"])
+        )
+        # learning rate
+        out["run_lr"] = (
+            _dig(data, ["lr"]) or _dig(data, ["learning_rate"]) or _dig(data, ["optimizer", "lr"]) or _dig(data, ["optim", "lr"]) or _dig(data, ["train", "lr"]) or _dig(data, ["training", "lr"]) or _dig(data, ["trainer", "lr"]) 
+        )
+        # optimizer
+        out["run_optimizer"] = _dig(data, ["optimizer", "name"]) or _dig(data, ["optim", "name"]) or _dig(data, ["optimizer"]) or _dig(data, ["optim"]) or _dig(data, ["trainer", "optimizer"])
+        # scheduler
+        out["run_scheduler"] = _dig(data, ["scheduler", "name"]) or _dig(data, ["lr_scheduler", "name"]) or _dig(data, ["scheduler"]) or _dig(data, ["lr_scheduler"]) 
+        # model name/backbone
+        out["run_model"] = _dig(data, ["model", "name"]) or _dig(data, ["model_name"]) or _dig(data, ["architecture", "model"]) or _dig(data, ["backbone"]) or _dig(data, ["model"]) 
+        # device & seed
+        out["run_device"] = _dig(data, ["device"]) or _dig(data, ["train", "device"]) or _dig(data, ["training", "device"]) or _dig(data, ["trainer", "device"]) 
+        out["run_seed"] = _dig(data, ["seed"]) or _dig(data, ["train", "seed"]) or _dig(data, ["training", "seed"]) or _dig(data, ["reproducibility", "seed"]) 
+        # loss settings
+        out["run_loss_base_weight"] = (
+            _dig(data, ["loss", "base_weight"]) or _dig(data, ["loss", "weights", "base"]) or _dig(data, ["loss_base_weight"]) or _dig(data, ["losses", "base_weight"]) 
+        )
+        out["run_loss_svd_weights"] = _dig(data, ["loss", "svd_weights"]) or _dig(data, ["loss", "weights", "svd"]) or _dig(data, ["loss_svd_weights"]) or _dig(data, ["losses", "svd_weights"]) 
+        out["run_loss_topk"] = _dig(data, ["loss", "topk"]) or _dig(data, ["loss_topk"]) or _dig(data, ["losses", "topk"]) 
+    except Exception:
+        pass
+    return out
+
+
+def _file_size_mb(p: Path) -> Optional[float]:
+    try:
+        if p.exists() and p.is_file():
+            return round(p.stat().st_size / (1024 * 1024), 3)
+    except Exception:
+        return None
+    return None
+
+
+def gather_artifacts_info(attn_dir: Path, attn: str) -> Dict[str, Any]:
+    """Collect presence/size of key artifacts under a single attention run directory."""
+    info: Dict[str, Any] = {
+        "artifact_best_model_path": None,
+        "artifact_best_model_mb": None,
+        "artifact_checkpoint_path": None,
+        "artifact_checkpoint_mb": None,
+        "artifact_loss_plot_path": None,
+        "artifact_loss_plot_exists": False,
+        "artifact_tb_events": 0,
+        "artifact_hardware_log_files": 0,
+    }
+    # best model (*.pt)
+    best = None
+    for patt in [f"best_model_{attn}.pt", "best_model*.pt", "*.pt"]:
+        cand = next((c for c in attn_dir.glob(patt) if c.is_file()), None)
+        if cand:
+            best = cand
+            break
+    if best:
+        info["artifact_best_model_path"] = str(best)
+        info["artifact_best_model_mb"] = _file_size_mb(best)
+    # checkpoint (*.pth)
+    ckpt = None
+    for patt in [f"checkpoint_{attn}.pth", "checkpoint*.pth", "*.pth"]:
+        cand = next((c for c in attn_dir.glob(patt) if c.is_file()), None)
+        if cand:
+            ckpt = cand
+            break
+    if ckpt:
+        info["artifact_checkpoint_path"] = str(ckpt)
+        info["artifact_checkpoint_mb"] = _file_size_mb(ckpt)
+    # loss curve png
+    plot = next((c for c in attn_dir.glob(f"loss_curve_{attn}.png") if c.is_file()), None) or \
+           next((c for c in attn_dir.glob("loss_curve*.png") if c.is_file()), None)
+    if plot:
+        info["artifact_loss_plot_path"] = str(plot)
+        info["artifact_loss_plot_exists"] = True
+    # TensorBoard runs
+    runs_dir = attn_dir / "runs"
+    if runs_dir.exists():
+        try:
+            info["artifact_tb_events"] = sum(1 for p in runs_dir.rglob("*") if p.is_file() and ("tfevents" in p.name.lower()))
+        except Exception:
+            pass
+    # hardware logs
+    hw_dir = attn_dir / "hardware_logs"
+    if hw_dir.exists():
+        try:
+            info["artifact_hardware_log_files"] = sum(1 for p in hw_dir.rglob("*") if p.is_file())
+        except Exception:
+            pass
+    return info
+
+# ===========================================================================
+
+
 def scan_runs(base_root: Path, dated_root_override: Optional[Path] = None, loss_cfg_root_override: Optional[Path] = None) -> List[Dict[str, Any]]:
     entries: List[Dict[str, Any]] = []
 
@@ -167,6 +392,7 @@ def scan_runs(base_root: Path, dated_root_override: Optional[Path] = None, loss_
             for attn_dir in sorted([p for p in cfg_dir.iterdir() if p.is_dir()]):
                 attn = attn_dir.name
                 entry = collect_single_run(attn_dir, attn, source_group=cfg_dir.name)
+                entry["loss_config_id"] = cfg_dir.name
                 entries.append(entry)
 
     return entries
@@ -188,6 +414,13 @@ def collect_single_run(attn_dir: Path, attn: str, source_group: str) -> Dict[str
     research_dir = attn_dir / "research_data"
     research_stats = read_research_metrics(research_dir, attn)
 
+    # New: parse per-run main_config.yaml (best-effort)
+    main_cfg_path = research_dir / "configs" / "main_config.yaml"
+    run_cfg = parse_main_config(main_cfg_path)
+
+    # New: collect artifact presence and size
+    artifacts = gather_artifacts_info(attn_dir, attn)
+
     return {
         "attention": attn,
         "source_group": source_group,
@@ -196,17 +429,27 @@ def collect_single_run(attn_dir: Path, attn: str, source_group: str) -> Dict[str
         "test_result_file_loss": test_result,
         **test_stats,
         **research_stats,
+        **run_cfg,
+        **artifacts,
+        "status": "ok",
     }
 
 
 def write_csv_summary(entries: List[Dict[str, Any]], out_csv: Path) -> None:
     out_csv.parent.mkdir(parents=True, exist_ok=True)
     fields = [
-        "attention", "source_group", "path", "epochs",
+        "attention", "source_group", "loss_config_id", "status", "path", "epochs",
         "final_train_loss", "final_valid_loss", "final_test_loss",
         "best_valid_loss", "best_valid_epoch",
         "test_result_file_loss", "avg_test_loss", "min_test_loss", "max_test_loss",
         "total_duration_seconds", "model_parameters", "flops_human", "params_profile",
+        "config_base_weight", "config_svd_weights", "config_topk", "failed_min_valid_loss",
+        # New: per-run config fields
+        "run_config_path", "run_dataset", "run_epochs", "run_batch_size", "run_lr", "run_optimizer", "run_scheduler", "run_model", "run_device", "run_seed",
+        "run_loss_base_weight", "run_loss_svd_weights", "run_loss_topk",
+        # New: artifact fields
+        "artifact_best_model_path", "artifact_best_model_mb", "artifact_checkpoint_path", "artifact_checkpoint_mb",
+        "artifact_loss_plot_path", "artifact_loss_plot_exists", "artifact_tb_events", "artifact_hardware_log_files",
     ]
     with out_csv.open('w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=fields)
@@ -241,7 +484,11 @@ def generate_markdown(entries: List[Dict[str, Any]], out_md: Path) -> None:
     out_md.parent.mkdir(parents=True, exist_ok=True)
 
     # Prefer ranking by avg_test_loss, then final_test_loss, then best_valid_loss
-    best_map = best_by_attention(entries, key_order=["avg_test_loss", "final_test_loss", "best_valid_loss"])
+    # Exclude failed entries from ranking
+    valid_entries = [e for e in entries if e.get("status") != "failed"]
+    if not valid_entries:
+        valid_entries = entries
+    best_map = best_by_attention(valid_entries, key_order=["avg_test_loss", "final_test_loss", "best_valid_loss"])
 
     # Build a sorted list of best entries
     best_list = list(best_map.values())
@@ -258,21 +505,30 @@ def generate_markdown(entries: List[Dict[str, Any]], out_md: Path) -> None:
 
     # Top-5 summary
     lines.append("## 总体排名（Top-5，按测试损失）\n")
-    lines.append("| 排名 | 注意力 | 平均测试损失 | 最终测试损失 | 最佳验证损失 | 轮数 | 源目录 |\n")
-    lines.append("|---:|:--|--:|--:|--:|--:|:--|\n")
+    lines.append("| 排名 | 注意力 | 平均测试损失 | 最终测试损失 | 最佳验证损失 | 轮数 | 源目录 | Loss配置 |\n")
+    lines.append("|---:|:--|--:|--:|--:|--:|:--|:--|\n")
     for i, e in enumerate(best_list[:5], 1):
         lines.append(
-            f"| {i} | {e['attention']} | {fmt(e.get('avg_test_loss'))} | {fmt(e.get('final_test_loss'))} | {fmt(e.get('best_valid_loss'))} | {e.get('epochs') or '-'} | {e.get('source_group')} |\n"
+            f"| {i} | {e['attention']} | {fmt(e.get('avg_test_loss'))} | {fmt(e.get('final_test_loss'))} | {fmt(e.get('best_valid_loss'))} | {e.get('epochs') or '-'} | {e.get('source_group')} | {e.get('loss_config_id') or '-'} |\n"
         )
 
-    # Detailed table
+    # Detailed table (add run config columns)
     lines.append("\n## 详细对比（每类注意力的最佳一次）\n")
-    lines.append("| 注意力 | 平均测试损失 | 最终测试损失 | 最佳验证损失 | 轮数 | 训练时长(s) | 参数量 | FLOPs | 源目录 |\n")
-    lines.append("|:--|--:|--:|--:|--:|--:|--:|:--|:--|\n")
+    lines.append("| 注意力 | 平均测试损失 | 最终测试损失 | 最佳验证损失 | 轮数 | 训练时长(s) | 参数量 | FLOPs | 源目录 | Loss配置 | base_weight | topk | 数据集 | 批量 | 学习率 | 优化器 |\n")
+    lines.append("|:--|--:|--:|--:|--:|--:|--:|:--|:--|:--|--:|--:|:--|--:|--:|:--|\n")
     for e in best_list:
         lines.append(
-            f"| {e['attention']} | {fmt(e.get('avg_test_loss'))} | {fmt(e.get('final_test_loss'))} | {fmt(e.get('best_valid_loss'))} | {e.get('epochs') or '-'} | {fmt(e.get('total_duration_seconds'))} | {e.get('model_parameters') or '-'} | {e.get('flops_human') or '-'} | {e.get('source_group')} |\n"
+            f"| {e['attention']} | {fmt(e.get('avg_test_loss'))} | {fmt(e.get('final_test_loss'))} | {fmt(e.get('best_valid_loss'))} | {e.get('epochs') or '-'} | {fmt(e.get('total_duration_seconds'))} | {e.get('model_parameters') or '-'} | {e.get('flops_human') or '-'} | {e.get('source_group')} | {e.get('loss_config_id') or '-'} | {fmt(e.get('config_base_weight'))} | {e.get('config_topk') or '-'} | {e.get('run_dataset') or '-'} | {fmt(e.get('run_batch_size'))} | {fmt(e.get('run_lr'))} | {e.get('run_optimizer') or '-'} |\n"
         )
+
+    # Failures
+    failures = [e for e in entries if e.get("status") == "failed"]
+    if failures:
+        lines.append("\n## 失败实验（来自 failed_attention_log.txt）\n")
+        lines.append("| 注意力 | 最小验证损失 | 来源 |\n")
+        lines.append("|:--|--:|:--|\n")
+        for e in failures:
+            lines.append(f"| {e['attention']} | {fmt(e.get('failed_min_valid_loss'))} | {e.get('source_group')} |\n")
 
     # Notes on data sources
     lines.append("\n## 数据来源与解析说明\n")
@@ -280,6 +536,9 @@ def generate_markdown(entries: List[Dict[str, Any]], out_md: Path) -> None:
     lines.append("- test_results/test_loss_log.txt：解析批次级测试损失与平均值。\n")
     lines.append("- test_result_*.txt：解析一次性汇报的测试损失。\n")
     lines.append("- research_data/comprehensive_metrics_*.json：若存在，补充训练时长、模型复杂度与FLOPs。\n")
+    lines.append("- research_data/configs/main_config.yaml：若存在，抽取数据集、批量、学习率、优化器等运行配置。\n")
+    lines.append("- 产物统计：记录 best_model/ckpt 文件大小、是否存在 loss 曲线图、TensorBoard 事件文件数量与硬件日志文件数。\n")
+    lines.append("- failed_attention_log.txt：若存在，列出训练失败的注意力机制（来自训练脚本 main.py）。\n")
 
     out_md.write_text("".join(lines), encoding="utf-8")
 
@@ -307,6 +566,9 @@ def main():
     parser.add_argument("--dated-root", type=str, default=None, help="Override dated results root (e.g., modify_multi_attention/attention_results1)")
     parser.add_argument("--loss-root", type=str, default=None, help="Override loss_config_* results root")
     parser.add_argument("--output-dir", type=str, default=None, help="Directory to write outputs; default: <base-root>/report")
+    # New options to integrate outputs with config and failures
+    parser.add_argument("--config-file", type=str, default=None, help="Path to YAML config (e.g., config_server.yaml) to annotate loss_config details")
+    parser.add_argument("--include-failures", action="store_true", help="Include failed attention entries from failed_attention_log.txt if present under loss-root")
     args = parser.parse_args()
 
     base_root = Path(args.base_root).resolve()
@@ -314,6 +576,16 @@ def main():
     loss_cfg_root_override = Path(args.loss_root).resolve() if args.loss_root else None
 
     entries = scan_runs(base_root, dated_root_override=dated_root_override, loss_cfg_root_override=loss_cfg_root_override)
+
+    # Optionally include failures from failed_attention_log.txt
+    if args.include_failures and loss_cfg_root_override and (loss_cfg_root_override / "failed_attention_log.txt").exists():
+        failures = parse_failed_attention_log(loss_cfg_root_override)
+        entries.extend(failures)
+
+    # Optionally annotate entries with loss config details
+    cfg_mapping = load_loss_config_mapping(Path(args.config_file).resolve()) if args.config_file else {}
+    if cfg_mapping:
+        annotate_with_loss_config(entries, cfg_mapping)
 
     report_dir = Path(args.output_dir).resolve() if args.output_dir else base_root / "report"
     out_csv = report_dir / "attention_summary.csv"
@@ -327,6 +599,8 @@ def main():
         print(f"Using dated_root override: {dated_root_override}")
     if loss_cfg_root_override:
         print(f"Using loss_cfg_root override: {loss_cfg_root_override}")
+    if args.config_file:
+        print(f"Using config_file: {Path(args.config_file).resolve()}")
     print(f"Summary CSV: {out_csv}")
     print(f"Markdown Report: {out_md}")
     print(f"Total entries: {len(entries)}")

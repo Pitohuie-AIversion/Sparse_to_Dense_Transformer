@@ -210,51 +210,65 @@ def parse_test_loss_log(txt_path: Path) -> Dict[str, Optional[float]]:
 
 def read_hardware_summary(research_dir: Path) -> Optional[Dict[str, Any]]:
     """Read hardware monitoring summary data"""
-    hardware_file = research_dir / "hardware_summary.json"
-    data = safe_json_load(hardware_file)
-    if data:
-        return {
-            "avg_gpu_utilization": data.get("avg_gpu_utilization"),
-            "max_gpu_memory_mb": data.get("max_gpu_memory_mb"),
-            "avg_cpu_percent": data.get("avg_cpu_percent"),
-            "max_ram_mb": data.get("max_ram_mb"),
-            "gpu_temperature_max": data.get("gpu_temperature_max")
-        }
+    possible_paths = [
+        research_dir / "hardware_summary.json",
+        research_dir / "hardware_logs" / "hardware_metrics.json"
+    ]
+    
+    for hardware_file in possible_paths:
+        data = safe_json_load(hardware_file)
+        if data:
+            return {
+                "avg_gpu_utilization": data.get("avg_gpu_utilization"),
+                "max_gpu_memory_mb": data.get("max_gpu_memory_mb"),
+                "avg_cpu_percent": data.get("avg_cpu_percent"),
+                "max_ram_mb": data.get("max_ram_mb"),
+                "gpu_temperature_max": data.get("gpu_temperature_max")
+            }
     return None
 
 
 def read_learning_rate_data(research_dir: Path) -> Optional[Dict[str, Any]]:
     """Read learning rate schedule data"""
-    lr_file = research_dir / "learning_rate_log.json"
-    data = safe_json_load(lr_file)
-    if data:
-        lr_values = data.get("learning_rates", [])
-        if lr_values:
-            return {
-                "initial_lr": lr_values[0] if lr_values else None,
-                "final_lr": lr_values[-1] if lr_values else None,
-                "min_lr": min(lr_values),
-                "max_lr": max(lr_values),
-                "lr_schedule_type": data.get("schedule_type")
-            }
+    possible_paths = [
+        research_dir / "learning_rate_log.json",
+        research_dir / "research_data" / "training_log.json"
+    ]
+    
+    for lr_file in possible_paths:
+        data = safe_json_load(lr_file)
+        if data:
+            lr_values = data.get("learning_rates", [])
+            if lr_values:
+                return {
+                    "initial_lr": lr_values[0] if lr_values else None,
+                    "final_lr": lr_values[-1] if lr_values else None,
+                    "min_lr": min(lr_values),
+                    "max_lr": max(lr_values),
+                    "lr_schedule_type": data.get("schedule_type")
+                }
     return None
 
 
 def read_optimizer_data(research_dir: Path) -> Optional[Dict[str, Any]]:
     """Read optimizer configuration and state"""
-    opt_file = research_dir / "optimizer_info.json"
-    data = safe_json_load(opt_file)
-    if data is None:
-        return None
+    possible_paths = [
+        research_dir / "optimizer_info.json",
+        research_dir / "research_data" / "training_log.json"
+    ]
     
-    return {
-        "optimizer_type": data.get("optimizer_type"),
-        "weight_decay": data.get("weight_decay"),
-        "momentum": data.get("momentum"),
-        "beta1": data.get("beta1"),
-        "beta2": data.get("beta2"),
-        "eps": data.get("eps")
-    }
+    for opt_file in possible_paths:
+        data = safe_json_load(opt_file)
+        if data is not None:
+            return {
+                "optimizer_type": data.get("optimizer_type"),
+                "weight_decay": data.get("weight_decay"),
+                "momentum": data.get("momentum"),
+                "beta1": data.get("beta1"),
+                "beta2": data.get("beta2"),
+                "eps": data.get("eps")
+            }
+    return None
 
 
 def analyze_training_convergence(loss_log_path: Path) -> Optional[Dict[str, Any]]:
@@ -347,35 +361,44 @@ def analyze_training_convergence(loss_log_path: Path) -> Optional[Dict[str, Any]
 
 def read_convergence_metrics(research_dir: Path) -> Optional[Dict[str, Any]]:
     """Read convergence analysis metrics"""
-    conv_file = research_dir / "convergence_metrics.json"
-    data = safe_json_load(conv_file)
-    if data is None:
-        return None
+    possible_paths = [
+        research_dir / "convergence_metrics.json",
+        research_dir / "research_data" / "convergence_analysis.json"
+    ]
     
-    return {
-        "loss_variance": data.get("loss_variance"),
-        "gradient_norm_avg": data.get("gradient_norm_avg"),
-        "gradient_norm_max": data.get("gradient_norm_max"),
-        "early_stopping_epoch": data.get("early_stopping_epoch"),
-        "plateau_epochs": data.get("plateau_epochs")
-    }
+    for conv_file in possible_paths:
+        data = safe_json_load(conv_file)
+        if data is not None:
+            return {
+                "loss_variance": data.get("loss_variance"),
+                "gradient_norm_avg": data.get("gradient_norm_avg"),
+                "gradient_norm_max": data.get("gradient_norm_max"),
+                "early_stopping_epoch": data.get("early_stopping_epoch"),
+                "plateau_epochs": data.get("plateau_epochs")
+            }
+    return None
 
 
 def read_system_info(research_dir: Path) -> Optional[Dict[str, Any]]:
     """Read system information"""
-    sys_file = research_dir / "system_info.json"
-    data = safe_json_load(sys_file)
-    if data is None:
-        return None
+    possible_paths = [
+        research_dir / "system_info.json",
+        research_dir / "research_data" / "system_info.json",
+        research_dir / "hardware_logs" / "system_info.json"
+    ]
     
-    return {
-        "python_version": data.get("python_version"),
-        "torch_version": data.get("torch_version"),
-        "cuda_version": data.get("cuda_version"),
-        "gpu_name": data.get("gpu_name"),
-        "cpu_count": data.get("cpu_count"),
-        "total_ram_gb": data.get("total_ram_gb")
-    }
+    for sys_file in possible_paths:
+        data = safe_json_load(sys_file)
+        if data is not None:
+            return {
+                "python_version": data.get("python_version"),
+                "torch_version": data.get("torch_version"),
+                "cuda_version": data.get("cuda_version"),
+                "gpu_name": data.get("gpu_name"),
+                "cpu_count": data.get("cpu_count"),
+                "total_ram_gb": data.get("total_ram_gb")
+            }
+    return None
 
 
 def read_research_metrics(research_dir: Path, attn: str) -> Dict[str, Any]:
@@ -391,19 +414,26 @@ def read_research_metrics(research_dir: Path, attn: str) -> Dict[str, Any]:
         "convergence_metrics": None,
         "system_info": None,
     }
-    metrics_path = research_dir / f"comprehensive_metrics_{attn}.json"
-    if metrics_path.exists():
-        try:
-            data = json.loads(metrics_path.read_text(encoding="utf-8", errors="ignore"))
-            exp = data.get("experiment_summary", {})
-            out["total_duration_seconds"] = exp.get("total_duration_seconds")
-            out["final_test_loss_collector"] = exp.get("final_test_loss")
-            mc = data.get("model_complexity", {})
-            out["model_parameters"] = mc.get("trainable_parameters") or mc.get("total_parameters")
-            out["flops_human"] = mc.get("flops_human")
-            out["params_profile"] = mc.get("params_profile")
-        except Exception:
-            pass
+    # Try multiple possible paths for comprehensive metrics
+    possible_paths = [
+        research_dir / f"comprehensive_metrics_{attn}.json",
+        research_dir / "research_data" / f"comprehensive_metrics_{attn}.json"
+    ]
+    
+    for metrics_path in possible_paths:
+        if metrics_path.exists():
+            try:
+                data = json.loads(metrics_path.read_text(encoding="utf-8", errors="ignore"))
+                exp = data.get("experiment_summary", {})
+                out["total_duration_seconds"] = exp.get("total_duration_seconds")
+                out["final_test_loss_collector"] = exp.get("final_test_loss")
+                mc = data.get("model_complexity", {})
+                out["model_parameters"] = mc.get("trainable_parameters") or mc.get("total_parameters")
+                out["flops_human"] = mc.get("flops_human")
+                out["params_profile"] = mc.get("params_profile")
+                break
+            except Exception:
+                continue
     
     # Read additional monitoring data
     out["hardware_summary"] = read_hardware_summary(research_dir)
@@ -644,6 +674,10 @@ def collect_single_run(attn_dir: Path, attn: str, source_group: str) -> Dict[str
         **flattened_data,
         "status": "ok",
     }
+    
+    # Map final_test_loss_collector to final_test_loss if available
+    if research_stats.get("final_test_loss_collector") is not None and collected_data.get("final_test_loss") is None:
+        collected_data["final_test_loss"] = research_stats["final_test_loss_collector"]
     
     # Validate and clean the collected data
     validated_data = validate_experiment_data(collected_data)

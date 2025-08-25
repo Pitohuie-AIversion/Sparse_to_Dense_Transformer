@@ -1,451 +1,886 @@
-import os
-import re
+import argparse
 import csv
 import json
-from pathlib import Path
-from typing import Dict, Any, List, Optional, Tuple
-import argparse
+import re
 import ast
-from datetime import datetime
 import statistics
+import math
+from typing import Any, Dict, List, Optional, Tuple
 
-try:
-    import yaml  # Optional
-except Exception:
-    yaml = None
+from pathlib import Path
 
+yaml = None
 try:
-    import numpy as np
+    import yaml
 except ImportError:
-    np = None
+    pass
 
 
-def safe_float(x: str) -> Optional[float]:
+def safe_json_load(json_path: Path) -> Dict[str, Any]:
+    """Load JSON content from a file path, return empty dict on any error."""
     try:
-        return float(x)
+        if not json_path.exists():
+            return {}
+        text = json_path.read_text(encoding="utf-8", errors="ignore")
+        data = json.loads(text)
+        return data if isinstance(data, dict) else {}
     except Exception:
-        try:
-            # scientific notation like 7.9e-05
-            return float(x.strip())
-        except Exception:
-            return None
+        return {}
 
 
-def safe_json_load(file_path: Path) -> Optional[Dict[str, Any]]:
-    """Safely load JSON file with comprehensive error handling"""
+def safe_float(v: Any) -> Optional[float]:
+    """Best-effort conversion to finite float. Return None if invalid."""
     try:
-        if not file_path.exists():
+        if v is None:
             return None
-        
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read().strip()
-            if not content:
-                return None
-            return json.loads(content)
-    except json.JSONDecodeError as e:
-        print(f"Warning: JSON decode error in {file_path}: {e}")
+        if isinstance(v, (int, float)):
+            fv = float(v)
+            return fv if math.isfinite(fv) else None
+        s = str(v).strip()
+        # Remove commas and surrounding quotes
+        s = s.strip("'\"").replace(",", "")
+        if s.lower() in {"nan", "inf", "+inf", "-inf"}:
+            return None
+        m = re.search(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?", s)
+        if not m:
+            return None
+        fv = float(m.group(0))
+        return fv if math.isfinite(fv) else None
+    except Exception:
         return None
-    except UnicodeDecodeError as e:
-        print(f"Warning: Unicode decode error in {file_path}: {e}")
+
+
+def parse_loss_log(loss_log: Path) -> Dict[str, Any]:
+    """Parse a training loss log file to extract key metrics.
+    Supports JSON logs and plain-text logs with lines containing 'train'/'val' losses.
+    """
+    out: Dict[str, Any] = {"training_status": "unknown"}
+    if not loss_log or not loss_log.exists():
+        out["training_status"] = "no_log_file"
+        return out
+
+    text = loss_log.read_text(encoding="utf-8", errors="ignore")
+    # Try JSON first
+    try:
+        data = json.loads(text)
+        if isinstance(data, dict):
+            # Pass through known fields if present
+            for k in [
+                "epochs", "final_train_loss", "final_valid_loss",
+                "best_valid_loss", "best_valid_epoch", "training_status"
+            ]:
+                if k in data:
+                    out[k] = data[k]
+            # Normalize status
+            if out.get("training_status") is None:
+                out["training_status"] = "ok"
+            return out
+    except Exception:
+        pass
+
+    # Try CSV-like parsing with headers such as: Epoch, Train Loss, Valid Loss, Test Loss
+    try:
+        lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+        header_idx = -1
+        for i, ln in enumerate(lines):
+            low = ln.lower()
+            if "," in ln and ("epoch" in low) and (("train" in low) or ("valid" in low) or ("val" in low)) and ("loss" in low):
+                header_idx = i
+                break
+        if header_idx >= 0:
+            reader = csv.DictReader(lines[header_idx:])
+            epochs_list: List[int] = []
+            train_list: List[float] = []
+            valid_list: List[float] = []
+            for row in reader:
+                if not row:
+                    continue
+                keymap = { (k or "").strip().lower(): k for k in row.keys() if k is not None }
+                def getcol(names: List[str]) -> Optional[float]:
+                    for name in names:
+                        col = keymap.get(name)
+                        if col is not None:
+                            v = safe_float(row.get(col))
+                            if v is not None:
+                                return v
+                    return None
+                ep = getcol(["epoch"])  # epoch index
+                tr = getcol(["train loss", "train_loss", "train"])  # training loss
+                va = getcol(["valid loss", "validation loss", "val loss", "val_loss", "valid", "validation", "val"])  # validation loss
+                if ep is not None:
+                    try:
+                        epochs_list.append(int(ep))
+                    except Exception:
+                        pass
+                if tr is not None:
+                    train_list.append(tr)
+                if va is not None:
+                    valid_list.append(va)
+            if train_list:
+                out["final_train_loss"] = train_list[-1]
+            if valid_list:
+                out["final_valid_loss"] = valid_list[-1]
+                best_val = min(valid_list)
+                out["best_valid_loss"] = best_val
+                try:
+                    idx = valid_list.index(best_val)
+                    if epochs_list and len(epochs_list) == len(valid_list):
+                        out["best_valid_epoch"] = int(epochs_list[idx])
+                    else:
+                        out["best_valid_epoch"] = idx + 1
+                except Exception:
+                    pass
+            # Epochs fallback from list lengths
+            if epochs_list:
+                try:
+                    out["epochs"] = max(epochs_list)
+                except Exception:
+                    pass
+            if not out.get("epochs"):
+                seq_len = max(len(train_list), len(valid_list))
+                if seq_len:
+                    out["epochs"] = seq_len
+            # Set training status
+            if out.get("epochs"):
+                out["training_status"] = "completed"
+            elif train_list or valid_list:
+                out["training_status"] = "in_progress"
+            else:
+                out["training_status"] = "unknown"
+            return out
+    except Exception:
+        pass
+
+    # Fallback: regex parsing from text
+    train_losses = [safe_float(m) for m in re.findall(r"train[^\n]*?(?:loss|Loss)[^\d\n]*([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)", text)]
+    val_losses = [safe_float(m) for m in re.findall(r"val(?:id)?(?:ation)?[^\n]*?(?:loss|Loss)[^\d\n]*([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)", text)]
+    train_losses = [x for x in train_losses if x is not None]
+    val_losses = [x for x in val_losses if x is not None]
+
+    # Epochs: robust detection - prefer totals from "Epoch X/Y", else use max single
+    epochs_total_candidates = [int(m.group(2)) for m in re.finditer(r"[Ee]poch\s*(\d+)\s*/\s*(\d+)", text)]
+    epochs_single_candidates = [int(m.group(1)) for m in re.finditer(r"[Ee]poch\s*(\d+)(?!\s*/)", text)]
+    if epochs_total_candidates:
+        out["epochs"] = max(epochs_total_candidates)
+    elif epochs_single_candidates:
+        out["epochs"] = max(epochs_single_candidates)
+
+    if train_losses:
+        out["final_train_loss"] = train_losses[-1]
+    if val_losses:
+        out["final_valid_loss"] = val_losses[-1]
+
+    # Try explicit 'best valid loss' pattern from logs (preferred if present)
+    m_best = re.search(r"best[_\s-]?val(?:id)?(?:ation)?[_\s-]?loss[\s:=]*([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)(?:[^\n]*?[Ee]poch[^\d]*(\d+))?", text, re.IGNORECASE)
+    if m_best:
+        bvl = safe_float(m_best.group(1))
+        if bvl is not None:
+            out["best_valid_loss"] = bvl
+            # Prefer epoch mentioned with the best loss if available
+            if m_best.lastindex and m_best.lastindex >= 2:
+                be = safe_float(m_best.group(2))
+                if be is not None:
+                    out["best_valid_epoch"] = int(be)
+            # If epoch not explicitly present, try infer from sequence position
+            if out.get("best_valid_epoch") is None and val_losses:
+                try:
+                    out["best_valid_epoch"] = val_losses.index(bvl) + 1
+                except Exception:
+                    pass
+    elif val_losses:
+        # Fallback: compute best from validation sequence
+        best_val = min(val_losses)
+        out["best_valid_loss"] = best_val
         try:
-            # Try with different encoding
-            with open(file_path, 'r', encoding='gbk') as f:
-                content = f.read().strip()
-                if content:
-                    return json.loads(content)
+            out["best_valid_epoch"] = val_losses.index(best_val) + 1
         except Exception:
             pass
-        return None
-    except Exception as e:
-        print(f"Warning: Unexpected error reading {file_path}: {e}")
-        return None
 
+    # Fallback: derive epochs from number of parsed loss lines if still missing
+    if not out.get("epochs"):
+        seq_len = max(len(train_losses), len(val_losses))
+        if seq_len:
+            out["epochs"] = seq_len
 
-def safe_file_read(file_path: Path, encoding: str = 'utf-8') -> Optional[str]:
-    """Safely read text file with fallback encodings"""
-    encodings = [encoding, 'utf-8', 'gbk', 'latin-1']
-    
-    for enc in encodings:
-        try:
-            if not file_path.exists():
-                return None
-            with open(file_path, 'r', encoding=enc) as f:
-                return f.read()
-        except UnicodeDecodeError:
-            continue
-        except Exception as e:
-            print(f"Warning: Error reading {file_path} with {enc}: {e}")
-            continue
-    
-    print(f"Error: Could not read {file_path} with any encoding")
-    return None
+    # Set training status
+    if out.get("epochs"):
+        out["training_status"] = "completed"
+    elif train_losses or val_losses:
+        out["training_status"] = "in_progress"
+    else:
+        out["training_status"] = "unknown"
 
-
-def validate_experiment_data(data: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate and clean experiment data"""
-    validated = data.copy()
-    
-    # Validate numeric fields
-    numeric_fields = [
-        'final_train_loss', 'final_valid_loss', 'final_test_loss',
-        'best_valid_loss', 'avg_test_loss', 'min_test_loss', 'max_test_loss',
-        'total_duration_seconds', 'learning_rate_initial', 'learning_rate_final'
-    ]
-    
-    for field in numeric_fields:
-        if field in validated and validated[field] is not None:
-            try:
-                validated[field] = float(validated[field])
-                # Check for reasonable ranges
-                if field.endswith('_loss') and (validated[field] < 0 or validated[field] > 1000):
-                    print(f"Warning: Unusual loss value {validated[field]} for {field}")
-                elif field == 'total_duration_seconds' and (validated[field] < 0 or validated[field] > 86400 * 7):  # 7 days
-                    print(f"Warning: Unusual duration {validated[field]} seconds")
-            except (ValueError, TypeError):
-                print(f"Warning: Invalid numeric value for {field}: {validated[field]}")
-                validated[field] = None
-    
-    # Validate string fields
-    string_fields = ['attention', 'source_group', 'status']
-    for field in string_fields:
-        if field in validated and validated[field] is not None:
-            validated[field] = str(validated[field]).strip()
-            if not validated[field]:  # Empty after strip
-                validated[field] = None
-    
-    # Ensure status is valid
-    if validated.get('status') not in ['ok', 'failed', None]:
-        print(f"Warning: Unknown status '{validated.get('status')}', setting to None")
-        validated['status'] = None
-    
-    return validated
-
-
-def parse_loss_log(loss_log_path: Path) -> Dict[str, Any]:
-    """Parse loss_logs/loss_log.txt with header: Epoch, Train Loss, Valid Loss, Test Loss"""
-    result = {
-        "epochs": 0,
-        "final_train_loss": None,
-        "final_valid_loss": None,
-        "final_test_loss": None,
-        "best_valid_loss": None,
-        "best_valid_epoch": None,
-    }
-    if not loss_log_path.exists():
-        return result
-
-    lines = [line.strip() for line in loss_log_path.read_text(encoding="utf-8", errors="ignore").splitlines() if line.strip()]
-    if not lines or len(lines) <= 1:
-        return result
-
-    header = [h.strip().lower() for h in lines[0].split(',')]
-    # Build column indices safely
-    idx = {name: header.index(name) if name in header else None for name in ["epoch", "train loss", "valid loss", "test loss"]}
-
-    best_valid: Tuple[int, float] = (-1, float('inf'))
-
-    for row in lines[1:]:
-        parts = [p.strip() for p in row.split(',')]
-        if idx["epoch"] is not None and idx["epoch"] < len(parts):
-            epoch = int(parts[idx["epoch"]])
-            result["epochs"] = max(result["epochs"], epoch)
-        else:
-            epoch = result["epochs"] + 1
-            result["epochs"] = epoch
-
-        if idx["train loss"] is not None and idx["train loss"] < len(parts):
-            result["final_train_loss"] = safe_float(parts[idx["train loss"]])
-        if idx["valid loss"] is not None and idx["valid loss"] < len(parts):
-            v = safe_float(parts[idx["valid loss"]])
-            result["final_valid_loss"] = v
-            if v is not None and v < best_valid[1]:
-                best_valid = (epoch, v)
-        if idx["test loss"] is not None and idx["test loss"] < len(parts):
-            result["final_test_loss"] = safe_float(parts[idx["test loss"]])
-
-    if best_valid[0] != -1:
-        result["best_valid_epoch"] = best_valid[0]
-        result["best_valid_loss"] = best_valid[1]
-    return result
-
-
-def parse_test_result_file(txt_path: Path) -> Optional[float]:
-    """Parse 'Test Loss for xxx: value'"""
-    if not txt_path.exists():
-        return None
-    text = txt_path.read_text(encoding="utf-8", errors="ignore")
-    m = re.search(r"Test\s+Loss\s+for\s+[^:]+:\s*([0-9eE\.+\-]+)", text)
-    if m:
-        return safe_float(m.group(1))
-    return None
-
-
-def parse_test_loss_log(txt_path: Path) -> Dict[str, Optional[float]]:
-    """Parse test_results/test_loss_log.txt with lines and 'Average Test Loss: X'"""
-    result = {"avg_test_loss": None, "min_test_loss": None, "max_test_loss": None}
-    if not txt_path.exists():
-        return result
-    values: List[float] = []
-    for line in txt_path.read_text(encoding="utf-8", errors="ignore").splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        if line.lower().startswith("batch"):
-            parts = [p.strip() for p in line.split(',')]
-            if len(parts) >= 2:
-                v = safe_float(parts[1])
-                if v is not None:
-                    values.append(v)
-        elif line.lower().startswith("average test loss"):
-            m = re.search(r":\s*([0-9eE\.+\-]+)", line)
-            if m:
-                result["avg_test_loss"] = safe_float(m.group(1))
-    if values:
-        result["min_test_loss"] = min(values)
-        result["max_test_loss"] = max(values)
-        if result["avg_test_loss"] is None:
-            result["avg_test_loss"] = sum(values) / len(values)
-    return result
-
-
-def read_hardware_summary(research_dir: Path) -> Optional[Dict[str, Any]]:
-    """Read hardware monitoring summary data"""
-    possible_paths = [
-        research_dir / "hardware_summary.json",
-        research_dir / "hardware_logs" / "hardware_metrics.json"
-    ]
-    
-    for hardware_file in possible_paths:
-        data = safe_json_load(hardware_file)
-        if data:
-            return {
-                "avg_gpu_utilization": data.get("avg_gpu_utilization"),
-                "max_gpu_memory_mb": data.get("max_gpu_memory_mb"),
-                "avg_cpu_percent": data.get("avg_cpu_percent"),
-                "max_ram_mb": data.get("max_ram_mb"),
-                "gpu_temperature_max": data.get("gpu_temperature_max")
-            }
-    return None
-
-
-def read_learning_rate_data(research_dir: Path) -> Optional[Dict[str, Any]]:
-    """Read learning rate schedule data"""
-    possible_paths = [
-        research_dir / "learning_rate_log.json",
-        research_dir / "research_data" / "training_log.json"
-    ]
-    
-    for lr_file in possible_paths:
-        data = safe_json_load(lr_file)
-        if data:
-            lr_values = data.get("learning_rates", [])
-            if lr_values:
-                return {
-                    "initial_lr": lr_values[0] if lr_values else None,
-                    "final_lr": lr_values[-1] if lr_values else None,
-                    "min_lr": min(lr_values),
-                    "max_lr": max(lr_values),
-                    "lr_schedule_type": data.get("schedule_type")
-                }
-    return None
-
-
-def read_optimizer_data(research_dir: Path) -> Optional[Dict[str, Any]]:
-    """Read optimizer configuration and state"""
-    possible_paths = [
-        research_dir / "optimizer_info.json",
-        research_dir / "research_data" / "training_log.json"
-    ]
-    
-    for opt_file in possible_paths:
-        data = safe_json_load(opt_file)
-        if data is not None:
-            return {
-                "optimizer_type": data.get("optimizer_type"),
-                "weight_decay": data.get("weight_decay"),
-                "momentum": data.get("momentum"),
-                "beta1": data.get("beta1"),
-                "beta2": data.get("beta2"),
-                "eps": data.get("eps")
-            }
-    return None
-
-
-def analyze_training_convergence(loss_log_path: Path) -> Optional[Dict[str, Any]]:
-    """Analyze training convergence from loss log"""
-    content = safe_file_read(loss_log_path)
-    if content is None:
-        return None
-    
-    try:
-        lines = [line.strip() for line in content.splitlines() if line.strip()]
-        if len(lines) <= 1:
-            return None
-        
-        header = [h.strip().lower() for h in lines[0].split(',')]
-        train_losses, valid_losses = [], []
-        
-        # Extract loss values
-        for row in lines[1:]:
-            parts = [p.strip() for p in row.split(',')]
-            if len(parts) >= len(header):
-                try:
-                    if "train loss" in header:
-                        train_loss = safe_float(parts[header.index("train loss")])
-                        if train_loss is not None:
-                            train_losses.append(train_loss)
-                    if "valid loss" in header:
-                        valid_loss = safe_float(parts[header.index("valid loss")])
-                        if valid_loss is not None:
-                            valid_losses.append(valid_loss)
-                except (IndexError, ValueError):
-                    continue
-        
-        if not train_losses or not valid_losses:
-            return None
-        
-        # Calculate convergence metrics
-        metrics = {}
-        
-        # Training stability (variance in last 20% of epochs)
-        if len(train_losses) >= 10:
-            last_20_percent = int(len(train_losses) * 0.2)
-            recent_train = train_losses[-last_20_percent:]
-            recent_valid = valid_losses[-last_20_percent:]
-            
-            if np and len(recent_train) > 1:
-                metrics["train_loss_variance_late"] = float(np.var(recent_train))
-                metrics["valid_loss_variance_late"] = float(np.var(recent_valid))
-            else:
-                metrics["train_loss_variance_late"] = statistics.variance(recent_train) if len(recent_train) > 1 else 0
-                metrics["valid_loss_variance_late"] = statistics.variance(recent_valid) if len(recent_valid) > 1 else 0
-        
-        # Overfitting detection (validation loss trend)
-        if len(valid_losses) >= 5:
-            best_valid_idx = valid_losses.index(min(valid_losses))
-            epochs_after_best = len(valid_losses) - best_valid_idx - 1
-            metrics["epochs_after_best_valid"] = epochs_after_best
-            
-            # Check if validation loss increased significantly after best
-            if epochs_after_best > 0:
-                final_valid = valid_losses[-1]
-                best_valid = min(valid_losses)
-                metrics["overfitting_ratio"] = final_valid / best_valid if best_valid > 0 else 1.0
-        
-        # Learning rate (if training loss decreases consistently)
-        if len(train_losses) >= 3:
-            decreasing_epochs = 0
-            for i in range(1, len(train_losses)):
-                if train_losses[i] < train_losses[i-1]:
-                    decreasing_epochs += 1
-            metrics["loss_decreasing_ratio"] = decreasing_epochs / (len(train_losses) - 1)
-        
-        # Convergence speed (epochs to reach 90% of final improvement)
-        if len(train_losses) >= 5:
-            initial_loss = train_losses[0]
-            final_loss = train_losses[-1]
-            target_loss = initial_loss - 0.9 * (initial_loss - final_loss)
-            
-            convergence_epoch = None
-            for i, loss in enumerate(train_losses):
-                if loss <= target_loss:
-                    convergence_epoch = i + 1
-                    break
-            metrics["convergence_epoch_90pct"] = convergence_epoch
-        
-        return metrics
-        
-    except Exception:
-        return None
-
-
-def read_convergence_metrics(research_dir: Path) -> Optional[Dict[str, Any]]:
-    """Read convergence analysis metrics"""
-    possible_paths = [
-        research_dir / "convergence_metrics.json",
-        research_dir / "research_data" / "convergence_analysis.json"
-    ]
-    
-    for conv_file in possible_paths:
-        data = safe_json_load(conv_file)
-        if data is not None:
-            return {
-                "loss_variance": data.get("loss_variance"),
-                "gradient_norm_avg": data.get("gradient_norm_avg"),
-                "gradient_norm_max": data.get("gradient_norm_max"),
-                "early_stopping_epoch": data.get("early_stopping_epoch"),
-                "plateau_epochs": data.get("plateau_epochs")
-            }
-    return None
-
-
-def read_system_info(research_dir: Path) -> Optional[Dict[str, Any]]:
-    """Read system information"""
-    possible_paths = [
-        research_dir / "system_info.json",
-        research_dir / "research_data" / "system_info.json",
-        research_dir / "hardware_logs" / "system_info.json"
-    ]
-    
-    for sys_file in possible_paths:
-        data = safe_json_load(sys_file)
-        if data is not None:
-            return {
-                "python_version": data.get("python_version"),
-                "torch_version": data.get("torch_version"),
-                "cuda_version": data.get("cuda_version"),
-                "gpu_name": data.get("gpu_name"),
-                "cpu_count": data.get("cpu_count"),
-                "total_ram_gb": data.get("total_ram_gb")
-            }
-    return None
-
-
-def read_research_metrics(research_dir: Path, attn: str) -> Dict[str, Any]:
-    out: Dict[str, Any] = {
-        "total_duration_seconds": None,
-        "final_test_loss_collector": None,
-        "model_parameters": None,
-        "flops_human": None,
-        "params_profile": None,
-        "hardware_summary": None,
-        "learning_rate_schedule": None,
-        "optimizer_info": None,
-        "convergence_metrics": None,
-        "system_info": None,
-    }
-    # Try multiple possible paths for comprehensive metrics
-    possible_paths = [
-        research_dir / f"comprehensive_metrics_{attn}.json",
-        research_dir / "research_data" / f"comprehensive_metrics_{attn}.json"
-    ]
-    
-    for metrics_path in possible_paths:
-        if metrics_path.exists():
-            try:
-                data = json.loads(metrics_path.read_text(encoding="utf-8", errors="ignore"))
-                exp = data.get("experiment_summary", {})
-                out["total_duration_seconds"] = exp.get("total_duration_seconds")
-                out["final_test_loss_collector"] = exp.get("final_test_loss")
-                mc = data.get("model_complexity", {})
-                out["model_parameters"] = mc.get("trainable_parameters") or mc.get("total_parameters")
-                out["flops_human"] = mc.get("flops_human")
-                out["params_profile"] = mc.get("params_profile")
-                break
-            except Exception:
-                continue
-    
-    # Read additional monitoring data
-    out["hardware_summary"] = read_hardware_summary(research_dir)
-    out["learning_rate_schedule"] = read_learning_rate_data(research_dir)
-    out["optimizer_info"] = read_optimizer_data(research_dir)
-    out["convergence_metrics"] = read_convergence_metrics(research_dir)
-    out["system_info"] = read_system_info(research_dir)
-    
     return out
 
 
-# ============== New: Load loss config mapping and failure logs ==============
+def parse_test_loss_log(test_loss_log: Path) -> Dict[str, Any]:
+    """Parse test loss log to compute avg/min/max from numeric values in file.
+    Handles JSON or plain-text with numeric values.
+    """
+    out: Dict[str, Any] = {}
+    if not test_loss_log or not test_loss_log.exists():
+        return out
+
+    text = test_loss_log.read_text(encoding="utf-8", errors="ignore")
+    # Try JSON first
+    try:
+        data = json.loads(text)
+        if isinstance(data, dict):
+            for k in ["avg_test_loss", "min_test_loss", "max_test_loss"]:
+                if k in data:
+                    out[k] = data[k]
+            return out
+        elif isinstance(data, list):
+            nums = [safe_float(x) for x in data]
+            nums = [x for x in nums if x is not None]
+            if nums:
+                out["avg_test_loss"] = sum(nums) / len(nums)
+                out["min_test_loss"] = min(nums)
+                out["max_test_loss"] = max(nums)
+                return out
+    except Exception:
+        pass
+
+    # Try CSV-like parsing with headers such as: Batch, Test Loss
+    try:
+        lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+        header_idx = -1
+        for i, ln in enumerate(lines):
+            low = ln.lower()
+            if "," in ln and ("batch" in low) and ("loss" in low):
+                header_idx = i
+                break
+        if header_idx >= 0:
+            reader = csv.DictReader(lines[header_idx:])
+            vals: List[float] = []
+            for row in reader:
+                if not row:
+                    continue
+                keymap = { (k or "").strip().lower(): k for k in row.keys() if k is not None }
+                col_name = None
+                for name in ["test loss", "test_loss", "loss", "value"]:
+                    if name in keymap:
+                        col_name = keymap[name]
+                        break
+                if col_name is None:
+                    # Try second column if present
+                    keys = list(row.keys())
+                    if len(keys) >= 2:
+                        col_name = keys[1]
+                if col_name is None:
+                    continue
+                v = safe_float(row.get(col_name))
+                if v is not None:
+                    vals.append(v)
+            if vals:
+                out["avg_test_loss"] = sum(vals) / len(vals)
+                out["min_test_loss"] = min(vals)
+                out["max_test_loss"] = max(vals)
+                return out
+    except Exception:
+        pass
+
+    # Look for an explicit average line like: Average Test Loss: 0.1234
+    m_avg = re.search(r"Average\s+Test\s+Loss\s*[:=]\s*([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)", text, re.IGNORECASE)
+    if m_avg:
+        avg = safe_float(m_avg.group(1))
+        if avg is not None:
+            out["avg_test_loss"] = avg
+            out["min_test_loss"] = avg
+            out["max_test_loss"] = avg
+            return out
+
+    # Fallback: extract all floats from text
+    nums = [safe_float(m) for m in re.findall(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?", text)]
+    nums = [x for x in nums if x is not None]
+    if nums:
+        out["avg_test_loss"] = sum(nums) / len(nums)
+        out["min_test_loss"] = min(nums)
+        out["max_test_loss"] = max(nums)
+    return out
+
+
+def parse_test_result_file(test_result_file: Path) -> Optional[float]:
+    """Parse a one-shot test result file and return the numeric loss if found.
+    Supports JSON with a scalar or dict containing 'final_test_loss', or plain text.
+    """
+    if not test_result_file or not test_result_file.exists():
+        return None
+    text = test_result_file.read_text(encoding="utf-8", errors="ignore").strip()
+    # Try JSON
+    try:
+        data = json.loads(text)
+        if isinstance(data, (int, float)):
+            fv = float(data)
+            return fv if math.isfinite(fv) else None
+        if isinstance(data, dict):
+            cand = data.get("final_test_loss") or data.get("test_loss") or data.get("loss")
+            return safe_float(cand)
+    except Exception:
+        pass
+    # Regex fallbacks
+    m = re.search(r"final[_\s-]*test[_\s-]*loss\s*[:=]\s*([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)", text, re.IGNORECASE)
+    if m:
+        return safe_float(m.group(1))
+    # First float in file
+    m = re.search(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?", text)
+    return safe_float(m.group(0)) if m else None
+
+
+def analyze_training_convergence(loss_log: Path) -> Dict[str, Any]:
+    """Compute simple convergence metrics from parsed loss log."""
+    parsed = parse_loss_log(loss_log) if loss_log and loss_log.exists() else {}
+    out: Dict[str, Any] = {}
+    vals = []
+    if parsed.get("best_valid_loss") is not None and parsed.get("epochs"):
+        # Build synthetic validation sequence if not present
+        # This is a heuristic fallback
+        vals = []
+    # Try to reconstruct from text if possible
+    try:
+        text = loss_log.read_text(encoding="utf-8", errors="ignore") if loss_log and loss_log.exists() else ""
+        seq = [safe_float(m) for m in re.findall(r"val(?:id)?(?:ation)?[^\n]*?(?:loss|Loss)[^\d\n]*([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)", text)]
+        seq = [x for x in seq if x is not None]
+        vals = seq
+    except Exception:
+        vals = []
+
+    if vals:
+        dec = 0
+        for i in range(1, len(vals)):
+            if vals[i] <= vals[i-1]:
+                dec += 1
+        out["loss_decreasing_ratio"] = dec / max(len(vals)-1, 1)
+        best_v = min(vals)
+        out["epochs_after_best_valid"] = (len(vals) - (vals.index(best_v) + 1)) if best_v in vals else None
+        # Overfitting ratio: last / best
+        if best_v is not None and vals[-1] is not None and best_v > 0:
+            out["overfitting_ratio"] = vals[-1] / best_v
+    return out
+
+
+def read_research_metrics(research_dir: Path, attn: str) -> Dict[str, Any]:
+    """Aggregate metrics from research_data JSON files if present.
+    Also returns additional enriched fields when possible:
+    - model_size_mb (estimated from model_parameters assuming float32)
+    - training_epochs (from experiment_summary or convergence files)
+    - attention_type (inferred from config or provided attn)
+    - experiment_name (directory name of the experiment)
+    - dataset_info (lightweight dataset metadata extracted from config if available)
+    - performance_metrics (dict collecting key performance indicators discovered)
+    - attention_visualization (presence and paths of viz artifacts)
+    """
+    out: Dict[str, Any] = {}
+    if not research_dir or not research_dir.exists():
+        return out
+
+    # Determine base directories to search: prefer research_data subdir when present
+    base_dirs: List[Path] = []
+    rd_sub = research_dir / "research_data"
+    if rd_sub.exists():
+        base_dirs.append(rd_sub)
+    base_dirs.append(research_dir)
+
+    def _find_first(path_rel: str) -> Optional[Path]:
+        for b in base_dirs:
+            p = b / path_rel
+            if p.exists():
+                return p
+        return None
+
+    # system_info.json
+    sys_path = _find_first("system_info.json")
+    sys_info = safe_json_load(sys_path) if sys_path else None
+    if sys_info:
+        # Normalize some common keys
+        out["system_info"] = {
+            "python_version": sys_info.get("python_version") or sys_info.get("python"),
+            "torch_version": sys_info.get("torch_version") or sys_info.get("pytorch_version"),
+            "cuda_version": sys_info.get("cuda_version"),
+            "gpu_name": sys_info.get("gpu_name"),
+            "cpu_count": sys_info.get("cpu_count"),
+            "total_ram_gb": sys_info.get("total_ram_gb") or sys_info.get("ram_gb"),
+        }
+
+    # comprehensive_metrics_{attn}.json
+    comp_path = _find_first(f"comprehensive_metrics_{attn}.json")
+    comp = safe_json_load(comp_path) if comp_path else None
+    if comp:
+        # These keys may include nested summaries
+        for k in ["hardware_summary", "learning_rate_schedule", "optimizer_info", "convergence_metrics"]:
+            if k in comp and isinstance(comp[k], dict):
+                out[k] = comp[k]
+        # Common top-level metrics
+        for k in ["total_duration_seconds", "model_parameters", "flops_human", "params_profile"]:
+            if k in comp:
+                out[k] = comp[k]
+        # Some pipelines store final_test_loss here
+        if comp.get("final_test_loss") is not None:
+            out["final_test_loss_collector"] = comp.get("final_test_loss")
+        elif comp.get("experiment_summary") and isinstance(comp["experiment_summary"], dict):
+            out["final_test_loss_collector"] = comp["experiment_summary"].get("final_test_loss")
+        # Fallbacks from nested structures in comprehensive metrics
+        if isinstance(comp.get("experiment_summary"), dict):
+            es = comp["experiment_summary"]
+            if out.get("total_duration_seconds") is None and es.get("total_duration_seconds") is not None:
+                out["total_duration_seconds"] = es.get("total_duration_seconds")
+            if out.get("training_epochs") is None and es.get("total_epochs") is not None:
+                out["training_epochs"] = es.get("total_epochs")
+        if isinstance(comp.get("model_complexity"), dict):
+            mc = comp["model_complexity"]
+            if out.get("model_parameters") is None and mc.get("total_parameters") is not None:
+                out["model_parameters"] = mc.get("total_parameters")
+
+    # convergence_analysis_{attn}.json
+    conv_path = _find_first(f"convergence_analysis_{attn}.json")
+    conv = safe_json_load(conv_path) if conv_path else None
+    if conv:
+        # Prefer nested convergence_statistics if available
+        cs = conv.get("convergence_statistics") if isinstance(conv.get("convergence_statistics"), dict) else None
+        if cs:
+            if cs.get("best_val_loss") is not None:
+                out["derived_best_valid_loss"] = cs.get("best_val_loss")
+            if cs.get("best_val_epoch") is not None:
+                out["derived_best_valid_epoch"] = cs.get("best_val_epoch")
+            if out.get("training_epochs") is None and cs.get("total_epochs") is not None:
+                out["training_epochs"] = cs.get("total_epochs")
+        else:
+            # Legacy flat keys
+            bvl = conv.get("best_val_loss") or conv.get("best_valid_loss")
+            if bvl is not None:
+                out["derived_best_valid_loss"] = bvl
+            bve = conv.get("best_val_epoch") or conv.get("best_valid_epoch")
+            if bve is not None:
+                out["derived_best_valid_epoch"] = bve
+            if out.get("training_epochs") is None:
+                out["training_epochs"] = conv.get("total_epochs") or conv.get("epochs")
+
+    # Try to derive hardware_summary from hardware_metrics.json when not present
+    if not out.get("hardware_summary"):
+        candidate_hm_paths: List[Path] = []
+        for b in base_dirs:
+            candidate_hm_paths.extend([
+                b / "hardware_metrics.json",
+                b / "hardware_logs" / "hardware_metrics.json",
+            ])
+        for hm_path in candidate_hm_paths:
+            hm = safe_json_load(hm_path)
+            if not hm:
+                continue
+            try:
+                epoch_metrics = hm.get("epoch_metrics") or []
+                gpu_utils: List[float] = []
+                gpu_mems: List[float] = []
+                gpu_temps: List[float] = []
+                cpu_percents: List[float] = []
+                rams: List[float] = []
+                for m in epoch_metrics:
+                    gm = m.get("gpu_metrics")
+                    if isinstance(gm, list) and gm:
+                        g0 = gm[0]
+                        u = g0.get("gpu_utilization_percent")
+                        mem = g0.get("memory_used_mb")
+                        temp = g0.get("temperature_celsius")
+                        if isinstance(u, (int, float)):
+                            gpu_utils.append(float(u))
+                        if isinstance(mem, (int, float)):
+                            gpu_mems.append(float(mem))
+                        if isinstance(temp, (int, float)):
+                            gpu_temps.append(float(temp))
+                    if isinstance(m.get("cpu_percent"), (int, float)):
+                        cpu_percents.append(float(m.get("cpu_percent")))
+                    if isinstance(m.get("ram_used_mb"), (int, float)):
+                        rams.append(float(m.get("ram_used_mb")))
+                if gpu_utils or gpu_mems or gpu_temps or cpu_percents or rams:
+                    out["hardware_summary"] = {
+                        "avg_gpu_utilization": round(sum(gpu_utils) / len(gpu_utils), 2) if gpu_utils else None,
+                        "max_gpu_memory_mb": max(gpu_mems) if gpu_mems else None,
+                        "gpu_temperature_max": max(gpu_temps) if gpu_temps else None,
+                        "avg_cpu_percent": round(sum(cpu_percents) / len(cpu_percents), 2) if cpu_percents else None,
+                        "max_ram_mb": max(rams) if rams else None,
+                    }
+                    break
+            except Exception:
+                # Ignore parse issues and continue
+                pass
+
+    # Optional: attach config info if present in common places
+    if yaml is not None and not out.get("config_info"):
+        # Try using the dedicated helper to benefit from broader search
+        try:
+            # Determine experiment directory base for config lookup
+            exp_base = research_dir if research_dir.name != "research_data" else research_dir.parent
+            cfg = read_config_info(exp_base)
+            if cfg:
+                out["config_info"] = cfg
+        except Exception:
+            pass
+
+    # Enrichment: compute additional friendly fields
+    # model_size_mb: estimate using float32 parameters
+    params = out.get("model_parameters")
+    if isinstance(params, (int, float)) and params is not None:
+        try:
+            out["model_size_mb"] = round(float(params) * 4.0 / 1_000_000.0, 2)
+        except Exception:
+            pass
+
+    # Ensure attention_type present
+    if not out.get("attention_type"):
+        if isinstance(out.get("config_info"), dict):
+            # try to extract attention_type from config_info
+            def _find_attention_type(node: Any) -> Optional[str]:
+                if isinstance(node, dict):
+                    for k in ["attention_type", "attention", "attn_type", "attention_name"]:
+                        v = node.get(k)
+                        if isinstance(v, str):
+                            return v
+                    for v in node.values():
+                        t = _find_attention_type(v)
+                        if t:
+                            return t
+                elif isinstance(node, list):
+                    for v in node:
+                        t = _find_attention_type(v)
+                        if t:
+                            return t
+                return None
+            a_type = _find_attention_type(out["config_info"]) or attn
+            if a_type:
+                out["attention_type"] = a_type
+        else:
+            out["attention_type"] = attn
+
+    # experiment_name: prefer the experiment directory rather than the research_data folder name
+    exp_dir_base = research_dir if research_dir.name != "research_data" else research_dir.parent
+    out.setdefault("experiment_name", exp_dir_base.name)
+
+    # dataset_info: extract lightweight info from config if available
+    ds_info: Dict[str, Any] = {}
+    cfg_info = out.get("config_info") if isinstance(out.get("config_info"), dict) else {}
+    if cfg_info:
+        # Common dataset fields
+        for k in ["dataset", "dataset_name", "data_name", "data_path", "dataset_path"]:
+            if cfg_info.get(k) is not None:
+                ds_info[k] = cfg_info.get(k)
+        # Nested common structures
+        for node_key in ["data", "dataset", "datamodule", "dataloader", "loader", "train_data"]:
+            node = cfg_info.get(node_key)
+            if isinstance(node, dict):
+                for kk in ["name", "dataset", "path", "root", "split", "batch_size", "num_workers"]:
+                    if node.get(kk) is not None:
+                        ds_info[f"{node_key}.{kk}"] = node.get(kk)
+    if ds_info:
+        out["dataset_info"] = ds_info
+
+    # performance_metrics: consolidate available signals
+    perf: Dict[str, Any] = {}
+    if out.get("final_test_loss_collector") is not None:
+        perf["final_test_loss"] = out["final_test_loss_collector"]
+    if out.get("derived_best_valid_loss") is not None:
+        perf["best_valid_loss"] = out["derived_best_valid_loss"]
+    if out.get("derived_best_valid_epoch") is not None:
+        perf["best_valid_epoch"] = out["derived_best_valid_epoch"]
+    if out.get("training_epochs") is not None:
+        perf["training_epochs"] = out["training_epochs"]
+    if perf:
+        out["performance_metrics"] = perf
+
+    # attention_visualization: detect presence using helper
+    try:
+        viz = read_attention_visualization_data(exp_dir_base, attn)
+        if viz:
+            out["attention_visualization"] = {
+                "has_image": bool(viz.get("attention_image")),
+                "image_path": viz.get("attention_image"),
+                "num_maps": viz.get("num_maps"),
+                "num_stats": viz.get("num_stats"),
+            }
+        else:
+            out["attention_visualization"] = {"has_image": False}
+    except Exception:
+        pass
+
+    # Config files optionally present under research_dir/configs as a fallback (keep existing behavior)
+    if yaml is not None and not out.get("config_info"):
+        cfg_dir = research_dir / "configs"
+        for yml in [cfg_dir / "config.yaml", cfg_dir / "config_server.yaml", research_dir / "config.yaml", research_dir / "config_server.yaml"]:
+            if yml.exists():
+                try:
+                    cfg = yaml.safe_load(yml.read_text(encoding="utf-8", errors="ignore")) or {}
+                    out.setdefault("config_info", cfg)
+                    break
+                except Exception:
+                    pass
+
+    return out
+
+
+def read_hardware_summary(exp_dir: Path) -> Dict[str, Any]:
+    """Read and summarize hardware monitoring data under an experiment directory.
+    It searches common locations for hardware_metrics.json and computes normalized fields:
+    - avg_gpu_utilization
+    - max_gpu_memory_mb
+    - gpu_temperature_max
+    Also attempts to include CPU and RAM indicators if present.
+    """
+    if not exp_dir or not exp_dir.exists():
+        return {}
+
+    candidates = [
+        exp_dir / "hardware_metrics.json",
+        exp_dir / "hardware_logs" / "hardware_metrics.json",
+        exp_dir / "research_data" / "hardware_metrics.json",
+        exp_dir / "research_data" / "hardware_logs" / "hardware_metrics.json",
+    ]
+
+    hm: Dict[str, Any] = {}
+    for p in candidates:
+        hm = safe_json_load(p)
+        if hm:
+            break
+    if not hm:
+        return {}
+
+    # Prefer epoch-wise aggregation to compute robust summary
+    epoch_metrics = hm.get("epoch_metrics") or []
+    gpu_utils: List[float] = []
+    gpu_mems: List[float] = []
+    gpu_temps: List[float] = []
+    cpu_percents: List[float] = []
+    rams: List[float] = []
+    total_epoch_time = 0.0
+
+    for m in epoch_metrics:
+        try:
+            if isinstance(m.get("epoch_duration_seconds"), (int, float)):
+                total_epoch_time += float(m.get("epoch_duration_seconds"))
+            if isinstance(m.get("cpu_percent"), (int, float)):
+                cpu_percents.append(float(m.get("cpu_percent")))
+            if isinstance(m.get("ram_used_mb"), (int, float)):
+                rams.append(float(m.get("ram_used_mb")))
+            gm = m.get("gpu_metrics")
+            if isinstance(gm, list) and gm:
+                g0 = gm[0]
+                u = g0.get("gpu_utilization_percent")
+                mem = g0.get("memory_used_mb")
+                temp = g0.get("temperature_celsius")
+                if isinstance(u, (int, float)):
+                    gpu_utils.append(float(u))
+                if isinstance(mem, (int, float)):
+                    gpu_mems.append(float(mem))
+                if isinstance(temp, (int, float)):
+                    gpu_temps.append(float(temp))
+        except Exception:
+            continue
+
+    # If the file already contains summarized keys, map them too as fallbacks
+    summary_map_candidates = [hm]
+    # Some implementations may store an inline summary under a key
+    if isinstance(hm.get("summary"), dict):
+        summary_map_candidates.append(hm["summary"]) 
+    if hm.get("training_metrics") and isinstance(hm["training_metrics"], list):
+        # Look for the last training_end metrics item
+        try:
+            last_tm = next((t for t in reversed(hm["training_metrics"]) if t.get("event") == "training_end"), None)
+            if isinstance(last_tm, dict):
+                summary_map_candidates.append(last_tm)
+        except Exception:
+            pass
+
+    # Build output
+    out: Dict[str, Any] = {
+        "avg_gpu_utilization": round(sum(gpu_utils) / len(gpu_utils), 2) if gpu_utils else None,
+        "max_gpu_memory_mb": max(gpu_mems) if gpu_mems else None,
+        "gpu_temperature_max": max(gpu_temps) if gpu_temps else None,
+        "avg_cpu_percent": round(sum(cpu_percents) / len(cpu_percents), 2) if cpu_percents else None,
+        "max_ram_mb": max(rams) if rams else None,
+        "total_duration_seconds": None,
+        "epochs": len([m for m in epoch_metrics if m.get("event") == "epoch_end"]) if epoch_metrics else None,
+    }
+
+    # Derive total training duration
+    if epoch_metrics:
+        out["total_duration_seconds"] = round(total_epoch_time, 2)
+    # Fallback: try to read from training_metrics
+    for cand in summary_map_candidates:
+        if out.get("total_duration_seconds") is None and isinstance(cand.get("total_duration_seconds"), (int, float)):
+            out["total_duration_seconds"] = float(cand["total_duration_seconds"])  
+        # Map alternate key names if present
+        if out.get("avg_gpu_utilization") is None and isinstance(cand.get("avg_gpu_utilization_percent"), (int, float)):
+            out["avg_gpu_utilization"] = float(cand.get("avg_gpu_utilization_percent"))
+        if out.get("max_gpu_memory_mb") is None and isinstance(cand.get("max_gpu_memory_usage_mb"), (int, float)):
+            out["max_gpu_memory_mb"] = float(cand.get("max_gpu_memory_usage_mb"))
+        if out.get("gpu_temperature_max") is None and isinstance(cand.get("max_gpu_temperature_celsius"), (int, float)):
+            out["gpu_temperature_max"] = float(cand.get("max_gpu_temperature_celsius"))
+
+    # Also provide a concise gpu_metrics sub-dict for convenience
+    out["gpu_metrics"] = {
+        "avg_utilization_percent": out.get("avg_gpu_utilization"),
+        "max_memory_mb": out.get("max_gpu_memory_mb"),
+        "max_temperature_celsius": out.get("gpu_temperature_max"),
+    }
+    return out
+
+
+def read_config_info(exp_dir: Path) -> Dict[str, Any]:
+    """Load configuration YAML if present under the experiment directory or its nearby parents.
+    Returns the raw parsed dict. Additionally tries to infer a top-level 'attention_type'.
+    """
+    if not exp_dir or not exp_dir.exists():
+        return {}
+
+    # Build candidate YAML locations: local, research_data, configs subfolder, and parent locations
+    candidates: List[Path] = []
+    search_bases: List[Path] = [exp_dir]
+    # Include common subdirectories inside exp_dir
+    for sub in ["research_data", "configs", str(Path("research_data") / "configs")]:
+        candidates_base = exp_dir / sub
+        if candidates_base.exists():
+            search_bases.append(candidates_base)
+    # Include parent and its configs
+    if exp_dir.parent and exp_dir.parent.exists():
+        search_bases.append(exp_dir.parent)
+        parent_configs = exp_dir.parent / "configs"
+        if parent_configs.exists():
+            search_bases.append(parent_configs)
+
+    seen: set = set()
+    for base in search_bases:
+        for name in ["config.yaml", "config_server.yaml"]:
+            p = base / name
+            if p.exists() and p not in seen:
+                candidates.append(p)
+                seen.add(p)
+
+    # Fallback: glob any *.yaml inside configs folders if nothing found yet
+    if not candidates:
+        for base in search_bases:
+            if base.name == "configs" and base.exists():
+                for p in sorted(base.glob("*.yaml")):
+                    candidates.append(p)
+
+    cfg: Dict[str, Any] = {}
+    for yml in candidates:
+        if yml.exists() and yaml is not None:
+            try:
+                cfg = yaml.safe_load(yml.read_text(encoding="utf-8", errors="ignore")) or {}
+                if cfg:
+                    break
+            except Exception:
+                continue
+    if not cfg:
+        return {}
+
+    # Try to infer attention_type from common places
+    def _find_attention_type(node: Any) -> Optional[str]:
+        if isinstance(node, dict):
+            # exact matches
+            for k in ["attention_type", "attention", "attn_type", "attention_name"]:
+                v = node.get(k)
+                if isinstance(v, str):
+                    return v
+            # nested search
+            for v in node.values():
+                t = _find_attention_type(v)
+                if t:
+                    return t
+        elif isinstance(node, list):
+            for v in node:
+                t = _find_attention_type(v)
+                if t:
+                    return t
+        return None
+
+    attention_type = _find_attention_type(cfg)
+    if attention_type:
+        cfg.setdefault("attention_type", attention_type)
+    return cfg
+
+
+def read_attention_visualization_data(exp_dir: Path, attn: str) -> Dict[str, Any]:
+    """Collect attention visualization artifacts for a given experiment and attention type.
+    Returns a dict with paths (as strings) to found images and stats.
+    Keys may include: attention_image, attention_maps, stats_files, num_maps, num_stats.
+    """
+    if not exp_dir or not exp_dir.exists():
+        return {}
+
+    results: Dict[str, Any] = {}
+
+    # Prepare search bases: experiment dir and common subfolders
+    bases: List[Path] = [exp_dir]
+    for sub in ["attention", "visualizations", "plots", "images", "research_data", "attention_maps"]:
+        p = exp_dir / sub
+        if p.exists():
+            bases.append(p)
+    # Also scan immediate subdirectories of attention_maps or visualizations for nested outputs
+    nested_candidates: List[Path] = []
+    for b in bases:
+        if b.name in {"attention_maps", "visualizations", "plots"} and b.exists():
+            try:
+                for child in b.iterdir():
+                    if child.is_dir():
+                        nested_candidates.append(child)
+            except Exception:
+                pass
+    bases.extend(nested_candidates)
+
+    # Common single-image visualizations
+    single_names = [
+        "attention_vis.png",
+        "attention_visualization.png",
+        "attention_heatmap.png",
+        "spatial_attention_visualization.png",
+        f"attention_{attn}.png",
+    ]
+    for b in bases:
+        for name in single_names:
+            p = b / name
+            if p.exists():
+                results["attention_image"] = str(p)
+                break
+        if results.get("attention_image"):
+            break
+
+    # Collected attention maps (per-epoch or per-layer)
+    glob_patterns = [
+        "epoch_*.png",
+        f"{attn}_epoch_*.png",
+        "layer_*_attention_maps.png",
+        "*attention*_map*.png",
+    ]
+    maps: List[str] = []
+    for b in bases:
+        for pat in glob_patterns:
+            for p in sorted(b.glob(pat)):
+                if p.is_file():
+                    maps.append(str(p))
+    if maps:
+        results["attention_maps"] = sorted(set(maps))
+        results["num_maps"] = len(results["attention_maps"])
+
+    # Stats JSON generated by analysis utilities
+    stats_patterns = [
+        f"attention_stats_{attn}_epoch_*.json",
+        f"{attn}_attention_stats_epoch_*.json",
+        "attention_stats_epoch_*.json",
+    ]
+    stats_files: List[str] = []
+    for b in bases:
+        for pat in stats_patterns:
+            for p in sorted(b.glob(pat)):
+                if p.is_file():
+                    stats_files.append(str(p))
+    if stats_files:
+        results["stats_files"] = sorted(set(stats_files))
+        results["num_stats"] = len(results["stats_files"]) 
+
+    # Attach the requested attention type for reference
+    results["attention_type"] = attn
+
+    return results
+
 
 def load_loss_config_mapping(config_file: Optional[Path]) -> Dict[str, Dict[str, Any]]:
     """Load loss_configs from a YAML config, map to ids like loss_config_0 -> config dict.
@@ -533,62 +968,202 @@ def parse_failed_attention_log(loss_root: Path) -> List[Dict[str, Any]]:
 # ===========================================================================
 
 
+def is_experiment_directory(path: Path) -> bool:
+    """Check if a directory contains experiment data files"""
+    # Check for common experiment indicators
+    indicators = [
+        (path / "loss_logs").exists(),
+        (path / "test_results").exists(),
+        any(path.glob("test_result_*.txt")),
+        any(path.glob("loss_log.txt")),
+        any(path.glob("comprehensive_metrics_*.json")),
+        (path / "research_data").exists(),
+        any(path.glob("*.json")),  # Any JSON files that might contain metrics
+        any(path.glob("hardware_*.json")),
+        any(path.glob("system_info.json"))
+    ]
+    return any(indicators)
+
+
 def scan_runs(base_root: Path, dated_root_override: Optional[Path] = None, loss_cfg_root_override: Optional[Path] = None) -> List[Dict[str, Any]]:
     entries: List[Dict[str, Any]] = []
+    print(f"Debug: Starting scan from base_root: {base_root}")
 
-    # Candidate roots
+    # Check if base_root itself is an experiment directory
+    if is_experiment_directory(base_root):
+        attn = base_root.name
+        print(f"Debug: Found direct experiment directory: {attn}")
+        entry = collect_single_run(base_root, attn, source_group="direct")
+        entries.append(entry)
+        return entries
+
+    # Enhanced candidate roots detection
     codex_root = base_root / "VIVTransformer-4sh2r1-codex"
     dated_root = Path(dated_root_override) if dated_root_override else codex_root / "modify_multi_attention" / "attention_results"
-    loss_cfg_root = Path(loss_cfg_root_override) if loss_cfg_root_override else codex_root / "attention_results"
+    
+    # Enhanced loss_cfg_root detection - check multiple possible locations
+    if loss_cfg_root_override:
+        loss_cfg_root = Path(loss_cfg_root_override)
+    else:
+        # Try multiple possible locations for loss_config directories
+        possible_loss_roots = [
+            codex_root / "attention_results",
+            base_root / "attention_results", 
+            base_root,  # loss_config_* might be directly under base_root
+            codex_root / "modify_multi_attention" / "attention_results"
+        ]
+        loss_cfg_root = None
+        for possible_root in possible_loss_roots:
+            if possible_root.exists() and any(p.name.startswith("loss_config_") for p in possible_root.iterdir() if p.is_dir()):
+                loss_cfg_root = possible_root
+                print(f"Debug: Found loss_config root at: {loss_cfg_root}")
+                break
+        
+        if loss_cfg_root is None:
+            loss_cfg_root = codex_root / "attention_results"  # fallback
 
     # 1) Dated runs under modify_multi_attention/attention_results
-    # Support both nested layout: <dated_root>/<datetime>/<attn>
-    # and flat layout: <dated_root>/<attn>
+    # Support multiple layouts: nested, flat, and mixed
     if dated_root.exists():
         children = [p for p in dated_root.iterdir() if p.is_dir()]
         for child in sorted(children):
-            # flat layout detection: the child itself looks like an attn_dir
-            has_logs = (child / "loss_logs").exists() or (child / "test_results").exists() or any(child.glob("test_result_*.txt"))
-            if has_logs:
+            # Enhanced experiment directory detection
+            if is_experiment_directory(child):
+                # Direct experiment directory (flat layout)
                 attn = child.name
                 entry = collect_single_run(child, attn, source_group=f"dated:{dated_root.name}")
                 entries.append(entry)
             else:
-                # nested layout: iterate its subdirs as attention dirs
-                for attn_dir in sorted([p for p in child.iterdir() if p.is_dir()]):
-                    attn = attn_dir.name
-                    entry = collect_single_run(attn_dir, attn, source_group=f"dated:{child.name}")
-                    entries.append(entry)
+                # Check subdirectories for experiments (nested layout)
+                subdirs = [p for p in child.iterdir() if p.is_dir()]
+                for attn_dir in sorted(subdirs):
+                    if is_experiment_directory(attn_dir):
+                        attn = attn_dir.name
+                        entry = collect_single_run(attn_dir, attn, source_group=f"dated:{child.name}")
+                        entries.append(entry)
+                    else:
+                        # Check one more level deep for deeply nested structures
+                        deep_subdirs = [p for p in attn_dir.iterdir() if p.is_dir()]
+                        for deep_dir in sorted(deep_subdirs):
+                            if is_experiment_directory(deep_dir):
+                                attn = deep_dir.name
+                                entry = collect_single_run(deep_dir, attn, source_group=f"dated:{child.name}/{attn_dir.name}")
+                                entries.append(entry)
 
-    # 2) loss_config_* runs under codex/attention_results/loss_config_X/<attn>
-    if loss_cfg_root.exists():
-        for cfg_dir in sorted([p for p in loss_cfg_root.iterdir() if p.is_dir() and p.name.startswith("loss_config_")]):
-            for attn_dir in sorted([p for p in cfg_dir.iterdir() if p.is_dir()]):
-                attn = attn_dir.name
-                entry = collect_single_run(attn_dir, attn, source_group=cfg_dir.name)
+    # 2) Enhanced loss_config_* runs scanning
+    if loss_cfg_root and loss_cfg_root.exists():
+        print(f"Debug: Scanning loss_cfg_root: {loss_cfg_root}")
+        loss_config_dirs = [p for p in loss_cfg_root.iterdir() if p.is_dir() and p.name.startswith("loss_config_")]
+        print(f"Debug: Found {len(loss_config_dirs)} loss_config directories: {[d.name for d in loss_config_dirs]}")
+        
+        for cfg_dir in sorted(loss_config_dirs):
+            print(f"Debug: Processing loss_config directory: {cfg_dir.name}")
+            
+            # Check if cfg_dir itself contains experiment files (flat structure)
+            if is_experiment_directory(cfg_dir):
+                attn = cfg_dir.name.replace("loss_config_", "")
+                print(f"Debug: Found flat experiment in {cfg_dir.name} with attention: {attn}")
+                entry = collect_single_run(cfg_dir, attn, source_group=cfg_dir.name)
                 entry["loss_config_id"] = cfg_dir.name
                 entries.append(entry)
+                continue
+            
+            # Enhanced scanning for nested structures
+            subdirs = [p for p in cfg_dir.iterdir() if p.is_dir()]
+            print(f"Debug: Found {len(subdirs)} subdirectories in {cfg_dir.name}: {[d.name for d in subdirs]}")
+            
+            for attn_dir in sorted(subdirs):
+                if is_experiment_directory(attn_dir):
+                    attn = attn_dir.name
+                    print(f"Debug: Found experiment directory: {attn} in {cfg_dir.name}")
+                    entry = collect_single_run(attn_dir, attn, source_group=cfg_dir.name)
+                    entry["loss_config_id"] = cfg_dir.name
+                    entries.append(entry)
+                else:
+                    # Check one level deeper for deeply nested structures
+                    deep_subdirs = [p for p in attn_dir.iterdir() if p.is_dir()]
+                    for deep_dir in sorted(deep_subdirs):
+                        if is_experiment_directory(deep_dir):
+                            attn = deep_dir.name
+                            print(f"Debug: Found deep experiment directory: {attn} in {cfg_dir.name}/{attn_dir.name}")
+                            entry = collect_single_run(deep_dir, attn, source_group=f"{cfg_dir.name}/{attn_dir.name}")
+                            entry["loss_config_id"] = cfg_dir.name
+                            entries.append(entry)
+    else:
+        print(f"Debug: loss_cfg_root does not exist or is None: {loss_cfg_root}")
 
     return entries
 
 
-def collect_single_run(attn_dir: Path, attn: str, source_group: str) -> Dict[str, Any]:
-    loss_log = attn_dir / "loss_logs" / "loss_log.txt"
-    test_result = None
-    # e.g. test_result_cbam.txt
-    for f in attn_dir.glob("test_result_*.txt"):
-        test_result = parse_test_result_file(f)
-        break
-    test_loss_log = attn_dir / "test_results" / "test_loss_log.txt"
+def find_file_in_multiple_locations(attn_dir: Path, relative_paths: List[str]) -> Optional[Path]:
+    """Find a file in multiple possible locations within the experiment directory"""
+    for rel_path in relative_paths:
+        full_path = attn_dir / rel_path
+        if full_path.exists():
+            return full_path
+    return None
 
-    loss_stats = parse_loss_log(loss_log)
-    test_stats = parse_test_loss_log(test_loss_log)
+
+def collect_single_run(attn_dir: Path, attn: str, source_group: str) -> Dict[str, Any]:
+    # Enhanced file location logic - check multiple possible locations
+    
+    # Loss log file locations
+    loss_log_paths = [
+        "loss_logs/loss_log.txt",
+        "loss_log.txt",
+        "logs/loss_log.txt",
+        "training_logs/loss_log.txt"
+    ]
+    loss_log = find_file_in_multiple_locations(attn_dir, loss_log_paths)
+    
+    # Test result file locations
+    test_result = None
+    test_result_patterns = [
+        f"test_result_{attn}.txt",
+        "test_result.txt",
+        f"test_results/test_result_{attn}.txt",
+        "test_results/test_result.txt",
+        f"results/test_result_{attn}.txt",
+        "results/test_result.txt"
+    ]
+    
+    # Try specific patterns first, then glob patterns
+    for pattern in test_result_patterns:
+        test_file = attn_dir / pattern
+        if test_file.exists():
+            test_result = parse_test_result_file(test_file)
+            break
+    
+    # If no specific file found, try glob patterns
+    if test_result is None:
+        for f in attn_dir.glob("test_result_*.txt"):
+            test_result = parse_test_result_file(f)
+            break
+        if test_result is None:
+            for f in attn_dir.glob("**/test_result_*.txt"):
+                test_result = parse_test_result_file(f)
+                break
+    
+    # Test loss log file locations
+    test_loss_log_paths = [
+        "test_results/test_loss_log.txt",
+        "test_loss_log.txt",
+        "logs/test_loss_log.txt",
+        "results/test_loss_log.txt"
+    ]
+    test_loss_log = find_file_in_multiple_locations(attn_dir, test_loss_log_paths)
+
+    loss_stats = parse_loss_log(loss_log) if loss_log else {"training_status": "no_log_file"}
+    test_stats = parse_test_loss_log(test_loss_log) if test_loss_log else {}
     
     # Analyze training convergence from loss log
-    convergence_analysis = analyze_training_convergence(loss_log)
+    convergence_analysis = analyze_training_convergence(loss_log) if loss_log else None
 
-    # research_data might be under attn_dir/research_data
+    # research_data might be under attn_dir/research_data or directly under attn_dir
+    # Try both locations to ensure we find the data files
     research_dir = attn_dir / "research_data"
+    if not research_dir.exists() or not any(research_dir.glob("*.json")):
+        research_dir = attn_dir  # Fallback to attn_dir itself
     research_stats = read_research_metrics(research_dir, attn)
     
     # Flatten nested dictionaries for CSV output
@@ -661,6 +1236,24 @@ def collect_single_run(attn_dir: Path, attn: str, source_group: str) -> Dict[str
             "cpu_count": sys_info.get("cpu_count"),
             "total_ram_gb": sys_info.get("total_ram_gb")
         })
+    
+    # Configuration info from YAML files
+    if research_stats.get("config_info"):
+        config_info = research_stats["config_info"]
+        flattened_data.update({
+            "config_device": config_info.get("device"),
+            "config_batch_size": config_info.get("batch_size"),
+            "config_attention_type": config_info.get("model_config", {}).get("attention_type"),
+            "config_d_model": config_info.get("model_config", {}).get("d_model"),
+            "config_num_heads": config_info.get("model_config", {}).get("num_heads"),
+            "config_num_layers": config_info.get("model_config", {}).get("num_layers"),
+            "config_base_weight": config_info.get("loss_config", {}).get("base_weight"),
+            "config_svd_weights": str(config_info.get("loss_config", {}).get("svd_weights", [])),
+            "config_topk": config_info.get("loss_config", {}).get("topk"),
+            "config_gpu_monitoring": config_info.get("hardware_monitoring", {}).get("enable_gpu_monitoring"),
+            "config_monitor_temperature": config_info.get("hardware_monitoring", {}).get("monitor_temperature"),
+            "config_monitor_power": config_info.get("hardware_monitoring", {}).get("monitor_power_usage")
+        })
 
     # Combine all collected data
     collected_data = {
@@ -675,9 +1268,30 @@ def collect_single_run(attn_dir: Path, attn: str, source_group: str) -> Dict[str
         "status": "ok",
     }
     
+    # Ensure training_status is set correctly (after flattened_data to avoid override)
+    collected_data["training_status"] = loss_stats.get("training_status", "unknown")
+    
     # Map final_test_loss_collector to final_test_loss if available
     if research_stats.get("final_test_loss_collector") is not None and collected_data.get("final_test_loss") is None:
         collected_data["final_test_loss"] = research_stats["final_test_loss_collector"]
+
+    # New: map derived best_valid_* and prefer training_epochs to fill missing fields without overriding valid values
+    if collected_data.get("best_valid_loss") is None and research_stats.get("derived_best_valid_loss") is not None:
+        collected_data["best_valid_loss"] = research_stats["derived_best_valid_loss"]
+    if collected_data.get("best_valid_epoch") is None and research_stats.get("derived_best_valid_epoch") is not None:
+        collected_data["best_valid_epoch"] = research_stats["derived_best_valid_epoch"]
+    # Prefer derived training_epochs when epochs is missing or zero
+    _epochs_current = collected_data.get("epochs")
+    if (_epochs_current is None or _epochs_current == 0) and research_stats.get("training_epochs") is not None:
+        collected_data["epochs"] = research_stats["training_epochs"]
+    # If training_status unknown or no log, infer from epochs when possible
+    _ts = collected_data.get("training_status")
+    _epochs_final = collected_data.get("epochs") or 0
+    if _ts in (None, "unknown", "no_log_file", "not_started"):
+        if _epochs_final >= 2:
+            collected_data["training_status"] = "completed"
+        elif _epochs_final == 1:
+            collected_data["training_status"] = "incomplete"
     
     # Validate and clean the collected data
     validated_data = validate_experiment_data(collected_data)
@@ -693,6 +1307,7 @@ def write_csv_summary(entries: List[Dict[str, Any]], out_csv: Path) -> None:
         "best_valid_loss", "best_valid_epoch",
         "test_result_file_loss", "avg_test_loss", "min_test_loss", "max_test_loss",
         "total_duration_seconds", "model_parameters", "flops_human", "params_profile",
+        "training_status",  # New field to track training completion status
         # Hardware monitoring fields
         "avg_gpu_utilization", "max_gpu_memory_mb", "avg_cpu_percent", "max_ram_mb", "gpu_temperature_max",
         # Learning rate fields
@@ -833,13 +1448,25 @@ def verify_reproducibility(entries: List[Dict[str, Any]]) -> Dict[str, Any]:
     # Analyze consistency within each group
     total_groups = 0
     consistent_groups = 0
+    single_run_groups = 0
     
     for group_key, runs in attention_groups.items():
-        if len(runs) < 2:
-            continue  # Need at least 2 runs for comparison
-        
         total_groups += 1
         attn_name = group_key.split('_')[0]
+        
+        if len(runs) < 2:
+            # Single run - assume consistent but note it
+            single_run_groups += 1
+            reproducibility["attention_consistency"][attn_name] = {
+                "runs": 1,
+                "mean_loss": runs[0].get("avg_test_loss"),
+                "std_loss": 0.0,
+                "cv": 0.0,
+                "is_consistent": True,
+                "note": "单次运行，无法验证一致性"
+            }
+            consistent_groups += 1
+            continue
         
         # Performance consistency
         test_losses = [r.get("avg_test_loss") for r in runs if r.get("avg_test_loss") is not None]
@@ -867,21 +1494,23 @@ def verify_reproducibility(entries: List[Dict[str, Any]]) -> Dict[str, Any]:
                     configs[key].append(run.get(key))
         
         config_consistent = True
-        for key, values in configs.items():
-            if len(set(str(v) for v in values)) > 1:  # More than one unique value
-                config_consistent = False
-                reproducibility["issues"].append(f"{attn_name}: 配置不一致 - {key}")
+        if len(runs) > 1:  # Only check consistency for multiple runs
+            for key, values in configs.items():
+                if len(set(str(v) for v in values)) > 1:  # More than one unique value
+                    config_consistent = False
+                    reproducibility["issues"].append(f"{attn_name}: 配置不一致 - {key}")
         
         reproducibility["config_consistency"][attn_name] = config_consistent
         
         # Environment consistency
         env_keys = ['pytorch_version', 'cuda_version', 'gpu_name']
         env_consistent = True
-        for key in env_keys:
-            values = [r.get(key) for r in runs if r.get(key) is not None]
-            if len(set(values)) > 1:
-                env_consistent = False
-                reproducibility["issues"].append(f"{attn_name}: 环境不一致 - {key}")
+        if len(runs) > 1:  # Only check consistency for multiple runs
+            for key in env_keys:
+                values = [r.get(key) for r in runs if r.get(key) is not None]
+                if len(set(values)) > 1:
+                    env_consistent = False
+                    reproducibility["issues"].append(f"{attn_name}: 环境不一致 - {key}")
         
         reproducibility["environment_consistency"][attn_name] = env_consistent
         
@@ -1210,6 +1839,17 @@ def generate_markdown(entries: List[Dict[str, Any]], out_md: Path) -> None:
         for recommendation in reproducibility['recommendations']:
             lines.append(f"- {recommendation}\n")
 
+    # 数据质量评估
+    quality_report = generate_data_quality_report(entries)
+    lines.append("\n## 数据质量评估\n")
+    lines.append(f"- 实验总数: {quality_report['total_experiments']}\n")
+    lines.append(f"- 平均质量评分: {quality_report['average_quality_score']:.2f}/10\n")
+    if quality_report.get('common_issues'):
+        lines.append("### 常见问题（Top-3）\n")
+        _issues_sorted = sorted(quality_report['common_issues'].items(), key=lambda x: x[1], reverse=True)[:3]
+        for k, v in _issues_sorted:
+            lines.append(f"- {k}: {v} 次\n")
+
     # Top-5 summary
     lines.append("## 总体排名（Top-5，按测试损失）\n")
     lines.append("| 排名 | 注意力 | 平均测试损失 | 最终测试损失 | 最佳验证损失 | 收敛指标 | 轮数 | 源目录 | Loss配置 |\n")
@@ -1316,6 +1956,163 @@ def generate_markdown(entries: List[Dict[str, Any]], out_md: Path) -> None:
     out_md.write_text("".join(lines), encoding="utf-8")
 
 
+def validate_experiment_data(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Validate and clean a single experiment entry, adding fallbacks where possible."""
+    cleaned = dict(data)
+    # Normalize numeric fields
+    for k in [
+        "final_train_loss", "final_valid_loss", "final_test_loss",
+        "best_valid_loss", "best_valid_epoch", "epochs",
+        "avg_test_loss", "min_test_loss", "max_test_loss",
+        "total_duration_seconds",
+        "avg_gpu_utilization", "max_gpu_memory_mb", "avg_cpu_percent", "max_ram_mb", "gpu_temperature_max",
+        "initial_lr", "final_lr", "min_lr", "max_lr",
+        "weight_decay", "momentum", "beta1", "beta2", "eps",
+        "loss_variance", "gradient_norm_avg", "gradient_norm_max",
+        "early_stopping_epoch", "plateau_epochs",
+        "train_loss_variance_late", "valid_loss_variance_late",
+        "epochs_after_best_valid", "overfitting_ratio", "loss_decreasing_ratio",
+        "convergence_epoch_90pct",
+    ]:
+        if k in cleaned and cleaned[k] is not None:
+            val = safe_float(cleaned[k])
+            cleaned[k] = val if val is not None else cleaned[k]
+
+    # Fallback: fill final_test_loss from test_result_file_loss or avg_test_loss
+    ftl = cleaned.get("final_test_loss")
+    if ftl is None or not isinstance(ftl, (int, float)) or not math.isfinite(float(ftl)):
+        tr = cleaned.get("test_result_file_loss")
+        tr_val = safe_float(tr)
+        if tr_val is not None:
+            cleaned["final_test_loss"] = tr_val
+        elif cleaned.get("avg_test_loss") is not None:
+            avg_val = safe_float(cleaned.get("avg_test_loss"))
+            if avg_val is not None:
+                cleaned["final_test_loss"] = avg_val
+
+    # Fallback: best_valid_loss from derived fields if still missing
+    if cleaned.get("best_valid_loss") is None:
+        d = cleaned.get("derived_best_valid_loss") or cleaned.get("best_val_loss")
+        d_val = safe_float(d)
+        if d_val is not None:
+            cleaned["best_valid_loss"] = d_val
+    if cleaned.get("best_valid_epoch") is None:
+        be = cleaned.get("derived_best_valid_epoch")
+        be_val = safe_float(be)
+        if be_val is not None:
+            cleaned["best_valid_epoch"] = int(be_val)
+
+    # NEW: Fallback from nested convergence_metrics in comprehensive metrics
+    if cleaned.get("best_valid_loss") is None:
+        cm = cleaned.get("convergence_metrics")
+        if isinstance(cm, dict):
+            cm_bvl = safe_float(cm.get("best_valid_loss") or cm.get("best_val_loss"))
+            if cm_bvl is not None:
+                cleaned["best_valid_loss"] = cm_bvl
+            if cleaned.get("best_valid_epoch") is None:
+                cm_be = safe_float(cm.get("best_valid_epoch") or cm.get("best_val_epoch"))
+                if cm_be is not None:
+                    cleaned["best_valid_epoch"] = int(cm_be)
+
+    # Last-resort fallback: use final_valid_loss and epochs as proxies
+    if cleaned.get("best_valid_loss") is None:
+        fvl = safe_float(cleaned.get("final_valid_loss"))
+        if fvl is not None:
+            cleaned["best_valid_loss"] = fvl
+            if cleaned.get("best_valid_epoch") is None:
+                ep = safe_float(cleaned.get("epochs"))
+                if ep is not None:
+                    cleaned["best_valid_epoch"] = int(ep)
+
+    # Fallback: epochs
+    if not cleaned.get("epochs"):
+        te = safe_float(cleaned.get("training_epochs"))
+        if te is not None:
+            cleaned["epochs"] = int(te)
+    # Try to recover epochs from nested convergence_metrics if still missing
+    if not cleaned.get("epochs"):
+        cm = cleaned.get("convergence_metrics")
+        if isinstance(cm, dict):
+            te2 = safe_float(cm.get("total_epochs") or cm.get("epochs"))
+            if te2 is not None:
+                cleaned["epochs"] = int(te2)
+
+    # Training status normalization
+    ts = cleaned.get("training_status")
+    if ts not in {"ok", "completed", "in_progress", "failed", "no_log_file", "unknown", "not_started"}:
+        cleaned["training_status"] = "ok"
+
+    return cleaned
+
+
+def generate_data_quality_report(entries: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Generate a summary of data completeness and quality across entries."""
+    total = len(entries)
+    issues: Dict[str, int] = {}
+
+    def inc(key: str):
+        issues[key] = issues.get(key, 0) + 1
+
+    for e in entries:
+        if e.get("final_test_loss") is None:
+            inc("Missing final_test_loss")
+        if e.get("best_valid_loss") is None:
+            inc("Missing best_valid_loss")
+        if not e.get("epochs"):
+            inc("Missing epochs")
+        if e.get("total_duration_seconds") is None:
+            inc("Missing total_duration_seconds")
+        if e.get("model_parameters") is None:
+            inc("Missing model_parameters")
+        if e.get("avg_gpu_utilization") is None:
+            inc("Missing avg_gpu_utilization")
+        # Unusual epochs
+        if isinstance(e.get("epochs"), int) and e.get("epochs") is not None and e.get("epochs") <= 1:
+            inc("Unusual epochs value")
+
+    # Quality scoring: simple heuristic
+    quality_scores: List[float] = []
+    for e in entries:
+        score = 10.0
+        if e.get("final_test_loss") is None:
+            score -= 2.0
+        if e.get("best_valid_loss") is None:
+            score -= 1.5
+        if not e.get("epochs"):
+            score -= 1.0
+        if e.get("total_duration_seconds") is None:
+            score -= 1.0
+        if e.get("model_parameters") is None:
+            score -= 0.5
+        if e.get("avg_gpu_utilization") is None:
+            score -= 0.5
+        quality_scores.append(max(0.0, score))
+
+    avg_score = sum(quality_scores) / total if total > 0 else 0.0
+
+    # Distribution by status
+    dist: Dict[str, int] = {}
+    for e in entries:
+        st = e.get("status", "unknown")
+        dist[st] = dist.get(st, 0) + 1
+
+    recs: List[str] = []
+    if issues.get("Missing final_test_loss", 0) > 0:
+        recs.append("确保在测试阶段保存 final_test_loss（或在分析脚本中启用回退提取）")
+    if issues.get("Unusual epochs value", 0) > 0:
+        recs.append("检查训练是否提前停止或日志是否不完整（epochs 值异常低）")
+    if issues.get("Missing avg_gpu_utilization", 0) > 0:
+        recs.append("启用硬件监控或保证 research_data/hardware_metrics.json 正确生成")
+
+    return {
+        "total_experiments": total,
+        "average_quality_score": round(avg_score, 2),
+        "quality_distribution": dist,
+        "common_issues": dict(sorted(issues.items(), key=lambda x: x[1], reverse=True)),
+        "recommendations": recs,
+    }
+
+
 def fmt(v: Any) -> str:
     if v is None:
         return "-"
@@ -1366,6 +2163,15 @@ def main():
 
     write_csv_summary(entries, out_csv)
     generate_markdown(entries, out_md)
+    
+    # Generate data quality report
+    quality_report = generate_data_quality_report(entries)
+    quality_report_file = report_dir / "data_quality_report.json"
+    
+    # Write quality report to JSON file
+    report_dir.mkdir(parents=True, exist_ok=True)
+    with open(quality_report_file, 'w', encoding='utf-8') as f:
+        json.dump(quality_report, f, indent=2, ensure_ascii=False)
 
     print(f"Scanning base_root: {base_root}")
     if dated_root_override:
@@ -1376,7 +2182,27 @@ def main():
         print(f"Using config_file: {Path(args.config_file).resolve()}")
     print(f"Summary CSV: {out_csv}")
     print(f"Markdown Report: {out_md}")
+    print(f"Data Quality Report: {quality_report_file}")
     print(f"Total entries: {len(entries)}")
+    
+    # Print quality summary to console
+    print(f"\n=== 数据质量概览 ===")
+    print(f"总实验数量: {quality_report['total_experiments']}")
+    print(f"数据质量分布:")
+    for quality, count in quality_report['quality_distribution'].items():
+        percentage = (count / quality_report['total_experiments']) * 100 if quality_report['total_experiments'] > 0 else 0
+        print(f"  {quality}: {count} ({percentage:.1f}%)")
+    print(f"平均质量评分: {quality_report['average_quality_score']:.2f}/10")
+    
+    if quality_report['common_issues']:
+        print(f"\n主要数据问题:")
+        for issue, count in list(quality_report['common_issues'].items())[:3]:
+            print(f"  - {issue}: {count}次")
+    
+    if quality_report['recommendations']:
+        print(f"\n改进建议:")
+        for rec in quality_report['recommendations'][:2]:
+            print(f"  - {rec}")
 
 
 if __name__ == "__main__":

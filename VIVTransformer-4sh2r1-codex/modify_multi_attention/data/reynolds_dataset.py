@@ -189,7 +189,16 @@ def create_reynolds_loaders(
     """创建Reynolds数据的训练、验证、测试加载器"""
     from torch.utils.data import DataLoader, random_split
     
-    # 创建数据集
+    # 创建数据集 (同时先提取 DataLoader 相关参数，避免误传给数据集构造)
+    # 先提取 DataLoader 相关参数，避免传入到数据集构造
+    num_workers = kwargs.pop('num_workers', 0)
+    pin_memory = kwargs.pop('pin_memory', torch.cuda.is_available())
+    prefetch_factor = kwargs.pop('prefetch_factor', 2)
+    persistent_workers = kwargs.pop('persistent_workers', None)
+    if persistent_workers is None:
+        persistent_workers = num_workers > 0
+
+    # 创建数据集（仅传入与数据集有关的参数）
     dataset = ReynoldsFlowDataset(
         data_path=data_path,
         use_time_sequence=use_time_sequence,
@@ -208,10 +217,7 @@ def create_reynolds_loaders(
     )
     
     # 创建数据加载器 (Windows兼容性：默认num_workers=0；若需要可根据机器配置调大并设置 persistent_workers=True)
-    num_workers = kwargs.get('num_workers', 0)
-    pin_memory = kwargs.get('pin_memory', torch.cuda.is_available())
-    prefetch_factor = kwargs.get('prefetch_factor', 2)
-    persistent_workers = num_workers > 0
+    # 上方已通过 kwargs.pop 提取了 DataLoader 相关参数: num_workers, pin_memory, prefetch_factor, persistent_workers
 
     common_kwargs = dict(
         num_workers=num_workers,

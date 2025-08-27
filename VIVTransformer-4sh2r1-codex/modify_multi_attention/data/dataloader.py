@@ -275,13 +275,21 @@ def get_adaptive_loaders(
         output_size = reynolds_cfg.get('output_size', 200)
         sequence_length = reynolds_cfg.get('sequence_length', 5)
         
+        # Forward loader-related performance options from config
+        num_workers = config.get('data', {}).get('num_workers', 0)
+        pin_memory = config.get('data', {}).get('pin_memory', torch.cuda.is_available())
+        prefetch_factor = config.get('performance', {}).get('data_loading', {}).get('prefetch_factor', 2)
+        
         train_loader, valid_loader, test_loader, _ = create_reynolds_loaders(
             data_path=data_path,
             batch_size=batch_size,
             use_time_sequence=use_time_sequence,
             input_size=input_size,
             output_size=output_size,
-            sequence_length=sequence_length
+            sequence_length=sequence_length,
+            num_workers=num_workers,
+            pin_memory=pin_memory,
+            prefetch_factor=prefetch_factor,
         )
         return train_loader, valid_loader, test_loader
     

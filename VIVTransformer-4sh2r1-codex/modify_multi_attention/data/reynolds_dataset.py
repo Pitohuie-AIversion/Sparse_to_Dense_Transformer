@@ -208,11 +208,19 @@ def create_reynolds_loaders(
     )
     
     # 创建数据加载器 (Windows兼容性：默认num_workers=0；若需要可根据机器配置调大并设置 persistent_workers=True)
+    num_workers = kwargs.get('num_workers', 0)
+    pin_memory = kwargs.get('pin_memory', torch.cuda.is_available())
+    prefetch_factor = kwargs.get('prefetch_factor', 2)
+    persistent_workers = num_workers > 0
+
     common_kwargs = dict(
-        num_workers=0,
-        pin_memory=torch.cuda.is_available(),
-        prefetch_factor=2,
+        num_workers=num_workers,
+        pin_memory=pin_memory,
+        persistent_workers=persistent_workers,
     )
+    if prefetch_factor is not None and num_workers > 0:
+        common_kwargs['prefetch_factor'] = prefetch_factor
+
     train_loader = DataLoader(
         train_dataset, 
         batch_size=batch_size, 

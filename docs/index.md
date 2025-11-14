@@ -4,6 +4,8 @@ title: Home
 nav_order: 1
 description: "Advanced Transformer Architecture with Vision Integration for Vortex-Induced Vibration Analysis"
 permalink: /
+lang: en
+ref: index
 ---
 
 
@@ -68,3 +70,9 @@ Welcome to VIVTransformer Documentation! This is an advanced Transformer archite
 - 📖 [Getting Help]({{ site.baseurl }}/pages/getting-help/) - Complete help resources
 - 🔧 [Troubleshooting]({{ site.baseurl }}/pages/troubleshooting/) - Problem diagnosis and solutions
 - ❓ [FAQ]({{ site.baseurl }}/pages/faq/) - Frequently asked questions and quick answers
+
+---
+
+<div style="text-align: center; margin-top: 2rem;">
+  <p><strong>Language:</strong> English | <a href="{{ site.baseurl }}/zh/">中文</a></p>
+</div>

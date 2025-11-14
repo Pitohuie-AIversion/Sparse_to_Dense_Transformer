@@ -1,0 +1,257 @@
+/* 跨浏览器兼容性样式 / Cross-browser Compatibility Styles */
+
+/* CSS Reset and Normalization */
+* {
+  box-sizing: border-box;
+}
+
+/* Webkit浏览器特定样式 / Webkit-specific styles */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .language-switcher {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  
+  .responsive-nav {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* Firefox浏览器特定样式 / Firefox-specific styles */
+@-moz-document url-prefix() {
+  .theme-toggle {
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  .nav-toggle {
+    -moz-appearance: none;
+    appearance: none;
+  }
+}
+
+/* Edge浏览器特定样式 / Edge-specific styles */
+@supports (-ms-ime-align: auto) {
+  .language-switcher {
+    background: rgba(255, 255, 255, 0.98);
+  }
+  
+  html[data-theme='dark'] .language-switcher {
+    background: rgba(30, 41, 59, 0.98);
+  }
+}
+
+/* Internet Explorer 11 支持 / IE11 support */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .language-switcher {
+    background: #ffffff;
+    border: 1px solid #cccccc;
+  }
+  
+  .responsive-nav {
+    background: #ffffff;
+    border-bottom: 1px solid #cccccc;
+  }
+  
+  html[data-theme='dark'] .language-switcher {
+    background: #1e293b;
+    border-color: #475569;
+  }
+  
+  html[data-theme='dark'] .responsive-nav {
+    background: #1e293b;
+    border-bottom-color: #475569;
+  }
+}
+
+/* Safari浏览器优化 / Safari optimizations */
+@supports (-webkit-appearance: none) {
+  .theme-toggle {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .nav-toggle {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .language-link {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* 移动设备优化 / Mobile device optimizations */
+@media screen and (max-width: 768px) {
+  /* iOS Safari 100vh 修复 / iOS Safari 100vh fix */
+  .responsive-nav {
+    height: -webkit-fill-available;
+    height: fill-available;
+  }
+  
+  /* 防止移动设备上的点击延迟 / Prevent tap delay on mobile */
+  .nav-toggle,
+  .language-link,
+  .theme-toggle {
+    touch-action: manipulation;
+  }
+  
+  /* 移动设备上的优化滚动 / Optimized scrolling on mobile */
+  .nav-menu {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+  }
+}
+
+/* 高DPI屏幕支持 / High DPI screen support */
+@media screen and (min-resolution: 2dppx) {
+  .nav-toggle-icon,
+  .nav-toggle-icon::before,
+  .nav-toggle-icon::after {
+    transform: scale(0.75);
+  }
+  
+  .language-switcher {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* 打印样式 / Print styles */
+@media print {
+  .language-switcher,
+  .responsive-nav,
+  .theme-toggle,
+  .back-to-top {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* 辅助功能增强 / Accessibility enhancements */
+@media (prefers-reduced-motion: reduce) {
+  .language-switcher,
+  .responsive-nav,
+  .theme-toggle,
+  .nav-toggle,
+  .nav-link,
+  .language-link {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .language-link {
+    border: 2px solid transparent;
+  }
+  
+  .language-link:focus {
+    border-color: currentColor;
+    outline: none;
+  }
+  
+  .nav-link:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* 颜色方案支持 / Color scheme support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nav-bg: rgba(30, 41, 59, 0.95);
+    --nav-text: #e5e7eb;
+    --nav-border: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --nav-bg: rgba(255, 255, 255, 0.95);
+    --nav-text: #374151;
+    --nav-border: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* 浏览器前缀处理 / Vendor prefix handling */
+.language-switcher {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.responsive-nav {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* 性能优化 / Performance optimizations */
+.language-switcher,
+.responsive-nav,
+.theme-toggle,
+.back-to-top {
+  will-change: transform, opacity;
+}
+
+/* 硬件加速 / Hardware acceleration */
+@media screen and (min-width: 769px) {
+  .language-switcher,
+  .responsive-nav {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 字体渲染优化 / Font rendering optimization */
+.language-link,
+.nav-link {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 选择文本样式 / Text selection styles */
+.language-link::selection,
+.nav-link::selection {
+  background: rgba(37, 99, 235, 0.2);
+  color: inherit;
+}
+
+html[data-theme='dark'] .language-link::selection,
+html[data-theme='dark'] .nav-link::selection {
+  background: rgba(96, 165, 250, 0.2);
+}
+
+/* 焦点可见性 / Focus visibility */
+.language-link:focus-visible,
+.nav-link:focus-visible,
+.nav-toggle:focus-visible,
+.theme-toggle:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+html[data-theme='dark'] .language-link:focus-visible,
+html[data-theme='dark'] .nav-link:focus-visible,
+html[data-theme='dark'] .nav-toggle:focus-visible,
+html[data-theme='dark'] .theme-toggle:focus-visible {
+  outline-color: #60a5fa;
+}

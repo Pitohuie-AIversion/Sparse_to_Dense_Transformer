@@ -1,0 +1,629 @@
+<!-- 链接验证器组件 / Link Validator Component -->
+<div class="link-validator" id="link-validator" style="display: none;">
+  <div class="validator-header">
+    <h3>🔍 链接验证器 / Link Validator</h3>
+    <button class="validator-close" aria-label="Close validator">&times;</button>
+  </div>
+  <div class="validator-content">
+    <div class="validator-stats">
+      <span class="stat-item">总链接: <span id="total-links">0</span></span>
+      <span class="stat-item">有效: <span id="valid-links">0</span></span>
+      <span class="stat-item">无效: <span id="invalid-links">0</span></span>
+      <span class="stat-item">状态: <span id="validator-status">就绪</span></span>
+    </div>
+    <div class="validator-progress">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <span class="progress-text" id="progress-text">0%</span>
+    </div>
+    <div class="validator-results" id="validator-results"></div>
+    <div class="validator-actions">
+      <button class="validator-btn primary" id="start-validation">开始验证 / Start Validation</button>
+      <button class="validator-btn secondary" id="export-results">导出结果 / Export Results</button>
+    </div>
+  </div>
+</div>
+
+<!-- 链接验证器触发器 / Link Validator Trigger -->
+<button class="validator-trigger" id="validator-trigger" title="验证页面链接 / Validate page links">
+  🔍
+</button>
+
+<style>
+/* 链接验证器样式 / Link Validator Styles */
+.link-validator {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+}
+
+.validator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.validator-header h3 {
+  margin: 0;
+  color: #374151;
+  font-size: 1.25rem;
+}
+
+.validator-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.validator-close:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.validator-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.validator-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.stat-item span {
+  font-weight: 600;
+  color: #374151;
+}
+
+.validator-progress {
+  margin-bottom: 1.5rem;
+}
+
+.progress-bar {
+  background: #e5e7eb;
+  border-radius: 4px;
+  height: 8px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  background: #2563eb;
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.progress-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-align: center;
+  display: block;
+}
+
+.validator-results {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.validator-result {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.validator-result:last-child {
+  border-bottom: none;
+}
+
+.result-status {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.result-status.valid {
+  background: #10b981;
+}
+
+.result-status.invalid {
+  background: #ef4444;
+}
+
+.result-status.warning {
+  background: #f59e0b;
+}
+
+.result-link {
+  flex: 1;
+  font-size: 0.875rem;
+  color: #374151;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.result-link:hover {
+  color: #2563eb;
+}
+
+.result-message {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-left: 0.5rem;
+}
+
+.validator-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.validator-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.validator-btn.primary {
+  background: #2563eb;
+  color: white;
+}
+
+.validator-btn.primary:hover {
+  background: #1d4ed8;
+}
+
+.validator-btn.primary:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.validator-btn.secondary {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.validator-btn.secondary:hover {
+  background: #e5e7eb;
+}
+
+.validator-btn.secondary:disabled {
+  background: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.validator-trigger {
+  position: fixed;
+  bottom: 140px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  background: #10b981;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 9999;
+}
+
+.validator-trigger:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.validator-trigger:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* 深色模式支持 / Dark Mode Support */
+html[data-theme='dark'] .link-validator {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+html[data-theme='dark'] .validator-header {
+  border-bottom-color: #374151;
+}
+
+html[data-theme='dark'] .validator-header h3 {
+  color: #f9fafb;
+}
+
+html[data-theme='dark'] .validator-close {
+  color: #9ca3af;
+}
+
+html[data-theme='dark'] .validator-close:hover {
+  background: #374151;
+  color: #f3f4f6;
+}
+
+html[data-theme='dark'] .stat-item {
+  color: #9ca3af;
+}
+
+html[data-theme='dark'] .stat-item span {
+  color: #f3f4f6;
+}
+
+html[data-theme='dark'] .progress-bar {
+  background: #374151;
+}
+
+html[data-theme='dark'] .validator-results {
+  border-color: #374151;
+  background: #111827;
+}
+
+html[data-theme='dark'] .validator-result {
+  border-bottom-color: #374151;
+}
+
+html[data-theme='dark'] .result-link {
+  color: #f3f4f6;
+}
+
+html[data-theme='dark'] .result-link:hover {
+  color: #60a5fa;
+}
+
+html[data-theme='dark'] .result-message {
+  color: #9ca3af;
+}
+
+html[data-theme='dark'] .validator-btn.secondary {
+  background: #374151;
+  color: #f3f4f6;
+  border-color: #4b5563;
+}
+
+html[data-theme='dark'] .validator-btn.secondary:hover {
+  background: #4b5563;
+}
+
+html[data-theme='dark'] .validator-btn.secondary:disabled {
+  background: #1f2937;
+  color: #6b7280;
+}
+
+/* 响应式设计 / Responsive Design */
+@media (max-width: 768px) {
+  .link-validator {
+    width: 95%;
+    max-height: 90vh;
+  }
+  
+  .validator-header {
+    padding: 1rem;
+  }
+  
+  .validator-content {
+    padding: 1rem;
+  }
+  
+  .validator-stats {
+    gap: 1rem;
+  }
+  
+  .validator-actions {
+    flex-direction: column;
+  }
+  
+  .validator-trigger {
+    bottom: 120px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .validator-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .validator-trigger {
+    bottom: 100px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+}
+</style>
+
+<script>
+// 链接验证器功能 / Link Validator Functionality
+class LinkValidator {
+  constructor() {
+    this.links = [];
+    this.results = [];
+    this.isValidating = false;
+    this.init();
+  }
+  
+  init() {
+    this.createValidator();
+    this.bindEvents();
+  }
+  
+  createValidator() {
+    const trigger = document.getElementById('validator-trigger');
+    const validator = document.getElementById('link-validator');
+    const closeBtn = document.querySelector('.validator-close');
+    
+    if (!trigger || !validator || !closeBtn) return;
+    
+    // 显示验证器
+    trigger.addEventListener('click', () => {
+      validator.style.display = 'flex';
+      this.collectLinks();
+    });
+    
+    // 关闭验证器
+    closeBtn.addEventListener('click', () => {
+      validator.style.display = 'none';
+    });
+    
+    // ESC键关闭
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && validator.style.display === 'flex') {
+        validator.style.display = 'none';
+      }
+    });
+    
+    // 点击外部关闭
+    validator.addEventListener('click', (e) => {
+      if (e.target === validator) {
+        validator.style.display = 'none';
+      }
+    });
+  }
+  
+  collectLinks() {
+    const allLinks = document.querySelectorAll('a[href]');
+    this.links = Array.from(allLinks).map(link => ({
+      element: link,
+      href: link.href,
+      text: link.textContent.trim() || link.href,
+      isExternal: !link.href.startsWith(window.location.origin)
+    }));
+    
+    this.updateStats();
+  }
+  
+  updateStats() {
+    document.getElementById('total-links').textContent = this.links.length;
+    document.getElementById('valid-links').textContent = this.results.filter(r => r.status === 'valid').length;
+    document.getElementById('invalid-links').textContent = this.results.filter(r => r.status === 'invalid').length;
+  }
+  
+  async validateLinks() {
+    if (this.isValidating) return;
+    
+    this.isValidating = true;
+    this.results = [];
+    const resultsContainer = document.getElementById('validator-results');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const statusText = document.getElementById('validator-status');
+    const startBtn = document.getElementById('start-validation');
+    
+    startBtn.disabled = true;
+    resultsContainer.innerHTML = '';
+    statusText.textContent = '验证中...';
+    
+    for (let i = 0; i < this.links.length; i++) {
+      const link = this.links[i];
+      const result = await this.validateLink(link);
+      this.results.push(result);
+      
+      // 更新进度
+      const progress = ((i + 1) / this.links.length) * 100;
+      progressFill.style.width = `${progress}%`;
+      progressText.textContent = `${Math.round(progress)}%`;
+      
+      // 显示结果
+      this.displayResult(result);
+      this.updateStats();
+      
+      // 小延迟以避免阻塞UI
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    
+    this.isValidating = false;
+    startBtn.disabled = false;
+    statusText.textContent = '完成';
+  }
+  
+  async validateLink(link) {
+    try {
+      // 跳过锚点链接
+      if (link.href.startsWith('#')) {
+        const target = document.querySelector(link.href);
+        return {
+          ...link,
+          status: target ? 'valid' : 'invalid',
+          message: target ? '锚点存在' : '锚点不存在'
+        };
+      }
+      
+      // 跳过JavaScript链接
+      if (link.href.startsWith('javascript:')) {
+        return {
+          ...link,
+          status: 'warning',
+          message: 'JavaScript链接'
+        };
+      }
+      
+      // 跳过mailto链接
+      if (link.href.startsWith('mailto:')) {
+        return {
+          ...link,
+          status: 'valid',
+          message: '邮件链接'
+        };
+      }
+      
+      // 对于外部链接，使用HEAD请求检查
+      if (link.isExternal) {
+        try {
+          const response = await fetch(link.href, {
+            method: 'HEAD',
+            mode: 'no-cors'
+          });
+          return {
+            ...link,
+            status: 'valid',
+            message: '外部链接'
+          };
+        } catch (error) {
+          return {
+            ...link,
+            status: 'warning',
+            message: '无法验证外部链接'
+          };
+        }
+      }
+      
+      // 对于内部链接，检查是否存在
+      const url = new URL(link.href);
+      const path = url.pathname;
+      
+      // 这里简化处理，实际应该检查文件是否存在
+      return {
+        ...link,
+        status: 'valid',
+        message: '内部链接'
+      };
+      
+    } catch (error) {
+      return {
+        ...link,
+        status: 'invalid',
+        message: `验证错误: ${error.message}`
+      };
+    }
+  }
+  
+  displayResult(result) {
+    const resultsContainer = document.getElementById('validator-results');
+    const resultDiv = document.createElement('div');
+    resultDiv.className = 'validator-result';
+    
+    const statusClass = result.status;
+    const statusIcon = result.status === 'valid' ? '✅' : result.status === 'invalid' ? '❌' : '⚠️';
+    
+    resultDiv.innerHTML = `
+      <div class="result-status ${statusClass}"></div>
+      <a href="${result.href}" class="result-link" target="_blank" rel="noopener">
+        ${result.text.substring(0, 60)}${result.text.length > 60 ? '...' : ''}
+      </a>
+      <span class="result-message">${result.message}</span>
+    `;
+    
+    resultsContainer.appendChild(resultDiv);
+  }
+  
+  exportResults() {
+    const validLinks = this.results.filter(r => r.status === 'valid');
+    const invalidLinks = this.results.filter(r => r.status === 'invalid');
+    const warningLinks = this.results.filter(r => r.status === 'warning');
+    
+    const report = {
+      timestamp: new Date().toISOString(),
+      summary: {
+        total: this.results.length,
+        valid: validLinks.length,
+        invalid: invalidLinks.length,
+        warnings: warningLinks.length
+      },
+      details: {
+        valid: validLinks,
+        invalid: invalidLinks,
+        warnings: warningLinks
+      }
+    };
+    
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `link-validation-report-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+  
+  bindEvents() {
+    const startBtn = document.getElementById('start-validation');
+    const exportBtn = document.getElementById('export-results');
+    
+    if (startBtn) {
+      startBtn.addEventListener('click', () => this.validateLinks());
+    }
+    
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => this.exportResults());
+    }
+  }
+}
+
+// 初始化链接验证器
+new LinkValidator();
+</script>

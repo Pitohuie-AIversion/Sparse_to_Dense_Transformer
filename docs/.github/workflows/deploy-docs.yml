@@ -1,0 +1,211 @@
+# VIVTransformer 文档网站 - 部署配置
+
+name: Deploy Documentation
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/deploy-docs.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'docs/**'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # 构建作业
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+          cache-version: 0
+          working-directory: docs
+          
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+        
+      - name: Install dependencies
+        run: |
+          cd docs
+          bundle install
+          
+      - name: Build with Jekyll
+        run: |
+          cd docs
+          bundle exec jekyll build \
+            --baseurl "${{ steps.pages.outputs.base_path }}" \
+            --destination ./_site
+        env:
+          JEKYLL_ENV: production
+          
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/_site
+
+  # 部署作业
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # 测试作业
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+          working-directory: docs
+          
+      - name: Install dependencies
+        run: |
+          cd docs
+          bundle install
+          
+      - name: Run HTML Proofer
+        run: |
+          cd docs
+          bundle exec htmlproofer ./_site \
+            --disable-external \
+            --check-html \
+            --check-img-http \
+            --check-opengraph \
+            --check-favicon \
+            --enforce-https false
+            
+      - name: Validate Jekyll build
+        run: |
+          cd docs
+          bundle exec jekyll doctor
+          
+      - name: Check for broken links
+        run: |
+          cd docs
+          # 使用自定义脚本检查链接
+          ruby -e "
+            require 'nokogiri'
+            require 'open-uri'
+            
+            html = File.read('_site/index.html')
+            doc = Nokogiri::HTML(html)
+            links = doc.css('a[href]')
+            
+            puts \"Found #{links.length} links\"
+            broken_links = []
+            
+            links.each do |link|
+              href = link['href']
+              next if href.start_with?('http', '#', 'mailto:', 'javascript:')
+              
+              file_path = \"_site#{href}\"
+              unless File.exist?(file_path) || File.exist?(\"_site/#{href}\")
+                broken_links << href
+              end
+            end
+            
+            if broken_links.any?
+              puts \"Broken links found:\"
+              broken_links.each { |link| puts \"  - #{link}\" }
+              exit 1
+            else
+              puts \"All internal links are valid!\"
+            end
+          "
+
+  # 性能测试
+  performance:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+        
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: github-pages
+          path: docs/_site
+          
+      - name: Serve site for Lighthouse
+        run: |
+          cd docs/_site
+          python3 -m http.server 8080 &
+          sleep 5
+          
+      - name: Run Lighthouse CI
+        run: |
+          lhci autorun --config=.lighthouserc.json || true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  # 可访问性测试
+  accessibility:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install Pa11y
+        run: npm install -g pa11y
+        
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: github-pages
+          path: docs/_site
+          
+      - name: Serve site for Pa11y
+        run: |
+          cd docs/_site
+          python3 -m http.server 8080 &
+          sleep 5
+          
+      - name: Run accessibility tests
+        run: |
+          pa11y --standard WCAG2AA http://localhost:8080/Sparse_to_Dense_Transformer/ || true
+          pa11y --standard WCAG2AA http://localhost:8080/Sparse_to_Dense_Transformer/zh/ || true

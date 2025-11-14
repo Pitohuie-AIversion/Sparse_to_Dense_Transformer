@@ -93,6 +93,11 @@ aux_links:
 # Aux links styling
 aux_links_new_tab: true
 
+# Multi-language configuration (GitHub Pages compatible)
+# Using directory-based approach instead of plugin
+lang: en
+locale: en_US
+
 # Exclude from processing
 exclude:
   - Gemfile
@@ -102,3 +107,9 @@ exclude:
   - README.md
   - LICENSE
   - .gitignore
+  - serve.bat
+  - setup.bat
+  - setup.ps1
+  - setup.py
+  - convert_wiki.py
+  - fix_links.py
